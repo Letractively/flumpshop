@@ -20,4 +20,4 @@ An exported configuration file includes the following:
 To import a file, simply got to the Admin CP, and under the [AdvancedMenu Advanced Menu], click Import. There, browse to the downloaded or previously exported file, and click upload. The system will automatically make all the changes necessary.
 
 = Limitations =
-* You cannot currently disable the importing of the Configuration Object. Transferring data between servers with different setups will break the system. To fix this, re-run the [Setup Wizard]
+* You cannot currently disable the importing of the Configuration Object. Transferring data between servers with different setups will break the system. To fix this, re-run the [SetupWizard Setup Wizard]
