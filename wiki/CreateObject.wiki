@@ -1,0 +1,14 @@
+#summary An Introduction to the Create Object menu in the Admin CP
+#labels Phase-Deploy,Type-Administration
+
+= Introduction =
+
+The Create Object menu is the first place to go to add new content to your site.
+
+
+= Menu Items =
+
+ *[CreateItem] - Add a new product
+ *[CreateCategory] - Add a new product category
+ *[CreateNewsPost] - Add a new news post
+ *[CreateTechHelpPost] - Add a new technical tips post
