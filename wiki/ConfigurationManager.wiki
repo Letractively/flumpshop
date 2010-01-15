@@ -1,0 +1,92 @@
+#summary The one-stop shop for all things variable
+#labels Phase-Deploy,Type-Configuration
+
+= Introduction =
+From moving servers or changing names, the Configuration Manager tells the [FlumpnetRobot Flumpnet Robot] to go delving around into the Configuration Object and throw it onto one cramped little web page for you to get stuck into, and inevitably break.
+
+= Details =
+Unlike the [SetupWizard Setup Wizard], this page is 100% dynamic, and whenever a new variable is added, it will appear here. The variables are divided up into groups, based on what they do. This page basically contains a list of the groups and the variables within them, with links to more details about what each one does.
+
+== Main Settings ==
+  * [enabled]
+  * [password]
+  * [vat]
+  * [country]
+  * [shopMode]
+
+== Site Paths and Directories ==
+  * [root]
+  * [secureRoot]
+  * [path]
+  * [offlineDir]
+  * [logDir]
+
+== Security Settings ==
+  * [secure|enabled]
+  * [admin]
+
+== Database Server Settings ==
+  * [type]
+  * [port]
+  * [uname]
+  * [password]
+  * [database|name]
+
+== Advanced Server Configuration ==
+  * [rewrite]
+  * [holdTimeout]
+  * [commitPayments]
+  * [crawlerAgents]
+  * [debug]
+
+== Predefined Text Strings ==
+  * [footer]
+  * [adminDenied]
+  * [crawler]
+  * [maintenance]
+  * [name]
+  * [tagline]
+  * [keywords]
+  * [defaultCategoryName]
+  * [defaultCategoryDesc]
+  * [basketRemItemConf]
+  * [basketEmptyConf]
+  * [noScript]
+  * [insufficientStock]
+  * [featuredItemHeader]
+  * [popularItemHeader]
+  * [latestNewsHeader]
+  * [technicalHeader]
+  * [transactionCancelled]
+  * [transactionFailed]
+  * [paymentComplete]
+  * [firstPage]
+  * [lastPage]
+  * [previousPage]
+  * [nextPage]
+  * [userNoCustomer]
+  * [loginNeeded]
+  * [countryNotSupported]
+  * [email]
+  * [address]
+  * [404]
+  * [homePage]
+  * [privacyPolicy]
+  * [disclaimer]
+  * [termsConditions]
+  * [aboutPage]
+  * [contactPage]
+  * [formFieldRequired]
+
+== Server Log Files ==
+  * [logs|enabled]
+  * [errors]
+
+== PayPal Settings ==
+  * [payPal|uname]
+  * [payPal|pass]
+  * [apiKey]
+
+== Pagination Options ==
+
+Hey, it's Lloyd. I hope you don't mind, but I decided to take a break here. This list isn't exactly a brief one. There's only three small categories left, which I'm sure you can figure out for yourselves.
