@@ -1,5 +1,5 @@
 #summary A quick guide to importing a configuration file
-#labels Featured
+#labels Featured,Type-Administration
 
 = Introduction =
 
