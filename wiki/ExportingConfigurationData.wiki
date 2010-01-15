@@ -2,7 +2,7 @@
 
 = Introduction =
 
-The most sure fire way of making sure you have everything you need from the site in the event of a failure is by exporting the site, which can then later be restored using the [ImportConfigurationData Import] feature in the [AdminCP Admin CP].
+The most sure fire way of making sure you have everything you need from the site in the event of a failure is by exporting the site, which can then later be restored using the [ImportingConfigurationData Import] feature in the [AdminCP Admin CP].
 
 
 = Details =
