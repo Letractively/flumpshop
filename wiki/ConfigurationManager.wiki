@@ -1,5 +1,5 @@
 #summary The one-stop shop for all things variable
-#labels Phase-Deploy,Type-Configuration
+#labels Phase-Deploy,Type-Configuration,Featured
 
 = Introduction =
 From moving servers or changing names, the Configuration Manager tells the [FlumpnetRobot Flumpnet Robot] to go delving around into the Configuration Object and throw it onto one cramped little web page for you to get stuck into, and inevitably break.
