@@ -1,5 +1,5 @@
 #summary A quick guide to importing a configuration file
-#labels Featured,Type-Administration
+#labels Featured,Phase-Deploy
 
 = Introduction =
 
