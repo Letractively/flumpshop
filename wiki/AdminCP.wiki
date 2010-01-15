@@ -12,11 +12,11 @@ The Admin CP currently uses a single authentication method - an Administrator Pa
 After logging in, the site will load a menu on the left of the page, which allows you to select a task. Note: You may have to refresh the page to see this - [http://code.google.com/p/flumpshop/issues/detail?id=1 See Issue 1] for details.
 
 == Top Level Menus ==
- *[CreateObject Create Object] - Create a new object for the site
- *[EditObject Edit Object] - Edit an existing object or static page
- *[ViewOrders View Orders] - View and update orders
- *[DeliverySettings Delivery Settings] - Configure delivery options
- *[Waves] - Development
- *[Advanced] - Access advanced settings and direct [ConfigurationObject] editing
+ *CreateObject - Create a new object for the site
+ *EditObject - Edit an existing object or static page
+ *ViewOrders - View and update orders
+ *DeliverySettings - Configure delivery options
+ *Waves - Development
+ *Advanced - Access advanced settings and direct [ConfigurationObject] editing
 
 Close is not a menu, but simply closes the current Admin module.
