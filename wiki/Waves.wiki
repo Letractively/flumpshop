@@ -8,5 +8,5 @@ The Waves menu is a development feature that allows the developers to collaborat
 
 = Menu Items =
 
- *Installation Guide - Draft of the site Installation Guide
- *Development - General developer discussion
+ * Installation Guide - Draft of the site Installation Guide
+ * Development - General developer discussion
