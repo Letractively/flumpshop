@@ -1,0 +1,13 @@
+#summary Details about the Configuration Object used by the system
+#labels Phase-Implementation,Configuration
+
+= Introduction =
+
+The Configuration Object stores all the vital information for each page to load. It stores everything from the directory the site is in to static page content.
+
+
+= Details =
+
+The Configuration Object is serialized in a conf.txt file in the [offlineDir] and is loaded at runtime for each page. The system knows where to find the file because of the path stored in the conf.txt in the [root] of the site.
+
+The object contains an md5-encoded string of the Administrator Password, as well as plain text login details for the database server and the SMTP server. It is for this reason that it must not be kept in a publicly accessible location.
