@@ -1,0 +1,12 @@
+#summary Features only used for development purposes
+#labels Phase-Implementation
+
+= Introduction =
+
+The features listed on this page are for development use only. They are not full integrated and will be removed once they are no longer needed
+
+
+= Details =
+
+ * [Waves] menu
+ * [SendFeedback] Bug Report (May be replaced by an improved implementation)
