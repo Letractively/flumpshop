@@ -9,13 +9,13 @@ An easy way to quickly see all the features of the project is to import a data f
 = Details =
 
 An exported configuration file includes the following:
-* Products
-* Categories
-* Orders
-* Users
-* Customers
-* News Posts
-* The Full [ConfigurationObject Configuration Object], including server specific settings and static page content
+  * Products
+  * Categories
+  * Orders
+  * Users
+  * Customers
+  * News Posts
+  * The Full [ConfigurationObject Configuration Object], including server specific settings and static page content
 
 To import a file, simply got to the Admin CP, and under the [AdvancedMenu Advanced Menu], click Import. There, browse to the downloaded or previously exported file, and click upload. The system will automatically make all the changes necessary.
 
