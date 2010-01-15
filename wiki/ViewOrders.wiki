@@ -1,0 +1,13 @@
+#summary An Introduction to the View Orders menu in the Admin CP
+#labels Phase-Deploy
+
+= Introduction =
+
+The Create Object menu is where you view orders that have been placed on your website.
+
+
+= Menu Items =
+
+ *[ActiveOrders] - View Active Orders
+ *[ClosedOrders] - View Completed Orders
+ *[QueryOrders] - Query an Order ID #
