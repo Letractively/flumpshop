@@ -1,6 +1,7 @@
 <?php
 date_default_timezone_set("Europe/London");
 if (stristr($_SERVER['REQUEST_URI'],"admin/setup")) $_SETUP = true; else $_SETUP = false;
+if (!isset($ajaxProvider)) $ajaxProvider = false;
 
 function init_err($msg) {
 	global $config, $_SETUP, $INIT_DEBUG;
@@ -19,8 +20,8 @@ if (isset($config)) {
 }
 
 function sys_error($level,$msg,$file,$line) {
-	global $errLog, $_PRINTDATA;
-	if ($_PRINTDATA) echo "<div class='ui-state-error ui-corner-all'><span class='ui-icon ui-icon-script'></span>$msg ($file:$line)</div>";
+	global $errLog, $_PRINTDATA, $ajaxProvider;
+	if ($_PRINTDATA && !$ajaxProvider) echo "<div class='ui-state-error ui-corner-all'><span class='ui-icon ui-icon-script'></span>$msg ($file:$line)</div>";
 	if (isset($errLog)) fwrite($errLog,"(".date("d/m/y H:i:s").") $msg [$file:$line]\r\n");
 	return true;
 }
@@ -28,8 +29,8 @@ function sys_error($level,$msg,$file,$line) {
 set_error_handler("sys_error");
 
 function debug_message($msg,$check = false) {
-	global $_PRINTDATA, $debugLog;
-	if ($_PRINTDATA) {
+	global $_PRINTDATA, $debugLog, $ajaxProvider;
+	if ($_PRINTDATA && !$ajaxProvider) {
 		if ($check) $class = "ui-icon-circle-check"; else $class="ui-icon-script";
 		echo "<div class='ui-state-highlight'><span class='ui-icon $class'></span>$msg</div>";
 		fwrite($debugLog,$msg."\r\n");
