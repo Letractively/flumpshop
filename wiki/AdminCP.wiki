@@ -1,5 +1,5 @@
 #summary An introduction to the Administrator Control Panel for the flumpshop system
-#labels Type-Administration,Featured,Phase-Deploy
+#labels Featured,Phase-Deploy
 
 = Introduction =
 
