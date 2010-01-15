@@ -8,5 +8,5 @@ The Delivery Settings menu is the first place to configure the order delivery op
 
 = Menu Items =
 
- *[SupportedCountries Supported Countries] - Select which countries you are able to deliver to
- *[DeliveryRates Delivery Rates] - Add and view the costs of delivering an order
+ * [SupportedCountries Supported Countries] - Select which countries you are able to deliver to
+ * [DeliveryRates Delivery Rates] - Add and view the costs of delivering an order
