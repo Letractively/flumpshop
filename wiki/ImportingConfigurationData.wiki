@@ -1,0 +1,23 @@
+#summary A quick guide to importing a configuration file
+#labels Featured
+
+= Introduction =
+
+An easy way to quickly see all the features of the project is to import a data file. It can be downloaded from the downloads section in Google Code, or exported from an existing site using the [ExportingConfigurationData Export] feature in the [AdminCP Admin CP].
+
+
+= Details =
+
+An exported configuration file includes the following:
+* Products
+* Categories
+* Orders
+* Users
+* Customers
+* News Posts
+* The Full [ConfigurationObject Configuration Object], including server specific settings and static page content
+
+To import a file, simply got to the Admin CP, and under the [AdvancedMenu Advanced Menu], click Import. There, browse to the downloaded or previously exported file, and click upload. The system will automatically make all the changes necessary.
+
+= Limitations =
+* You cannot currently disable the importing of the Configuration Object. Transferring data between servers with different setups will break the system. To fix this, re-run the [Setup Wizard]
