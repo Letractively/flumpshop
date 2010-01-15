@@ -1,0 +1,12 @@
+#summary An Introduction to the Waves menu in the Admin CP
+#labels Phase-Implementation
+
+= Introduction =
+
+The Waves menu is a development feature that allows the developers to collaborate using Google Wave.
+
+
+= Menu Items =
+
+ *Installation Guide - Draft of the site Installation Guide
+ *Development - General developer discussion
