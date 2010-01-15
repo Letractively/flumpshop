@@ -1,0 +1,9 @@
+#summary Configuration Steps that aren't included in the Setup Wizard
+#labels Phase-Deploy
+
+= Introduction =
+
+The [SetupWizard Setup Wizard] currently doesn't cover all of the bases. Please ensure you make the changes below in [ConfigurationManager Configuration Manager].
+
+  * Configure the [SMTPServer SMTP Server] Settings
+  * Toggle [shopMode]
