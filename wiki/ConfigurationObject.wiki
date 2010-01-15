@@ -1,5 +1,5 @@
 #summary Details about the Configuration Object used by the system
-#labels Phase-Implementation,Configuration
+#labels Phase-Implementation,Type-Configuration
 
 = Introduction =
 
