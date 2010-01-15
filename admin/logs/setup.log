@@ -1,0 +1,319 @@
+Stage 2: Updated Configuration
+Stage 2: Loading Input Form: Paths
+Stage 2: Temporary Configuration data updated
+Stage 3: Updated Configuration
+Stage 3: Loading Input Form: Database
+Stage 3: Temporary Configuration data updated
+Stage 4: Updated Configuration
+Stage 4: Database Connected
+Stage 4: No exisiting database detected. Running install.sql
+Stage 4: install.sql Executed. Passing to DBUpgrade.
+Stage 4: Executed Installation SQL File
+Stage 4: Loading Input Form: PayPal
+Stage 4: Temporary Configuration data updated
+Stage 5: Updated Configuration
+Stage 5: Loading Input Form: Administrator Password
+Stage 5: Temporary Configuration data updated
+Stage 5: Updated Configuration
+Stage 5: Loading Input Form: Administrator Password
+Stage 5: Temporary Configuration data updated
+Stage 6: Configuration Updated
+Stage 6: Temporary Configuration data updated
+Stage 8: Beginning Advanced Configuration
+Stage 8: Loading Input Form: Security
+Stage 8: Temporary Configuration data updated
+Stage 9: Configuration Updated
+Stage 9: Loading Input Form: Logging
+Stage 9: Temporary Configuration data updated
+Stage 10: Configuration Updated
+Stage 10: Loading Input Form: Messages
+Stage 10: Temporary Configuration data updated
+Stage 11: Configuration Updated
+Stage 11: Loading Input Form: Server
+Stage 11: Temporary Configuration data updated
+Stage 12: Configuration Updated
+Stage 12: Temporary Configuration data updated
+Finished: Configuration Stored
+Copying files to offline directory
+Copied C:\inetpub\wwwroot\shop\admin\setup/setup_files/info to C:/inetpub/data//info
+Copied C:\inetpub\wwwroot\shop\admin\setup/setup_files/images/item_placeholder.png to C:/inetpub/data//images/item_placeholder.png
+Finished: Setup files copied
+Finished: Temporary files deleted
+Warning: I don't THINK I have access to the {siteroot} directory. The setup wizard needs write access for the configuration process. After setup, you should change this to read-only
+Pass: I can write to the {siteroot}/admin/logs directory
+Pass: PHP Version 5.4.9 or newer is installed (5.3.0)
+Pass: The MySQLi extension is installed and loaded
+Pass: The CURL extension is installed and loaded
+Pass: The SimpleXML extension is installed and loaded
+Pass: The GD extension is installed and loaded
+Pass: The Fileinfo extension is installed and loaded
+Pass: The SQLite extension is installed and loaded
+Stage 1: Generating Default Configuration
+Stage 1: Temporary Configuration data updated
+Stage 2: Updated Configuration
+Stage 2: Loading Input Form: Paths
+Stage 2: Temporary Configuration data updated
+Stage 3: Updated Configuration
+Stage 3: Loading Input Form: Database
+Stage 3: Temporary Configuration data updated
+Stage 2: Updated Configuration
+Stage 2: Loading Input Form: Paths
+Stage 2: Temporary Configuration data updated
+Stage 3: Updated Configuration
+Stage 3: Loading Input Form: Database
+Stage 3: Temporary Configuration data updated
+Stage 4: Updated Configuration
+Stage 4: Database Connected
+Stage 4: Existing installation detected. Passing to DBUpgrade.
+Stage 4: Executed Installation SQL File
+Stage 4: Loading Input Form: PayPal
+Stage 4: Temporary Configuration data updated
+Stage 5: Updated Configuration
+Stage 5: Loading Input Form: Administrator Password
+Stage 5: Temporary Configuration data updated
+Stage 6: Configuration Updated
+Stage 6: Temporary Configuration data updated
+Stage 8: Beginning Advanced Configuration
+Stage 8: Loading Input Form: Security
+Stage 8: Temporary Configuration data updated
+Stage 9: Configuration Updated
+Stage 9: Loading Input Form: Logging
+Stage 9: Temporary Configuration data updated
+Stage 10: Configuration Updated
+Stage 10: Loading Input Form: Messages
+Stage 10: Temporary Configuration data updated
+Stage 11: Configuration Updated
+Stage 11: Loading Input Form: Server
+Stage 11: Temporary Configuration data updated
+Stage 12: Configuration Updated
+Stage 12: Temporary Configuration data updated
+Finished: Configuration Stored
+Copying files to offline directory
+Copied C:\inetpub\wwwroot\shop\admin\setup/setup_files/info to C:/inetpub/data//info
+Copied C:\inetpub\wwwroot\shop\admin\setup/setup_files/images/item_placeholder.png to C:/inetpub/data//images/item_placeholder.png
+Finished: Setup files copied
+Finished: Temporary files deleted
+Warning: I don't THINK I have access to the {siteroot} directory. The setup wizard needs write access for the configuration process. After setup, you should change this to read-only
+Pass: I can write to the {siteroot}/admin/logs directory
+Pass: PHP Version 5.4.9 or newer is installed (5.3.0)
+Pass: The MySQLi extension is installed and loaded
+Pass: The CURL extension is installed and loaded
+Pass: The SimpleXML extension is installed and loaded
+Pass: The GD extension is installed and loaded
+Pass: The Fileinfo extension is installed and loaded
+Pass: The SQLite extension is installed and loaded
+Warning: I don't THINK I have access to the {siteroot} directory. The setup wizard needs write access for the configuration process. After setup, you should change this to read-only
+Pass: I can write to the {siteroot}/admin/logs directory
+Pass: PHP Version 5.4.9 or newer is installed (5.3.0)
+Pass: The MySQLi extension is installed and loaded
+Pass: The CURL extension is installed and loaded
+Pass: The SimpleXML extension is installed and loaded
+Pass: The GD extension is installed and loaded
+Pass: The Fileinfo extension is installed and loaded
+Pass: The SQLite extension is installed and loaded
+Stage 1: Generating Default Configuration
+Stage 1: Temporary Configuration data updated
+Stage 2: Updated Configuration
+Stage 2: Loading Input Form: Paths
+Stage 2: Temporary Configuration data updated
+Stage 3: Updated Configuration
+Stage 3: Loading Input Form: Database
+Stage 3: Temporary Configuration data updated
+Stage 4: Updated Configuration
+Stage 4: Database Connected
+Stage 4: Existing installation detected. Passing to DBUpgrade.
+Stage 4: Executed Installation SQL File
+Stage 4: Loading Input Form: PayPal
+Stage 4: Temporary Configuration data updated
+Stage 5: Updated Configuration
+Stage 5: Loading Input Form: Administrator Password
+Stage 5: Temporary Configuration data updated
+Stage 6: Configuration Updated
+Stage 6: Temporary Configuration data updated
+Stage 8: Beginning Advanced Configuration
+Stage 8: Loading Input Form: Security
+Stage 8: Temporary Configuration data updated
+Stage 9: Configuration Updated
+Stage 9: Loading Input Form: Logging
+Stage 9: Temporary Configuration data updated
+Stage 10: Configuration Updated
+Stage 10: Loading Input Form: Messages
+Stage 10: Temporary Configuration data updated
+Stage 11: Configuration Updated
+Stage 11: Loading Input Form: Server
+Stage 11: Temporary Configuration data updated
+Stage 12: Configuration Updated
+Stage 12: Temporary Configuration data updated
+Finished: Configuration Stored
+Copying files to offline directory
+Copied C:\inetpub\wwwroot\shop\admin\setup/setup_files/info to C:/inetpub/data//info
+Copied C:\inetpub\wwwroot\shop\admin\setup/setup_files/images/item_placeholder.png to C:/inetpub/data//images/item_placeholder.png
+Finished: Setup files copied
+Finished: Temporary files deleted
+Warning: I don't THINK I have access to the {siteroot} directory. The setup wizard needs write access for the configuration process. After setup, you should change this to read-only
+Pass: I can write to the {siteroot}/admin/logs directory
+Pass: PHP Version 5.4.9 or newer is installed (5.3.0)
+Pass: The MySQLi extension is installed and loaded
+Pass: The CURL extension is installed and loaded
+Pass: The SimpleXML extension is installed and loaded
+Pass: The GD extension is installed and loaded
+Pass: The Fileinfo extension is installed and loaded
+Pass: The SQLite extension is installed and loaded
+Stage 1: Generating Default Configuration
+Stage 1: Temporary Configuration data updated
+Stage 2: Updated Configuration
+Stage 2: Loading Input Form: Paths
+Stage 2: Temporary Configuration data updated
+Stage 1: Generating Default Configuration
+Stage 1: Temporary Configuration data updated
+Stage 2: Updated Configuration
+Stage 2: Loading Input Form: Paths
+Stage 2: Temporary Configuration data updated
+Stage 1: Generating Default Configuration
+Stage 1: Temporary Configuration data updated
+Stage 2: Updated Configuration
+Stage 2: Loading Input Form: Paths
+Stage 2: Temporary Configuration data updated
+Stage 1: Generating Default Configuration
+Stage 1: Temporary Configuration data updated
+Stage 2: Updated Configuration
+Stage 2: Loading Input Form: Paths
+Stage 2: Temporary Configuration data updated
+Stage 1: Generating Default Configuration
+Stage 1: Temporary Configuration data updated
+Stage 1: Generating Default Configuration
+Stage 1: Temporary Configuration data updated
+Stage 2: Updated Configuration
+Stage 2: Loading Input Form: Paths
+Stage 2: Temporary Configuration data updated
+Stage 3: Updated Configuration
+Stage 3: Loading Input Form: Database
+Stage 3: Temporary Configuration data updated
+Stage 4: Updated Configuration
+Stage 4: Database Connected
+Stage 4: Existing installation detected. Passing to DBUpgrade.
+Stage 4: Executed Installation SQL File
+Stage 4: Loading Input Form: PayPal
+Stage 4: Temporary Configuration data updated
+Stage 5: Updated Configuration
+Stage 5: Loading Input Form: Administrator Password
+Stage 5: Temporary Configuration data updated
+Stage 4: Updated Configuration
+Stage 4: Database Connected
+Stage 4: Existing installation detected. Passing to DBUpgrade.
+Stage 4: Executed Installation SQL File
+Stage 4: Loading Input Form: PayPal
+Stage 4: Temporary Configuration data updated
+Stage 5: Updated Configuration
+Stage 5: Loading Input Form: Administrator Password
+Stage 5: Temporary Configuration data updated
+Stage 6: Configuration Updated
+Stage 6: Temporary Configuration data updated
+Stage 8: Beginning Advanced Configuration
+Stage 8: Loading Input Form: Security
+Stage 8: Temporary Configuration data updated
+Stage 9: Configuration Updated
+Stage 9: Loading Input Form: Logging
+Stage 9: Temporary Configuration data updated
+Stage 10: Configuration Updated
+Stage 10: Loading Input Form: Messages
+Stage 10: Temporary Configuration data updated
+Stage 11: Configuration Updated
+Stage 11: Loading Input Form: Server
+Stage 11: Temporary Configuration data updated
+Stage 12: Configuration Updated
+Stage 12: Temporary Configuration data updated
+Finished: Configuration Stored
+Copying files to offline directory
+Copied C:\inetpub\wwwroot\shop\admin\setup/setup_files/info to C:/inetpub/data//info
+Copied C:\inetpub\wwwroot\shop\admin\setup/setup_files/images/item_placeholder.png to C:/inetpub/data//images/item_placeholder.png
+Finished: Setup files copied
+Finished: Temporary files deleted
+Stage 1: Generating Default Configuration
+Stage 1/style/style.css: Temporary Configuration data updated
+Stage 1: Generating Default Configuration
+Stage 1/style/jcarousel.css: Temporary Configuration data updated
+Stage 1: Generating Default Configuration
+Stage 1/style/skins/rjc/skin.css: Temporary Configuration data updated
+Stage 1: Generating Default Configuration
+Stage 1/style/jquery.css: Temporary Configuration data updated
+Stage 1: Generating Default Configuration
+Stage 1: Temporary Configuration data updated
+Stage 1: Generating Default Configuration
+Stage 1: Temporary Configuration data updated
+Stage 1: Generating Default Configuration
+Stage 1: Temporary Configuration data updated
+Stage 1: Generating Default Configuration
+Stage 1/js/jquery.validate.min.js: Temporary Configuration data updated
+Stage 1: Generating Default Configuration
+Stage 1/js/jquery.validate.password.js: Temporary Configuration data updated
+Stage 1: Generating Default Configuration
+Stage 1: Temporary Configuration data updated
+Stage 1: Generating Default Configuration
+Stage 1: Temporary Configuration data updated
+Stage 1: Generating Default Configuration
+Stage 1: Temporary Configuration data updated
+Stage 1: Generating Default Configuration
+Stage 1: Temporary Configuration data updated
+Pass: I can write to the {siteroot}/admin/logs directory
+Pass: I can write to the {siteroot} directory
+Pass: PHP Version 5.4.9 or newer is installed (5.3.0)
+Pass: The MySQLi extension is installed and loaded
+Pass: The CURL extension is installed and loaded
+Pass: The SimpleXML extension is installed and loaded
+Pass: The GD extension is installed and loaded
+Pass: The Fileinfo extension is installed and loaded
+Pass: The SQLite extension is installed and loaded
+Stage 1: Generating Default Configuration
+Stage 1: Temporary Configuration data updated
+Stage 2: Updated Configuration
+Stage 2: Loading Input Form: Paths
+Stage 2: Temporary Configuration data updated
+Stage 1: Generating Default Configuration
+Stage 1: Temporary Configuration data updated
+Stage 1: Generating Default Configuration
+Stage 1: Temporary Configuration data updated
+Stage 2: Updated Configuration
+Stage 2: Loading Input Form: Paths
+Stage 2: Temporary Configuration data updated
+Stage 1: Generating Default Configuration
+Stage 1: Temporary Configuration data updated
+Stage 1: Generating Default Configuration
+Stage 1: Temporary Configuration data updated
+Stage 2: Updated Configuration
+Stage 2: Loading Input Form: Paths
+Stage 2: Temporary Configuration data updated
+Stage 3: Updated Configuration
+Stage 3: Loading Input Form: Database
+Stage 3: Temporary Configuration data updated
+Stage 4: Updated Configuration
+Stage 4: Database Connected
+Stage 4: Existing installation detected. Passing to DBUpgrade.
+Stage 4: Executed Installation SQL File
+Stage 4: Loading Input Form: PayPal
+Stage 4: Temporary Configuration data updated
+Stage 5: Updated Configuration
+Stage 5: Loading Input Form: Administrator Password
+Stage 5: Temporary Configuration data updated
+Stage 6: Configuration Updated
+Stage 6: Temporary Configuration data updated
+Stage 8: Beginning Advanced Configuration
+Stage 8: Loading Input Form: Security
+Stage 8: Temporary Configuration data updated
+Stage 9: Configuration Updated
+Stage 9: Loading Input Form: Logging
+Stage 9: Temporary Configuration data updated
+Stage 10: Configuration Updated
+Stage 10: Loading Input Form: Messages
+Stage 10: Temporary Configuration data updated
+Stage 11: Configuration Updated
+Stage 11: Loading Input Form: Server
+Stage 11: Temporary Configuration data updated
+Stage 12: Configuration Updated
+Stage 12: Temporary Configuration data updated
+Finished: Configuration Stored
+Copying files to offline directory
+Copied C:\inetpub\wwwroot\shop\admin\setup/setup_files/info to C:/inetpub/data//info
+Copied C:\inetpub\wwwroot\shop\admin\setup/setup_files/images/item_placeholder.png to C:/inetpub/data//images/item_placeholder.png
+Finished: Setup files copied
+Finished: Temporary files deleted
