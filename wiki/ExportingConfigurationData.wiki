@@ -1,5 +1,5 @@
 #summary A quick guide to exporting a configuration file
-#labels Type-Administration
+#labels Phase-Deploy
 
 = Introduction =
 
