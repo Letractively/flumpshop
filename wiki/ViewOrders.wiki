@@ -8,6 +8,6 @@ The Create Object menu is where you view orders that have been placed on your we
 
 = Menu Items =
 
- *[ActiveOrders Active] - View Active Orders
- *[ClosedOrders Closed] - View Completed Orders
- *[QueryOrders Query] - Query an Order ID #
+ * [ActiveOrders Active] - View Active Orders
+ * [ClosedOrders Closed] - View Completed Orders
+ * [QueryOrders Query] - Query an Order ID #
