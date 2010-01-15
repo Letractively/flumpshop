@@ -1,4 +1,5 @@
 #summary A quick guide to exporting a configuration file
+#labels Type-Administration
 
 = Introduction =
 
