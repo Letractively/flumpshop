@@ -8,11 +8,11 @@ The Edit Object menu is where you got to edit items, categories and pages.
 
 = Menu Items =
 
- *[EditItem] - Edit a product
- *[EditCategory] - Edit a product category
- *[EditPrivacyPolicy] - Edit the Privacy Policy
- *[EditDisclaimer] - Edit the Disclaimer
- *[EditTermsandConditions] - Edit the Terms and conditions
- *[EditHomePage] - Edit the Home Page
- *[EditAboutPage] - Edit the About Page
- *[EditContactPage] - Edit the Contact Page
+ *[EditItem Item] - Edit a product
+ *[EditCategory Category] - Edit a product category
+ *[EditPrivacyPolicy Privacy Policy] - Edit the Privacy Policy
+ *[EditDisclaimer Disclaimer] - Edit the Disclaimer
+ *[EditTermsandConditions Terms and Conditions] - Edit the Terms and conditions
+ *[EditHomePage Home Page] - Edit the Home Page
+ *[EditAboutPage About Page] - Edit the About Page
+ *[EditContactPage Contact Page] - Edit the Contact Page
