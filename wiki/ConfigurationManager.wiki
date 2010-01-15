@@ -8,7 +8,7 @@ From moving servers or changing names, the Configuration Manager tells the [Flum
 Unlike the [SetupWizard Setup Wizard], this page is 100% dynamic, and whenever a new variable is added, it will appear here. The variables are divided up into groups, based on what they do. This page basically contains a list of the groups and the variables within them, with links to more details about what each one does.
 
 == Main Settings ==
-  * [enabled]
+  * [enabled#main enabled]
   * [password]
   * [vat]
   * [country]
@@ -22,15 +22,15 @@ Unlike the [SetupWizard Setup Wizard], this page is 100% dynamic, and whenever a
   * [logDir]
 
 == Security Settings ==
-  * [secure|enabled]
+  * [enabled#secure enabled]
   * [admin]
 
 == Database Server Settings ==
   * [type]
   * [port]
-  * [uname]
+  * [uname#database uname]
   * [password]
-  * [database|name]
+  * [name#database name]
 
 == Advanced Server Configuration ==
   * [rewrite]
@@ -44,7 +44,7 @@ Unlike the [SetupWizard Setup Wizard], this page is 100% dynamic, and whenever a
   * [adminDenied]
   * [crawler]
   * [maintenance]
-  * [name]
+  * [name#messages name]
   * [tagline]
   * [keywords]
   * [defaultCategoryName]
@@ -79,12 +79,12 @@ Unlike the [SetupWizard Setup Wizard], this page is 100% dynamic, and whenever a
   * [formFieldRequired]
 
 == Server Log Files ==
-  * [logs|enabled]
+  * [enabled#logs enabled]
   * [errors]
 
 == PayPal Settings ==
-  * [payPal|uname]
-  * [payPal|pass]
+  * [uname#paypal uname]
+  * [pass#paypal pass]
   * [apiKey]
 
 == Pagination Options ==
