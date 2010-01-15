@@ -1,5 +1,5 @@
 #summary An Introduction to the Create Object menu in the Admin CP
-#labels Phase-Deploy,Type-Administration
+#labels Phase-Deploy
 
 = Introduction =
 
