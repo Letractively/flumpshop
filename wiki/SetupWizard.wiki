@@ -4,6 +4,8 @@
 = *Notice* =
 The information on this page is preliminary and subject to change at any time.
 
+<wiki:toc max_depth="3" />
+
 = Introduction =
 
 Although designed to be as easy as possible, the Setup Wizard was also designed with versatility in mind, making various aspects of it dynamic and automatically expanding with each change to the system, and with a wide range of settings to suit your needs.
