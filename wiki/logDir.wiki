@@ -1,0 +1,12 @@
+#summary Configuration Variable
+#labels Type-Configuration
+
+The physical location to which the flumpshop has write access to for storing log files.
+
+Default: [path]/admin/logs
+
+Recommended Alternative: [offlineDir]/logs
+
+Note: The trailing / is optional, but the directory this variable refers to must already exist
+
+Category: [ConfigurationManager#Site_Paths_and_Directories paths]
