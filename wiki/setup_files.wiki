@@ -1,0 +1,12 @@
+#summary Directory
+#labels Phase-Implementation
+
+= Introduction =
+
+The setup_files directory ([path]/admin/setup/setup_files), contains files that are copied to [offlineDir] as part of the [SetupWizard Setup Wizard]. After initial setup, it is no longer used.
+
+= Contents =
+
+  * info - A text file explaining what the directory is for
+  * images - A directory containing placeholder images
+    * item_placeholder.png - This image is displayed if an item has no images uploaded
