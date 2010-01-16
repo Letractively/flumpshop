@@ -32,7 +32,7 @@ if (isset($_GET['orderid'])) {
 <?php
 } else {
 	?>
-    <form action="queryOrder.php" method="get" onsubmit="if ($(this).valid()) $(this).ajaxSubmit({target: '#adminContent'}); return false;">
+    <form action="./endpoints/orders/queryOrder.php" method="get" onsubmit="if ($(this).valid()) $(this).ajaxSubmit({target: '#adminContent'}); return false;">
     	<label for="orderid">Order ID #</label><input type="text" name="orderid" id="orderid" class="ui-state-default required number" />
         <input type="submit" class="ui-state-default" />
     </form>
