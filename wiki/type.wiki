@@ -1,0 +1,16 @@
+#summary Configuration Variable
+#labels Type-Configuration
+
+The type of database used by the flumpshop
+
+Default Value: mysql
+
+Possible Values:
+  * mysql
+  * sqlite
+
+Note: SQLite support is currently experimental.
+
+Category: [ConfigurationManager#Database_Settings database]
+
+See Also: [SetupWizard#3._Database_Configuration]
