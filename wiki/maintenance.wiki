@@ -1,5 +1,5 @@
 #summary maintenance Configuration Variable
-#labels Phase-Deploy,Type-Configuration
+#labels Type-Configuration
 
 A predefined text string only displayed when the [enabled#Main site|enabled] is false.
 
