@@ -36,7 +36,7 @@ if (isset($import['revision']) and $import['revision'] >= 2 and isset($import['c
 		$config->import();
 		debug_message("Configuration file imported successfully.");
 	} else {
-		echo "Config Import Skipped.<br />";
+		echo "Configuration Object Import Skipped.<br />";
 	}
 } else {
 	echo "Notice: Configuration not included in import file.<br />";
