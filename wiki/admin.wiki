@@ -1,0 +1,8 @@
+#summary Configuration Variable
+#labels Type-Configuration
+
+When enabled, you cannot access the [AdminCP Admin CP] without the use of the HTTPS protocol.
+
+Default: Enabled
+
+Category: [ConfigurationManager#Security_Settings security]
