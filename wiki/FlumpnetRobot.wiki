@@ -1,0 +1,4 @@
+#summary The Flumpnet Robot
+#labels Featured,Phase-Support
+
+The Flumpnet Robot is the happy little computer that sits behind the scenes on each Flumpnet project. Always cheerful and willing to help, without him, the Flumpshop wouldn't work.
