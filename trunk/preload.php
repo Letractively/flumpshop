@@ -11,9 +11,9 @@ function init_err($msg) {
 	}
 	die($msg);
 }
-
-require_once(dirname(__FILE__)."/Config.class.php");
-require_once(dirname(__FILE__)."/vars.php");
+require_once(dirname(__FILE__)."/includes/Config.class.php");
+require_once(dirname(__FILE__)."/includes/vars.inc.php");
+error_reporting(E_ALL);
 if (isset($config)) {
 	if($config->getNode('logs','errors')) $errLog = fopen($config->getNode('paths','logDir')."/errors.log","a+");
 	if($config->getNode('server','debug')) $debugLog = fopen($config->getNode('paths','logDir')."/debug.log","a+");
@@ -184,7 +184,7 @@ if ($_SETUP == false) {
 }
 
 //Locale
-if (isset($_SESSION['locale'])) $config->setNode("temp","country",$_SESSION['locale']);
+if (isset($_SESSION['locale']) && !$_SETUP) $config->setNode("temp","country",$_SESSION['locale']);
 
 //Admin Functions
 //Validation
