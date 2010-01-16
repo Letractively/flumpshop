@@ -1,4 +1,10 @@
-<?php require_once dirname(__FILE__)."/../preload.php"; ?>
+<?php require_once dirname(__FILE__)."/../preload.php";
+if (isset($_POST['submit'])) {
+	if (md5($_POST['password']) == $config->getNode('site','password')) {
+		$_SESSION['adminAuth'] = true;
+	}
+}
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -118,14 +124,6 @@
 		if ($config->getNode('secure','admin') && $_SERVER["HTTPS"] == "off") {
 			echo "The admin section must be accessed using the HTTPS protocol. Click <a href='".$config->getNode('paths','secureRoot')."/admin'>here</a> to go to the HTTPS site.";
 		} else {
-			if (isset($_POST['submit'])) {
-				if (md5($_POST['password']) == $config->getNode('site','password')) {
-					$_SESSION['adminAuth'] = true;
-					echo "Login Successful.<br />";
-				} else {
-					echo "Login Failed.<br />";
-				}
-			}
 			if (!isset($_SESSION['adminAuth']) || !$_SESSION['adminAuth']) {
 				?>
 				<h1 class="content">Authentication Required</h1>
