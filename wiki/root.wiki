@@ -1,0 +1,10 @@
+#summary Configuration Variable
+#labels Type-Configuration
+
+Root is the full web address of the home page of the flumpshop, e.g. http://www.theflump.com/shop
+
+Note: The trailing / is optional
+
+Default: Auto-detected
+
+Category: [paths]
