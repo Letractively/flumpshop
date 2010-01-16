@@ -62,18 +62,7 @@ if (stristr($_SERVER['REQUEST_URI'],"about.php")) {?><a class='tab active' href=
 	?>
   </div>
   <div id='rightside'>
-  <ul id='carousel' class='jcarousel jcarousel-skin-tango'>
-    <li><img src='item/imageProvider.php?random=1' width='75' height='75' alt="Loading Image..." /></li>
-    <li><img src='item/imageProvider.php?random=2' width='75' height='75' alt="Loading Image..." /></li>
-    <li><img src='item/imageProvider.php?random=3' width='75' height='75' alt="Loading Image..." /></li>
-    <li><img src='item/imageProvider.php?random=4' width='75' height='75' alt="Loading Image..." /></li>
-    <li><img src='item/imageProvider.php?random=5' width='75' height='75' alt="Loading Image..." /></li>
-    <li><img src='item/imageProvider.php?random=6' width='75' height='75' alt="Loading Image..." /></li>
-    <li><img src='item/imageProvider.php?random=7' width='75' height='75' alt="Loading Image..." /></li>
-    <li><img src='item/imageProvider.php?random=8' width='75' height='75' alt="Loading Image..." /></li>
-    <li><img src='item/imageProvider.php?random=9' width='75' height='75' alt="Loading Image..." /></li>
-    <li><img src='item/imageProvider.php?random=0' width='75' height='75' alt="Loading Image..." /></li>
-  </ul>
+  <?php include $config->getNode('paths','path')."/includes/carousel.inc.php";?>
   </div>
   <div id="mainContent">
   <h1 class='content'>Welcome to <?php echo $config->getNode('messages','name');?></h1>
@@ -160,34 +149,6 @@ if (stristr($_SERVER['REQUEST_URI'],"about.php")) {?><a class='tab active' href=
       </div>
 	</div>
 <script type="text/javascript">
-function carousel_initCallback(carousel)
-{
-    // Disable autoscrolling if the user clicks the prev or next button.
-    carousel.buttonNext.bind('click', function() {
-        carousel.startAuto(0);
-    });
- 
-    carousel.buttonPrev.bind('click', function() {
-        carousel.startAuto(0);
-    });
- 
-    // Pause autoscrolling if the user moves with the cursor over the clip.
-    carousel.clip.hover(function() {
-        carousel.stopAuto();
-    }, function() {
-        carousel.startAuto();
-    });
-};
- 
-$('#carousel').jcarousel({
-	auto: 2,
-	animation: 'slow',
-	scroll: 1,
-	vertical: true,
-	wrap: 'last',
-	initCallback: carousel_initCallback
-});
-
 function loadCat(obj,url) {
 	$("#leftside a:not(#"+obj+")").removeClass('activeNavigation');
 	$("#"+obj).toggleClass('activeNavigation');
