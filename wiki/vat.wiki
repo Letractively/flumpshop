@@ -1,0 +1,8 @@
+#summary Configuration Variable
+#labels Type-Configuration
+
+The %age tax added to all prices.
+
+Friendly Name: VAT Rate
+
+Category: [ConfigurationManager#Main_Settings site]
