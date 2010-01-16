@@ -94,7 +94,8 @@ if (PHP_VERSION < "4.4.9") {
 if (extension_loaded("curl")) {
 	debug_message("Curl Extension Installed",true);
 } else {
-	if (!$_SETUP) init_err("Curl Extension NOT Loaded.");
+	debug_message("CURL Extension not Available. PayPal disabled.");
+	if (isset($config)) $config->setNode("paypal","enabled",false);
 }
 //Check SimpleXML Installed
 if (extension_loaded("simplexml")) {

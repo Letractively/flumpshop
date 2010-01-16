@@ -116,7 +116,7 @@
 			}
 			/*Curl Extension*/
 			if (!extension_loaded("curl")) {
-				$fail[] = "The CURL extension is not installed. This extension is required for the PayPal API";
+				$warn[] = "The CURL extension is not installed. This extension is required for the PayPal API";
 			} else {
 				$success[] = "The CURL extension is installed and loaded";
 			}
