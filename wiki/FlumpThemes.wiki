@@ -1,0 +1,22 @@
+#summary Initial Design notes for installing and customising themes
+#labels Phase-Requirements,Phase-Design,Phase-Implementation
+
+= Introduction =
+A planned feature for flumpshop is complete customisation of the theme.
+
+  * Widgets
+  * Colours
+  * Fonts
+  * Vertical/Horizontal Scrolling
+  * Element widths/heights
+  * Show/hide navigation on subpages
+
+= Basic Implementation =
+Basic styles can already be changed by creating a custom JQueryUI Theme at http://www.jqueryui.com/themeroller.
+
+The system should be able to dynamically generate new styles (use [offlineDir]) within the [AdminCP Admin CP]
+
+= Possible Advanced Features =
+Add drag/drop elements and widgets on the home page as well as removing/adding new ones
+
+Import .fsx theme files (FlumpShopXML) and store them in a library (offlineDir again)
