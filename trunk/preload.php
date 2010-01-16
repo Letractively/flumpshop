@@ -48,37 +48,37 @@ if ($_SETUP == false && $config->getNode('site','enabled') != true && !strstr($_
 }
 
 //Load Classes
-require_once(dirname(__FILE__)."/Item.class.php");
+require_once(dirname(__FILE__)."/includes/Item.class.php");
 debug_message("Item Class Definition Loaded.");
-require_once(dirname(__FILE__)."/Basket.class.php");
+require_once(dirname(__FILE__)."/includes/Basket.class.php");
 debug_message("Basket Class Definition Loaded.");
-require_once(dirname(__FILE__)."/Customer.class.php");
+require_once(dirname(__FILE__)."/includes/Customer.class.php");
 debug_message("Customer Class Definition Loaded.");
-require_once(dirname(__FILE__)."/User.class.php");
+require_once(dirname(__FILE__)."/includes/User.class.php");
 debug_message("User Class Definition Loaded.");
-require_once(dirname(__FILE__)."/Database.class.php");
+require_once(dirname(__FILE__)."/includes/Database.class.php");
 debug_message("Database Class Definitions Loaded.");
-require_once(dirname(__FILE__)."/Category.class.php");
+require_once(dirname(__FILE__)."/includes/Category.class.php");
 debug_message("Category Class Definition Loaded.");
-require_once(dirname(__FILE__)."/Stats.class.php");
+require_once(dirname(__FILE__)."/includes/Stats.class.php");
 debug_message("Stats Class Definition Loaded.");
-require_once(dirname(__FILE__)."/Order.class.php");
+require_once(dirname(__FILE__)."/includes/Order.class.php");
 debug_message("Order Class Definition Loaded.");
-require_once(dirname(__FILE__)."/Delivery.class.php");
+require_once(dirname(__FILE__)."/includes/Delivery.class.php");
 debug_message("Delivery Class Definition Loaded.");
-require_once(dirname(__FILE__)."/News.class.php");
+require_once(dirname(__FILE__)."/includes/News.class.php");
 debug_message("News Class Definition Loaded.");
-require_once(dirname(__FILE__)."/Reserve.class.php");
+require_once(dirname(__FILE__)."/includes/Reserve.class.php");
 debug_message("Reserve Class Definition Loaded.");
-require_once(dirname(__FILE__)."/Session.class.php");
+require_once(dirname(__FILE__)."/includes/Session.class.php");
 debug_message("Session Class Definition Loaded.");
-require_once(dirname(__FILE__)."/Techhelp.class.php");
+require_once(dirname(__FILE__)."/includes/Techhelp.class.php");
 debug_message("Techhelp Class Definition Loaded.");
-require_once(dirname(__FILE__)."/Mail.class.php");
+require_once(dirname(__FILE__)."/includes/Mail.class.php");
 debug_message("Mail Class Definition Loaded.");
-require_once(dirname(__FILE__)."/Paginator.class.php");
+require_once(dirname(__FILE__)."/includes/Paginator.class.php");
 debug_message("Paginator Class Definition Loaded.");
-require_once(dirname(__FILE__)."/Keycodes.class.php");
+require_once(dirname(__FILE__)."/includes/Keycodes.class.php");
 debug_message("Keycodes Class Definition Loaded.");
 
 $stats = new Stats();
