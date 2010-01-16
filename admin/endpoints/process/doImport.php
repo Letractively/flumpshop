@@ -29,11 +29,15 @@ foreach ($import['categories'] as $category) {
 }
 
 //Import Config
-if (isset($import['revision']) and $import['revision'] >= 2) {
-	echo "Importing Config...<br />";
-	$config = unserialize($import['config']);
-	$config->import();
-	debug_message("Configuration file imported successfully.");
+if (isset($import['revision']) and $import['revision'] >= 2 and isset($import['config'])) {
+	if (isset($_POST['includeConf'])) {
+		echo "Importing Config...<br />";
+		$config = unserialize($import['config']);
+		$config->import();
+		debug_message("Configuration file imported successfully.");
+	} else {
+		echo "Config Import Skipped.<br />";
+	}
 } else {
 	echo "Notice: Configuration not included in import file.<br />";
 }
