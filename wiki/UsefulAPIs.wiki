@@ -1,0 +1,7 @@
+#summary APIs that may prove useful later in the development cycle
+#labels Phase-Requirements
+
+  * Google Visualization API
+  * Google Closure Tools
+  * Google Checkout
+  * Google Analytics
