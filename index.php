@@ -62,6 +62,7 @@ if (stristr($_SERVER['REQUEST_URI'],"about.php")) {?><a class='tab active' href=
 	?>
   </div>
   <div id='rightside'>
+  <!-- Product Carousel -->
   <?php include $config->getNode('paths','path')."/includes/carousel.inc.php";?>
   </div>
   <div id="mainContent">
