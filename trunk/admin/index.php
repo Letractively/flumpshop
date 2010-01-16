@@ -21,6 +21,7 @@ if (isset($_POST['submit'])) {
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jquery.validate.min.js"></script> 
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jquery.validate.password.js"></script> 
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jquery.form.js"></script> 
+<script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/defaults.php"></script> 
 <script src="http://wave-api.appspot.com/public/embed.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo $config->getNode('paths','root');?>/style/jcarousel.css" /> 
 <link rel="stylesheet" type="text/css" href="<?php echo $config->getNode('paths','root');?>/style/skins/rjc/skin.css" />
@@ -84,7 +85,7 @@ if (isset($_POST['submit'])) {
     	</div>
     <a class="navigation" onclick='loadCat("adv");' id='adv'>Advanced</a>
     	<div class="subcat ui-corner-right" id="advMenu">
-        	<a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/advanced/cron.php');$('#advMenu').toggle('fold');">Cron Script</a>
+        	<a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/process/cron.php');$('#advMenu').toggle('fold');">Cron Script</a>
             <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./logs');$('#advMenu').toggle('fold');">Log Viewer</a>
             <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/advanced/bugs.php');$('#advMenu').toggle('fold');">Bug Reports</a>
             <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);loadVarMan(loadingString);$('#advMenu').toggle('fold');">Configuration Manager</a>
