@@ -236,6 +236,8 @@ class SQLite_Database extends Database {
 								  ),"",$str); //Unsupported & Non-vital
 		$str = preg_replace("/ENGINE=.*?;/i",";",$str);
 		$str = str_ireplace("AUTO_INCREMENT","AUTOINCREMENT",$str);
+		//Random
+		$str = str_ireplace("RAND()","RANDOM()",$str);
 		//Datatypes
 		$str = preg_replace("/int\([0-9]*\)/i","INTEGER",$str);
 		//Keys
