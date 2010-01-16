@@ -140,18 +140,6 @@
 				<h1 class='content'>Control Panel</h1>
 				<div id="adminContent" class="ui-widget ui-corner-all" style="max-height: 500px; overflow: auto;">Use the menu on the left to load an administration tool.</div>
                 <div id="empty"></div>
-				<h2>Todo Pile</h2>
-				<ul>
-                    <li>Delivery Charges - <span class="ui-state-error-text">In Testing (Requires Checkout Support)</span></li>
-                    <li>Edit Quantity</li>
-                    <li>Coupon Codes - <strong>In Progress - Similar system to email verification</strong></li>
-                    <li>Disable/Hide Products</li>
-                    <li>RBS WorldPay Support</li>
-                    <li>Legal Stuff - <strong>In Progress</strong></li>
-                    <li>Item/Category Images - <strong>In Progress</strong></li>
-                    <li>Advanced Tracking System - <strong>In Progress</strong></li>
-                    <li>Ajax Failure Callbacks (404,500 etc)</li>
-				</ul>
 				<?php
 			}
 		}?>
