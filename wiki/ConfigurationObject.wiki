@@ -15,4 +15,4 @@ The object contains an md5-encoded string of the Administrator Password, as well
 = Editing the Configuration Object =
 Most of the changes should be made automatically when necessary, or can be edited using safe, [FlumpnetRobot Flumpnet Robot]-validated forms.
 
-For those that can't, you can access the Configuration Object directly by using the [ConfigurationManager Configuration Manager] in the [advanced] menu of the [AdminCP Admin CP]
+For those that can't, you can access the Configuration Object directly by using the [ConfigurationManager Configuration Manager] in the [Advanced] menu of the [AdminCP Admin CP]
