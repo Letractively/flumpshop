@@ -17,7 +17,7 @@ foreach ($vars as $var) {
 			$config->setNode($val[0],$val[1],false);
 		}
 	} else {
-		$config->setNode($val[0],$val[1],str_replace("\\","",$_POST[$var]));
+		$config->setNode($val[0],$val[1],str_replace(array("\\'","\\\""),array("'",'"'),$_POST[$var]));
 	}
 }
 ?>
