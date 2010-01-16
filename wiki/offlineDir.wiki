@@ -1,0 +1,7 @@
+#summary The offlineDir Configuration Variable
+#labels Type-Configuration
+
+Stores the location of the offline directory the system has write access to and stores sensitive and uploaded data.
+
+Friendly Name: Offline Directory
+Category: [paths]
