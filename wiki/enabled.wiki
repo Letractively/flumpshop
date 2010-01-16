@@ -1,5 +1,5 @@
 #summary Description of the enabled variable
-#labels Phase-Deploy,Type-Configuration
+#labels Type-Configuration
 
 = Introduction =
 
