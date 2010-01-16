@@ -33,7 +33,7 @@ function debug_message($msg,$check = false) {
 	if ($_PRINTDATA && !$ajaxProvider) {
 		if ($check) $class = "ui-icon-circle-check"; else $class="ui-icon-script";
 		echo "<div class='ui-state-highlight'><span class='ui-icon $class'></span>$msg</div>";
-		fwrite($debugLog,$msg."\r\n");
+		if (is_resource($debugLog)) fwrite($debugLog,$msg."\r\n");
 	}
 }
 
