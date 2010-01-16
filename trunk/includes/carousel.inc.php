@@ -1,11 +1,12 @@
 <?php
 //Creates a Carousel of random products using the JS JCarousel plugin
 
-//LIMITATION: Only once per page
-
 require_once dirname(__FILE__)."/../preload.php";
+
+//Use incremental ID to allow multiple carousels per page
+if (!$config->isNode('temp','carouselid')) $config->setNode('temp','carouselid',0);
 ?>
-<ul id='carousel' class='jcarousel jcarousel-skin-tango'>
+<ul id='carousel<?php echo $config->getNode("temp","carouselid");?>' class='jcarousel jcarousel-skin-tango'>
   	<?php 
 		//Selects up to ten random products from the database, and creates an image linking to them
 		$result = $dbConn->query("SELECT id FROM `products` WHERE active=1 ORDER BY RAND() LIMIT 10");
@@ -42,7 +43,7 @@ if ($dbConn->rows($result) != 0) {//Don't activate if there's no products
 		});
 	};
 	 
-	$('#carousel').jcarousel({
+	$('#carousel<?php echo $config->getNode("temp","carouselid");?>').jcarousel({
 		auto: 2,
 		animation: 'slow',
 		scroll: 1,
@@ -53,4 +54,5 @@ if ($dbConn->rows($result) != 0) {//Don't activate if there's no products
 	</script>
 <?php
 }
+$config->setNode("temp","carouselid",$config->getNode("temp","carouselid")+1); //Increment the Carousel ID
 ?>
