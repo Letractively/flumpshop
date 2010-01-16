@@ -1,0 +1,8 @@
+#summary Configuration Variable
+#labels Type-Configuration
+
+The 2-character country code to be used by default.
+
+Friendly Name: Default Country
+
+Category: [ConfigurationManager#Main_Settings site]
