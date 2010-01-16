@@ -1,0 +1,10 @@
+#summary Description of the enabled variable
+#labels Phase-Deploy,Type-Configuration
+
+= Introduction =
+
+The enabled variable is used in more than one tree of the [ConfigurationObject Configuration Object]. Details about its use in each tree are detailed below.
+
+
+= Main =
+In the Main Settings tree, disabling this options puts the site into maintenance mode, showing the [maintenance] message.
