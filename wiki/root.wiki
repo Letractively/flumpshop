@@ -7,4 +7,4 @@ Note: The trailing / is optional
 
 Default: Auto-detected
 
-Category: [ConfigurationManager#paths paths]
+Category: [ConfigurationManager#Site_Paths_and_Directories paths]
