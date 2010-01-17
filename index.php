@@ -50,7 +50,8 @@ if (stristr($_SERVER['REQUEST_URI'],"about.php")) {?><a class='tab active' href=
 </div>
 </div>
 <!--End Header-->
-<a href='<?php echo $config->getNode('paths','root');?>/reportbug.php' class="ui-state-highlight" style='position: absolute; top: 99px; text-align: center;'>Send Feedback</a><br /><!--Send Feedback - Remove on Final Release-->
+<div style="position: fixed; top: 99px; text-align: center; left: 45%;"><a href='<?php echo $config->getNode('paths','root');?>/reportbug.php' class="ui-state-highlight">Send Feedback</a></div>
+<!--Send Feedback - Remove on Final Release-->
 <div id='content_container_background'>
 <div id="content_container">
   <div id="leftside">

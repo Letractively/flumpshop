@@ -58,8 +58,8 @@ if (stristr($_SERVER['REQUEST_URI'],"about.php")) {?><a class='tab active' href=
 <!--End Header-->
   <?php
   //Remove before final release
-  if (!isset($ajaxProvider)) {
-	?><a href='<?php echo $config->getNode('paths','root');?>/reportbug.php' class="ui-state-highlight" style='position: fixed; top: 99px; text-align: center;'>Send Feedback</a><br /><?php
+  if (!isset($ajaxProvider) or $ajaxProvider == false) {
+	?><div style="position: fixed; top: 99px; text-align: center; left: 45%;"><a href='<?php echo $config->getNode('paths','root');?>/reportbug.php' class="ui-state-highlight">Send Feedback</a></div><?php
 	}
 ?>
 <div id='content_container_background'>
