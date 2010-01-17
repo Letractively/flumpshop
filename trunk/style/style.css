@@ -181,7 +181,10 @@ a.subcat:hover {
 #mainContent a:hover {
 	color: #000;
 }*/
-
+h2
+{
+	color: #15324b; font-size: 1em; 
+}
 h1.content
 {
 	color: #15324b;
@@ -264,6 +267,16 @@ a.tab:hover, a.tab.active
 	z-index: 1000;
 }
 
+#footer a
+{
+	color: #FFF;
+	text-decoration: none;
+}
+
+#footer a:hover
+{
+	text-decoration: underline;
+}
 
 /*Items*/
 #itemDesc {
@@ -274,4 +287,9 @@ a.tab:hover, a.tab.active
 /*Admin*/
 #adminWave {
 	height: 500px;
+}
+
+p
+{
+	text-indent: 1em;
 }
