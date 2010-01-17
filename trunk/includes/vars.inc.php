@@ -33,7 +33,7 @@ if (!file_exists(dirname(__FILE__)."/../conf.txt")) {
 				die();
 			}
 		}
-		if (!is_writable(dirname(__FILE__)."/../conf.txt")) $config->setEditable(false);
+		if (!is_writable($config->getNode("paths","offlineDir")."/conf.txt")) $config->setEditable(false);
 	}
 	if (!isset($_PRINTDATA)) $_PRINTDATA = $config->getNode('server','debug');
 	$SYSTEM_DEBUG = $_PRINTDATA;
