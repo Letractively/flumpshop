@@ -42,10 +42,10 @@ flumpshop currently supports MySQL databases, and has experimental support for S
 
 Note: With SQLite, only the first to fields are used, the first being "sqlite", and the second being the path to where the database should be stored, including the filename, e.g. /home/theflump/data/flumpshop.db
 
-=== 4. PayPal ===
-*Note:* The checkout flow currently needs major development and may be insecure. It is recommended that you do not use the checkout at this time.
+=== 4. !PayPal ===
+*Note:* The checkout flow currently needs major redevelopment and may be insecure. It is recommended that you do not use the checkout at this time.
 
-This page allows you to enter your access details for you PayPal Express Checkout, if you have it. Simple untick the "Enable PayPal" box if you don't want or have this.
+This page allows you to enter your access details for you !PayPal Express Checkout, if you have it. Simple untick the "Enable !PayPal" box if you don't want or have this.
 
 === 5. Password ===
 Here you set a password for the [AdminCP Admin CP]. *THIS PASSWORD CANNOT BE CHANGED*.
