@@ -59,7 +59,7 @@ if (stristr($_SERVER['REQUEST_URI'],"about.php")) {?><a class='tab active' href=
   <?php
   //Remove before final release
   if (!isset($ajaxProvider) or $ajaxProvider == false) {
-	?><div style="position: fixed; top: 99px; text-align: center; left: 45%;"><a href='<?php echo $config->getNode('paths','root');?>/reportbug.php' class="ui-state-highlight">Send Feedback</a></div><?php
+	?><div style="position: fixed; top: 99px; text-align: center; margin: 0 auto 0 auto; "><a href='<?php echo $config->getNode('paths','root');?>/reportbug.php' class="ui-state-highlight">Send Feedback</a></div><?php
 	}
 ?>
 <div id='content_container_background'>
