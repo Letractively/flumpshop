@@ -3,13 +3,14 @@
 
 = Introduction =
 A planned feature for flumpshop is complete customisation of the theme.
+When sufficient time is available, themeing will be created and tested in the TRY-THEME branch of the repository.
 
   * Widgets
   * Colours
   * Fonts
   * Vertical/Horizontal Scrolling
   * Element widths/heights
-  * Show/hide navigation on subpages
+  * Show/hide navigation on sub pages
 
 = Basic Implementation =
 Basic styles can already be changed by creating a custom JQueryUI Theme at http://www.jqueryui.com/themeroller.
