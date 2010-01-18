@@ -80,6 +80,8 @@ require_once(dirname(__FILE__)."/includes/Paginator.class.php");
 debug_message("Paginator Class Definition Loaded.");
 require_once(dirname(__FILE__)."/includes/Keycodes.class.php");
 debug_message("Keycodes Class Definition Loaded.");
+require_once(dirname(__FILE__)."/includes/json_encode.inc.php");
+debug_message("json_encode Function Definition Loaded.");
 
 $stats = new Stats();
 
@@ -173,8 +175,13 @@ if ($_SETUP == false) {
 			$basket = $dbConn->fetch($basket);
 			$basket = unserialize(base64_decode($basket['obj']));
 			if (!is_object($basket)) {
-				trigger_error("Fatal Error: Basket Corrupted. Aborting.");
-				die();
+				//Just load empty basket if shop disabled - Not used for major reasons
+				if ($config->getNode('site','shopMode') == false) {
+					$basket = new Basket(-1);
+				} else {
+					trigger_error("Fatal Error: Basket Corrupted. Aborting.");
+					die();
+				}
 			}
 			$basket->restore();
 			$config->setNode('temp','crawler',false);

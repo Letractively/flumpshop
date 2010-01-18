@@ -173,17 +173,22 @@ class MySQL_Database extends Database {
 
 //SQLite Extension
 class SQLite_Database extends Database {
-	function __construct($file) {
+	function SQLite_Database($file) {
+		global $_SETUP;
 		$this->engine = "sqlite";
-		$this->linkid = new SQLiteDatabase($file);
+		$this->linkid = sqlite_open($file, 0666, $error);
 		$this->connected = true;
 		if (!$this->linkid) {
+			$this->lastError = $error;
 			trigger_error("Database Error: Could not initialise - ".$this->lastError);
+			if ($_SETUP) {
+				echo "<div class='ui-state-higlight ui-state-error'><span class='ui-icon ui-icon-alert'></span>I couldn't open $file as a SQLite Database!</div>";
+			}
 			$this->connected = false;
 		}
 		$link = $this->linkid;
 		$this->Database(); //Parent Constructor
-		$this->lastError = $link->lastError();
+		$this->lastError = sqlite_error_string(sqlite_last_error($link));
 	}
 	
 	function __destruct() {
@@ -191,16 +196,16 @@ class SQLite_Database extends Database {
 	}
 	
 	function query($str,$debug = false) {
-		if (!is_object($this->linkid)) {
+		if (!is_resource($this->linkid)) {
 			trigger_error("Database Error: Cannot Execute Query - Connection Failed!");
 			return false;
 		}
 		$str = $this->parse($str);
 		$this->xmlLog($str);
 		$link = $this->linkid;
-		$result = $link->query($str,SQLITE_ASSOC,$error);
+		$result = sqlite_query($link,$str,SQLITE_ASSOC);
 		if (!$result) {
-			$this->lastError = $error;
+			$this->lastError = sqlite_error_string(sqlite_last_error($link));
 			trigger_error("Database Error: ".$this->lastError);
 			$this->xmlLog($this->lastError,true);
 		}
@@ -208,38 +213,43 @@ class SQLite_Database extends Database {
 	}
 	
 	function multi_query($str,$debug = NULL) {
-		echo "HI";
 		if ($debug == NULL) $debug = $this->debug;
-		if (!$this->linkid) {
+		if (!$this->connected) {
 			trigger_error("Database Error: Cannot Execute Query - Connection Failed!");
 			return false;
 		}
-		echo 1;
 		$str = $this->parse($str);
 		$this->xmlLog($str);
-		$query = $this->linkid->queryExec($str,$err);
-		if (!$query) {
-			$this->lastError = $err;
-			trigger_error("Database Error: ".$this->lastError);
-			$this->xmlLog($this->lastError,true);
+		$arr = explode(";",$str);
+		$return = true;
+		foreach ($arr as $query) {
+			$query = sqlite_query($this->linkid,$query);
+			if (!$query) {
+				$this->lastError = sqlite_error_string(sqlite_last_error($this->linkid));
+				trigger_error("Database Error: ".$this->lastError);
+				$this->xmlLog($this->lastError,true);
+				$return = false;
+			}
 		}
-		echo 2;
-		return true;
+		return $return;
 	}
 	
 	function parse($str) {
-		$str = str_ireplace(array(
-								  "IF NOT EXISTS ",
-								  " unsigned",
-								  " zerofill",
-								  " NOT NULL"
+		/*str_ireplace is PHP 5 only*/
+		$str = preg_replace(array(
+								  "/IF NOT EXISTS /i",
+								  "/ unsigned/i",
+								  "/ zerofill/i",
+								  "/ NOT NULL/i"
 								  ),"",$str); //Unsupported & Non-vital
-		$str = preg_replace("/ENGINE=.*?;/i",";",$str);
-		$str = str_ireplace("AUTO_INCREMENT","AUTOINCREMENT",$str);
+		$str = preg_replace("/(\s*)?ENGINE=.*?;/i",";",$str);
+		$str = preg_replace("/AUTO_INCREMENT/i","AUTOINCREMENT",$str);
 		//Random
-		$str = str_ireplace("RAND()","RANDOM()",$str);
+		$str = preg_replace("/RAND\(\)/i","RANDOM()",$str);
 		//Datatypes
-		$str = preg_replace("/int\([0-9]*\)/i","INTEGER",$str);
+		$str = preg_replace("/ (tiny)?int\([0-9]*\)/i"," INTEGER",$str);
+		//Limit
+		$str = preg_replace("/ LIMIT [0-9](\s*)?$/i","",$str);
 		//Keys
 		$str = preg_replace("/,(\s*)?KEY (.*?),(\r)?\n/",",\n",$str);
 		$str = preg_replace("/,(\s*)?KEY (.*?)(\r)?\n/","\n",$str);
@@ -252,18 +262,18 @@ class SQLite_Database extends Database {
 	}
 	
 	function fetch($resource) {
-		if (is_object($resource)) return $resource->fetch();
+		if (is_resource($resource)) return sqlite_fetch_array($resource);
 		trigger_error("Database Error: Invalid Resource");
 		return false;
 	}
 	
 	function rows($resource) {
-		if (!is_object($resource)) {
+		if (!is_resource($resource)) {
 			trigger_error("Database Error: Invalid Resource");
 			return 0;
 		}
 		$i = 0;
-		return $resource->numRows();
+		return sqlite_num_rows($resource);
 	}
 	
 	function insert_id() {
@@ -271,7 +281,7 @@ class SQLite_Database extends Database {
 			trigger_error("Database Error: Cannot Execute Query - Connection Failed!");
 			return -1;
 		}
-		return $this->linkid->lastInsertRowid();
+		return sqlite_last_insert_rowid($this->linkid);
 	}
 }
 
