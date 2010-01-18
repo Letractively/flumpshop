@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name='keywords' content='' />
 <meta name='description' content='' />
-<title>Welcome!</title>
+<title>Flumpshop Setup</title>
 <link rel='stylesheet' href='../../style/style.css' type='text/css' />
 <link rel='stylesheet' href='../../style/style-subpage.css' type='text/css' />
 <link rel='stylesheet' href='../../style/style_carousel.css' type='text/css' />

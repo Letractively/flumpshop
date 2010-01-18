@@ -91,6 +91,7 @@ if (isset($_POST['submit'])) {
             <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);loadVarMan(loadingString);$('#advMenu').toggle('fold');">Configuration Manager</a>
             <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/advanced/export.php');$('#advMenu').toggle('fold');">Export</a>
             <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/advanced/import.php');$('#advMenu').toggle('fold');">Import</a>
+            <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/advanced/phpinfo.php');$('#advMenu').toggle('fold');">PHP Info</a>
         </div>
     <a class="navigation" onclick="$('#adminContent').html(null);">Close</a>
     <?php  

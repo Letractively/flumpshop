@@ -145,243 +145,242 @@ CREATE TABLE `techhelp` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 
-INSERT INTO `country` (`iso`, `name`, `supported`) VALUES
-('AD', 'Andorra', 0),
-('AE', 'United Arab Emirates', 0),
-('AF', 'Afghanistan', 0),
-('AG', 'Antigua and Barbuda', 0),
-('AI', 'Anguilla', 0),
-('AL', 'Albania', 0),
-('AM', 'Armenia', 0),
-('AN', 'Netherlands Antilles', 0),
-('AO', 'Angola', 0),
-('AQ', 'Antarctica', 0),
-('AR', 'Argentina', 0),
-('AS', 'American Samoa', 0),
-('AT', 'Austria', 0),
-('AU', 'Australia', 0),
-('AW', 'Aruba', 0),
-('AZ', 'Azerbaijan', 0),
-('BA', 'Bosnia and Herzegovina', 0),
-('BB', 'Barbados', 0),
-('BD', 'Bangladesh', 0),
-('BE', 'Belgium', 0),
-('BF', 'Burkina Faso', 0),
-('BG', 'Bulgaria', 0),
-('BH', 'Bahrain', 0),
-('BI', 'Burundi', 0),
-('BJ', 'Benin', 0),
-('BM', 'Bermuda', 0),
-('BN', 'Brunei Darussalam', 0),
-('BO', 'Bolivia', 0),
-('BR', 'Brazil', 0),
-('BS', 'Bahamas', 0),
-('BT', 'Bhutan', 0),
-('BV', 'Bouvet Island', 0),
-('BW', 'Botswana', 0),
-('BY', 'Belarus', 0),
-('BZ', 'Belize', 0),
-('CA', 'Canada', 0),
-('CC', 'Cocos (Keeling) Islands', 0),
-('CD', 'Congo, the Democratic Republic of the', 0),
-('CF', 'Central African Republic', 0),
-('CG', 'Congo', 0),
-('CH', 'Switzerland', 0),
-('CI', 'Cote D''Ivoire', 0),
-('CK', 'Cook Islands', 0),
-('CL', 'Chile', 0),
-('CM', 'Cameroon', 0),
-('CN', 'China', 0),
-('CO', 'Colombia', 0),
-('CR', 'Costa Rica', 0),
-('CS', 'Serbia and Montenegro', 0),
-('CU', 'Cuba', 0),
-('CV', 'Cape Verde', 0),
-('CX', 'Christmas Island', 0),
-('CY', 'Cyprus', 0),
-('CZ', 'Czech Republic', 0),
-('DE', 'Germany', 0),
-('DJ', 'Djibouti', 0),
-('DK', 'Denmark', 0),
-('DM', 'Dominica', 0),
-('DO', 'Dominican Republic', 0),
-('DZ', 'Algeria', 0),
-('EC', 'Ecuador', 0),
-('EE', 'Estonia', 0),
-('EG', 'Egypt', 0),
-('EH', 'Western Sahara', 0),
-('ER', 'Eritrea', 0),
-('ES', 'Spain', 0),
-('ET', 'Ethiopia', 0),
-('FI', 'Finland', 0),
-('FJ', 'Fiji', 0),
-('FK', 'Falkland Islands (Malvinas)', 0),
-('FM', 'Micronesia, Federated States of', 0),
-('FO', 'Faroe Islands', 0),
-('FR', 'France', 0),
-('GA', 'Gabon', 0),
-('GB', 'United Kingdom', 0),
-('GD', 'Grenada', 0),
-('GE', 'Georgia', 0),
-('GF', 'French Guiana', 0),
-('GH', 'Ghana', 0),
-('GI', 'Gibraltar', 0),
-('GL', 'Greenland', 0),
-('GM', 'Gambia', 0),
-('GN', 'Guinea', 0),
-('GP', 'Guadeloupe', 0),
-('GQ', 'Equatorial Guinea', 0),
-('GR', 'Greece', 0),
-('GS', 'South Georgia and the South Sandwich Islands', 0),
-('GT', 'Guatemala', 0),
-('GU', 'Guam', 0),
-('GW', 'Guinea-Bissau', 0),
-('GY', 'Guyana', 0),
-('HK', 'Hong Kong', 0),
-('HM', 'Heard Island and Mcdonald Islands', 0),
-('HN', 'Honduras', 0),
-('HR', 'Croatia', 0),
-('HT', 'Haiti', 0),
-('HU', 'Hungary', 0),
-('ID', 'Indonesia', 0),
-('IE', 'Ireland', 0),
-('IL', 'Israel', 0),
-('IN', 'India', 0),
-('IO', 'British Indian Ocean Territory', 0),
-('IQ', 'Iraq', 0),
-('IR', 'Iran, Islamic Republic of', 0),
-('IS', 'Iceland', 0),
-('IT', 'Italy', 0),
-('JM', 'Jamaica', 0),
-('JO', 'Jordan', 0),
-('JP', 'Japan', 0),
-('KE', 'Kenya', 0),
-('KG', 'Kyrgyzstan', 0),
-('KH', 'Cambodia', 0),
-('KI', 'Kiribati', 0),
-('KM', 'Comoros', 0),
-('KN', 'Saint Kitts and Nevis', 0),
-('KP', 'Korea, Democratic People''s Republic of', 0),
-('KR', 'Korea, Republic of', 0),
-('KW', 'Kuwait', 0),
-('KY', 'Cayman Islands', 0),
-('KZ', 'Kazakhstan', 0),
-('LA', 'Lao People''s Democratic Republic', 0),
-('LB', 'Lebanon', 0),
-('LC', 'Saint Lucia', 0),
-('LI', 'Liechtenstein', 0),
-('LK', 'Sri Lanka', 0),
-('LR', 'Liberia', 0),
-('LS', 'Lesotho', 0),
-('LT', 'Lithuania', 0),
-('LU', 'Luxembourg', 0),
-('LV', 'Latvia', 0),
-('LY', 'Libyan Arab Jamahiriya', 0),
-('MA', 'Morocco', 0),
-('MC', 'Monaco', 0),
-('MD', 'Moldova, Republic of', 0),
-('MG', 'Madagascar', 0),
-('MH', 'Marshall Islands', 0),
-('MK', 'Macedonia, the Former Yugoslav Republic of', 0),
-('ML', 'Mali', 0),
-('MM', 'Myanmar', 0),
-('MN', 'Mongolia', 0),
-('MO', 'Macao', 0),
-('MP', 'Northern Mariana Islands', 0),
-('MQ', 'Martinique', 0),
-('MR', 'Mauritania', 0),
-('MS', 'Montserrat', 0),
-('MT', 'Malta', 0),
-('MU', 'Mauritius', 0),
-('MV', 'Maldives', 0),
-('MW', 'Malawi', 0),
-('MX', 'Mexico', 0),
-('MY', 'Malaysia', 0),
-('MZ', 'Mozambique', 0),
-('NA', 'Namibia', 0),
-('NC', 'New Caledonia', 0),
-('NE', 'Niger', 0),
-('NF', 'Norfolk Island', 0),
-('NG', 'Nigeria', 0),
-('NI', 'Nicaragua', 0),
-('NL', 'Netherlands', 0),
-('NO', 'Norway', 0),
-('NP', 'Nepal', 0),
-('NR', 'Nauru', 0),
-('NU', 'Niue', 0),
-('NZ', 'New Zealand', 0),
-('OM', 'Oman', 0),
-('PA', 'Panama', 0),
-('PE', 'Peru', 0),
-('PF', 'French Polynesia', 0),
-('PG', 'Papua New Guinea', 0),
-('PH', 'Philippines', 0),
-('PK', 'Pakistan', 0),
-('PL', 'Poland', 0),
-('PM', 'Saint Pierre and Miquelon', 0),
-('PN', 'Pitcairn', 0),
-('PR', 'Puerto Rico', 0),
-('PS', 'Palestinian Territory, Occupied', 0),
-('PT', 'Portugal', 0),
-('PW', 'Palau', 0),
-('PY', 'Paraguay', 0),
-('QA', 'Qatar', 0),
-('RE', 'Reunion', 0),
-('RO', 'Romania', 0),
-('RU', 'Russian Federation', 0),
-('RW', 'Rwanda', 0),
-('SA', 'Saudi Arabia', 0),
-('SB', 'Solomon Islands', 0),
-('SC', 'Seychelles', 0),
-('SD', 'Sudan', 0),
-('SE', 'Sweden', 0),
-('SG', 'Singapore', 0),
-('SH', 'Saint Helena', 0),
-('SI', 'Slovenia', 0),
-('SJ', 'Svalbard and Jan Mayen', 0),
-('SK', 'Slovakia', 0),
-('SL', 'Sierra Leone', 0),
-('SM', 'San Marino', 0),
-('SN', 'Senegal', 0),
-('SO', 'Somalia', 0),
-('SR', 'Suriname', 0),
-('ST', 'Sao Tome and Principe', 0),
-('SV', 'El Salvador', 0),
-('SY', 'Syrian Arab Republic', 0),
-('SZ', 'Swaziland', 0),
-('TC', 'Turks and Caicos Islands', 0),
-('TD', 'Chad', 0),
-('TF', 'French Southern Territories', 0),
-('TG', 'Togo', 0),
-('TH', 'Thailand', 0),
-('TJ', 'Tajikistan', 0),
-('TK', 'Tokelau', 0),
-('TL', 'Timor-Leste', 0),
-('TM', 'Turkmenistan', 0),
-('TN', 'Tunisia', 0),
-('TO', 'Tonga', 0),
-('TR', 'Turkey', 0),
-('TT', 'Trinidad and Tobago', 0),
-('TV', 'Tuvalu', 0),
-('TW', 'Taiwan, Province of China', 0),
-('TZ', 'Tanzania, United Republic of', 0),
-('UA', 'Ukraine', 0),
-('UG', 'Uganda', 0),
-('UM', 'United States Minor Outlying Islands', 0),
-('US', 'United States', 0),
-('UY', 'Uruguay', 0),
-('UZ', 'Uzbekistan', 0),
-('VA', 'Holy See (Vatican City State)', 0),
-('VC', 'Saint Vincent and the Grenadines', 0),
-('VE', 'Venezuela', 0),
-('VG', 'Virgin Islands, British', 0),
-('VI', 'Virgin Islands, U.s.', 0),
-('VN', 'Viet Nam', 0),
-('VU', 'Vanuatu', 0),
-('WF', 'Wallis and Futuna', 0),
-('WS', 'Samoa', 0),
-('YE', 'Yemen', 0),
-('YT', 'Mayotte', 0),
-('ZA', 'South Africa', 0),
-('ZM', 'Zambia', 0),
-('ZW', 'Zimbabwe', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('AD', 'Andorra', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('AE', 'United Arab Emirates', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('AF', 'Afghanistan', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('AG', 'Antigua and Barbuda', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('AI', 'Anguilla', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('AL', 'Albania', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('AM', 'Armenia', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('AN', 'Netherlands Antilles', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('AO', 'Angola', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('AQ', 'Antarctica', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('AR', 'Argentina', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('AS', 'American Samoa', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('AT', 'Austria', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('AU', 'Australia', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('AW', 'Aruba', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('AZ', 'Azerbaijan', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('BA', 'Bosnia and Herzegovina', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('BB', 'Barbados', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('BD', 'Bangladesh', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('BE', 'Belgium', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('BF', 'Burkina Faso', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('BG', 'Bulgaria', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('BH', 'Bahrain', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('BI', 'Burundi', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('BJ', 'Benin', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('BM', 'Bermuda', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('BN', 'Brunei Darussalam', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('BO', 'Bolivia', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('BR', 'Brazil', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('BS', 'Bahamas', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('BT', 'Bhutan', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('BV', 'Bouvet Island', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('BW', 'Botswana', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('BY', 'Belarus', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('BZ', 'Belize', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('CA', 'Canada', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('CC', 'Cocos (Keeling) Islands', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('CD', 'Congo, the Democratic Republic of the', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('CF', 'Central African Republic', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('CG', 'Congo', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('CH', 'Switzerland', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('CI', 'Cote D''Ivoire', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('CK', 'Cook Islands', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('CL', 'Chile', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('CM', 'Cameroon', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('CN', 'China', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('CO', 'Colombia', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('CR', 'Costa Rica', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('CS', 'Serbia and Montenegro', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('CU', 'Cuba', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('CV', 'Cape Verde', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('CX', 'Christmas Island', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('CY', 'Cyprus', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('CZ', 'Czech Republic', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('DE', 'Germany', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('DJ', 'Djibouti', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('DK', 'Denmark', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('DM', 'Dominica', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('DO', 'Dominican Republic', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('DZ', 'Algeria', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('EC', 'Ecuador', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('EE', 'Estonia', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('EG', 'Egypt', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('EH', 'Western Sahara', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('ER', 'Eritrea', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('ES', 'Spain', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('ET', 'Ethiopia', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('FI', 'Finland', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('FJ', 'Fiji', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('FK', 'Falkland Islands (Malvinas)', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('FM', 'Micronesia, Federated States of', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('FO', 'Faroe Islands', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('FR', 'France', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('GA', 'Gabon', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('GB', 'United Kingdom', 1);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('GD', 'Grenada', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('GE', 'Georgia', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('GF', 'French Guiana', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('GH', 'Ghana', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('GI', 'Gibraltar', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('GL', 'Greenland', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('GM', 'Gambia', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('GN', 'Guinea', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('GP', 'Guadeloupe', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('GQ', 'Equatorial Guinea', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('GR', 'Greece', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('GS', 'South Georgia and the South Sandwich Islands', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('GT', 'Guatemala', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('GU', 'Guam', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('GW', 'Guinea-Bissau', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('GY', 'Guyana', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('HK', 'Hong Kong', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('HM', 'Heard Island and Mcdonald Islands', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('HN', 'Honduras', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('HR', 'Croatia', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('HT', 'Haiti', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('HU', 'Hungary', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('ID', 'Indonesia', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('IE', 'Ireland', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('IL', 'Israel', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('IN', 'India', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('IO', 'British Indian Ocean Territory', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('IQ', 'Iraq', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('IR', 'Iran, Islamic Republic of', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('IS', 'Iceland', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('IT', 'Italy', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('JM', 'Jamaica', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('JO', 'Jordan', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('JP', 'Japan', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('KE', 'Kenya', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('KG', 'Kyrgyzstan', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('KH', 'Cambodia', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('KI', 'Kiribati', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('KM', 'Comoros', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('KN', 'Saint Kitts and Nevis', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('KP', 'Korea, Democratic People''s Republic of', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('KR', 'Korea, Republic of', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('KW', 'Kuwait', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('KY', 'Cayman Islands', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('KZ', 'Kazakhstan', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('LA', 'Lao People''s Democratic Republic', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('LB', 'Lebanon', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('LC', 'Saint Lucia', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('LI', 'Liechtenstein', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('LK', 'Sri Lanka', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('LR', 'Liberia', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('LS', 'Lesotho', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('LT', 'Lithuania', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('LU', 'Luxembourg', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('LV', 'Latvia', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('LY', 'Libyan Arab Jamahiriya', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('MA', 'Morocco', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('MC', 'Monaco', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('MD', 'Moldova, Republic of', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('MG', 'Madagascar', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('MH', 'Marshall Islands', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('MK', 'Macedonia, the Former Yugoslav Republic of', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('ML', 'Mali', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('MM', 'Myanmar', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('MN', 'Mongolia', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('MO', 'Macao', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('MP', 'Northern Mariana Islands', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('MQ', 'Martinique', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('MR', 'Mauritania', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('MS', 'Montserrat', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('MT', 'Malta', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('MU', 'Mauritius', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('MV', 'Maldives', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('MW', 'Malawi', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('MX', 'Mexico', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('MY', 'Malaysia', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('MZ', 'Mozambique', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('NA', 'Namibia', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('NC', 'New Caledonia', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('NE', 'Niger', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('NF', 'Norfolk Island', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('NG', 'Nigeria', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('NI', 'Nicaragua', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('NL', 'Netherlands', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('NO', 'Norway', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('NP', 'Nepal', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('NR', 'Nauru', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('NU', 'Niue', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('NZ', 'New Zealand', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('OM', 'Oman', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('PA', 'Panama', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('PE', 'Peru', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('PF', 'French Polynesia', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('PG', 'Papua New Guinea', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('PH', 'Philippines', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('PK', 'Pakistan', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('PL', 'Poland', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('PM', 'Saint Pierre and Miquelon', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('PN', 'Pitcairn', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('PR', 'Puerto Rico', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('PS', 'Palestinian Territory, Occupied', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('PT', 'Portugal', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('PW', 'Palau', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('PY', 'Paraguay', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('QA', 'Qatar', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('RE', 'Reunion', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('RO', 'Romania', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('RU', 'Russian Federation', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('RW', 'Rwanda', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('SA', 'Saudi Arabia', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('SB', 'Solomon Islands', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('SC', 'Seychelles', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('SD', 'Sudan', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('SE', 'Sweden', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('SG', 'Singapore', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('SH', 'Saint Helena', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('SI', 'Slovenia', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('SJ', 'Svalbard and Jan Mayen', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('SK', 'Slovakia', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('SL', 'Sierra Leone', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('SM', 'San Marino', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('SN', 'Senegal', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('SO', 'Somalia', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('SR', 'Suriname', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('ST', 'Sao Tome and Principe', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('SV', 'El Salvador', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('SY', 'Syrian Arab Republic', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('SZ', 'Swaziland', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('TC', 'Turks and Caicos Islands', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('TD', 'Chad', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('TF', 'French Southern Territories', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('TG', 'Togo', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('TH', 'Thailand', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('TJ', 'Tajikistan', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('TK', 'Tokelau', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('TL', 'Timor-Leste', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('TM', 'Turkmenistan', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('TN', 'Tunisia', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('TO', 'Tonga', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('TR', 'Turkey', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('TT', 'Trinidad and Tobago', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('TV', 'Tuvalu', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('TW', 'Taiwan, Province of China', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('TZ', 'Tanzania, United Republic of', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('UA', 'Ukraine', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('UG', 'Uganda', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('UM', 'United States Minor Outlying Islands', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('US', 'United States', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('UY', 'Uruguay', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('UZ', 'Uzbekistan', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('VA', 'Holy See (Vatican City State)', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('VC', 'Saint Vincent and the Grenadines', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('VE', 'Venezuela', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('VG', 'Virgin Islands, British', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('VI', 'Virgin Islands, U.s.', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('VN', 'Viet Nam', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('VU', 'Vanuatu', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('WF', 'Wallis and Futuna', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('WS', 'Samoa', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('YE', 'Yemen', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('YT', 'Mayotte', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('ZA', 'South Africa', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('ZM', 'Zambia', 0);
+INSERT INTO `country` (`iso`, `name`, `supported`) VALUES('ZW', 'Zimbabwe', 0);
