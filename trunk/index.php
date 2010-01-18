@@ -144,7 +144,7 @@ if (stristr($_SERVER['REQUEST_URI'],"about.php")) {?><a class='tab active' href=
 		  echo "<ul>";
 		  while ($techHelp = $dbConn->fetch($result)) {
 			  $news = new Techhelp($techHelp['id']);
-			  echo "<li><a href='{$news->getURL()}'>".$news->getTitle()."</a></li>";
+			  echo "<li><a href='$news->getURL()'>".$news->getTitle()."</a></li>";
 		  }
 		  echo "</ul>";
 	  }
