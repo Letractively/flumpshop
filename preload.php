@@ -1,5 +1,5 @@
 <?php
-date_default_timezone_set("Europe/London");
+ini_set("date.timezone","Europe/London");
 if (stristr($_SERVER['REQUEST_URI'],"admin/setup")) $_SETUP = true; else $_SETUP = false;
 if (!isset($ajaxProvider)) $ajaxProvider = false;
 
