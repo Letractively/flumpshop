@@ -19,6 +19,10 @@ class News {
 		return $this->id;
 	}
 	
+	function getURL() {
+		return "javascript:alert('This feature has not been implemented yet.');";
+	}
+	
 	function import() {
 		global $dbConn;
 		if ($dbConn->rows($dbConn->query("SELECT * FROM `news` WHERE id=".$this->id." LIMIT 1"))) {
