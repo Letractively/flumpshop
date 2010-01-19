@@ -23,34 +23,33 @@ echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->ge
 			$subCat = new Category($row['id']);
 			echo "<a href='".$subCat->getURL()."'>".$subCat->getName()."</a><br />";
 		}
+	}
+	$items = $dbConn->query("SELECT id FROM `products` WHERE category='".$category->getID()."'");
+	$num = $dbConn->rows($items);
+	
+	$perPage = $config->getNode("pagination","categoryPerPage");
+	if (isset($_GET['page'])) $page = $_GET['page']; else $page = 1;
+	
+	$items = $dbConn->query("SELECT id FROM `products` WHERE category='".$category->getID()."' ORDER BY name ASC LIMIT ".($page-1)*$perPage.",".$perPage);
+	
+	if ($dbConn->rows($items) == 0) {
+		echo "There are no products in this category.";
+	} elseif ($dbConn->rows($items) == 1) {
+		$item = $dbConn->fetch($items);
+		$item = new Item($item['id']);
+		header("Location: ".$item->getURL());
 	} else {
-		$items = $dbConn->query("SELECT id FROM `products` WHERE category='".$category->getID()."'");
-		$num = $dbConn->rows($items);
-		
-		$perPage = $config->getNode("pagination","categoryPerPage");
-		if (isset($_GET['page'])) $page = $_GET['page']; else $page = 1;
-		
-		$items = $dbConn->query("SELECT id FROM `products` WHERE category='".$category->getID()."' ORDER BY name ASC LIMIT ".($page-1)*$perPage.",".$perPage);
-		
-		if ($dbConn->rows($items) == 0) {
-			echo "There are no products in this category.";
-		} elseif ($dbConn->rows($items) == 1) {
-			$item = $dbConn->fetch($items);
+		while ($item = $dbConn->fetch($items)) {
 			$item = new Item($item['id']);
-			header("Location: ".$item->getURL());
+			echo $item->getDetails('CATEGORY');
+		}
+		
+		$paginator = new Paginator();
+		
+		if ($config->getNode('server','rewrite')) {
+			echo $paginator->paginate($page,$perPage,$num,"");
 		} else {
-			while ($item = $dbConn->fetch($items)) {
-				$item = new Item($item['id']);
-				echo $item->getDetails('CATEGORY');
-			}
-			
-			$paginator = new Paginator();
-			
-			if ($config->getNode('server','rewrite')) {
-				echo $paginator->paginate($page,$perPage,$num,"");
-			} else {
-				echo $paginator->paginate($page,$perPage,$num,"?id=".$category->getID());
-			}
+			echo $paginator->paginate($page,$perPage,$num,"?id=".$category->getID());
 		}
 	}
 require_once dirname(__FILE__)."/../footer.php";
