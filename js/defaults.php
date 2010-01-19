@@ -1,4 +1,5 @@
 <?php
+$ajaxProvider = true;
 //Sets JQuery Message Defaults
 header("Content-Type: text/javascript");
 require_once dirname(__FILE__)."/../preload.php";
