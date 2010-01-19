@@ -10,12 +10,16 @@ if (!isset($_GET['file'])) {
     <div class="ui-widget-header">Database Logs</div><div class="ui-widget-content">
     <?php
 	$dir = opendir($config->getNode('paths','logDir'));
-	while ($file = readdir($dir)) {
-		if (is_dir($config->getNode('paths','logDir')."/$file") && $file != "." && $file != "..") {
-			?>
-			<a href="javascript:void(0);" onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./logs/index.php?file=dbviewer&date=<?php echo $file; ?>');"><?php echo $file; ?></a><br />
-			<?php
+	if ($config->getNode('temp','simplexml')) {
+		while ($file = readdir($dir)) {
+			if (is_dir($config->getNode('paths','logDir')."/$file") && $file != "." && $file != "..") {
+				?>
+				<a href="javascript:void(0);" onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./logs/index.php?file=dbviewer&date=<?php echo $file; ?>');"><?php echo $file; ?></a><br />
+				<?php
+			}
 		}
+	} else {
+		echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-gear'></span>Sorry, I can't log database activity without the SimpleXML Extension.</div>";
 	}
 	echo "</div>";
 } else {
@@ -37,7 +41,7 @@ if (!isset($_GET['file'])) {
 		echo "</div>";
 	} else {
 		if (!file_exists($config->getNode('paths','logDir')."/$file")) {
-			die("The selected logfile could not be found.");
+			die("<div class='ui-state-error'><span class='ui-icon ui-icon-help'></span>I can't find that logfile. Looks like nothing has ever happened that needed to be reported.</div>");
 		}
 		if (isset($_GET['type'])) $type = $_GET['type']; else $type = "text";
 		if (strtolower($type) == "text") {
