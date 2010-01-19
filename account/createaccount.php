@@ -61,7 +61,9 @@ if ($error) {
 		$customer = new Customer();
 		$customer->populate(NULL,NULL,NULL,NULL,NULL,NULL,$email);
 	}
-	
+	//{} Not Supported in PHP 4
+	$name = $config->getNode("messages","name");
+	$root = $config->getNode('paths','root');
 	//Account Created. Send email
 	if ($doEmail) {
 		$mailer = new Mail();
@@ -72,10 +74,10 @@ if ($error) {
 			$dbConn->query("INSERT INTO `keys` (action,`key`,expiry,expiryaction,uid) VALUES (0,'$code','".$dbConn->time(time()+(3600*$hrs))."','DELETE FROM `users` WHERE id=".$user->getID()." LIMIT 1; DELETE FROM `customers` WHERE id=".$customer->getID()." LIMIT 1;',".$user->getID().")");
 			$mailer->send($name,$email,"Registration Confirmation",<<<EOT
 <html><head><title>Registration Confirmation</title></head><body>
-Hello, and thanks for registering for an account on the {$config->getNode("messages","name")} website.<br /><br />
+Hello, and thanks for registering for an account on the $name website.<br /><br />
 In order to complete the signup process, I need you to confirm that you own this email address. To do so, simply click the link below, or copy and paste it into your web browser.<br />
-<a href='{$config->getNode("paths","root")}/account/verify.php?key={$code}'>{$config->getNode("paths","root")}/account/verify.php?key={$code}</a><br />
-If you do not confirm your email address within {$hrs} hours, you will have to sign up again.
+<a href='$root/account/verify.php?key=$code'>$root/account/verify.php?key=$code</a><br />
+If you do not confirm your email address within $hrs hours, you will have to sign up again.
 </body></html>
 EOT
 );
@@ -87,9 +89,9 @@ EOT;
 			//No Validation Required. Confirmation Only.
 			$mailer->send($name,$email,"Registration Confirmation",<<<EOT
 <html><head><title>Registration Confirmation</title></head>
-Hello {$uname},<br /><br />
-Thank you for registering with {$config->getNode("messages","name")}. It looks like this website was only set up recently, so I'm afraid that this is just a placeholder message. It might be a good idea to contact us so that we can create a nice, pretty registration email that's full of useful information.<br /><br />
-The {$config->getNode("messages","name")} team
+Hello $uname,<br /><br />
+Thank you for registering with $root. It looks like this website was only set up recently, so I'm afraid that this is just a placeholder message. It might be a good idea to contact us so that we can create a nice, pretty registration email that's full of useful information.<br /><br />
+The $name team
 </body></html>
 EOT
 );

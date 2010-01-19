@@ -14,7 +14,7 @@ class Keycodes {
 	function import() {
 		global $dbConn;
 		foreach ($this->keycodes as $keycode) {
-			if ($dbConn->rows($dbConn->query("SELECT id FROM `keys` WHERE id='{$keycode['id']}' LIMIT 1")) == 1) {
+			if ($dbConn->rows($dbConn->query("SELECT id FROM `keys` WHERE id='".$keycode['id']."' LIMIT 1")) == 1) {
 				$qry = "UPDATE `keys` SET true=true";
 				foreach ($keycode as $key => $value) {
 					$qry .= ", `$key`='".str_replace("'","''",$value)."'";
@@ -32,7 +32,7 @@ class Keycodes {
 				$qry .=")";
 			}
 			if ($dbConn->query($qry)) {
-				debug_message("Keycode #{$keycode['id']} imported successfully.");
+				debug_message("Keycode #".$keycode['id']." imported successfully.");
 			} else {
 				echo "<div class='ui-state-error'><span class='ui-icon ui-icon-alert'></span>FAILED TO IMPORT KEYCODE #".$keycode['id']."</div>";
 			}

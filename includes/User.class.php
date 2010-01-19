@@ -37,10 +37,10 @@ class User {
 		$this->active = $active;
 		$this->canContact = 0;
 		if ($this->id != 0) {
-			$query = "UPDATE `login` SET uname='".$this->uname."', password='".$this->password."', customer=".$this->customerID.", active={$this->active}, can_contact={$this->canContact} WHERE id=".$this->id." LIMIT 1";
+			$query = "UPDATE `login` SET uname='".$this->uname."', password='".$this->password."', customer=".$this->customerID.", active=$this->active, can_contact=$this->canContact WHERE id=".$this->id." LIMIT 1";
 			return $dbConn->query($query);
 		} else {
-			$query = "INSERT INTO `login` (uname,password,customer,active,can_contact) VALUES ('$this->uname','$this->password','$this->customerID',$this->active,{$this->canContact})";
+			$query = "INSERT INTO `login` (uname,password,customer,active,can_contact) VALUES ('$this->uname','$this->password','$this->customerID',$this->active,$this->canContact)";
 			if (!$dbConn->query($query)) return false;
 			$this->id = $dbConn->insert_id();
 			return true;

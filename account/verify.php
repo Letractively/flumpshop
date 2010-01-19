@@ -14,10 +14,11 @@ EOT;
 	$result = $dbConn->fetch($result);
 	$user = new User($result['uid']);
 	$user->activate();
+	$uname = $user->getUname();
 	$dbConn->query("DELETE FROM `keys` WHERE `key`='$key'");
 	echo <<<EOT
     <h1 class="content">Verification Successful</h1>
-    <p>Your new user account, {$user->getUname()}, has been verified and activated. You can now log in.</p>
+    <p>Your new user account, $uname, has been verified and activated. You can now log in.</p>
 EOT;
 }
 
