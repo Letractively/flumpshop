@@ -96,6 +96,11 @@ if (PHP_VERSION < "4.4.9") {
 	debug_message("PHP Version Supported (v".PHP_VERSION.")",true);
 }
 
+if (PHP_VERSION < "5.0.0") {
+	register_shutdown_function("endGame");
+	function endGame() {global $config; $config->__destruct();}
+}
+
 //Check CURL Installed
 if (extension_loaded("curl")) {
 	debug_message("Curl Extension Installed",true);
