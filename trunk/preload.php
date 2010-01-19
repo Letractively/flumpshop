@@ -21,9 +21,11 @@ if (isset($config)) {
 
 function sys_error($level,$msg,$file,$line) {
 	global $errLog, $_PRINTDATA, $ajaxProvider;
-	if ($_PRINTDATA && !$ajaxProvider) echo "<div class='ui-state-error ui-corner-all'><span class='ui-icon ui-icon-script'></span>$msg ($file:$line)</div>";
-	if (isset($errLog)) fwrite($errLog,"(".date("d/m/y H:i:s").") $msg [$file:$line]\r\n");
-	return true;
+	if (!stristr($msg,"Unable to load dynamic library")) {
+		if ($_PRINTDATA && !$ajaxProvider) echo "<div class='ui-state-error ui-corner-all'><span class='ui-icon ui-icon-script'></span>$msg ($file:$line)</div>";
+		if (isset($errLog)) fwrite($errLog,"(".date("d/m/y H:i:s").") $msg [$file:$line]\r\n");
+		return true;
+	}
 }
 
 set_error_handler("sys_error");
