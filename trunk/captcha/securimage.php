@@ -630,7 +630,7 @@ class Securimage {
 		header('Content-type: audio/mpeg'); // default to mp3
 		$ext = 'mp3';
 
-		header("Content-Disposition: attachment; filename=\"securimage_audio.{$ext}\"");
+		header("Content-Disposition: attachment; filename=\"securimage_audio.$ext\"");
 		header('Cache-Control: no-store, no-cache, must-revalidate');
 		header('Expires: Sun, 1 Jan 2000 12:00:00 GMT');
 		header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . 'GMT');
@@ -841,7 +841,8 @@ class Securimage {
 			if (!is_int($this->gd_font_file)) { //is a file name
 				$font = @imageloadfont($this->gd_font_file);
 				if ($font == false) {
-					trigger_error("Failed to load GD Font file {$this->gd_font_file} ", E_USER_WARNING);
+					$fontFile = $this->gd_font_file
+					trigger_error("Failed to load GD Font file $fontFile ", E_USER_WARNING);
 					return;
 				}
 			} else { //gd font identifier

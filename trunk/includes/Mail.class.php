@@ -26,7 +26,7 @@ class Mail {
 		$this->sendMsg("MAIL FROM: ".$config->getNode("smtp","email"));
 		$this->sendMsg("RCPT TO: $toName <$toAddr>");
 		$this->sendMsg("DATA");
-		$this->sendMsg("To: {$toName} <{$toAddr}>\r\nFrom: ".$this->stripString($config->getNode('messages','name'))." <".$config->getNode('smtp','email').">\r\nSubject: {$subject}\r\nMIME-Version: 1.0\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n{$body}\r\n.");
+		$this->sendMsg("To: $toName <$toAddr>\r\nFrom: ".$this->stripString($config->getNode('messages','name'))." <".$config->getNode('smtp','email').">\r\nSubject: $subject\r\nMIME-Version: 1.0\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n$body\r\n.");
 	}
 	
 	function stripString($str) {
