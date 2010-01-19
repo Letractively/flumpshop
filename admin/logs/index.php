@@ -73,11 +73,12 @@ if (!isset($_GET['file'])) {
             $log = new SimpleXMLElement($config->getNode('paths','logDir')."/$file",NULL,true);
 			$result = false;
 			foreach ($log->children() as $event) {
-				if ($filter == false or $event->attributes()->type == $mode) {
+				$attr = $event->attributes();
+				if ($filter == false or $attr->type == $mode) {
 					$result = true;
-					if ($event->attributes()->type == "query") {
+					if ($attr->type == "query") {
 						echo "<tr class='ui-state-default'><td>".$event->timestamp."</td><td>".urldecode($event->message)."</td></tr>";
-					} elseif ($event->attributes()->type == "error") {
+					} elseif ($attr->type == "error") {
 						echo "<tr class='ui-state-error'><td>".$event->timestamp."</td><td>".urldecode($event->message)."</td></tr>";
 					}
 				}
