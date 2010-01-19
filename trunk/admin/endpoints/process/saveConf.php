@@ -3,6 +3,7 @@ $ajaxProvider = true;
 require_once dirname(__FILE__)."/../../../preload.php";
 
 if (!isset($_SESSION['adminAuth']) || $_SESSION['adminAuth'] == false) die($config->getNode('messages','adminDenied'));
+if (!$config->getEditable()) die("conf.txt is not editable.");
 
 $vars = array_keys($_POST);
 
@@ -17,7 +18,10 @@ foreach ($vars as $var) {
 			$config->setNode($val[0],$val[1],false);
 		}
 	} else {
-		$config->setNode($val[0],$val[1],str_replace(array("\\'","\\\""),array("'",'"'),$_POST[$var]));
+		$value = str_replace(array("\\\'","\\\""),array("'",'"'),$_POST[$var]);
+		if (!$config->setNode($val[0],$val[1],$value)) {
+			echo "Failed to save $val[0]|$val[1].";
+		}
 	}
 }
 ?>
