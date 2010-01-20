@@ -38,7 +38,7 @@ if (!isset($_SUBPAGE) or $_SUBPAGE == true) {
 <?php
 //Home
 if ($config->getNode("site", "homeTab") == true) {
-	if ($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == $config->getNode('paths','root')) {?>
+	if (isset($_SUBPAGE) and $_SUBPAGE = true) {?>
     <a class='tab active' href='<?php echo $config->getNode('paths','root');?>'>home</a>
 	<?php } else {?>
     <a class='tab' href='<?php echo $config->getNode('paths','root');?>'>home</a><?php }
