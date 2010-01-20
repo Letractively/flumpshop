@@ -11,7 +11,7 @@ class Paginator {
 		if ($cpage != 1) {
 			if ($ajax != NULL) {
 				$return .= "<a href='javascript:void(0);' onclick='$(\"#".$ajax."\").load(\"".$urlprefix.$join."page=1\");'>".$config->getNode('messages','firstPage')."</a>&nbsp;";
-				$return .= "<a href='javascript:void(0);' onclick='$(\"#{$ajax}\").load(\"$urlprefix$joinpage=".($cpage-1)."\");'>".$config->getNode('messages','previousPage')."</a>&nbsp;";
+				$return .= "<a href='javascript:void(0);' onclick='$(\"#{$ajax}\").load(\"".$urlprefix.$join."page=".($cpage-1)."\");'>".$config->getNode('messages','previousPage')."</a>&nbsp;";
 			} else {
 				$return .= "<a href='".$urlprefix.$join."page=1'>".$config->getNode('messages','firstPage')."</a>&nbsp;";
 				$return .= "<a href='".$urlprefix.$join."page=".($cpage-1)."'>".$config->getNode('messages','previousPage')."</a>&nbsp;";
