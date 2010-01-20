@@ -94,7 +94,7 @@ while ($category = $dbConn->fetch($categories)) {
 </div>
 <div id='rightside'>
 <!-- Product Carousel -->
-<?php //include $config->getNode('paths','path')."/includes/carousel.inc.php";?>
+<?php include $config->getNode('paths','path')."/includes/carousel.inc.php";?>
 <script type="text/javascript">
 function loadCat(obj,url) {
 	$("#leftside a:not(#"+obj+")").removeClass('activeNavigation');
