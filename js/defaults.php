@@ -11,8 +11,12 @@ $('*').ajaxError(function (event, request, settings) {
     else if (request.status == 500) {
     	$('#dialog').html('<?php echo str_replace("'","\\'",$config->getNode('messages','ajax500')); ?>');
     } else {
-    $('#dialog').html('<?php echo str_replace("'","\\'",$config->getNode('messages','ajaxError')); ?>');
+    $('#dialog').html('<?php echo str_replace("'","\\'",$config->getNode('messages','ajaxError')); ?><br />Error Code: '+request.status);
     }
     $('#dialog').append('<p>Requested Page: '+settings.url);
     $('#dialog').dialog({buttons: {Close: function() {$(this).dialog('destroy');}}, title: 'Load Error', dialogClass: 'ui-state-error'});
 });
+
+function loadMsg(str) {
+  return "<center><img src='<?php echo $config->getNode('paths','root')."/images/loading.gif"; ?>' /><br />"+str+"</center>";
+}

@@ -227,6 +227,9 @@ class Item {
 			$reply = "";
 			if ($int === true && (isset($_SESSION['adminAuth']) && $_SESSION['adminAuth'] == true)) {
 				$reply .= "<form action='".$config->getNode('paths','root')."/item/upload.php' method='post' enctype='multipart/form-data'><label for='file'>Upload Image: </label><input type='file' name='image' id='image' class='ui-state-default' /><input type='submit' class='ui-state-default' value='Upload' /><input type='hidden' name='id' id='id' value='".$this->getID()."' /></form>";
+				
+				//Disable
+				$reply .= '<a href="javascript:void(0);" onclick="$(\'#notice\').html(loadMsg(\'Hiding Product...\')).load(\''.$config->getNode('paths','root').'/admin/endpoints/process/disableItem.php?id='.$this->getID().'\');">Hide Product</a>';
 			}
 			
 			$reply .= "<div class='ui-widget'><div class='ui-widget-header' id='itemTitle'>".$this->getName()."</div><div class='ui-widget-content'>";

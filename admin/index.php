@@ -22,7 +22,6 @@ if (isset($_POST['submit'])) {
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jquery.validate.password.js"></script> 
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jquery.form.js"></script> 
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/defaults.php"></script> 
-<script src="http://wave-api.appspot.com/public/embed.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo $config->getNode('paths','root');?>/style/jcarousel.css" /> 
 <link rel="stylesheet" type="text/css" href="<?php echo $config->getNode('paths','root');?>/style/skins/rjc/skin.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo $config->getNode('paths','root');?>/style/jquery.css" />
@@ -75,14 +74,6 @@ if (isset($_POST['submit'])) {
             <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/delivery/deliveryRates.php');$('#deliveryMenu').toggle('fold');">Delivery Rates</a>
         </div>
         
-    <!--Development Feature Only-->
-    <a class="navigation" onclick="loadCat('wav');" id="wav">Waves</a>
-    	<div class="subcat ui-corner-right" id="wavMenu">
-        	<a class="subcat ui-corner-right" onclick="$('#adminContent').html('<div id=\'adminWave\'></div>');$('#empty').html(null);loadWave('w+MnjMGBv3A');$('#wavMenu').toggle('fold')">Installation Guide</a>
-            <a class="subcat ui-corner-right" onclick="$('#adminContent').html('<div id=\'adminWave\'></div>');$('#empty').html(null);loadWave('w+GblSO64RA');$('#wavMenu').toggle('fold')">Development</a>
-            
-            
-    	</div>
     <a class="navigation" onclick='loadCat("adv");' id='adv'>Advanced</a>
     	<div class="subcat ui-corner-right" id="advMenu">
         	<a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/process/cron.php');$('#advMenu').toggle('fold');">Cron Script</a>
@@ -102,6 +93,7 @@ if (isset($_POST['submit'])) {
   <div id="mainContent">
   <script type="text/javascript">
   var loadingString = "<center><img src='<?php echo $config->getNode('paths','root')."/images/loading.gif"; ?>' /><br />Loading Content...</center>";
+
   function loadVarMan(loadingString) {
 	  $('#adminContent').html(loadingString);
 	  $('#empty').html(null);
@@ -144,13 +136,6 @@ if (isset($_POST['submit'])) {
 			}
 		}?>
         <script>
-		//Load Wave
-		function loadWave(id) {
-		  var wavePanel = new WavePanel('http://wave.google.com/wave/');
-		  wavePanel.setUIConfig('white', 'black', 'Arial', '13px');
-		  wavePanel.loadWave('googlewave.com!'+id);
-		  wavePanel.init(document.getElementById('adminWave'));
-		}
 		//deliveryRates.php add form (recursive elements)
 		function addCountrySelector() {
 			var id = $('#counter').val();
