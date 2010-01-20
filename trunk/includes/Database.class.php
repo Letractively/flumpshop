@@ -138,11 +138,11 @@ class MySQL_Database extends Database {
 		}
 		$this->xmlLog($str);
 		mysqli_multi_query($this->linkid,$str);
-		do {
+		while (mysqli_more_results($this->linkid)) {
 			mysqli_next_result($this->linkid);
 			$result = mysqli_store_result($this->linkid);
 			if (!is_bool($result)) mysqli_free_result($result);
-		} while (mysqli_more_results($this->linkid));
+		}
 		return true;
 	}
 	

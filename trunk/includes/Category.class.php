@@ -6,6 +6,7 @@ class Category {
 	var $parent = 0;
 	var $description = "Details for this category are unavailable.";
 	var $breadcrumb = "<a href='javascript:void(0);'>Uncategorised</a>";
+	var $enabled = true;
 	
 	function Category($id) {
 		global $dbConn, $config;
@@ -27,15 +28,17 @@ class Category {
 			$this->name = $result['name'];
 			$this->description = $result['description'];
 			$this->parent = $result['parent'];
+			if (isset($result['enabled'])) $this->enabled = $result['enabled'];
 		}
 	}
 	
 	function import() {
 		global $dbConn;
+		if (!isset($this->enabled)) $this->enabled = true;
 		if ($dbConn->rows($dbConn->query("SELECT id FROM `category` WHERE id='".$this->id."' LIMIT 1"))) {
-			$query = "UPDATE `category` SET name='".$this->name."', description='".$this->description."', parent='".$this->parent."' WHERE id=".$this->id." LIMIT 1";
+			$query = "UPDATE `category` SET name='".$this->name."', description='".$this->description."', parent='".$this->parent."' WHERE id=".$this->id.", enabled='".intval($this->enabled)."' LIMIT 1";
 		} else {
-			$query = "INSERT INTO `category` (id,name,description,parent) VALUES (".$this->id.",'".$this->name."','".$this->description."',".$this->parent.");";
+			$query = "INSERT INTO `category` (id,name,description,parent,enabled) VALUES (".$this->id.",'".$this->name."','".$this->description."',".$this->parent.",".intval($this->enabled).");";
 		}
 		return $dbConn->query($query);
 	}
