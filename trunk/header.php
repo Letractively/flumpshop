@@ -1,8 +1,6 @@
-<?php require_once dirname(__FILE__)."/preload.php"; ?>
-<?php
+<?php require_once dirname(__FILE__)."/preload.php";
 if (!isset($page_title)) $page_title = "Welcome";
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -10,7 +8,11 @@ if (!isset($page_title)) $page_title = "Welcome";
 <meta name='description' content='<?php echo $config->getNode('messages','tagline');?>' />
 <title><?php echo $config->getNode('messages','name');?> | <?php echo $page_title;?></title>
 <link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/style.css' type='text/css' />
-<link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/style-subpage.css' type='text/css' />
+<?php
+$regex = "/(http:\/\/)?".str_replace('/','\/',$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'])."(\/)?$/i";
+if (!preg_match($regex,$config->getNode('paths','root'))) {
+	?><link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/style-subpage.css' type='text/css' /><?php
+}?> 
 <link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/style_carousel.css' type='text/css' />
 <script src='<?php echo $config->getNode('paths','root');?>/js/jquery.js' type='text/javascript'></script>
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jcarousel.js"></script> 
@@ -36,7 +38,16 @@ if (!isset($page_title)) $page_title = "Welcome";
 </div>
 <div id='search_container'><form action='<?php echo $config->getNode('paths','root');?>/search.php' onsubmit='return $(this).validate();'><input class='search_box' value='Search...' onfocus="if(this.value=='Search...'){this.value=''}" onblur="if(this.value==''){this.value='Search...'}" type='text' name='q' id='q' maxlength="150" /></form></div>
 <div id='tab'>
-<?php //Basket
+<?php
+//Home
+if ($config->getNode("site", "homeTab") == true) {
+	if ($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == $config->getNode('paths','root')) {?>
+    <a class='tab active' href='<?php echo $config->getNode('paths','root');?>'>home</a>
+	<?php } else {?>
+    <a class='tab' href='<?php echo $config->getNode('paths','root');?>'>home</a><?php }
+}
+
+//Basket
 if ($config->getNode("site","shopEnabled")) {
 	if (stristr($_SERVER['REQUEST_URI'],"basket.php")) {?><a class='tab active' href='<?php echo $config->getNode('paths','root');?>/basket.php'>cart</a><?php } else {?><a class='tab' href='<?php echo $config->getNode('paths','root');?>/basket.php'>cart</a><?php }
 }
@@ -57,8 +68,8 @@ if (stristr($_SERVER['REQUEST_URI'],"about.php")) {?><a class='tab active' href=
 </div>
 <!--End Header-->
   <?php
-  //Remove before final release
-  if (!isset($ajaxProvider) or $ajaxProvider == false) {
+  //Send Feedback
+  if ((!isset($ajaxProvider) or $ajaxProvider == false) and $config->getNode('site','sendFeedback')) {
 	?><div style="position: fixed; top: 99px; text-align: center; margin: 0 auto 0 auto; "><a href='<?php echo $config->getNode('paths','root');?>/reportbug.php' class="ui-state-highlight">Send Feedback</a></div><?php
 	}
 ?>

@@ -209,6 +209,8 @@
 						$config->setNode("site", "vat", 17.5, "VAT Rate");
 						$config->setNode("site", "country", "GB", "Default Country");
 						$config->setNode("site", "shopMode", false, "Shop Mode");
+						$config->setNode("site", "homeTab", true, "Home Tab");
+						$config->setNode("site", "sendFeedback", true, "Send Feedback");
 						
 						//Paths and Directories Tree
 						$config->addTree("paths", "Site Paths and Directories");
