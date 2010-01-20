@@ -7,13 +7,10 @@ if (!isset($page_title)) $page_title = "Welcome";
 <meta name='keywords' content='<?php echo $config->getNode('messages','keywords');?>' />
 <meta name='description' content='<?php echo $config->getNode('messages','tagline');?>' />
 <title><?php echo $config->getNode('messages','name');?> | <?php echo $page_title;?></title>
-<link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/style.css' type='text/css' />
-<?php
-$regex = "/(http:\/\/)?".str_replace('/','\/',$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'])."(\/)?$/i";
-if (!preg_match($regex,$config->getNode('paths','root'))) {
+<link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/style.css' type='text/css' /><?php
+if (!isset($_SUBPAGE) or $_SUBPAGE == true) {
 	?><link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/style-subpage.css' type='text/css' /><?php
-}?> 
-<link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/style_carousel.css' type='text/css' />
+}?><link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/style_carousel.css' type='text/css' />
 <script src='<?php echo $config->getNode('paths','root');?>/js/jquery.js' type='text/javascript'></script>
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jcarousel.js"></script> 
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jqueryui.js"></script> 
