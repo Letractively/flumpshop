@@ -1,4 +1,4 @@
-<?php require_once dirname(__FILE__)."/header.php";?>
+<?php $_SUBPAGE = false; require_once dirname(__FILE__)."/header.php";?>
   <h1 class='content'>Welcome to <?php echo $config->getNode('messages','name');?></h1>
   <?php
   //GET Notices
