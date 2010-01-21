@@ -25,7 +25,7 @@ class Config {
 	
 	function import() {
 		//Imported. Attempt to learn offline directory
-		$this->setNode('paths',"offlineDir",str_ireplace('/conf.txt','',file_get_contents(dirname(__FILE__)."/conf.txt")));
+		$this->setNode('paths',"offlineDir",preg_replace('/\/conf\.txt$/i','',file_get_contents(dirname(__FILE__)."/conf.txt")));
 		$this->setNode('paths','path',dirname(__FILE__));
 	}
 	
