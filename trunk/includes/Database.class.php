@@ -245,7 +245,7 @@ class SQLite_Database extends Database {
 		$str = preg_replace("/(\s*)?ENGINE=.*?;/i",";",$str);
 		$str = preg_replace("/AUTO_INCREMENT/i","AUTOINCREMENT",$str);
 		//Add Column
-		$str = preg_replace_callback("/ALTER (TABLE )?`(.*?)` ADD (COLUMN )?(.*?)((\r)?\n|;|$)/i", 'SQLite_Database::addColumn',$str);
+		$str = preg_replace_callback("/ALTER (TABLE )?`(.*?)` ADD (COLUMN )?(.*?)((\r)?\n|;|$)/i", 'SQLite_Database_addColumn',$str);
 		//Random
 		$str = preg_replace("/RAND\(\)/i","RANDOM()",$str);
 		//Datatypes
@@ -261,38 +261,6 @@ class SQLite_Database extends Database {
 		$str = preg_replace_callback("/INET_ATON\(\'(.*?)\'\)/i",create_function('$matches','return "\'".ip2long($matches[1])."\'";'),$str);
 		$str = str_replace("`","",$str);
 		return $str;
-	}
-	
-	function addColumn($matches) {
-		//It's clunky and inefficient, but it works
-		global $dbConn;
-		//$matches[2] table name
-		//$matches[4] new column definition
-		//Copy Data
-		$dbConn->query("CREATE TEMPORARY TABLE upgrade_".$matches[2]." AS SELECT * FROM ".$matches[2]);
-		//Gets list of old columns
-		$result = $dbConn->query("SELECT * FROM ".$matches[2]." LIMIT 0,1");
-		if ($dbConn->rows($result) == 0) {
-			//Empty. Try to create a row
-			$dbConn->query("INSERT INTO ".$matches[2]." (ROWID) VALUES (1)");
-			$result = $dbConn->query("SELECT * FROM ".$matches[2]." LIMIT 0,1");
-		}
-		$columns = array_keys($dbConn->fetch($result));
-		$columnlist = "(";
-		foreach ($columns as $column) {
-			$columnlist .= $column.",";
-		}
-		$columnlist .= ")";
-		$columnlist = str_replace(",)",")",$columnlist);
-		//Get Table SQL
-		$oldTable = $dbConn->query("SELECT * FROM sqlite_master WHERE type='table' AND name='".$matches[2]."'");
-		$oldTable = $dbConn->fetch($oldTable);
-		$dbConn->query("DROP TABLE ".$matches[2]);
-		//Push new column to create query
-		$sql = preg_replace("/^CREATE TABLE ".$matches[2]." \(/i", "CREATE TABLE ".$matches[2]." (".$matches[4].", ",$oldTable['sql']);
-		$dbConn->query($sql);
-		$dbConn->query("INSERT INTO ".$matches[2]." ".$columnlist." SELECT * FROM upgrade_".$matches[2]);
-		return "SELECT table FROM sqlite_master LIMIT 0,1"; //Supress "Empty Query" Errors
 	}
 	
 	function fetch($resource) {
@@ -317,6 +285,39 @@ class SQLite_Database extends Database {
 		}
 		return sqlite_last_insert_rowid($this->linkid);
 	}
+}
+
+//PHP 4 Won't let me call this using ::
+function SQLite_Database_addColumn($matches) {
+	//It's clunky and inefficient, but it works
+	global $dbConn;
+	//$matches[2] table name
+	//$matches[4] new column definition
+	//Copy Data
+	$dbConn->query("CREATE TEMPORARY TABLE upgrade_".$matches[2]." AS SELECT * FROM ".$matches[2]);
+	//Gets list of old columns
+	$result = $dbConn->query("SELECT * FROM ".$matches[2]." LIMIT 0,1");
+	if ($dbConn->rows($result) == 0) {
+		//Empty. Try to create a row
+		$dbConn->query("INSERT INTO ".$matches[2]." (ROWID) VALUES (1)");
+		$result = $dbConn->query("SELECT * FROM ".$matches[2]." LIMIT 0,1");
+	}
+	$columns = array_keys($dbConn->fetch($result));
+	$columnlist = "(";
+	foreach ($columns as $column) {
+		$columnlist .= $column.",";
+	}
+	$columnlist .= ")";
+	$columnlist = str_replace(",)",")",$columnlist);
+	//Get Table SQL
+	$oldTable = $dbConn->query("SELECT * FROM sqlite_master WHERE type='table' AND name='".$matches[2]."'");
+	$oldTable = $dbConn->fetch($oldTable);
+	$dbConn->query("DROP TABLE ".$matches[2]);
+	//Push new column to create query
+	$sql = preg_replace("/^CREATE TABLE ".$matches[2]." \(/i", "CREATE TABLE ".$matches[2]." (".$matches[4].", ",$oldTable['sql']);
+	$dbConn->query($sql);
+	$dbConn->query("INSERT INTO ".$matches[2]." ".$columnlist." SELECT * FROM upgrade_".$matches[2]);
+	return "SELECT table FROM sqlite_master LIMIT 0,1"; //Supress "Empty Query" Errors
 }
 
 //MSSQL Extension
