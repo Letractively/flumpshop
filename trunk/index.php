@@ -82,17 +82,8 @@
 	  ?>
       </div>
 	</div>
-</div><!-- Close MainContent -->
-<div id="leftside">
-<?php
-$categories = $dbConn->query("SELECT id FROM `category` WHERE parent='0' AND enabled='1'");
-while ($category = $dbConn->fetch($categories)) {
-    $cat = new Category($category['id']);
-    echo "<a class='navigation' id='cat".$category['id']."' onclick='loadCat(\"cat".$category['id']."\",\"".$cat->getAjaxURL()."\");'>".ucwords(strtolower($cat->getName()))."</a><div class='subcat ui-corner-right'><center><img src='".$config->getNode('paths','root')."/images/loading.gif' alt='Loading Image' /><br />Loading Content...</center></div>";
-}
-?>
-</div>
-<div id='rightside'>
+</td><!-- Close MainContent -->
+<td id='rightside'>
 <!-- Product Carousel -->
 <?php include $config->getNode('paths','path')."/includes/carousel.inc.php";?>
 <script type="text/javascript">
@@ -101,8 +92,14 @@ function loadCat(obj,url) {
 	$("#"+obj).toggleClass('activeNavigation');
 	$("#"+obj+" + div").load(url);
 	$("#leftside div:not(#"+obj+" + div):visible").hide("fold",{},"50");
+	$("#"+obj+" + div").css('left',(($('#leftside').position().left)+160)+"px");
 	$("#"+obj+" + div").toggle("fold");
 }
+
+//Move subcat on window resize
+$(window).bind("resize", function(e) {
+								  $('.subcat:visible').css('left',(($('#leftside').position().left)+160)+"px");
+								  });
 </script>
 <!-- Close rightside in footer -->
 <?php require_once dirname(__FILE__)."/footer.php"; ?>
