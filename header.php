@@ -19,6 +19,7 @@ if (!isset($_SUBPAGE) or $_SUBPAGE == true) {
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/additional-methods.js"></script> 
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jquery.validate.password.js"></script> 
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jquery.form.js"></script>
+<script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jquery.wresize.js"></script>
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jquery.init.js"></script>
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/defaults.php"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo $config->getNode('paths','root');?>/style/jcarousel.css" /> 
@@ -38,7 +39,7 @@ if (!isset($_SUBPAGE) or $_SUBPAGE == true) {
 <?php
 //Home
 if ($config->getNode("site", "homeTab") == true) {
-	if (isset($_SUBPAGE) and $_SUBPAGE = true) {?>
+	if (isset($_SUBPAGE) and $_SUBPAGE == false) {?>
     <a class='tab active' href='<?php echo $config->getNode('paths','root');?>'>home</a>
 	<?php } else {?>
     <a class='tab' href='<?php echo $config->getNode('paths','root');?>'>home</a><?php }
@@ -72,5 +73,7 @@ if (stristr($_SERVER['REQUEST_URI'],"about.php")) {?><a class='tab active' href=
 ?>
 <div id='content_container_background'>
 <div id="content_container">
-  <div id="mainContent">
-<?php  if ($_PRINTDATA) echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-alert'></span>Debug Mode Enabled.</div>";?>
+<table><tr><?php
+if (!isset($_SUBPAGE) or $_SUBPAGE == false) include $config->getNode("paths","path")."/includes/index_nav.inc.php";
+echo '<td id="mainContent">';
+if ($_PRINTDATA) echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-alert'></span>Debug Mode Enabled.</div>";?>
