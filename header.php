@@ -19,7 +19,6 @@ if (!isset($_SUBPAGE) or $_SUBPAGE == true) {
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/additional-methods.js"></script> 
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jquery.validate.password.js"></script> 
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jquery.form.js"></script>
-<script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jquery.wresize.js"></script>
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jquery.init.js"></script>
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/defaults.php"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo $config->getNode('paths','root');?>/style/jcarousel.css" /> 
