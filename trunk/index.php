@@ -88,10 +88,10 @@
 <?php include $config->getNode('paths','path')."/includes/carousel.inc.php";?>
 <script type="text/javascript">
 function loadCat(obj,url) {
-	$("#leftside a:not(#"+obj+")").removeClass('activeNavigation');
+	$("#leftside_nav a:not(#"+obj+")").removeClass('activeNavigation');
 	$("#"+obj).toggleClass('activeNavigation');
 	$("#"+obj+" + div").load(url);
-	$("#leftside div:not(#"+obj+" + div):visible").hide("fold",{},"50");
+	$("#leftside_nav div:not(#"+obj+" + div):visible").hide("fold",{},"50");
 	$("#"+obj+" + div").css('left',(($('#leftside').position().left)+160)+"px");
 	$("#"+obj+" + div").toggle("fold");
 }
@@ -100,6 +100,7 @@ function loadCat(obj,url) {
 $(window).bind("resize", function(e) {
 								  $('.subcat:visible').css('left',(($('#leftside').position().left)+160)+"px");
 								  });
+$('#leftside_nav').css('top',($('#mainContent').position().top)+"px");
 </script>
 <!-- Close rightside in footer -->
 <?php require_once dirname(__FILE__)."/footer.php"; ?>
