@@ -1,5 +1,5 @@
 <?php require_once dirname(__FILE__)."/preload.php";?>
-</td></tr></table>
+</td></tr></table></center>
 </div>
 <div id="dialog" class="ui-helper-hidden"></div>
 <div id='footer'><?php echo $config->getNode('messages','footer');?>
