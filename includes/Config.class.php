@@ -120,6 +120,11 @@ class Config {
 		return isset($this->data[$treeName][$nodeName]);
 	}
 	
+	function isTree($treeName) {
+		//Checks whether a tree exists
+		return isset($this->data[$treeName]);
+	}
+	
 	function getFriendName($treeName, $nodeName = NULL) {
 		//Returns the friendly (human-readable) name of the node or tree
 		if ($nodeName != NULL) {

@@ -90,12 +90,8 @@ if (isset($_POST['submit'])) {
   }
   ?> 
   </td>
-  <td id="mainContent" style="width: 800px;"><?php
-  $version = file_get_contents("http://www.theflump.com/flumpshop/version.txt");
-  if ($version > $config->getNode("site","version")) {
-	  ?><div class="ui-state-highlight"><span class="ui-icon ui-icon-refresh"></span><strong>Update Available</strong> - Version <?php echo $version;?> is now available for download.</div><?php
-  }
-  ?><script type="text/javascript">
+  <td id="mainContent" style="width: 800px;">
+  <script type="text/javascript">
   var loadingString = "<center><img src='<?php echo $config->getNode('paths','root')."/images/loading.gif"; ?>' /><br />Loading Content...</center>";
 
   function loadVarMan(loadingString) {
@@ -132,7 +128,12 @@ if (isset($_POST['submit'])) {
 				</form>
 				<?php
 			} else {
-				?>
+					//Update Checker
+				    $version = file_get_contents("http://flumpshop.googlecode.com/svn/updater/version.txt");
+				    if ($version > $config->getNode("site","version")) {
+					    ?><div class="ui-state-highlight"><span class="ui-icon ui-icon-refresh"></span><strong>Update Available</strong> - Version <?php echo $version;?> is now available for download.</div><?php
+				  }
+				  ?>
 				<h1 class='content'>Control Panel</h1>
 				<div id="adminContent" class="ui-widget ui-corner-all" style="max-height: 500px; overflow: auto;">Use the menu on the left to load an administration tool.</div>
                 <div id="empty"></div>
