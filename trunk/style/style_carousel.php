@@ -1,4 +1,7 @@
-/**
+<?php header("Content-Type: text/css");
+require_once dirname(__FILE__)."/../preload.php";
+$size = ceil(75*$config->getNode('widget_carousel','imageScale'))."px";
+?>/**
  * This <div> element is wrapped by jCarousel around the list
  * and has the classname "jcarousel-container".
  */
@@ -29,8 +32,8 @@
     float: left;
     list-style: none;
     /* We set the width/height explicitly. No width/height causes infinite loops. */
-    width: 75px;
-    height: 75px;
+    width: <?php echo $size;?>;
+    height: <?php echo $size;?>;
 }
 
 /**

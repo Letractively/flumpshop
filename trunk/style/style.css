@@ -77,7 +77,7 @@ body
 { 
 	background-color: #e6dac0;
 	text-align: left;
-	width: 960px;
+	min-width: 960px;
 	min-height: 100%;
 	margin: 40px auto 0 auto;
 	overflow: hidden;
@@ -167,8 +167,7 @@ a.subcat:hover {
 #rightside 
 {
 	width: 100px;
-	float: right;
-	margin-right: 15px;
+	overflow: visible;
 	/*position: fixed;
 	top: 150px;
 	right: 15%;*/
@@ -186,6 +185,7 @@ a.subcat:hover {
 	color: #000;
 	padding: 10px 15px 10px 15px;
 	min-height: 100%;
+	vertical-align: top;
 }
 
 #mainContent a, #mainContent a:visited {
@@ -304,11 +304,6 @@ a.tab:hover, a.tab.active
 #itemDesc {
 	min-height: 300px;
 	padding-right: 2em;
-}
-
-/*Admin*/
-#adminWave {
-	height: 500px;
 }
 
 p

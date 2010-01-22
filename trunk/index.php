@@ -85,7 +85,7 @@
 </td><!-- Close MainContent -->
 <td id='rightside'>
 <!-- Product Carousel -->
-<?php include $config->getNode('paths','path')."/includes/carousel.inc.php";?>
+<?php if ($config->getNode("widget_carousel", "onIndex") and $config->getNode("widget_carousel", "indexPosition") == "right") include $config->getNode('paths','path')."/includes/carousel.inc.php";?>
 <script type="text/javascript">
 function loadCat(obj,url) {
 	$("#leftside_nav a:not(#"+obj+")").removeClass('activeNavigation');

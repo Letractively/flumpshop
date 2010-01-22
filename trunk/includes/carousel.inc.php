@@ -9,13 +9,14 @@ if (!$config->isNode('temp','carouselid')) $config->setNode('temp','carouselid',
 <ul id='carousel<?php echo $config->getNode("temp","carouselid");?>' class='jcarousel jcarousel-skin-tango'>
   	<?php 
 		//Selects up to ten random products from the database, and creates an image linking to them
-		$result = $dbConn->query("SELECT id FROM `products` WHERE active=1 ORDER BY RAND() LIMIT 10");
+		$result = $dbConn->query("SELECT id FROM `products` WHERE active=1 ORDER BY RAND() LIMIT 0, ".$config->getNode('widget_carousel','images'));
 		
 		//Load Item
 		while ($row = $dbConn->fetch($result)) {
 			$item = new Item($row['id']);
+			$size = $config->getNode("widget_carousel", "imageScale");
 			echo "<li><a href='".$item->getURL()."'>";
-			echo "<img src='item/imageProvider.php?id=".$item->getID()."' width='75' height='75' alt='".$item->getName()."' title='".$item->getName()."' />";
+			echo "<img src='item/imageProvider.php?id=".$item->getID()."' width='".(75*$size)."' height='".(75*$size)."' alt='".$item->getName()."' title='".$item->getName()."' />";
 			echo "</a></li>";
 		}
 	?>
@@ -43,14 +44,15 @@ if ($dbConn->rows($result) != 0) {//Don't activate if there's no products
 		});
 	};
 	 
-	$('#carousel<?php echo $config->getNode("temp","carouselid");?>').jcarousel({
-		auto: 2,
-		animation: 'slow',
-		scroll: 1,
-		vertical: true,
-		wrap: 'last',
-		initCallback: carousel_initCallback
-	});
+	$(document).ready(function() {$('#carousel<?php echo $config->getNode("temp","carouselid");?>').jcarousel({
+									auto: 2,
+									animation: 'slow',
+									scroll: 1,
+									vertical: true,
+									wrap: 'last',
+									initCallback: carousel_initCallback
+								});
+							   });
 	</script>
 <?php
 }

@@ -1,22 +1,25 @@
-.jcarousel-skin-tango .jcarousel-container {
+<?php header("Content-type: text/css");
+require_once dirname(__FILE__)."/../../../preload.php";
+$size = ceil(75*$config->getNode('widget_carousel','imageScale'))."px";
+?>.jcarousel-skin-tango .jcarousel-container {
     -moz-border-radius: 10px;
 }
 
 
 .jcarousel-skin-tango .jcarousel-container-vertical {
-    width: 75px;
-    height: 400px;
+    width: <?php echo $size;?>;
+    height: <?php echo $config->getNode('widget_carousel','indexHeight');?>px;
     padding: 40px 20px;
 }
 
 .jcarousel-skin-tango .jcarousel-clip-vertical {
-    width:  75px;
-    height: 400px;
+    width:  <?php echo $size;?>;
+    height: <?php echo $config->getNode('widget_carousel','indexHeight');?>px;
 }
 
 .jcarousel-skin-tango .jcarousel-item {
-    width: 75px;
-    height: 75px;
+    width: <?php echo $size;?>;
+    height: <?php echo $size;?>;
 }
 
 
@@ -87,7 +90,7 @@
 .jcarousel-skin-tango .jcarousel-next-vertical {
     position: absolute;
     bottom: 5px;
-    left: 43px;
+    left: <?php echo (ceil((75*$config->getNode('widget_carousel','imageScale'))/2))."px";?>;
     width: 32px;
     height: 32px;
     cursor: pointer;
@@ -112,7 +115,7 @@
 .jcarousel-skin-tango .jcarousel-prev-vertical {
     position: absolute;
     top: 5px;
-    left: 43px;
+    left: <?php echo (ceil((75*$config->getNode('widget_carousel','imageScale'))/2))."px";?>;
     width: 32px;
     height: 32px;
     cursor: pointer;
