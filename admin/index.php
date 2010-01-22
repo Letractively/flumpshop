@@ -131,7 +131,7 @@ if (isset($_POST['submit'])) {
 					//Update Checker
 				    $version = file_get_contents("http://flumpshop.googlecode.com/svn/updater/version.txt");
 				    if ($version > $config->getNode("site","version")) {
-					    ?><div class="ui-state-highlight"><span class="ui-icon ui-icon-refresh"></span><strong>Update Available</strong> - Version <?php echo $version;?> is now available for download.</div><?php
+					    ?><div class="ui-state-highlight"><span class="ui-icon ui-icon-refresh"></span><strong>Update Available</strong> - Version <?php echo $version;?> is now available for download. <a href="./upgrade">Click Here to Upgrade</a></div><?php
 				  }
 				  ?>
 				<h1 class='content'>Control Panel</h1>
