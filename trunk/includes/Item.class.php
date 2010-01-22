@@ -94,10 +94,11 @@ class Item {
 			$price = str_replace("'","''",$this->getPrice());
 			$stock = str_replace("'","''",$this->getStock());
 			$desc = str_replace("'","''",$this->getDesc());
+			$category = $this->getCategory();
 			$reducedPrice = $this->itemReducedPrice;
 			$reduceStart = $this->itemReductionStart;
 			$reduceEnd = $this->itemReductionEnd;
-			$dbConn->query("UPDATE `products` SET name='$name', price='$price', stock='$stock', description='$desc', reducedPrice='$reducedPrice', reducedValidFrom='$reduceStart', reducedExpiry='$reduceEnd' WHERE id=".$this->getID()." LIMIT 1");
+			$dbConn->query("UPDATE `products` SET name='$name', price='$price', stock='$stock', description='$desc', reducedPrice='$reducedPrice', reducedValidFrom='$reduceStart', reducedExpiry='$reduceEnd', category='$category' WHERE id=".$this->getID()." LIMIT 1");
 		}
 	}
 	
@@ -197,7 +198,7 @@ class Item {
 	//Return Product Info
 	function getDetails($type,$int = 0) {
 		//Int Usage: Quantity for Basket View (Integer), Edit Mode for Full View (Boolean), $higlight for Search View (String/Array)
-		global $config, $stats;
+		global $config, $stats, $dbConn;
 		$type = strtoupper($type); //Standardize for easy comparison
 		if ($type == "INDEX") {
 			$reply = "<img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' style='float: left; padding: 1em; width: 100px; height: 100px; border: none;' alt='Loading Image...'/>";
@@ -226,7 +227,19 @@ class Item {
 		if ($type == "FULL") {
 			$reply = "";
 			if ($int === true && (isset($_SESSION['adminAuth']) && $_SESSION['adminAuth'] == true)) {
+				//Image Upload
 				$reply .= "<form action='".$config->getNode('paths','root')."/item/upload.php' method='post' enctype='multipart/form-data'><label for='file'>Upload Image: </label><input type='file' name='image' id='image' class='ui-state-default' /><input type='submit' class='ui-state-default' value='Upload' /><input type='hidden' name='id' id='id' value='".$this->getID()."' /></form>";
+				
+				//Change Category
+				$reply .= "<form action='".$config->getNode('paths','root')."/item/update.php?pid=category' method='post' enctype='multipart/form-data' onsubmit='$(\"#notice\").html(loadMsg(\"Updating Category...\"));$(this).ajaxSubmit({target: \"#notice\"}); return false;'><select name='newCat' id='newCat' class='ui-widget-content'><option value='0'>Uncategorised</option>";
+				$result = $dbConn->query("SELECT id FROM `category` ORDER BY `parent` ASC");
+				while ($row = $dbConn->fetch($result)) {
+					$parentCategory = new Category($row['id']);
+					$selected = "";
+					if ($this->getCategory() == $row['id']) $selected = " selected='selected'";
+					$reply .= "<option value='".$parentCategory->getID()."'$selected>".$parentCategory->getFullName()."</option>";
+				}
+				$reply .= "</select><input type='submit' class='ui-state-default' value='Change Category' /><input type='hidden' name='id' id='id' value='".$this->getID()."' /></form>";
 				
 				//Disable
 				$reply .= '<a href="javascript:void(0);" onclick="$(\'#notice\').html(loadMsg(\'Hiding Product...\')).load(\''.$config->getNode('paths','root').'/admin/endpoints/process/disableItem.php?id='.$this->getID().'\');">Hide Product</a>';
@@ -390,6 +403,11 @@ class Item {
 	
 	function setDesc($str) {
 		$this->itemDesc = $str;
+		$this->change = true;
+	}
+	
+	function setCategory($str) {
+		$this->itemCategory = $str;
 		$this->change = true;
 	}
 }

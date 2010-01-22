@@ -1,10 +1,15 @@
 <?php
 //Initialises Configuration Object
+require_once dirname(__FILE__)."/Config.class.php";
 //Debug Purposes Only
 $INIT_DEBUG = true;
 if (!$INIT_DEBUG) error_reporting(0);
 $SYSTEM_DEBUG = $INIT_DEBUG;
 
+//Allow use without preloader
+if (!function_exists("debug_message")) {
+	function debug_message($str,$bool = false) {return;}
+}
 
 //Global Vars Across Site
 if (!file_exists(dirname(__FILE__)."/../conf.txt")) {
@@ -20,7 +25,7 @@ if (!file_exists(dirname(__FILE__)."/../conf.txt")) {
 			init_err("Could not access configuration file.");
 		}
 		if (!is_writable($confDat)) $config->setEditable(false);
-	} elseif (file_exists($confDat."/conf.txt")) { //ISSUE RESOLVED 8/1/09 - Keep for historical reasons (Why the hell not)
+	} elseif (file_exists($confDat."/conf.txt")) { //ISSUE RESOLVED 8/1/10 - Keep for historical reasons (Why the hell not)
 		$config = unserialize(file_get_contents($confDat."/conf.txt"));
 		if (!is_object($config)) {
 			init_err("Could not access configuration file.");
