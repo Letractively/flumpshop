@@ -211,7 +211,7 @@
 						$config->setNode("site", "shopMode", false, "Shop Mode");
 						$config->setNode("site", "homeTab", true, "Home Tab");
 						$config->setNode("site", "sendFeedback", true, "Send Feedback");
-						$config->setNode("site", "version", "0.5.159", "Version");
+						$config->setNode("site", "version", "0.6.159", "Version");
 						
 						//Paths and Directories Tree
 						$config->addTree("paths", "Site Paths and Directories");
@@ -502,6 +502,11 @@ EOT
 						$config->setNode("widget_carousel", "indexHeight", 800, "Height on Home Page");
 						$config->setNode("widget_carousel", "images", 10, "Number of Images");
 						$config->setNode("widget_carousel", "imageScale", 1.5, "Image Scale");
+						
+						//Item View Options
+						$config->addTree("viewItem", "Item View Settings");
+						
+						$config->setNode("viewItem", "showID", true, "Show Item ID");
 						
 						//Start First Stage
 						echo "<p>Hello, I've just finished generating a sample configuration file for this site. Over the next few pages the information I need to run will need to be filled out. Let's start with something simple. Give me a name in the box below.</p><form action='?stage=2' method='post' class='ui-widget-content' id='jquery-form'><input type='text' name='siteName' id='siteName' class='ui-state-default required' value='".$config->getNode('messages','name')."' /><input type='submit' value='Next -&gt;' class='ui-state-default' /></form>";

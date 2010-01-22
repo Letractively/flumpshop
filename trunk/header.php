@@ -1,5 +1,6 @@
 <?php require_once dirname(__FILE__)."/preload.php";
 if (!isset($page_title)) $page_title = "Welcome";
+if (!isset($_SUBPAGE)) $_SUBPAGE = true;
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -59,17 +60,15 @@ if (stristr($_SERVER['REQUEST_URI'],"contact.php")) {?><a class='tab active' hre
 //About
 if (stristr($_SERVER['REQUEST_URI'],"about.php")) {?><a class='tab active' href='<?php echo $config->getNode('paths','root');?>/about.php'>about</a><?php } else {?><a class='tab' href='<?php echo $config->getNode('paths','root');?>/about.php'>about</a><?php }
 
-/*ADMIN*/ if (isset($_SESSION['adminAuth']) and $_SESSION['adminAuth'] == true) echo "<a class='tab' href='".$config->getNode('paths','root')."/admin'>admin</a>";?>
+/*ADMIN*/ if (isset($_SESSION['adminAuth']) and $_SESSION['adminAuth'] == true) echo "<a class='tab' href='".$config->getNode('paths','root')."/admin'>admin</a>";
+?></div>
 </div>
-</div>
-<!--End Header-->
-  <?php
+<!--End Header--><?php
   //Send Feedback
   if ((!isset($ajaxProvider) or $ajaxProvider == false) and $config->getNode('site','sendFeedback')) {
 	?><div style="position: fixed; top: 99px; text-align: center; margin: 0 auto 0 auto; "><a href='<?php echo $config->getNode('paths','root');?>/reportbug.php' class="ui-state-highlight">Send Feedback</a></div><?php
 	}
-?>
-<div id='content_container_background'>
+?><div id='content_container_background'>
 <div id="content_container">
 <center><table><tr><?php
 if (!isset($_SUBPAGE) or $_SUBPAGE == false) include $config->getNode("paths","path")."/includes/index_nav.inc.php";

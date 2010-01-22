@@ -270,7 +270,12 @@ class Item {
 				else $reply .= "<div class='ui-state-disabled'><span id='itemStock'>Out of Stock. </span><a href='javascript:void(0);'>Notify me when available</a></div>";
 			}
 			//Description
-			$reply .= "<p id='itemDesc'>".$this->getDesc()."</p>";
+			if ($config->getNode("viewItem", "showID")) {
+				$reply .= "<p id='itemDesc'><strong>Product Code: </strong>".$this->getID()."<br /><br />";
+			} else {
+				$reply .= "<p id='itemDesc'>";
+			}
+			$reply .= $this->getDesc()."</p>";
 			//Tracker
 			//TODO: Unique only - Store Visited Array in session obj?
 			$stats->incStat("item".$this->getID()."Hits");

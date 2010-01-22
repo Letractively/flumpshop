@@ -39,7 +39,8 @@ if (isset($_POST['submit'])) {
 <a href='<?php echo $config->getNode('paths','root');?>/reportbug.php' class="ui-state-highlight" style='position: fixed; top: 99px; text-align: center;'>Send Feedback</a><br /><!--Send Feedback - Remove on Final Release-->
 <div id='content_container_background'>
 <div id="content_container">
-  <div id="leftside">
+<center><table><tr>
+  <td id="leftside">
   <?php
   if (isset($_SESSION['adminAuth']) && $_SESSION['adminAuth']) {
 	?>
@@ -88,10 +89,13 @@ if (isset($_POST['submit'])) {
     <?php  
   }
   ?> 
-  </div>
-  <div id='rightside'></div>
-  <div id="mainContent">
-  <script type="text/javascript">
+  </td>
+  <td id="mainContent" style="width: 800px;"><?php
+  $version = file_get_contents("http://www.theflump.com/flumpshop/version.txt");
+  if ($version > $config->getNode("site","version")) {
+	  ?><div class="ui-state-highlight"><span class="ui-icon ui-icon-refresh"></span><strong>Update Available</strong> - Version <?php echo $version;?> is now available for download.</div><?php
+  }
+  ?><script type="text/javascript">
   var loadingString = "<center><img src='<?php echo $config->getNode('paths','root')."/images/loading.gif"; ?>' /><br />Loading Content...</center>";
 
   function loadVarMan(loadingString) {
@@ -145,7 +149,7 @@ if (isset($_POST['submit'])) {
 		}
 		$.validator.setDefaults({errorClass: "ui-state-error"});
 		</script>
-</div>
+</td></tr></table></center>
 </div>
 <div id="dialog" class="ui-helper-hidden"></div>
 <div id='footer'><?php echo $config->getNode('messages','footer');?><!--Site Designed by Jake Mitchell. Programmed by Lloyd Wallis and John Maydew.--></div>
