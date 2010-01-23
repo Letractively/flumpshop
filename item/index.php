@@ -18,7 +18,7 @@ require_once dirname(__FILE__)."/../header.php";
 <script type="text/javascript">
 document.saving = "<div class='ui-state-highlight ui-corner-all'><span class='ui-icon ui-icon-refresh'></span>Saving Data...</div>";
 document.modify = <?php echo intval(isset($_GET['modify']) && $_GET['modify'] == "true"); ?>;
-document.id = <?php echo $_GET['id']; ?>;
+document.id = <?php echo intval($_GET['id']); ?>;
 document.adminAuth = <?php if (!isset($_SESSION['adminAuth']) || !$_SESSION['adminAuth']) echo "false"; else echo "true";?>;
 document.updateURL = "<?php echo $config->getNode('paths','root')."/item/update.php?pid=".$_GET['id'];?>";
 if (document.modify) {

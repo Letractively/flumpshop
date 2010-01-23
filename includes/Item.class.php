@@ -125,7 +125,7 @@ class Item {
 		global $config;
 		
 		$imgnum = 0;
-		while (file_exists($config->getNode('paths','offlineDir')."/images/item_".$this->itemID."/thumb_$imgnum.png")) {
+		while (file_exists($config->getNode('paths','offlineDir')."/images/item_".$this->itemID."/full_$imgnum.png")) {
 			$imgnum++;
 		}
 		
@@ -160,7 +160,7 @@ class Item {
 		}
 		
 		//800x650
-		list($img_w,$img_h) = getimagesize($file); 
+		list($img_w,$img_h) = getimagesize($file);
 		$f = min(800/$img_w, 650/$img_h, 1); 
 		$w = round($f * $img_w); 
 		$h = round($f * $img_h); 
@@ -168,11 +168,19 @@ class Item {
 		$fullimage = imagecreatetruecolor($w,$h);
 		imagecopyresampled($fullimage,$image,0,0,0,0,$w,$h,$img_w,$img_h);
 		
-		$smallimage = imagecreatetruecolor(150,150);
-		imagecopyresampled($smallimage,$image,0,0,0,0,150,150,$img_w,$img_h);
+		//150x150
+		$f = min(150/$img_w, 150/$img_h, 1); 
+		$w = round($f * $img_w); 
+		$h = round($f * $img_h); 
+		$smallimage = imagecreatetruecolor($w,$h);
+		imagecopyresampled($smallimage,$image,0,0,0,0,$w,$h,$img_w,$img_h);
 		
-		$miniimage = imagecreatetruecolor(45,45);
-		imagecopyresampled($miniimage,$image,0,0,0,0,45,45,$img_w,$img_h);
+		//45x45
+		$f = min(45/$img_w, 45/$img_h, 1); 
+		$w = round($f * $img_w); 
+		$h = round($f * $img_h); 
+		$miniimage = imagecreatetruecolor($w,$h);
+		imagecopyresampled($miniimage,$image,0,0,0,0,$w,$h,$img_w,$img_h);
 		
 		if (!file_exists($config->getNode('paths','offlineDir')."/images/item_".$this->itemID)) {
 			mkdir($config->getNode('paths','offlineDir')."/images/item_".$this->itemID);
@@ -250,12 +258,13 @@ class Item {
 			}
 			
 			$reply .= "<div class='ui-widget'><div class='ui-widget-header' id='itemTitle'>".$this->getName()."</div><div class='ui-widget-content'>";
+			//Images
 			$reply .= "<div style='float: left; padding-right: 1em;'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' onclick='openImageViewer(0);' style='cursor: pointer' />";
 			
 			$num = 0;
 			while (file_exists($config->getNode('paths','offlineDir')."/images/item_".$this->getID()."/minithumb_$num.png")) {
 				if (is_int(($num)/3)) $reply .= "<br />";
-				$reply .= "<img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=$num&size=minithumb' onclick='openImageViewer($num);' style='border: 1px solid #000; cursor: pointer; width: 45px; height: 45px;' />";
+				$reply .= "<span style='width: 45px; height: 45px;'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=$num&size=minithumb' onclick='openImageViewer($num);' style='border: 1px solid #000; cursor: pointer;' /></span>";
 				$num++;
 			}
 			
