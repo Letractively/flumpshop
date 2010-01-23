@@ -5,6 +5,10 @@ class Upgrade {
 	var $confUpdate;
 	var $sqlUpdate;
 	
+	function Upgrade() {
+		$this->confUpdate = array();
+	}
+	
 	function newVersion() {
 		return $this->newVersion;
 	}
