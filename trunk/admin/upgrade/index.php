@@ -1,5 +1,9 @@
-<?php require_once dirname(__FILE__)."/../../includes/vars.inc.php"; require_once "./Upgrade.class.php";
+<?php
+require_once dirname(__FILE__)."/../../includes/vars.inc.php";
+require_once dirname(__FILE__)."/../../includes/file_put_contents.inc.php";
+require_once "./Upgrade.class.php";
 $latestVersion = file_get_contents("http://flumpshop.googlecode.com/svn/updater/version.txt");
+error_reporting(E_ALL);
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <!--
 Design by Free CSS Templates
@@ -136,6 +140,7 @@ Released for free under a Creative Commons Attribution 2.5 License
 		foreach ($package['package'] as $dirname => $dir) {
 			if (!is_dir($dirname)) mkdir($dirname);
 			foreach ($dir as $file => $contents) {
+				echo $dirname."/".$file."<br />";
 				$fp = fopen($dirname."/".$file,"w+");
 				fwrite($fp, $contents);
 				fclose($fp);
@@ -164,4 +169,4 @@ Released for free under a Creative Commons Attribution 2.5 License
 	<p>Copyright (c) 2009-2010 <a href='http://www.theflump.com'>Flumpnet</a>. All Rights Reserved. Upgrader Developer Preview Design by <a href="http://www.freecsstemplates.org/">Free CSS Templates</a>.</p>
 </div>
 </body>
-</html>
+</html><?php $config->__destruct();?>
