@@ -169,7 +169,8 @@ class Item {
 		imagecopyresampled($fullimage,$image,0,0,0,0,$w,$h,$img_w,$img_h);
 		
 		//150x150
-		$f = min(150/$img_w, 150/$img_h, 1); 
+		$scale = 150*$config->getNode('viewItem','imageScale');
+		$f = min($scale/$img_w, $scale/$img_h, 1); 
 		$w = round($f * $img_w); 
 		$h = round($f * $img_h); 
 		$smallimage = imagecreatetruecolor($w,$h);
@@ -213,7 +214,7 @@ class Item {
 		global $config, $stats, $dbConn;
 		$type = strtoupper($type); //Standardize for easy comparison
 		if ($type == "INDEX") {
-			$reply = "<span style='width: 100px; height: 100px;'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' style='float: left; padding: 1em; border: none;' alt='".$this->getName()."' /></span>";
+			$reply = "<span style='min-width: 100px; min-height: 100px;'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' style='float: left; padding: 1em; border: none; max-width: 150px; max-height: 150px;' alt='".$this->getName()."' /></span>";
 			$reply .= "<h3 style='font-size: 0.8em;'><a href='".$this->getURL()."' class='ui-widget-content'>".$this->getName()."</a></h3>";
 			if ($config->getNode("site","shopEnabled")) {
 				$reply .= "<em>&pound;".$this->itemPrice."</em><span class='ui-state-disabled'>&nbsp;ex.VAT</span>";
@@ -259,7 +260,8 @@ class Item {
 			
 			$reply .= "<div class='ui-widget'><div class='ui-widget-header' id='itemTitle'>".$this->getName()."</div><div class='ui-widget-content'>";
 			//Images
-			$reply .= "<div style='float: left; padding-right: 1em;'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' onclick='openImageViewer(0);' style='cursor: pointer' />";
+			$scale = 150*$config->getNode("viewItem","imageScale");
+			$reply .= "<div style='float: left; padding-right: 1em; width: ".$scale."px; height: ".$scale."px;'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' onclick='openImageViewer(0);' style='cursor: pointer' />";
 			
 			$num = 0;
 			while (file_exists($config->getNode('paths','offlineDir')."/images/item_".$this->getID()."/minithumb_$num.png")) {

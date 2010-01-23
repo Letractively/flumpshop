@@ -24,7 +24,7 @@
       <div class="ui-widget-header ui-corner-top"><?php echo $config->getNode("messages","featuredItemHeader");?></div>
       <div class="ui-widget-content" style='height: 150px;'>
       <?php
-	  $result = $dbConn->query("SELECT id FROM `products` WHERE active=1 ORDER BY id DESC LIMIT 1");
+	  $result = $dbConn->query("SELECT value FROM `stats` WHERE `key`='featuredItem' LIMIT 1");
 	  if ($dbConn->rows($result) == 0) {
 		  echo "Hey, It's the Flumpnet robot and this is another one of my spectacular placeholders! You can set an item to appear here by selecting it in the Admin CP, under Edit Object->Featured Item";
 	  } else {
