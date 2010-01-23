@@ -507,6 +507,7 @@ EOT
 						$config->addTree("viewItem", "Item View Settings");
 						
 						$config->setNode("viewItem", "showID", true, "Show Item ID");
+						$config->setNode("viewItem", "imageScale", 2.5, "Image Scale");
 						
 						//Start First Stage
 						echo "<p>Hello, I've just finished generating a sample configuration file for this site. Over the next few pages the information I need to run will need to be filled out. Let's start with something simple. Give me a name in the box below.</p><form action='?stage=2' method='post' class='ui-widget-content' id='jquery-form'><input type='text' name='siteName' id='siteName' class='ui-state-default required' value='".$config->getNode('messages','name')."' /><input type='submit' value='Next -&gt;' class='ui-state-default' /></form>";

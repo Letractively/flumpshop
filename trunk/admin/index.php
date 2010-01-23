@@ -61,7 +61,9 @@ if (isset($_POST['submit'])) {
             <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/edit/editPageContent.php?pageid=homePage');$('#editObjMenu').toggle('fold');">Home Page</a>
             <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/edit/editPageContent.php?pageid=aboutPage');$('#editObjMenu').toggle('fold');">About Page</a>
             <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/edit/editPageContent.php?pageid=contactPage');$('#editObjMenu').toggle('fold');">Contact Page</a>
+            <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/edit/editFeatured.php');$('#editObjMenu').toggle('fold');">Featured Item</a>
         </div>
+
     <a class="navigation" onclick='loadCat("orders");' id='orders'>View Orders</a>
     	<div class="subcat ui-corner-right" id="ordersMenu">
         	<a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/orders/listOrders.php?filter=active');$('#ordersMenu').toggle('fold');">Active</a>
@@ -84,7 +86,7 @@ if (isset($_POST['submit'])) {
             <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/advanced/export.php');$('#advMenu').toggle('fold');">Export</a>
             <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/advanced/import.php');$('#advMenu').toggle('fold');">Import</a>
             <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/advanced/phpinfo.php');$('#advMenu').toggle('fold');">PHP Info</a>
-            <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/advanced/recreateImages.php');$('#advMenu').toggle('fold');">Rebuild Images</a>
+            <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadMsg('Rebuilding Images. This may take several minutes.');$('#empty').html(null);$('#adminContent').load('./endpoints/advanced/recreateImages.php');$('#advMenu').toggle('fold');">Rebuild Images</a>
         </div>
     <a class="navigation" onclick="$('#adminContent').html(null);">Close</a>
     <?php  
