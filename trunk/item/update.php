@@ -28,6 +28,7 @@ if ($pid == "category") {
 			$item->setStock($_POST['value']);
 			break;
 	}
+	$item->save(); //PHP 4 Support (No destructor)
 	echo str_replace(array("\\","\n"),"",nl2br($_POST['value']));
 }
 ?>
