@@ -213,7 +213,7 @@ class Item {
 		global $config, $stats, $dbConn;
 		$type = strtoupper($type); //Standardize for easy comparison
 		if ($type == "INDEX") {
-			$reply = "<img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' style='float: left; padding: 1em; width: 100px; height: 100px; border: none;' alt='Loading Image...'/>";
+			$reply = "<span style='width: 100px; height: 100px;'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' style='float: left; padding: 1em; border: none;' alt='".$this->getName()."' /></span>";
 			$reply .= "<h3 style='font-size: 0.8em;'><a href='".$this->getURL()."' class='ui-widget-content'>".$this->getName()."</a></h3>";
 			if ($config->getNode("site","shopEnabled")) {
 				$reply .= "<em>&pound;".$this->itemPrice."</em><span class='ui-state-disabled'>&nbsp;ex.VAT</span>";
@@ -222,7 +222,7 @@ class Item {
 			else $reply .= "<p style='font-size: 0.8em; padding-right: 1em; min-height: 100px;'>".$this->getDesc()."</p>";
 		}
 		if ($type == "CATEGORY") {
-			$reply = "<a href='".$this->getURL()."' class='ui-widget-content'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' style='float: left; padding-right: 1em; padding-top: 1em;' />";
+			$reply = "<a href='".$this->getURL()."' class='ui-widget-content'><span style='width: 100px; height: 100px;'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' style='float: left; padding-right: 1em; padding-top: 1em;' alt='".$this->getName()."' /></span>";
 			$reply .= "<h3 style='font-size: 0.8em;'>".$this->getName()."</h3></a>";
 			if ($config->getNode("site","shopEnabled")) {
 				$reply .= "<em>&pound;".$this->itemPrice."</em><span class='ui-state-disabled'>&nbsp;ex.VAT</span>";
@@ -232,7 +232,7 @@ class Item {
 		}
 		if ($type == "SEARCH") {
 			$reply = "<h3 style='margin-bottom: 0;'><a href='".$this->getURL()."' class='ui-widget-content'>".$this->getName($int)."</a></h3>";
-			$reply .= "<img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' style='float: left; padding-right: 1em; padding-top: 1em;' />";
+			$reply .= "<span style='width: 100px; height: 100px;'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' style='float: left; padding-right: 1em; padding-top: 1em;' alt='".$this->getName()."' /></span>";
 			if (strlen($this->getDesc()) > 250) $reply .= "<p style='overflow: hidden; height: 150px;'>".substr($this->getDesc($int),0,250)."...</p>";
 			else $reply .= "<p style='overflow: hidden; height: 150px;'>".$this->getDesc()."</p>";
 		}
