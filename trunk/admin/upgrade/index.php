@@ -19,13 +19,12 @@ Released for free under a Creative Commons Attribution 2.5 License
 <div id="header">
 	<h1>Flumpshop</h1>
 	<h2>The living online shop</h2>
-	<!--<ul>
-		<li><a href="#" accesskey="1" title="">Homepage</a></li>
-		<li><a href="#" accesskey="2" title="">My Blog</a></li>
-		<li><a href="#" accesskey="3" title="">Photo Gallery</a></li>
-		<li><a href="#" accesskey="4" title="">Favorite Sites</a></li>
-		<li><a href="#" accesskey="5" title="">Contact Me</a></li>
-	</ul>-->
+	<ul>
+		<li><a href="http://www.theflump.com/" accesskey="1" title="Flumpnet Site">Flumpnet</a></li>
+		<li><a href="http://flumpshop.googlecode.com/" accesskey="2" title="Flumpshop Site">Flumpshop</a></li>
+        <li><a href="../" accesskey="3" title="Admin CP">Admin CP</a></li>
+        <li><a href="../../" accesskey="4" title="Home">Home</a></li>
+	</ul>
 </div>
 <div id="content">
 	<div id="colOne">
@@ -33,17 +32,41 @@ Released for free under a Creative Commons Attribution 2.5 License
 		if (file_exists($config->getNode("paths","offlineDir")."/upgrade_v".$latestVersion.".fml")) {
 			$package = unserialize(base64_decode(file_get_contents($config->getNode("paths","offlineDir")."/upgrade_v".$latestVersion.".fml")));
 			$upgrade = $package['upgrade'];
-		?><div class="bg1">
-			<ul>
-				<li class="first"><a href="javascript:">Important Information</a></li>
-				<li><a href="javascript:">Configure New Features</a></li>
-				<li><a href="javascript:">Upgrade</a></li>
-                <li><a href="javascript:">Finish</a></li>
-			</ul>
-		</div>
-	</div>
-	<div id="colTwo"><?php
-    if (!isset($_GET['page'])) {
+			//Version Package Downloaded - Steps List
+			?><div class="bg1">
+				<ul>
+					<li class="first"><a href="javascript:">Important Information</a></li>
+					<li><a href="javascript:">Configure New Features</a></li>
+					<li><a href="javascript:">Upgrade</a></li>
+					<li><a href="javascript:">Finish</a></li>
+				</ul>
+			</div></div><?php
+		} else {
+			//Package Version Hasn't Been Downloaded Yet - Version Data and Download Form
+			?><div class="bg1">
+    			Current Flumpshop Version: <?php echo $config->getNode("site","version");?><br />
+    			Latest Flumpshop Version: <?php echo $latestVersion;?>
+    		  </div></div><?php
+			  if (!isset($_GET['page'])) {
+    		  ?><div id="colTwo">
+    			<div class="bg1"><?php
+					if ($config->getNode("site","version") == $latestVersion) {
+						//Begin New Version Download
+						?><h2>Upgrade</h2>
+						<p>The latest upgrade file is now being downloaded. If you are having issues with this feature, please download the file http://flumpshop.googlecode.com/svn/updater/upgrade_<?php echo $latestVersion;?>.fml file and place it in the offline directory.</p>
+            			<p>Remember that PHP must have WRITE access to the Flumpshop root directory and all subdirectories for this process.</p>
+            			<p><center id="downloader"><img src="../../images/loading.gif" /><br />Downloading upgrade_v<?php echo $latestVersion;?>.fml</center></p>
+            			<script type="text/javascript">$('#downloader').load('downloader.php?file=upgrade_v<?php echo $latestVersion;?>.fml');</script><?php
+					} else {
+						//Latest Version already installed
+						?><h2>Upgrade</h2><p>You already have the latest version. No upgrade is necessary.<?php
+					}?></div>
+				</div><?php
+			  }
+		}
+		echo "<div id='colTwo'>";
+		//Actual Page Content -- Home Page
+    	if (!isset($_GET['page']) and file_exists($config->getNode("paths","offlineDir")."/upgrade_v".$latestVersion.".fml")) {
 		?><div class="bg2">
 			<h2><em>Flumpshop</em> Upgrade</h2>
 			<p>This wizard will upgrade the Flumpshop client from v<?php echo $config->getNode("site","version");?> to v<?php echo $upgrade->newVersion();?>. Once you start this process, the Flumpnet Robot, and your Flumpshop Site, will be unavailable until the upgrade is complete. Please review all the latest details below, make any necessary changes, and if you're sure, click "Start Upgrade".</p>
@@ -59,7 +82,7 @@ Released for free under a Creative Commons Attribution 2.5 License
         <div class="bg1">
         	<p><input type="button" onclick="window.location = '?page=features';" value="Start Upgrade" class="ui-widget-content" /></p>
         </div><?php
-	} elseif ($_GET['page'] == "features") {
+	} elseif (file_exists($config->getNode("paths","offlineDir")."/upgrade_v".$latestVersion.".fml") and $_GET['page'] == "features") {
 		//Disable Site
 		$config->setNode("site","enabled",false);
 		?><div class="bg2">
@@ -101,7 +124,7 @@ Released for free under a Creative Commons Attribution 2.5 License
 				}
 			}?><input type="submit" value="Upgrade" onclick="this.disabled = true; $('#form').submit();" /></form><?php
 	}//END New Conf Vars
-	elseif ($_GET['page'] == "upgrade") {
+	elseif (file_exists($config->getNode("paths","offlineDir")."/upgrade_v".$latestVersion.".fml") and $_GET['page'] == "upgrade") {
 		//Commit the upgrade
 		echo "Saving Configuration Changes...<br />";
 		$newConf = $upgrade->getConfUpdate();
@@ -138,26 +161,12 @@ Released for free under a Creative Commons Attribution 2.5 License
 		echo "Cleaning Up...<br />";
 		unlink($config->getNode("paths","offlineDir")."/upgrade_v".$latestVersion.".fml");
 		echo "Upgrade Complete. <a href='?page=finish'>Click Here to continue</a>";
-	} elseif ($_GET['page'] == "finish") {
-		?><div class='bg2'><h2>Upgrade Complete</h2><p>Your Flumpshop Client has now been upgraded to v<?php echo $config->getNode('site','version');?>.<?php
+	} elseif (isset($_GET['page']) and $_GET['page'] == "finish") {
+		?><div class='bg2'><h2>Upgrade Complete</h2><p>Your Flumpshop Client has now been upgraded to v<?php echo $config->getNode('site','version');?>.</p><?php
 	}
-	?></div><?php
-} else {
-	//Upgrade Package hasn't been downloaded yet
-	?><div class="bg1">
-    Current Flumpshop Version: <?php echo $config->getNode("site","version");?><br />
-    Latest Flumpshop Version: <?php echo $latestVersion;?>
-    </div></div>
-    <div id="colTwo">
-    	<div class="bg1">
-        	<h2>Upgrade</h2>
-			<p>The latest upgrade file is now being downloaded. If you are having issues with this feature, please download the file http://flumpshop.googlecode.com/svn/updater/upgrade_<?php echo $latestVersion;?>.fml file and place it in the offline directory.</p>
-            <p>Remember that PHP must have WRITE access to the Flumpshop root directory and all subdirectories for this process.</p>
-            <p><center id="downloader"><img src="../../images/loading.gif" /><br />Downloading upgrade_v<?php echo $latestVersion;?>.fml</center></p>
-            <script type="text/javascript">$('#downloader').load('downloader.php?file=upgrade_v<?php echo $latestVersion;?>.fml');</script>
-        </div>
-	</div><?php
-}?></div>
+	?></div>
+    </div>
+</div>
 <div id="footer">
 	<p>Copyright (c) 2009-2010 <a href='http://www.theflump.com'>Flumpnet</a>. All Rights Reserved. Upgrader Developer Preview Design by <a href="http://www.freecsstemplates.org/">Free CSS Templates</a>.</p>
 </div>

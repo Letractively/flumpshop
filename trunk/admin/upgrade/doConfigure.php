@@ -21,7 +21,9 @@ for ($i = 0; isset($trees[$i]); $i++) {
 	$config[$i]['value'] = $defaults[$i];
 	$config[$i]['name'] = $names[$i];
 }
-$upgrade->setConfUpdate($config);
+if (!empty($config[0]['tree'])) {
+	$upgrade->setConfUpdate($config);
+}
 $package = array();
 //Upgrade Object Generated, now package files
 $dirs = array("../..");
