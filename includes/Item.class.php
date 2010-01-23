@@ -87,6 +87,10 @@ class Item {
 	
 	//Destructor
 	function __destruct() {
+		$this->save();
+	}
+	
+	function save() {
 		if ($this->change) {
 			global $dbConn;
 			debug_message("Commiting Changes to Item #".$this->getID());
