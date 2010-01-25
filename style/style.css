@@ -143,6 +143,9 @@ a.subcat:hover {
 #leftside 
 {
 	/*float: left;*/
+	background: #263137;
+	background-image: url(../images/box_top.png);
+	background-repeat: no-repeat;
 	width: 160px;
 	padding: 10px 0 0 0;
 	text-align: center;
@@ -156,12 +159,10 @@ a.subcat:hover {
 #leftside_nav
 {
 	width: 160px;
-	background: #263137;
-	background-image: url(../images/box_top.png);
-	background-repeat: no-repeat;
-	position: fixed;
+	position: relative;
 	top: 0;
 	height: 100%;
+	vertical-align: top;
 }
 
 #rightside 

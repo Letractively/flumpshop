@@ -100,7 +100,7 @@ function loadCat(obj,url) {
 $(window).bind("resize", function(e) {
 								  $('.subcat:visible').css('left',(($('#leftside').position().left)+160)+"px");
 								  });
-$('#leftside_nav').css('top',($('#mainContent').position().top)+"px");
+//$('#leftside_nav').css('top',($('#mainContent').position().top)+"px");
 </script>
 <!-- Close rightside in footer -->
 <?php require_once dirname(__FILE__)."/footer.php"; ?>
