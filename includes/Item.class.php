@@ -214,13 +214,14 @@ class Item {
 		global $config, $stats, $dbConn;
 		$type = strtoupper($type); //Standardize for easy comparison
 		if ($type == "INDEX") {
-			$reply = "<span style='min-width: 100px; min-height: 100px;'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' style='float: left; padding: 1em; border: none; max-width: 150px; max-height: 150px;' alt='".$this->getName()."' /></span>";
-			$reply .= "<h3 style='font-size: 0.8em;'><a href='".$this->getURL()."' class='ui-widget-content'>".$this->getName()."</a></h3>";
+			$reply = "<table><tr><td><a href='".$this->getURL()."'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' style='border: none; max-width: 150px; max-height: 150px;' alt='".$this->getName()."' /></a></td>";
+			$reply .= "<td><h3 style='font-size: 0.8em;'><a href='".$this->getURL()."' class='ui-widget-content'>".$this->getName()."</a></h3>";
 			if ($config->getNode("site","shopEnabled")) {
 				$reply .= "<em>&pound;".$this->itemPrice."</em><span class='ui-state-disabled'>&nbsp;ex.VAT</span>";
 			}
 			if (strlen($this->getDesc()) > 250) $reply .= "<p style='font-size: 0.8em; padding-right: 1em; min-height: 100px;'>".substr($this->getDesc(),0,250)."...</p>";
 			else $reply .= "<p style='font-size: 0.8em; padding-right: 1em; min-height: 100px;'>".$this->getDesc()."</p>";
+			$reply .= "</td></tr></table><br />";
 		}
 		if ($type == "CATEGORY") {
 			$reply = "<a href='".$this->getURL()."' class='ui-widget-content'><span style='width: 100px; height: 100px;'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' style='float: left; padding-right: 1em; padding-top: 1em;' alt='".$this->getName()."' /></span>";
