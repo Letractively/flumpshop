@@ -169,6 +169,10 @@ class MySQL_Database extends Database {
 		}
 		return mysqli_insert_id($this->linkid);
 	}
+	
+	function version() {
+		return $this->linkid->server_info;
+	}
 }
 
 //SQLite Extension
@@ -284,6 +288,10 @@ class SQLite_Database extends Database {
 			return -1;
 		}
 		return sqlite_last_insert_rowid($this->linkid);
+	}
+	
+	function version() {
+		return sqlite_libversion();
 	}
 }
 

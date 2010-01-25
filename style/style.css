@@ -210,19 +210,21 @@ h1.content
 }
 a.navigation
 {
-	background-image: url(../images/nav_regular.png);
 	display:block;
 	font-family: "Century Schoolbook", serif;
 	font-size: 14px;
 	width: 155px;
-	height: 36px;
+	height: 56px;
 	margin: 7px 0 7px 3px;
 	font-variant: small-caps;
 	font-weight: bold;
+	margin-bottom: 15px;
+	background-color: #FFF;
+	color: #000;
 }
 a.navigation:hover, a.activeNavigation
 {
-	background-image: url(../images/nav_hover.png);
+	background-color: #5A707C;
 	cursor: pointer;
 }
 .search_box
@@ -279,8 +281,8 @@ a.tab:hover, a.tab.active
 {
 	text-align: right;
 	width: 100%;
-	min-height: 40px;
-	max-height: 60px;
+	min-height: 25px;
+	max-height: 45px;
 	overflow: auto;
 	background-color: #263137;
 	position: fixed;
