@@ -22,14 +22,14 @@
   ?>
   <div class="ui-widget">
       <div class="ui-widget-header ui-corner-top"><?php echo $config->getNode("messages","featuredItemHeader");?></div>
-      <div class="ui-widget-content" style='height: 150px;'>
+      <div class="ui-widget-content" style='min-height: 150px;'>
       <?php
 	  $result = $dbConn->query("SELECT value FROM `stats` WHERE `key`='featuredItem' LIMIT 1");
 	  if ($dbConn->rows($result) == 0) {
 		  echo "Hey, It's the Flumpnet robot and this is another one of my spectacular placeholders! You can set an item to appear here by selecting it in the Admin CP, under Edit Object->Featured Item";
 	  } else {
 		  $row = $dbConn->fetch($result);
-		  $item = new Item($row['id']);
+		  $item = new Item($row['value']);
 		  echo $item->getDetails("INDEX");
 	  }
 	  ?>
@@ -37,7 +37,7 @@
   </div>
   <div class="ui-widget">
       <div class="ui-widget-header"><?php echo $config->getNode("messages","popularItemHeader");?></div>
-      <div class="ui-widget-content"><?php
+      <div class="ui-widget-content" style='min-height: 150px;'><?php
       $popular = $stats->getHighestStat("item%Hits");
 	  if (!$popular) {
 		  echo "This feature isn't available right now. Please try again later.";

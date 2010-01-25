@@ -16,7 +16,7 @@ if (!$config->isNode('temp','carouselid')) $config->setNode('temp','carouselid',
 			$item = new Item($row['id']);
 			$size = $config->getNode("widget_carousel", "imageScale");
 			echo "<li><a href='".$item->getURL()."'>";
-			echo "<img src='item/imageProvider.php?id=".$item->getID()."' alt='".$item->getName()."' title='".$item->getName()."' style='max-width: ".(75*$size)."px; max-height: ".(75*$size)."px' />";
+			echo "<center><img src='item/imageProvider.php?id=".$item->getID()."' alt='".$item->getName()."' title='".$item->getName()."' style='max-width: ".(75*$size)."px; max-height: ".(75*$size)."px' /></center>";
 			echo "</a></li>";
 		}
 	?>

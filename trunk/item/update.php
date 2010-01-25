@@ -8,7 +8,6 @@ if (!isset($_SESSION['adminAuth']) || !$_SESSION['adminAuth']) die($config->getN
 $pid = $_GET['pid'];
 if ($pid == "category") {
 	$item = new Item($_POST['id']);
-	echo $_POST['newCat'];
 	$item->setCategory($_POST['newCat']);
 	echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-circle-check'></span>Category Updated</div>";
 } else {
