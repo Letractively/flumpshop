@@ -224,13 +224,13 @@ class Item {
 			$reply .= "</td></tr></table><br />";
 		}
 		if ($type == "CATEGORY") {
-			$reply = "<a href='".$this->getURL()."' class='ui-widget-content'><span style='width: 100px; height: 100px;'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' style='float: left; padding-right: 1em; padding-top: 1em;' alt='".$this->getName()."' /></span>";
-			$reply .= "<h3 style='font-size: 0.8em;'>".$this->getName()."</h3></a>";
+			$reply = "<table><tr><td width='100'><a href='".$this->getURL()."' class='ui-widget-content'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' style='float: left; padding-right: 1em; padding-top: 1em; max-height: 150px; max-width: 150px;' alt='".$this->getName()."' /></a></td>";
+			$reply .= "<td><h3 style='font-size: 0.8em;'><a href='".$this->getURL()."' class='ui-widget-content'>".$this->getName()."</a></h3>";
 			if ($config->getNode("site","shopEnabled")) {
 				$reply .= "<em>&pound;".$this->itemPrice."</em><span class='ui-state-disabled'>&nbsp;ex.VAT</span>";
 			}
 			if (strlen($this->getDesc()) > 250) $reply .= "<p style='font-size: 0.8em; height: 125px;'>".substr($this->getDesc(),0,250)."...</p>";
-			else $reply .= "<p style='font-size: 0.8em; height: 125px;'>".$this->getDesc()."</p>";
+			else $reply .= "<p style='font-size: 0.8em; height: 125px;'>".$this->getDesc()."</p></td></tr></table>";
 		}
 		if ($type == "SEARCH") {
 			$reply = "<h3 style='margin-bottom: 0;'><a href='".$this->getURL()."' class='ui-widget-content'>".$this->getName($int)."</a></h3>";
@@ -262,7 +262,7 @@ class Item {
 			$reply .= "<div class='ui-widget'><div class='ui-widget-header' id='itemTitle'>".$this->getName()."</div><div class='ui-widget-content'>";
 			//Images
 			$scale = 150*$config->getNode("viewItem","imageScale");
-			$reply .= "<div style='float: left; padding-right: 1em; width: ".$scale."px; height: ".$scale."px;'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' onclick='openImageViewer(0);' style='cursor: pointer' />";
+			$reply .= "<table><tr><td><div style='float: left; padding-right: 1em; width: ".$scale."px; height: ".$scale."px;'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' onclick='openImageViewer(0);' style='cursor: pointer' />";
 			
 			$num = 0;
 			while (file_exists($config->getNode('paths','offlineDir')."/images/item_".$this->getID()."/minithumb_$num.png")) {
@@ -271,7 +271,7 @@ class Item {
 				$num++;
 			}
 			
-			$reply .= "<br /><br /></div>";
+			$reply .= "</div>";
 			
 			/*Shop Mode (Removes Prices/Checkout)*/
 			if ($config->getNode("site","shopMode")) {
@@ -309,7 +309,7 @@ class Item {
 			//TODO: Unique only - Store Visited Array in session obj?
 			$stats->incStat("item".$this->getID()."Hits");
 			if ($int && (isset($_SESSION['adminAuth']) && $_SESSION['adminAuth'] == true)) $reply .= "This page has been viewed ".$stats->getStat("item".$this->getID()."Hits")." times.";
-			$reply .= "</div></div>";
+			$reply .= "</div></div></td></tr></table>";
 		}
 		if ($type == "BASKET") {
 			$reply = "<div class='ui-widget-header ui-corner-top'><a href='".$this->getURL()."'>".$this->getName()."</a></div>";

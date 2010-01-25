@@ -1,4 +1,6 @@
-<?php require_once dirname(__FILE__)."/preload.php";?>
+<?php require_once dirname(__FILE__)."/preload.php";
+ob_flush();
+?>
 </td></tr></table></center>
 </div>
 <div id="dialog" class="ui-helper-hidden"></div>

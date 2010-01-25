@@ -1,4 +1,7 @@
-<?php require_once dirname(__FILE__)."/preload.php";
+<?php
+//Some headers sent later
+ob_start();
+require_once dirname(__FILE__)."/preload.php";
 if (!isset($page_title)) $page_title = "Welcome";
 if (!isset($_SUBPAGE)) $_SUBPAGE = true;
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

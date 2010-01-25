@@ -34,11 +34,13 @@ echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->ge
 	
 	if ($dbConn->rows($items) == 0) {
 		echo "There are no products in this category.";
-	} elseif ($dbConn->rows($items) == 1) {
-		$item = $dbConn->fetch($items);
-		$item = new Item($item['id']);
-		header("Location: ".$item->getURL());
 	} else {
+		if ($dbConn->rows($items) == 1) {
+			$item = $dbConn->fetch($items);
+			$item = new Item($item['id']);
+			header("Location: ".$item->getURL());
+			echo $item->getDetails('CATEGORY');
+		}
 		while ($item = $dbConn->fetch($items)) {
 			$item = new Item($item['id']);
 			echo $item->getDetails('CATEGORY');
