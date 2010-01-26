@@ -11,7 +11,7 @@ if (isset($_GET['frame'])) {
             <script type="text/javascript" language="javascript" src="../js/jqueryui.js"></script>
             </head>
             <body>
-            	<center><img src="images/flumpshop-logo.png" />
+            	<center><img src="images/logo.jpg" />
                 <div class="header">flump<span class='header2'>shop</span> <?php echo $config->getNode("site","version");?></div>
                 Powered by Flumpnet<br />
                 <!--<a href="javascript:void(0);">Expand All</a> | <a href="javascript:void(0);"> Collapse All</a><br />--><br />
@@ -45,7 +45,7 @@ if (isset($_GET['frame'])) {
                     	<a href="endpoints/process/cron.php" target="main">Cron Script</a>
                         <a href="logs" target="main">Logs</a>
                         <a href="adminendpoints/advanced/bugs.php" target="main">Bugs</a>
-                        <a href="javascript:void(0);" onclick="loadVarMan();" target="main">Configuration Manager</a>
+                        <a href="javascript:void(0);" onClick="loadVarMan();" target="main">Configuration Manager</a>
                     </div>
                 </div>
                 </div>
@@ -93,7 +93,7 @@ if (isset($_GET['frame'])) {
 	?><html><head><title>Flumpshop | Admin CP</title></head>
     	<frameset cols="252px,*" framespacing="0" border="0" frameborder="0" frameborder="no" border="0">
     	<frame name="leftFrame" id="leftFrame" src="?frame=leftFrame" scrolling="yes" frameborder="0" marginwidth="0" marginheight="0" border="no" />
-        <frameset rows="50px,*" framespacing="0" border="0" frameborder="0" frameborder="no" border="0">
+        <frameset rows="60px,*" framespacing="0" border="0" frameborder="0" frameborder="no" border="0">
 			<frame src="?frame=header" name="header" id="header" scrolling="no" noresize="noresize" frameborder="0" marginwidth="10" marginheight="0" border="no" />
 			<frame src="?frame=main" name="main" id="main" scrolling="yes" frameborder="0" marginwidth="10" marginheight="10" border="no" />
 		</frameset>
