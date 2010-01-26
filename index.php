@@ -87,10 +87,9 @@
 <!-- Product Carousel -->
 <?php if ($config->getNode("widget_carousel", "onIndex") and $config->getNode("widget_carousel", "indexPosition") == "right") include $config->getNode('paths','path')."/includes/carousel.inc.php";?>
 <script type="text/javascript">
-function loadCat(obj,url) {
+function loadCat(obj) {
 	$("#leftside_nav a:not(#"+obj+")").removeClass('activeNavigation');
 	$("#"+obj).toggleClass('activeNavigation');
-	$("#"+obj+" + div").load(url);
 	$("#leftside_nav div:not(#"+obj+" + div):visible").hide("fold",{},"50");
 	$("#"+obj+" + div").css('left',(($('#leftside').position().left)+160)+"px");
 	$("#"+obj+" + div").toggle("fold");
