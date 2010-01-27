@@ -3,5 +3,7 @@ This feature uses a previously exported copy of my database to fix altered or mi
 	<input type="file" name="file" id="file" /><br />
     <input type="checkbox" name="includeConf" id="includeConf" checked="checked" />
     <label for='includeConf'>Replace the Configuration Object</label><br />
+    <input type="checkbox" name="includeImages" id="includeImages" checked="checked" />
+    <label for='includeImages'>Import images</label><br />
     <input type="submit" id="submitButton" value="Import" class="ui-widget-content" />
 </form>

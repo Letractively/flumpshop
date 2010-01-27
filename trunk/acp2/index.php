@@ -44,8 +44,9 @@ if (isset($_GET['frame'])) {
                     <div>
                     	<a href="endpoints/process/cron.php" target="main">Cron Script</a>
                         <a href="logs" target="main">Logs</a>
-                        <a href="adminendpoints/advanced/bugs.php" target="main">Bugs</a>
+                        <a href="endpoints/advanced/bugs.php" target="main">Bugs</a>
                         <a href="javascript:void(0);" onClick="loadVarMan();" target="main">Configuration Manager</a>
+                        <a href="endpoints/widget/install.php" target="main">Widget Installer</a>
                     </div>
                 </div>
                 </div>

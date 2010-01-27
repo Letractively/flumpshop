@@ -89,6 +89,24 @@ $export['keycodes'] = serialize($keycodes);
 //Config
 $export['config'] = serialize($config);
 
+//Images
+$export['images'] == array();
+$package = array();
+//Upgrade Object Generated, now package files
+$dirs = array($config->getNode('paths','offlineDir')."/images/");
+while ($dir = array_pop($dirs)) {
+	$handle = opendir($config->getNode('paths','offlineDir')."/$dir");
+	while ($file = readdir($handle)) {
+		if (is_dir($config->getNode('paths','offlineDir')."/$dir/$file") && $file != "." && $file != "..") {
+			array_push($dirs,$dir."/$file");
+		} elseif (preg_match("/(png|jpg|gif)$/i",$file)) {//Only include Image Files
+			if (!is_dir($config->getNode('paths','offlineDir')."/$dir/$file")) {
+				$export['images'][$dir][$file] = file_get_contents($config->getNode('paths','offlineDir')."/$dir/$file");
+			}
+		}
+	}
+}
+
 
 header("Content-Disposition: attachment; filename=exportdata.dat");
 

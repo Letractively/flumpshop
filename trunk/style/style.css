@@ -10,6 +10,13 @@ body
 	padding: 0;
 	text-align: center;
 }
+
+a {
+	border: none;
+	text-decoration: none;
+	color: #FFFFFF;
+}
+
 #header
 {
 	height: 100px;
