@@ -1,6 +1,6 @@
 <?php
 $ajaxProvider = true;
-require_once dirname(__FILE__)."/../preload.php";
+require_once dirname(__FILE__)."/../../../preload.php";
 $initTime = $dbConn->time();
 $result = $dbConn->query("SELECT * FROM `reserve` WHERE expire<='".$initTime."'");
 

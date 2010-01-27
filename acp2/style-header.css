@@ -1,7 +1,7 @@
 body, a, a:visited {
 	background-color: #1e2b5e;
 	color: #FFF;
-	border-bottom: 2px inset #FFF;
+	/*border-bottom: 2px inset #FFF;*/
 }
 
 h1 {

@@ -80,6 +80,26 @@ echo "Importing Keycodes...<br />";
 $keycodes = unserialize($import['keycodes']);
 $keycodes->import();
 
+//Import Images
+if (isset($import['revision']) and $import['revision'] >= 2 and isset($import['config'])) {
+	if (isset($_POST['includeImages'])) {
+		echo "Importing Images...<br />";
+		foreach ($export['images'] as $dirname => $dir) {
+			if (!is_dir($dirname)) mkdir($dirname);
+			foreach ($dir as $file => $contents) {
+				debug_message($dirname."/".$file);
+				$fp = fopen($dirname."/".$file,"w+");
+				fwrite($fp, $contents);
+				fclose($fp);
+			}
+		}
+	} else {
+		echo "Images import skipped.";
+	}
+} else {
+	echo "Notice: Images not included in import file.<br />";
+}
+
 //Import Items
 echo "Importing Items...<br />";
 foreach ($import['items'] as $item) {
