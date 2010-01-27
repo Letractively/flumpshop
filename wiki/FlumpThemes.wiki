@@ -3,7 +3,7 @@
 
 = Introduction =
 A planned feature for flumpshop is complete customisation of the theme.
-When sufficient time is available, themeing will be created and tested in the TRY-THEME branch of the repository.
+When sufficient time is available, themeing may be created and tested in the TRY-THEME branch of the repository.
 
   * Widgets
   * Colours
@@ -20,4 +20,4 @@ The system should be able to dynamically generate new styles (use [offlineDir]) 
 = Possible Advanced Features =
 Add drag/drop elements and widgets on the home page as well as removing/adding new ones
 
-Import .fsx theme files (FlumpShopXML) and store them in a library (offlineDir again)
+Import .fml theme files (Flump Magic Language) and store them in a library (offlineDir again)
