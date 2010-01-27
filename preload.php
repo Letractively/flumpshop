@@ -86,6 +86,8 @@ require_once(dirname(__FILE__)."/includes/json_encode.inc.php");
 debug_message("json_encode Function Definition Loaded.");
 require_once(dirname(__FILE__)."/includes/file_put_contents.inc.php");
 debug_message("file_put_contents Function Definition Loaded.");
+require_once(dirname(__FILE__)."/includes/file_get_contents.inc.php");
+debug_message("file_get_contents Function Definition Loaded.");
 
 $stats = new Stats();
 
