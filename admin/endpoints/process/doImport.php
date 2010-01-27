@@ -85,10 +85,10 @@ if (isset($import['revision']) and $import['revision'] >= 2 and isset($import['c
 	if (isset($_POST['includeImages'])) {
 		echo "Importing Images...<br />";
 		foreach ($export['images'] as $dirname => $dir) {
-			if (!is_dir($dirname)) mkdir($dirname);
+			if (!is_dir($config->getNode("paths","offlineDir")."/".$dirname)) mkdir($config->getNode("paths","offlineDir")."/".$dirname);
 			foreach ($dir as $file => $contents) {
-				debug_message($dirname."/".$file);
-				$fp = fopen($dirname."/".$file,"w+");
+				debug_message($config->getNode("paths","offlineDir")."/".$dirname."/".$file);
+				$fp = fopen($config->getNode("paths","offlineDir")."/".$dirname."/".$file,"w+");
 				fwrite($fp, $contents);
 				fclose($fp);
 			}
