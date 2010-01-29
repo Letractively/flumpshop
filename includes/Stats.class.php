@@ -50,11 +50,19 @@ class Stats {
 		return $this->setStat($key,$newVal);
 	}
 	
-	function getHighestStat($filter = "%") {
+	function getHighestStat($filter = "%", $int = 1) {
 		global $dbConn;
-		$result = $dbConn->query("SELECT `key` FROM `stats` WHERE `key` LIKE '$filter' ORDER BY value DESC LIMIT 1");
-		$result = $dbConn->fetch($result);
-		return $result['key'];
+		$result = $dbConn->query("SELECT `key` FROM `stats` WHERE `key` LIKE '$filter' ORDER BY value DESC LIMIT 0,$int");
+		if ($int == 1) {
+			$result = $dbConn->fetch($result);
+			return $result['key'];
+		} else {
+			$return = array();
+			while ($row = $dbConn->fetch($result)) {
+				$return[] = $row['key'];
+			}
+			return $return;
+		}
 	}
 }
 ?>
