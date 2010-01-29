@@ -1,4 +1,5 @@
 <?php require_once dirname(__FILE__)."/preload.php";
+echo "Page Generated in ".(microtime_float()-$time_start)." Seconds";
 ob_flush();
 ?>
 </td></tr></table></center>
