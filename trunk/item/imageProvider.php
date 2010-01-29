@@ -1,4 +1,5 @@
 <?php
+die();
 $_PRINTDATA = false;
 $ajaxProvider = true;
 require_once dirname(__FILE__)."/../preload.php";

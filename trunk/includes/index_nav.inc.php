@@ -7,7 +7,7 @@ $subcatstr = "";
 $categories = $dbConn->query("SELECT id FROM `category` WHERE parent='0' AND enabled='1'");
 while ($category = $dbConn->fetch($categories)) {
     $cat = new Category($category['id']);
-    echo "<tr><td class='ui-corner-all' onclick='loadCat(".$category['id'].");' id='cat".$category['id']."'><a class='navigation ui-widget' href='javascript:void(0);'>".ucwords(strtolower($cat->getName()))."</a></td></tr>";
+    echo "<tr><td class='ui-corner-all' onclick='loadCat(\"".$category['id']."\");' id='cat".$category['id']."'><a class='navigation ui-widget' href='javascript:void(0);'>".ucwords(strtolower($cat->getName()))."</a></td></tr>";
 	//Subcat Menu
 	$subcatstr .= "<table class='subcat ui-corner-right' id='subcat".$category['id']."'>";
 	$result = $dbConn->query("SELECT id FROM `category` WHERE parent='".$category['id']."' AND enabled='1' ORDER BY `name` ASC");

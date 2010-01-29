@@ -90,9 +90,9 @@
 function loadCat(obj) {
 	$("#leftside_nav td:not(#cat"+obj+")").removeClass('activeNavigation');
 	$("#cat"+obj).toggleClass('activeNavigation');
-	$("#leftside table:not(#subcat"+obj+" + div):not(#leftside_nav):visible").hide("fold",{},"50");
-	$("#subcat"+obj+" + table").css('left',(($('#leftside').position().left)+160)+"px");
-	$("#subcat"+obj+" + table").toggle("fold");
+	$("#leftside table:not(#subcat"+obj+", #leftside_nav):visible").hide("fold",{},"50");
+	$("#subcat"+obj).css('left',(($('#leftside').position().left)+160)+"px");
+	$("#subcat"+obj).toggle("fold");
 }
 
 //Move subcat on window resize

@@ -17,6 +17,11 @@ a {
 	color: #FFFFFF;
 }
 
+img {
+	border-style: none;
+	border: 1px #000 solid;
+}
+
 /* Header */
 #header
 {
