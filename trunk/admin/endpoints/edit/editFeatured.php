@@ -8,6 +8,8 @@ if ($dbConn->rows($result) == 0) {
 	$id = $result['value'];
 }
 ?><form action="./endpoints/process/saveFeatured.php" method="get" onsubmit="$('#adminContent').html(loadMsg('Saving Content...'));$(this).ajaxSubmit({target: '#adminContent'}); return false;">
-<label for="featuredItem">Featured Item ID: </label><input type="text" name="featuredItem" id="featuredItem" class="ui-state-default" value="<?php echo $id;?>" /><br />
+<label for="featuredItem1">Featured Item ID: </label><input type="text" name="featuredItem1" id="featuredItem1" class="ui-state-default" value="<?php echo $id;?>" /><br />
+<label for="featuredItem2">Featured Item ID: </label><input type="text" name="featuredItem2" id="featuredItem2" class="ui-state-default" value="<?php echo $id;?>" /><br />
+<label for="popularItem">"Most Popular" Item ID: </label><input type="text" name="popularItem" id="popularItem" class="ui-state-default" value="<?php echo $id;?>" /><br />
 <input type="submit" value="Save" />
 </form>
