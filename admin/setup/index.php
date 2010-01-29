@@ -211,7 +211,8 @@
 						$config->setNode("site", "shopMode", false, "Shop Mode");
 						$config->setNode("site", "homeTab", true, "Home Tab");
 						$config->setNode("site", "sendFeedback", true, "Send Feedback");
-						$config->setNode("site", "version", "0.7.185", "Version");
+						$config->setNode("site", "version", "0.8.207", "Version");
+						$config->setNode("site", "loginTab", true, "Login Tab");
 						
 						//Paths and Directories Tree
 						$config->addTree("paths", "Site Paths and Directories");
