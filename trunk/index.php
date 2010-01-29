@@ -88,11 +88,11 @@
 <?php if ($config->getNode("widget_carousel", "onIndex") and $config->getNode("widget_carousel", "indexPosition") == "right") include $config->getNode('paths','path')."/includes/carousel.inc.php";?>
 <script type="text/javascript">
 function loadCat(obj) {
-	$("#leftside_nav a:not(#"+obj+")").removeClass('activeNavigation');
-	$("#"+obj).toggleClass('activeNavigation');
-	$("#leftside_nav div:not(#"+obj+" + div):visible").hide("fold",{},"50");
-	$("#"+obj+" + div").css('left',(($('#leftside').position().left)+160)+"px");
-	$("#"+obj+" + div").toggle("fold");
+	$("#leftside_nav td:not(#cat"+obj+")").removeClass('activeNavigation');
+	$("#cat"+obj).toggleClass('activeNavigation');
+	$("#leftside table:not(#subcat"+obj+" + div):not(#leftside_nav):visible").hide("fold",{},"50");
+	$("#subcat"+obj+" + table").css('left',(($('#leftside').position().left)+160)+"px");
+	$("#subcat"+obj+" + table").toggle("fold");
 }
 
 //Move subcat on window resize

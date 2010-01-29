@@ -5,7 +5,7 @@ require_once dirname(__FILE__)."/../../../preload.php";
 
 $export = array();
 
-$export['revision'] = 2;
+$export['revision'] = 3;
 
 $items = $dbConn->query("SELECT id FROM `products`");
 $export['items'] = array();

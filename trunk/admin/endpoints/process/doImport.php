@@ -81,7 +81,7 @@ $keycodes = unserialize($import['keycodes']);
 $keycodes->import();
 
 //Import Images
-if (isset($import['revision']) and $import['revision'] >= 2 and isset($import['config'])) {
+if (isset($import['revision']) and $import['revision'] >= 3 and isset($import['config'])) {
 	if (isset($_POST['includeImages'])) {
 		echo "Importing Images...<br />";
 		foreach ($export['images'] as $dirname => $dir) {

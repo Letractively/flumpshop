@@ -16,7 +16,7 @@
 input.ui-widget-content, select.ui-widget-content {
 	padding: 0;
 }
-/*
+
 .ui-widget { margin: 2em 0 2em 0; }
 .ui-widget-header { border: none; background: none; color: #15324b; font-size: 1.5em; border-bottom: 1px dashed #15324b; }
-.ui-widget-content { border: none; background: none; }*/
+.ui-widget-content { border: none; background: none; }
