@@ -17,6 +17,7 @@ a {
 	color: #FFFFFF;
 }
 
+/* Header */
 #header
 {
 	height: 100px;
@@ -71,13 +72,13 @@ a {
 	z-index: 1;
 	font-style:italic;
 }
+
+/* Main Content */
 #content_container_background
 {
 	padding-top: 110px;
 	background-color: #e6dac0;
 	width: 100%;
-	min-height: 700px;
-	margin: 0 0 40px 0;
 }
 
 #content_container 
@@ -90,21 +91,11 @@ a {
 	overflow: hidden;
 } 
 
-/*
-div.subcat
-{
-	width: 80%;
-	background-color: #5a707c;
-	height: auto;
-	margin: 0 auto 0 auto;
-	padding: 10px 0 10px 0;
-	display: none;
-	border: 2px solid #4d626d;
-}*/
-div.subcat {
+/* Subcategories */
+table.subcat {
 	width: 170px;
 	position: fixed;
-	left: 26.3%;
+	left: 26%;
 	top: 180px;
 	height: auto;
 	margin: 0px;
@@ -114,53 +105,45 @@ div.subcat {
 	background-repeat: no-repeat;
 	z-index: 4;
 }
-/*a.subcat
-{
-	color: #FFF;
-	display:block;
-	font-family: "Century Schoolbook", serif;
-	font-size: 17px;
-	width: 100%;
-	margin: 7px 0 7px 0;
-	text-decoration: none;
-}*/
+
+table.subcat td {
+	background-color: #c0b59d;
+	vertical-align: middle;
+	width: 95%;
+	height: 35px;
+	cursor: pointer;
+}
+
 a.subcat {
 	color: #fff;
-	display: block;
 	font-family: "Century Schoolbook", serif;
 	font-size: 14px;
-	width: 95%;
-	height: 25px;
 	margin: 7px 0px;
 	text-decoration: none;
-	background-color: #c0b59d;
 	overflow: hidden;
-	cursor: pointer;
 	font-variant: small-caps;
+	padding: auto;
 }
-/*a.subcat:hover
-{
-	background: #6f8591;
-	cursor: pointer;
-}*/
-a.subcat:hover {
+
+table.subcat td:hover {
 	background-color: #8c8675;
 	background-repeat: no-repeat;
 }
+
+/* Navigation Container*/
 #leftside 
 {
-	/*float: left;*/
 	background: #263137;
 	background-image: url(../images/box_top.png);
 	background-repeat: no-repeat;
 	width: 160px;
 	padding: 10px 0 0 0;
 	text-align: center;
-	/*position: fixed;*/
 	vertical-align: top;
 	height: 100%;
 	overflow: auto;
 	z-index: 1001;
+	border-bottom: 1px solid #263137;
 }
 
 #leftside_nav
@@ -172,13 +155,35 @@ a.subcat:hover {
 	vertical-align: top;
 }
 
+#leftside_nav td {
+	vertical-align: middle;
+	background-color: #FFF;
+	width: 155px;
+	height: 56px;
+	cursor: pointer;
+}
+
+/* Navigation */
+a.navigation
+{
+	font-family: "Century Schoolbook", serif;
+	font-size: 14px;
+	font-variant: small-caps;
+	font-weight: bold;
+	color: #000;
+}
+
+#leftside_nav td:hover, #leftside_nav td.activeNavigation
+{
+	background-color: #5A707C;
+}
+
+/* Carousel Container */
 #rightside 
 {
 	width: 100px;
 	overflow: visible;
-	/*position: fixed;
-	top: 150px;
-	right: 15%;*/
+	vertical-align: top;
 }
 
 #mainContent 
@@ -215,25 +220,7 @@ h1.content
 	font-family: Verdana, Geneva, sans-serif;
 	margin: 0 0 10px 0;
 }
-a.navigation
-{
-	display:block;
-	font-family: "Century Schoolbook", serif;
-	font-size: 14px;
-	width: 155px;
-	height: 56px;
-	margin: 7px 0 7px 3px;
-	font-variant: small-caps;
-	font-weight: bold;
-	margin-bottom: 15px;
-	background-color: #FFF;
-	color: #000;
-}
-a.navigation:hover, a.activeNavigation
-{
-	background-color: #5A707C;
-	cursor: pointer;
-}
+
 .search_box
 {
 	background: #13191c url(../images/magnifying_glass.png) right no-repeat;
@@ -288,11 +275,10 @@ a.tab:hover, a.tab.active
 {
 	text-align: right;
 	width: 100%;
-	min-height: 25px;
-	max-height: 45px;
+	height: auto;
 	overflow: auto;
 	background-color: #263137;
-	position: fixed;
+	position: relative;
 	bottom: 0;
 	left: 0;
 	display: block;

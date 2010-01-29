@@ -7,7 +7,7 @@ ob_flush();
 <div id='footer'><?php echo $config->getNode('messages','footer');?>
 <p><a href='<?php echo $config->getNode('paths','root');?>/legal/privacy.php'>Privacy Policy</a> &middot;
 <a href='<?php echo $config->getNode('paths','root');?>/legal/terms.php'>Terms and Conditions</a> &middot;
-<a href='<?php echo $config->getNode('paths','root');?>/legal/disclaimer.php'>Disclaimer</a></p>
+<a href='<?php echo $config->getNode('paths','root');?>/legal/disclaimer.php'>Disclaimer</a>&nbsp;&nbsp;</p>
 <!--Site Designed by Jake Mitchell. Programmed by Lloyd Wallis and John Maydew.-->
 </div></div>
 <script type="text/javascript">
