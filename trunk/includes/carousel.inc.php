@@ -16,7 +16,7 @@ if (!$config->isNode('temp','carouselid')) $config->setNode('temp','carouselid',
 		while ($row = $dbConn->fetch($result)) {
 			$item = new Item($row['id']);
 			echo "<li><a href='".$item->getURL()."'>";
-			echo "<center><img src='item/imageProvider.php?id=".$item->getID()."' alt='".$item->getName()."' title='".$item->getName()."' style='width: ".(75*$size)."px; max-height: ".(75*$size)."px' /></center>";
+			echo "<center><img src='item/imageProvider.php?id=".$item->getID()."' alt='".$item->getName()."' title='".$item->getName()."' style='width: ".(75*$size)."px; height: ".(75*$size)."px' /></center>";
 			echo "</a></li>";
 		}
 	?>
