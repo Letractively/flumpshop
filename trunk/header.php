@@ -53,9 +53,11 @@ if ($config->getNode("site","shopEnabled")) {
 	if (stristr($_SERVER['REQUEST_URI'],"basket.php")) {?><a class='tab active' href='<?php echo $config->getNode('paths','root');?>/basket.php'>cart</a><?php } else {?><a class='tab' href='<?php echo $config->getNode('paths','root');?>/basket.php'>cart</a><?php }
 }
 
-if (!isset($_SESSION['login']['active']) or $_SESSION['login']['active'] == false) echo "<a class='tab' onclick='loginForm();'>login</a>"; else {
-	//Login/Account
-	if (stristr($_SERVER['REQUEST_URI'],"/account")) {echo "<a class='tab active' href='".$config->getNode("paths","root")."/account/'>account</a>";} else {echo "<a class='tab' href='".$config->getNode("paths","root")."/account/'>account</a>";}
+if ($config->getNode("site","loginTab")) {
+	if (!isset($_SESSION['login']['active']) or $_SESSION['login']['active'] == false) echo "<a class='tab' onclick='loginForm();'>login</a>"; else {
+		//Login/Account
+		if (stristr($_SERVER['REQUEST_URI'],"/account")) {echo "<a class='tab active' href='".$config->getNode("paths","root")."/account/'>account</a>";} else {echo "<a class='tab' href='".$config->getNode("paths","root")."/account/'>account</a>";}
+	}
 }
 
 //Contact
