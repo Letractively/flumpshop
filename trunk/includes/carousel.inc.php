@@ -5,54 +5,35 @@ require_once dirname(__FILE__)."/../preload.php";
 
 //Use incremental ID to allow multiple carousels per page
 if (!$config->isNode('temp','carouselid')) $config->setNode('temp','carouselid',0);
-?>
-<ul id='carousel<?php echo $config->getNode("temp","carouselid");?>' class='jcarousel jcarousel-skin-tango'>
+?><div id='carousel<?php echo $config->getNode("temp","carouselid");?>' class="jMyCarousel" style="width: 150px;">
+<ul>
   	<?php 
 		//Selects up to ten random products from the database, and creates an image linking to them
 		$result = $dbConn->query("SELECT id FROM `products` WHERE active=1 ORDER BY RAND() LIMIT 0, ".$config->getNode('widget_carousel','images'));
 		
+		$size = $config->getNode("widget_carousel", "imageScale");
 		//Load Item
 		while ($row = $dbConn->fetch($result)) {
 			$item = new Item($row['id']);
-			$size = $config->getNode("widget_carousel", "imageScale");
 			echo "<li><a href='".$item->getURL()."'>";
-			echo "<center><img src='item/imageProvider.php?id=".$item->getID()."' alt='".$item->getName()."' title='".$item->getName()."' style='max-width: ".(75*$size)."px; max-height: ".(75*$size)."px' /></center>";
+			echo "<center><img src='item/imageProvider.php?id=".$item->getID()."' alt='".$item->getName()."' title='".$item->getName()."' style='width: ".(75*$size)."px; max-height: ".(75*$size)."px' /></center>";
 			echo "</a></li>";
 		}
 	?>
-</ul>
+</ul></div>
 <?php
 if ($dbConn->rows($result) != 0) {//Don't activate if there's no products
 ?>
 	<script type="text/javascript">
-	function carousel_initCallback(carousel)
-	{
-		// Disable autoscrolling if the user clicks the prev or next button.
-		carousel.buttonNext.bind('click', function() {
-			carousel.startAuto(0);
+	$(function() {
+		$("#carousel<?php echo $config->getNode("temp","carouselid");?>").jMyCarousel({
+			visible: '<?php echo $config->getNode('widget_carousel','indexHeight');?>px',
+			auto : true, 
+			vertical : true,
+			speed : 2500,
+			circular: true
 		});
-	 
-		carousel.buttonPrev.bind('click', function() {
-			carousel.startAuto(0);
-		});
-	 
-		// Pause autoscrolling if the user moves with the cursor over the clip.
-		carousel.clip.hover(function() {
-			carousel.stopAuto();
-		}, function() {
-			carousel.startAuto();
-		});
-	};
-	 
-	$(document).ready(function() {$('#carousel<?php echo $config->getNode("temp","carouselid");?>').jcarousel({
-									auto: 2,
-									animation: 'slow',
-									scroll: 1,
-									vertical: true,
-									wrap: 'last',
-									initCallback: carousel_initCallback
-								});
-							   });
+	});
 	</script>
 <?php
 }

@@ -14,7 +14,7 @@ if (!isset($_SUBPAGE)) $_SUBPAGE = true;
 <link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/style.css' type='text/css' /><?php
 if (!isset($_SUBPAGE) or $_SUBPAGE == true) {
 	?><link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/style-subpage.css' type='text/css' /><?php
-}?><link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/style_carousel.php' type='text/css' />
+}?><link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/style_carousel.css' type='text/css' />
 <script src='<?php echo $config->getNode('paths','root');?>/js/jquery.js' type='text/javascript'></script>
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jcarousel.js"></script> 
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jqueryui.js"></script> 
@@ -24,6 +24,7 @@ if (!isset($_SUBPAGE) or $_SUBPAGE == true) {
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jquery.validate.password.js"></script> 
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jquery.form.js"></script>
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jquery.init.js"></script>
+<script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jMyCarousel.pack.js"></script>
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/defaults.php"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo $config->getNode('paths','root');?>/style/skins/rjc/skin.php" />
 <link rel="stylesheet" type="text/css" href="<?php echo $config->getNode('paths','root');?>/style/jquery.css" />

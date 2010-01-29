@@ -1,5 +1,13 @@
 <?php
+function microtime_float()
+{
+    list($usec, $sec) = explode(" ", microtime());
+    return ((float)$usec + (float)$sec);
+}
+
+$time_start = microtime_float();
 ini_set("date.timezone","Europe/London");
+
 if (stristr($_SERVER['REQUEST_URI'],"admin/setup")) $_SETUP = true; else $_SETUP = false;
 if (!isset($ajaxProvider)) $ajaxProvider = false;
 
@@ -14,6 +22,7 @@ function init_err($msg) {
 require_once(dirname(__FILE__)."/includes/Config.class.php");
 require_once(dirname(__FILE__)."/includes/vars.inc.php");
 error_reporting(E_ALL);
+
 if (isset($config)) {
 	if($config->getNode('logs','errors')) $errLog = fopen($config->getNode('paths','logDir')."/errors.log","a+");
 	if($config->getNode('server','debug')) $debugLog = fopen($config->getNode('paths','logDir')."/debug.log","a+");
