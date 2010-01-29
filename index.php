@@ -24,20 +24,28 @@
       <div class="ui-widget-header ui-corner-top"><?php echo $config->getNode("messages","featuredItemHeader");?></div>
       <div class="ui-widget-content" style='min-height: 150px;'>
       <?php
-	  $result = $dbConn->query("SELECT value FROM `stats` WHERE `key`='featuredItem' LIMIT 1");
+	  $result = $dbConn->query("SELECT value FROM `stats` WHERE `key` LIKE 'featuredItem%'");
 	  if ($dbConn->rows($result) == 0) {
 		  echo "Hey, It's the Flumpnet robot and this is another one of my spectacular placeholders! You can set an item to appear here by selecting it in the Admin CP, under Edit Object->Featured Item";
 	  } else {
+		  echo '<table><tr><td style="width: 50%;">';
+		  //Item 1
 		  $row = $dbConn->fetch($result);
 		  $item = new Item($row['value']);
 		  echo $item->getDetails("INDEX");
+		  echo '</td><td style="width: 50%;">';
+		  //Item 2 (Image Only)
+		  $row = $dbConn->fetch($result);
+		  $item = new Item($row['value']);
+		  echo "<a href='".$item->getURL()."'><img src='".$config->getNode("paths","root")."/item/imageProvider.php?id=".$item->getID()."&image=0&size=thumb' style='width: 100%;' /></a>";
+		  echo "</td></tr></table>";
 	  }
 	  ?>
     </div>
   </div>
   <div class="ui-widget">
       <div class="ui-widget-header"><?php echo $config->getNode("messages","popularItemHeader");?></div>
-      <div class="ui-widget-content" style='min-height: 150px;'><?php
+      <div class="ui-widget-content" style='min-height: 150px;'><table><tr><td style='width: 50%;'><?php
       $popular = $stats->getHighestStat("item%Hits");
 	  if (!$popular) {
 		  echo "This feature isn't available right now. Please try again later.";
@@ -46,6 +54,17 @@
 		  $item = new Item($popular);
 		  echo $item->getDetails("INDEX");
 	  }
+	  echo "</td><td style='width: 50%;'>";
+	  
+	  $result = $dbConn->query("SELECT value FROM `stats` WHERE `key`='popularItem' LIMIT 1");
+	  if ($dbConn->rows($result) == 0) {
+		  echo "Hey, It's the Flumpnet robot and this is another one of my spectacular placeholders! You can set an item to appear here by selecting it in the Admin CP, under Edit Object->Featured Item";
+	  } else {
+		  $item = $dbConn->fetch($result);
+		  $item = new Item($item['id']);
+		  echo $item->getDetails("INDEX");
+	  }
+	  echo "</td></tr></table>";
 	  ?></div>
 	</div>
     <div class="ui-widget">
