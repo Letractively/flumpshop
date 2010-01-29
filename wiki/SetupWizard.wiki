@@ -72,7 +72,7 @@ Here you can toggle server logs.
 This one's a doozy. Continually expanding, this page allows you to edit all the canned messages in the site. You can change these later using [ConfigurationManager Configuration Manager].
 
 === 11. Super Really Advanced ===
-These settings are dangerous. The default values are often being changed by the developers, so make sure that URL Rewrite is off (unless you know how to, and have, configured IIS7 to do this), Commit Payments (Debug) is on (Even if you don't want the shop enabled, this gets rid of an ugly message on the home page), and that Debug Mode is off, unless you want random messages thrown up all over every page.
+These settings are dangerous. The default values are often being changed by the developers, so if you have configured IIS, or have mod_rewrite, then make sure URL Rewrite is on, otherwise keep it off, Commit Payments (Debug) is on (Even if you don't want the shop enabled, this gets rid of an ugly message on the home page), and that Debug Mode is off, unless you want random messages thrown up all over every page.
 
 === 12. Finished ===
 That's it. Click Save and Finish.
