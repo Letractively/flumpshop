@@ -45,26 +45,24 @@
   </div>
   <div class="ui-widget">
       <div class="ui-widget-header"><?php echo $config->getNode("messages","popularItemHeader");?></div>
-      <div class="ui-widget-content" style='min-height: 150px;'><table><tr><td style='width: 50%;'><?php
-      $popular = $stats->getHighestStat("item%Hits");
-	  if (!$popular) {
+      <div class="ui-widget-content" style='min-height: 150px;'><table><tr><?php
+      $popular = $stats->getHighestStat("item%Hits",2);
+	  if (!is_array($popular)) {
 		  echo "This feature isn't available right now. Please try again later.";
 	  } else {
-		  $popular = intval(preg_replace("/item([0-9]*)Hits/","$1",$popular));
-		  $item = new Item($popular);
+		  echo "<td style='width: 50%;'>";
+		  //First Item
+		  $popular1 = intval(preg_replace("/item([0-9]*)Hits/","$1",$popular[0]));
+		  $item = new Item($popular1);
 		  echo $item->getDetails("INDEX");
-	  }
-	  echo "</td><td style='width: 50%;'>";
-	  
-	  $result = $dbConn->query("SELECT value FROM `stats` WHERE `key`='popularItem' LIMIT 1");
-	  if ($dbConn->rows($result) == 0) {
-		  echo "Hey, It's the Flumpnet robot and this is another one of my spectacular placeholders! You can set an item to appear here by selecting it in the Admin CP, under Edit Object->Featured Item";
-	  } else {
-		  $item = $dbConn->fetch($result);
-		  $item = new Item($item['id']);
+		  echo "</td><td style='width: 50%;'>";
+		  //Second Item
+		  $popular2 = intval(preg_replace("/item([0-9]*)Hits/","$1",$popular[1]));
+		  $item = new Item($popular2);
 		  echo $item->getDetails("INDEX");
+		  echo "</td>";
 	  }
-	  echo "</td></tr></table>";
+	  echo "</tr></table>";
 	  ?></div>
 	</div>
     <div class="ui-widget">
