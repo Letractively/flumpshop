@@ -91,7 +91,7 @@ img {
 	background-color: #e6dac0;
 	text-align: left;
 	min-width: 960px;
-	min-height: 100%;
+	min-height: 500px;
 	margin: 40px auto 0 auto;
 	overflow: hidden;
 } 
@@ -196,13 +196,11 @@ a.navigation
 	text-align: justify;
 	margin-left: 175px;
 	width: 620px;
-	min-height: 100%;
 	border: 1px solid #aba492;
 	background-color: #f7f3e9;
 	font-weight: bold;
 	color: #000;
 	padding: 10px 15px 10px 15px;
-	min-height: 100%;
 	vertical-align: top;
 }
 

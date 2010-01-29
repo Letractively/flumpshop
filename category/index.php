@@ -24,7 +24,10 @@ echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->ge
 			echo "<a href='".$subCat->getURL()."'>".$subCat->getName()."</a><br />";
 		}
 	}
-	$items = $dbConn->query("SELECT id FROM `products` WHERE category='".$category->getID()."'");
+	foreach ($category->getChildren() as $child) {
+		$criteria .= " OR category='$child'";
+	}
+	$items = $dbConn->query("SELECT id FROM `products` WHERE category='".$category->getID()."'".$criteria);
 	$num = $dbConn->rows($items);
 	
 	$perPage = $config->getNode("pagination","categoryPerPage");
