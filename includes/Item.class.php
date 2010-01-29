@@ -159,6 +159,10 @@ class Item {
 				return false;
 		}
 		
+		if (!file_exists($config->getNode('paths','offlineDir')."/images/item_".$this->itemID)) {
+			mkdir($config->getNode('paths','offlineDir')."/images/item_".$this->itemID);
+		}
+		
 		//800x650
 		list($img_w,$img_h) = getimagesize($file);
 		$f = min(800/$img_w, 650/$img_h, 1); 
@@ -168,6 +172,9 @@ class Item {
 		$fullimage = imagecreatetruecolor($w,$h);
 		imagecopyresampled($fullimage,$image,0,0,0,0,$w,$h,$img_w,$img_h);
 		
+		imagepng($fullimage,$config->getNode('paths','offlineDir')."/images/item_".$this->itemID."/full_$imgnum.png");
+		imagedestroy($fullimage);
+		
 		//150x150
 		$scale = 150*$config->getNode('viewItem','imageScale');
 		$f = min($scale/$img_w, $scale/$img_h, 1); 
@@ -176,6 +183,9 @@ class Item {
 		$smallimage = imagecreatetruecolor($w,$h);
 		imagecopyresampled($smallimage,$image,0,0,0,0,$w,$h,$img_w,$img_h);
 		
+		imagepng($smallimage,$config->getNode('paths','offlineDir')."/images/item_".$this->itemID."/thumb_$imgnum.png");
+		imagedestroy($smallimage);
+		
 		//45x45
 		$f = min(45/$img_w, 45/$img_h, 1); 
 		$w = round($f * $img_w); 
@@ -183,13 +193,8 @@ class Item {
 		$miniimage = imagecreatetruecolor($w,$h);
 		imagecopyresampled($miniimage,$image,0,0,0,0,$w,$h,$img_w,$img_h);
 		
-		if (!file_exists($config->getNode('paths','offlineDir')."/images/item_".$this->itemID)) {
-			mkdir($config->getNode('paths','offlineDir')."/images/item_".$this->itemID);
-		}
-		
-		imagepng($smallimage,$config->getNode('paths','offlineDir')."/images/item_".$this->itemID."/thumb_$imgnum.png");
 		imagepng($miniimage,$config->getNode('paths','offlineDir')."/images/item_".$this->itemID."/minithumb_$imgnum.png");
-		imagepng($fullimage,$config->getNode('paths','offlineDir')."/images/item_".$this->itemID."/full_$imgnum.png");
+		imagedestroy($miniimage);
 		return true;
 	}
 	
@@ -224,7 +229,7 @@ class Item {
 			$reply .= "</td></tr></table><br />";
 		}
 		if ($type == "CATEGORY") {
-			$reply = "<table><tr><td width='100'><a href='".$this->getURL()."' class='ui-widget-content'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' style='float: left; padding-right: 1em; padding-top: 1em; max-height: 150px; max-width: 150px;' alt='".$this->getName()."' /></a></td>";
+			$reply = "<table><tr><td width='100'><a href='".$this->getURL()."' class='ui-widget-content'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' style='float: left; margin-right: 1em; margin-top: 1em; max-height: ".(150*$config->getNode("viewItem","imageScale"))."px; max-width: ".(150*$config->getNode("viewItem","imageScale"))."px;' alt='".$this->getName()."' /></a></td>";
 			$reply .= "<td><h3 style='font-size: 0.8em;'><a href='".$this->getURL()."' class='ui-widget-content'>".$this->getName()."</a></h3>";
 			if ($config->getNode("site","shopEnabled")) {
 				$reply .= "<em>&pound;".$this->itemPrice."</em><span class='ui-state-disabled'>&nbsp;ex.VAT</span>";
@@ -262,7 +267,7 @@ class Item {
 			$reply .= "<div class='ui-widget'><div class='ui-widget-header' id='itemTitle'>".$this->getName()."</div><div class='ui-widget-content'>";
 			//Images
 			$scale = 150*$config->getNode("viewItem","imageScale");
-			$reply .= "<table><tr><td><div style='float: left; padding-right: 1em; width: ".$scale."px; height: ".$scale."px;'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' onclick='openImageViewer(0);' style='cursor: pointer' />";
+			$reply .= "<table style='height: auto;'><tr><td><div style='float: left; padding-right: 1em; width: ".$scale."px; height: ".$scale."px;'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' onclick='openImageViewer(0);' style='cursor: pointer' />";
 			
 			$num = 0;
 			while (file_exists($config->getNode('paths','offlineDir')."/images/item_".$this->getID()."/minithumb_$num.png")) {
