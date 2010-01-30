@@ -1,6 +1,5 @@
 <?php
-$ajaxProvider = true;
-require_once dirname(__FILE__)."/../../../preload.php";
+require_once dirname(__FILE__)."/../header.php";
 $filter = $_GET['filter'];
 $query = "SELECT * FROM `orders` WHERE false";
 
@@ -40,7 +39,7 @@ switch ($filter) {
 
 $orders = $dbConn->query($query);
 if ($dbConn->rows($orders) == 0) {
-	echo "There are no orders that match the specified filters.";
+	echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-info'></span>There are no orders that match the specified filters.</div>";
 }
 while ($order = $dbConn->fetch($orders)) {
 	$status = $config->getNode('orderstatus',$order['status']);

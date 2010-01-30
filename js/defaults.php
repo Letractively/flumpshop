@@ -19,3 +19,5 @@ require_once dirname(__FILE__)."/../preload.php";
 function loadMsg(str) {
   return "<center><img src='<?php echo $config->getNode('paths','root')."/images/loading.gif"; ?>' /><br />"+str+"</center>";
 }
+
+$.validator.setDefaults({errorClass: "ui-state-error"});

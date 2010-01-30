@@ -1,6 +1,5 @@
 <?php
-$ajaxProvider = true;
-require_once dirname(__FILE__)."/../../../preload.php";
+require_once dirname(__FILE__)."/../header.php";
 
 if (isset($_GET['orderid'])) {
 	$order = intval($_GET['orderid']);
@@ -31,10 +30,11 @@ if (isset($_GET['orderid'])) {
 	</div>
 <?php
 } else {
-	?>
-    <form action="./endpoints/orders/queryOrder.php" method="get" onsubmit="if ($(this).valid()) $(this).ajaxSubmit({target: '#adminContent'}); return false;">
+	?><div class="ui-widget-header">Query Order</div>
+    <form action="./queryOrder.php" method="get" onsubmit="if ($(this).valid()) {$(body).html(loadMsg('Running Query...')); return true;} return false;" class="ui-widget-content">
+    	<p>Enter the ID number of a query below to display it.</p>
     	<label for="orderid">Order ID #</label><input type="text" name="orderid" id="orderid" class="ui-state-default required number" />
-        <input type="submit" class="ui-state-default" />
+        <input type="submit" class="ui-state-default" style="font-size: 12px; padding: .2em .4em;" />
     </form>
     <?php
 }

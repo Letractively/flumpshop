@@ -247,6 +247,7 @@
 						$config->setNode("server", "commitPayments", false, "Commit Payments (Debug)");
 						$config->setNode("server", "crawlerAgents", "Googlebot|msnbot|Slurp", "Web Crawler Useragents");
 						$config->setNode("server", "debug", true, "Enable Debug Mode");
+						$config->setNode("server", "cronFreq", 30, "Cron Frequency (mins)");
 						
 						//Messages
 						$config->addTree("messages", "Predefined Text Strings");

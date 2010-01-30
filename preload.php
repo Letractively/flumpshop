@@ -1,9 +1,12 @@
 <?php
+//Timer
 function microtime_float()
 {
     list($usec, $sec) = explode(" ", microtime());
     return ((float)$usec + (float)$sec);
 }
+
+header("Content-Type: text/html;charset=UTF-8");
 
 $time_start = microtime_float();
 ini_set("date.timezone","Europe/London");
@@ -53,7 +56,7 @@ if (!isset($_SESSION)) {
 	debug_message("Session Initialized");
 }
 
-if ($_SETUP == false && $config->getNode('site','enabled') != true && !strstr($_SERVER['REQUEST_URI'],"/admin/")) {
+if ($_SETUP == false && $config->getNode('site','enabled') != true && !strstr($_SERVER['REQUEST_URI'],"/admin/") && !strstr($_SERVER['REQUEST_URI'],"/acp2/")) {
 	require_once dirname(__FILE__)."/errors/maintenance.php";
 	die();
 }
@@ -243,5 +246,12 @@ function placeholders($string) {
 function placeholder_callback($args) {
 	global $config;
 	return $config->getNode('messages',$args[1]);
+}
+
+
+//CRON RUNNER
+if ($config->getNode("server","lastCron") < $time-($config->getNode('server','cronFreq')*60)) {
+	//Run in iFrame so it doesn't prevent loading of rest of page
+	echo "<iframe style='display: none;' src='".$config->getNode("paths","root")."/admin/process/cron.php'></iframe>";
 }
 ?>

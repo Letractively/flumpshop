@@ -1,8 +1,6 @@
 <?php
-$ajaxProvider = true;
-require_once dirname(__FILE__)."/../../../preload.php";
+require_once dirname(__FILE__)."/../header.php";
 
-if (!isset($_SESSION['adminAuth']) || $_SESSION['adminAuth'] == false) die($config->getNode('messages','adminDenied'));
 if (!$config->getEditable()) die("conf.txt is not editable.");
 
 $vars = array_keys($_POST);
@@ -24,5 +22,6 @@ foreach ($vars as $var) {
 		}
 	}
 }
+?><div class="ui-state-highlight"><span class="ui-icon ui-icon-circle-check"></span>Configuration Saved</div><?php
+include dirname(__FILE__)."/../advanced/varMan.php";
 ?>
-<div class="ui-state-highlight"><span class="ui-icon ui-icon-circle-check"></span>Configuration Saved</div>

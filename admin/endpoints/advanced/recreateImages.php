@@ -1,7 +1,6 @@
 <?php
 //Updates images to correct aspect ratio (Issue 30, r188)
-$ajaxProvider = true;
-require_once dirname(__FILE__)."/../../../preload.php";
+require_once dirname(__FILE__)."/../header.php";
 $dp = opendir($config->getNode("paths","offlineDir")."/images");
 while ($dir = readdir($dp)) {
 	if (preg_match("/^item_([0-9])*$/i",$dir)) {
@@ -26,4 +25,4 @@ while ($dir = readdir($dp)) {
 		}
 	}
 }
-?>Images have been rebuilt. Originals can be found with the .bak extension.
+?><div class="ui-state-highlight"><span class="ui-icon ui-icon-info"></span>Images have been rebuilt. Originals can be found with the .bak extension.</div>
