@@ -1,10 +1,8 @@
 <?php
-$ajaxProvider = true;
-require_once dirname(__FILE__)."/../../../preload.php";
+require_once dirname(__FILE__)."/../header.php";
 ?>
-<fieldset class="ui-widget">
-<legend>Add Category</legend>
-<form action="./endpoints/process/insertCategory.php" method="post" class="ui-widget-content" onsubmit="if ($(this).valid()) {$(this).ajaxSubmit({target: '#adminContent'});} else {$('#submit').removeClass('ui-state-disabled').val('Save');} return false;">
+<div class="ui-widget-header">Add Category</div>
+<form action="../process/insertCategory.php" method="post" class="ui-widget-content" onsubmit="if ($(this).valid()) {$(body).html(loadMsg('Saving Content...')); return true;} else return false;">
 <label for="name">Name: </label><input type="text" maxlength="255" name="name" id="name" class="ui-widget-content ui-state-default required" /><br />
 <label for="description">Description: </label><br /><textarea rows="4" cols="45" name="description" id="description" class="ui-widget-content ui-state-default"></textarea><br />
 <label for="parent">Parent: </label>
@@ -18,5 +16,5 @@ require_once dirname(__FILE__)."/../../../preload.php";
 	}
 	?>
 </select>
-<br /><input type="submit" value="Save" onclick="$(this).addClass('ui-state-disabled').val('Saving...');" name="submit" id="submit" class="ui-widget-content ui-state-default" /><input type="button" value="Cancel" onclick="$('#adminContent').html('');" class="ui-widget-content ui-state-default" />
-</form>
+<br /><input type="submit" value="Save" name="submit" id="submit" style="font-size: 13px; padding: .2em .4em;" />
+</form></body></html>

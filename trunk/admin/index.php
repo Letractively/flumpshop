@@ -1,161 +1,157 @@
-<?php require_once dirname(__FILE__)."/../preload.php";
-if (isset($_POST['submit'])) {
-	if (md5($_POST['password']) == $config->getNode('site','password')) {
-		$_SESSION['adminAuth'] = true;
-	}
+<?php
+$ajaxProvider = true;
+require_once "../preload.php";
+//Process Login
+if (isset($_POST['pass']) && md5($_POST['pass']) == $config->getNode("site","password")) {
+	$_SESSION['adminAuth'] = true;
+	header("Location: ./");
+	die();
 }
+//Not Logged In
+if (!isset($_SESSION['adminAuth']) or $_SESSION['adminAuth'] !== true) {
+	//Login Page
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+><head>
+<style type="text/css">
+body {background-color: #1e2b5b; color: #FFF; font: Arial, Helvetica, sans-serif;}
+form {width: 300px; margin: 150px auto 0 auto;}
+.header {font: "Trebuchet MS", Arial, Helvetica, sans-serif; font-size: 23px;}
+.header2 {color: #c43131;}
+.title {background-color: #0e78ee; padding: 0 5px; line-height: 1.5; font-size: 17px;}
+.content {background-color: #e7e7e7; padding: 0 5px; color: #000; font-size: 12px;}
+.content label {color: #1e2b5b;}
+table td {text-align: right;}
+input {border: 1px solid #1e2b5b; color: #1e2b5b; width: 200px;}
+input.submit {width: auto; position: relative; left: 220px; border: 3px outset #1e2b5b; background: #FFF; color: #1e2b5b; font-size: 14px; font-weight: bold;}
+</style>
+<title>Flumpshop Login</title></head><body>
+<form action="./" method="post">
+<div class="header"><img src="images/logo.jpg" alt="Flumpshop Logo" />flump<span class='header2'>shop</span></div>
+<div class="title">please login...</div>
+<div class="content">
+Please enter your username and password to continue...
+<table>
+<tr><td><label for='uname'>Username: </label></td><td><input type="text" name="uname" id="uname" disabled="disabled" /></td></tr>
+<tr><td><label for='pass'>Password: </label></td><td><input type="password" name="pass" id="pass" /></td></tr>
+</table>
+<input type="submit" class="submit" value="Login" />
+</div>
+</form>
+</body></html><?php
+} else {
+	//Logged In
+	if (isset($_GET['frame'])) {
+		if ($_GET['frame'] == "leftFrame") {
+			//Left Frame
+?><html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name='keywords' content='<?php echo $config->getNode('messages','keywords');?>' />
-<meta name='description' content='<?php echo $config->getNode('messages','tagline');?>' />
-<title><?php echo $config->getNode('messages','name');?> | Control Panel</title>
-<link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/style.css' type='text/css' />
-<link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/style_carousel.css' type='text/css' />
-<script src='<?php echo $config->getNode('paths','root');?>/js/jquery.js' type='text/javascript'></script>
-<script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jcarousel.js"></script> 
-<script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jqueryui.js"></script> 
-<script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jeditable.js"></script> 
-<script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jquery.validate.min.js"></script> 
-<script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jquery.validate.password.js"></script> 
-<script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jquery.form.js"></script> 
-<script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/defaults.php"></script> 
-<link rel="stylesheet" type="text/css" href="<?php echo $config->getNode('paths','root');?>/style/jcarousel.css" /> 
-<link rel="stylesheet" type="text/css" href="<?php echo $config->getNode('paths','root');?>/style/skins/rjc/skin.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo $config->getNode('paths','root');?>/style/jquery.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo $config->getNode('paths','root');?>/style/jquery-overrides.css" />
+<link href="../style/jquery.css" rel="stylesheet" type="text/css" />
+<link href="style-nav.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" language="javascript" src="../js/jqueryui-1-8.js"></script>
+<script type="text/javascript" language="javascript" src="../js/defaults.php"></script>
 </head>
 <body>
-<div id='header'>
-<div id="title">
-<a href='<?php echo $config->getNode('paths','root');?>'><h1><?php echo strtolower($config->getNode('messages','name')); ?></h1>
-<h1 class='drop_shadow'><?php echo strtolower($config->getNode('messages','name')); ?></h1>
-<h1 class='slogan'><?php echo $config->getNode('messages','tagline');?></h1></a>
-</div>
-<div id='search_container'><form action='<?php echo $config->getNode('paths','root');?>/search.php'><input class='search_box' value='Search...' onfocus="if(this.value=='Search...'){this.value=''}" onblur="if(this.value==''){this.value='Search...'}" type='text' name='q' id='q' /></form></div></div>
-<!--End Header-->
-<a href='<?php echo $config->getNode('paths','root');?>/reportbug.php' class="ui-state-highlight" style='position: fixed; top: 99px; text-align: center;'>Send Feedback</a><br /><!--Send Feedback - Remove on Final Release-->
-<div id='content_container_background'>
-<div id="content_container">
-<center><table><tr>
-  <td id="leftside">
-  <?php
-  if (isset($_SESSION['adminAuth']) && $_SESSION['adminAuth']) {
-	?>
-    <a class="navigation" onclick='loadCat("addObj");' id='addObj'>Create Object</a>
-    	<div class="subcat ui-corner-right" id="addObjMenu">
-        	<a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/create/newItem.php');$('#addObjMenu').toggle('fold');">Item</a>
-            <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/create/newCategory.php');$('#addObjMenu').toggle('fold');">Category</a>
-            <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/create/newNews.php');$('#addObjMenu').toggle('fold');">News Post</a>
-            <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/create/newTechHelp.php');$('#addObjMenu').toggle('fold');">Technical Tips Post</a>
+    <center><img src="images/logo.jpg" />
+    <div class="header">flump<span class='header2'>shop</span> <?php echo $config->getNode("site","version");?></div>
+    Powered by Flumpnet<br />
+    <!--<a href="javascript:void(0);">Expand All</a> | <a href="javascript:void(0);"> Collapse All</a><br />--><br />
+    <div id="navContainer">
+    <div id="navAccordion">
+        <h3>Products</h3>
+        <div>
+            <a href='endpoints/create/newItem.php' onclick='loader("Loading Content...");' target="main">New Item</a>
+            <a href='endpoints/edit/editItems.php' onclick='loader("Loading Content...");' target="main">Edit Item</a>
+            <a href='endpoints/edit/editFeatured.php' onclick='loader("Loading Content...");' target="main">Featured Items</a>
         </div>
-    <a class="navigation" onclick='loadCat("editObj");' id='editObj'>Edit Object</a>
-    	<div class="subcat ui-corner-right" id="editObjMenu">
-        	<a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/edit/editItems.php');$('#editObjMenu').toggle('fold');">Item</a>
-            <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/edit/editCategory.php');$('#editObjMenu').toggle('fold');">Category</a>
-            <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/edit/editPageContent.php?pageid=privacyPolicy');$('#editObjMenu').toggle('fold');">Privacy Policy</a>
-            <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/edit/editPageContent.php?pageid=disclaimer');$('#editObjMenu').toggle('fold');">Disclaimer</a>
-            <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/edit/editPageContent.php?pageid=termsConditions');$('#editObjMenu').toggle('fold');">Terms and Conditions</a>
-            <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/edit/editPageContent.php?pageid=homePage');$('#editObjMenu').toggle('fold');">Home Page</a>
-            <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/edit/editPageContent.php?pageid=aboutPage');$('#editObjMenu').toggle('fold');">About Page</a>
-            <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/edit/editPageContent.php?pageid=contactPage');$('#editObjMenu').toggle('fold');">Contact Page</a>
-            <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/edit/editFeatured.php');$('#editObjMenu').toggle('fold');">Featured Item</a>
+        <h3>Categories</h3>
+        <div>
+            <a href='endpoints/create/newCategory.php' onclick='loader("Loading Content...");' target="main">New Category</a>
+            <a href='endpoints/edit/editCategory.php' onclick='loader("Loading Content...");' target="main">Edit Category</a>
         </div>
-
-    <a class="navigation" onclick='loadCat("orders");' id='orders'>View Orders</a>
-    	<div class="subcat ui-corner-right" id="ordersMenu">
-        	<a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/orders/listOrders.php?filter=active');$('#ordersMenu').toggle('fold');">Active</a>
-            <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/orders/listOrders.php?filter=closed');$('#ordersMenu').toggle('fold');">Closed</a>
-            <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/orders/queryOrder.php');$('#ordersMenu').toggle('fold');">Query</a>
+        <h3>News</h3>
+        <div>
+            <a href='endpoints/create/newNews.php' onclick='loader("Loading Content...");' target="main">New News Post</a>
+            <a href='endpoints/create/newTechHelp.php' onclick='loader("Loading Content...");' target="main">New Technical Tips Post</a>
         </div>
-        
-    <a class="navigation" onclick="loadCat('delivery');" id="delivery">Delivery Settings</a>
-    	<div class="subcat ui-corner-right" id="deliveryMenu">
-        	<a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/delivery/countries.php');$('#deliveryMenu').toggle('fold');">Supported Countries</a>
-            <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/delivery/deliveryRates.php');$('#deliveryMenu').toggle('fold');">Delivery Rates</a>
+        <h3>Pages</h3>
+        <div>
+            <a href='endpoints/edit/editPageContent.php?pageid=homePage' onclick='loader("Loading Content...");' target="main">Home Page</a>
+            <a href='endpoints/edit/editPageContent.php?pageid=aboutPage' onclick='loader("Loading Content...");' target="main">About Page</a>
+            <a href='endpoints/edit/editPageContent.php?pageid=contactPage' onclick='loader("Loading Content...");' target="main">Contact Page</a>
+            <a href='endpoints/edit/editPageContent.php?pageid=privacyPolicy' onclick='loader("Loading Content...");' target="main">Privacy Policy</a>
+            <a href='endpoints/edit/editPageContent.php?pageid=disclaimer' onclick='loader("Loading Content...");' target="main">Disclaimer</a>
+            <a href='endpoints/edit/editPageContent.php?pageid=termsConditions' onclick='loader("Loading Content...");' target="main">Terms and Conditions</a>
         </div>
-        
-    <a class="navigation" onclick='loadCat("adv");' id='adv'>Advanced</a>
-    	<div class="subcat ui-corner-right" id="advMenu">
-        	<a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/process/cron.php');$('#advMenu').toggle('fold');">Cron Script</a>
-            <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./logs');$('#advMenu').toggle('fold');">Log Viewer</a>
-            <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/advanced/bugs.php');$('#advMenu').toggle('fold');">Bug Reports</a>
-            <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);loadVarMan(loadingString);$('#advMenu').toggle('fold');">Configuration Manager</a>
-            <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/advanced/export.php');$('#advMenu').toggle('fold');">Export</a>
-            <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/advanced/import.php');$('#advMenu').toggle('fold');">Import</a>
-            <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./endpoints/advanced/phpinfo.php');$('#advMenu').toggle('fold');">PHP Info</a>
-            <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadMsg('Rebuilding Images. This may take several minutes.'));$('#empty').html(null);$('#adminContent').load('./endpoints/advanced/recreateImages.php');$('#advMenu').toggle('fold');">Rebuild Images</a>
-            <a class='subcat ui-corner-right' onclick="$('#adminContent').html(loadMsg('Loading Content...'));$('#empty').html(null);$('#adminContent').load('./endpoints/advanced/query.php');$('#advMenu').toggle('fold');">SQL Query</a>
+        <h3>Orders</h3>
+        <div>
+            <a href='endpoints/orders/listOrders.php?filter=active' onclick='loader("Loading Content...");' target="main">Active</a>
+            <a href='endpoints/orders/listOrders.php?filter=closed' onclick='loader("Loading Content...");' target="main">Closed</a>
+            <a href='endpoints/orders/queryOrder.php' onclick='loader("Loading Content...");' target="main">Query</a>
         </div>
-    <a class="navigation" onclick="$('#adminContent').html(null);">Close</a>
-    <?php  
-  }
-  ?> 
-  </td>
-  <td id="mainContent" style="width: 800px;">
-  <script type="text/javascript">
-  var loadingString = "<center><img src='<?php echo $config->getNode('paths','root')."/images/loading.gif"; ?>' /><br />Loading Content...</center>";
-
-  function loadVarMan(loadingString) {
-	  $('#adminContent').html(loadingString);
-	  $('#empty').html(null);
-	  $('#adminContent').load('./endpoints/advanced/varMan.php',{},
-							  function() {
-								  $('#varForm').ajaxForm({
-														 success: function(response) {
-																			 $('#adminContent').html(response);
-																			 }
-															})});
-  }
-  
-  function loadCat(obj) {
-	$("#leftside a:not(#"+obj+")").removeClass('activeNavigation');
-	$("#"+obj).toggleClass('activeNavigation');
-	$("#leftside div:not(#"+obj+" + div):visible").hide("fold");
-	$("#"+obj+" + div").toggle("fold");
+        <h3>Deliveries</h3>
+        <div>
+        	<a href="endpoints/delivery/countries.php" onClick="loader('Loading Content...');" target="main">Supported Countries</a>
+            <a href="endpoints/delivery/deliveryRates.php" onClick="loader('Loading Content...');" target="main">Delivery Rates</a>
+        </div>
+        <h3>Advanced</h3>
+        <div>
+            <a href="endpoints/process/cron.php" onclick='loader("Executing Cron Script...");' target="main">Cron Script</a>
+            <a href="logs" onclick='loader("Loading Content...");' target="main">Log Viewer</a>
+            <a href="endpoints/advanced/bugs.php" onclick='loader("Loading Content...");' target="main">Bugs</a>
+            <a href="endpoints/advanced/query.php" onclick='loader("Loading Content...");' target="main">Execute SQL</a>
+            <a href="endpoints/advanced/varMan.php" onclick='loader("Loading Content...");' target="main">Configuration Manager</a>
+            <a href="endpoints/advanced/export.php" onclick='loader("Loading Content...");' target="main">Export</a>
+            <a href="endpoints/advanced/import.php" onclick='loader("Loading Content...");' target="main">Import</a>
+            <a href="endpoints/advanced/phpinfo.php" onclick='loader("Loading Content...");' target="main">PHP Info</a>
+            <a href="endpoints/advanced/recreateImages.php" onclick='loader("Rebuilding Images. This process may take several hours.");' target="main">Rebuild Images</a>
+        </div>
+    </div>
+    </div>
+    </center>
+    <script type="text/javascript">
+    $(document).ready(function() {$('#navAccordion').accordion({collapsible: true, active: false, autoHeight: false, icons: {'header': 'ui-icon-circle-arrow-e', 'headerSelected': 'ui-icon-circle-arrow-s'}});});
+	function loader(str) {
+		parent.main.document.body.innerHTML = loadMsg(str);
 	}
-  </script>
-  	<?php
-		//Check for HTTPS
-		if ($config->getNode('secure','admin') && $_SERVER["HTTPS"] == "off") {
-			echo "The admin section must be accessed using the HTTPS protocol. Click <a href='".$config->getNode('paths','secureRoot')."/admin'>here</a> to go to the HTTPS site.";
-		} else {
-			if (!isset($_SESSION['adminAuth']) || !$_SESSION['adminAuth']) {
-				?>
-				<h1 class="content">Authentication Required</h1>
-				<p>Please enter the administrator password in order to view the full administrator panel. Please note that this is not the same as the password for the Webmaster account used in the site frontend.</p>
-				<form action="./" class="ui-widget ui-widget-content ui-corner-all" method="post">
-					<label for="adminPass">Password: </label><input class="ui-state-default" type="password" name="password" id="password" />
-					<input type="submit" value="Login" name="submit" class="ui-state-default" />
-				</form>
-				<?php
-			} else {
-					//Update Checker
-				    $version = file_get_contents("http://flumpshop.googlecode.com/svn/updater/version.txt");
-				    if ($version > $config->getNode("site","version")) {
-					    ?><div class="ui-state-highlight"><span class="ui-icon ui-icon-refresh"></span><strong>Update Available</strong> - Version <?php echo $version;?> is now available for download. <a href="./upgrade">Click Here to Upgrade</a></div><?php
-				  }
-				  ?>
-				<h1 class='content'>Control Panel</h1>
-				<div id="adminContent" class="ui-widget ui-corner-all" style="max-height: 500px; overflow: auto;">Use the menu on the left to load an administration tool.</div>
-                <div id="empty"></div>
-				<?php
-			}
-		}?>
-        <script>
-		//deliveryRates.php add form (recursive elements)
-		function addCountrySelector() {
-			var id = $('#counter').val();
-			$.ajax({url: './endpoints/delivery/countrySelect.php?id='+id, success: function(data, textStatus) {$("#countrySelectors").append(data+"<br />");}, cache: true});
-			id++;
-			$('#counter').val(id);
-		}
-		$.validator.setDefaults({errorClass: "ui-state-error"});
-		</script>
-</td></tr></table></center>
-</div>
-<div id="dialog" class="ui-helper-hidden"></div>
-<div id='footer'><?php echo $config->getNode('messages','footer');?><!--Site Designed by Jake Mitchell. Programmed by Lloyd Wallis and John Maydew.--></div>
+    </script>
 </body>
-</html>
+</html><?php
+		} elseif ($_GET['frame'] == "header") {
+			//Header Frame
+			?><html>
+				<head><link href="style-header.css" rel="stylesheet" type="text/css" /></head>
+				<body>
+				<h1>ADMINISTRATOR CONTROL PANEL</h1>
+				<p class="version">Latest Version Available: <?php echo file_get_contents("http://flumpshop.googlecode.com/svn/updater/version.txt");?> <a href='upgrade' target='_top'>Upgrade Wizard</a></p>
+				<div class="right">
+					<h1>flump<span class="header2">shop</span> <?php echo $config->getNode("site","version");?></h1>
+					<p><a href='../account/logout.php' target="_top">Logout</a> | <a href='../' target="_top">View live storefront</a></p>
+				</div>
+				</body>
+			  </html><?php
+		} elseif ($_GET['frame'] == "main") {
+			//Main Frame
+			?><html>
+				<head><link href="style-main.css" rel="stylesheet" type="text/css" /></head>
+				<body>
+				<h1>Flumpshop Admin CP</h1>
+				<p>PHP v<?php echo PHP_VERSION;?></p>
+				<p>Database v<?php echo $dbConn->version();?>
+				</body>
+			  </html><?php
+		}
+	} else {
+		?><html><head><title>Flumpshop | Admin CP</title></head>
+			<frameset cols="252px,*" framespacing="0" border="0" frameborder="0" frameborder="no" border="0">
+			<frame name="leftFrame" id="leftFrame" src="?frame=leftFrame" scrolling="yes" frameborder="0" marginwidth="0" marginheight="0" border="no" />
+			<frameset rows="60px,*" framespacing="0" border="0" frameborder="0" frameborder="no" border="0">
+				<frame src="?frame=header" name="header" id="header" scrolling="no" noresize="noresize" frameborder="0" marginwidth="10" marginheight="0" border="no" />
+				<frame src="?frame=main" name="main" id="main" scrolling="yes" frameborder="0" marginwidth="10" marginheight="10" border="no" />
+			</frameset>
+		  </frameset>
+		  </html><?php
+	}
+}
+?>

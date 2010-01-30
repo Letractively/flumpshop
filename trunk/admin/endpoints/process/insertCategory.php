@@ -1,16 +1,16 @@
 <?php
-$ajaxProvider = true;
-require_once dirname(__FILE__)."/../../../preload.php";
-if (!isset($_SESSION['adminAuth']) || !$_SESSION['adminAuth']) {
-	echo json_encode($_GLOBALS['errormsg']['adminAccessDenied']);
-}
+require_once dirname(__FILE__)."/../header.php";
 $name = str_replace("'","''",$_POST['name']);
 $description = str_replace("'","''",$_POST['description']);
 $parent = str_replace("'","''",$_POST['parent']);
 if ($name == "") {
-	die(json_encode(-1));
+	echo "<div class='ui-state-error'><span class='ui-icon ui-icon-alert'></span>'Name' is a required field.</div>";
+} else {
+	if ($dbConn->query("INSERT INTO `category` (name,description,parent) VALUES ('$name','$description','$parent')")) {
+		echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-circle-check'></span>Category Added to database with ID ".$dbConn->insert_id()."</div>";
+	} else {
+		echo "<div class='ui-state-error'><span class='ui-icon ui-icon-alert'></span>Failed to add category to database.</div>";
+	}
 }
-
-$dbConn->query("INSERT INTO `category` (name,description,parent) VALUES ('$name','$description','$parent')");
-echo json_encode("Category Added to database with ID ".$dbConn->insert_id());
+include dirname(__FILE__)."/../create/newCategory.php";
 ?>

@@ -1,12 +1,13 @@
 <?php
-$ajaxProvider = true;
-require_once dirname(__FILE__)."/../../../preload.php";
-if (!isset($_SESSION['adminAuth']) || !$_SESSION['adminAuth']) $config->getNode('messages','adminDenied');
+require_once dirname(__FILE__)."/../header.php";
 
 $title = str_replace("'","''",$_POST['postTitle']);
 $body = str_replace("'","''",$_POST['postContent']);
 
-$dbConn->query("INSERT INTO `news` (title,body) VALUES ('$title','$body')");
+if ($dbConn->query("INSERT INTO `news` (title,body) VALUES ('$title','$body')")) {
+	echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-circle-check'></span>The post has been added and is now visible on the home page.</div>";
+} else {
+	echo "<div class='ui-state-error'><span class='ui-icon ui-icon-alert'></span>Failed to enter the post into the database.</div>";
+}
+include dirname(__FILE__)."/../create/newNews.php";
 ?>
-<h2 class="content">Post Created</h2>
-<p>Your new post has been added and is now visible on the home page.</p>

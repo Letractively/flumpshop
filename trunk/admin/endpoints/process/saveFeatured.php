@@ -1,5 +1,5 @@
 <?php
-require_once dirname(__FILE__)."/../../../preload.php";
+require_once dirname(__FILE__)."/../header.php";
 if ($dbConn->rows($dbConn->query("SELECT id FROM `stats` WHERE `key`='featuredItem1' LIMIT 1")) == 0) {
 	$dbConn->query("INSERT INTO `stats` (`key`,value) VALUES ('featuredItem1',".intval($_GET['featuredItem1']).")");
 	$dbConn->query("INSERT INTO `stats` (`key`,value) VALUES ('featuredItem2',".intval($_GET['featuredItem2']).")");
@@ -13,4 +13,6 @@ if ($dbConn->rows($dbConn->query("SELECT id FROM `stats` WHERE `key`='popularIte
 } else {
 	$dbConn->query("UPDATE `stats` SET value=".intval($_GET['popularItem'])." WHERE `key`='popularItem' LIMIT 1");
 }
-?><div class="ui-state-highlight"><span class="ui-icon ui-icon-circle-check"></span>Featured Item Saved</div>
+?><div class="ui-state-highlight"><span class="ui-icon ui-icon-circle-check"></span>Featured Items Saved</div><?php
+include dirname(__FILE__)."/../edit/editFeatured.php";
+?>

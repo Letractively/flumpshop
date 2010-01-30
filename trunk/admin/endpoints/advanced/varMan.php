@@ -1,20 +1,15 @@
 <?php
-$ajaxProvider = true;
-require_once dirname(__FILE__)."/../../../preload.php";
+require_once dirname(__FILE__)."/../header.php";
 $disabled = "";
 if (!$config->getEditable()) {
-	?>
-    <div class="ui-state-error"><span class="ui-icon ui-icon-alert"></span>I don't have permission to save any changes.</div>
-    <?php
+	?><div class="ui-state-error"><span class="ui-icon ui-icon-alert"></span>I don't have permission to save any changes.</div><?php
 	$disabled = " disabled='disabled'";
 }
-?>
-<form action='./endpoints/process/saveConf.php' method="POST" name='varForm' id='varForm'>
-<?php
+?><form action='../process/saveConf.php' method="POST" name='varForm' id='varForm' onsubmit="$(body).html(loadMsg('Saving Content...'));"><?php
 //Section input form
 foreach ($config->getTrees() as $tree) {
 	if ($tree != "orderstatus" && $tree != "temp") {
-		echo "<fieldset><legend>".$config->getFriendName($tree)."</legend><table>";
+		echo "<h3 style='padding-left: 25px;'>".$config->getFriendName($tree)."</h3><div><table>";
 			foreach ($config->getNodes($tree) as $pathNode) {
 				$class = "";
 				$name = $config->getFriendName($tree,$pathNode);
@@ -38,9 +33,8 @@ foreach ($config->getTrees() as $tree) {
 					}
 				}
 			}
-			echo '</table></fieldset>';
+			echo '</table></div>';
 	}
 }
-?>
-<input type="submit" value="Save"<?php echo $disabled;?> />
-</form>
+?><input type="submit" onclick="$(this).parent().submit();" value="Save"<?php echo $disabled;?> style="font-size: 14px; padding: .2em .4em;" />
+</form><script type="text/javascript">$('#varForm').accordion({autoHeight: false, collapsible: true});</script></body></html>

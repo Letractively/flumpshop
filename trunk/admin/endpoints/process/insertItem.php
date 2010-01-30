@@ -1,10 +1,5 @@
 <?php
-$ajaxProvider = true;
-$_PRINTDATA = false;
-require_once dirname(__FILE__)."/../../../preload.php";
-if (!isset($_SESSION['adminAuth']) || !$_SESSION['adminAuth']) {
-	echo json_encode($_GLOBALS['errormsg']['adminAccessDenied']);
-}
+require_once dirname(__FILE__)."/../header.php";
 $name = str_replace("'","''",$_POST['name']);
 $description = nl2br(str_replace("'","''",$_POST['description']));
 $price = str_replace("'","''",$_POST['price']);
@@ -13,9 +8,14 @@ $category = str_replace("'","''",$_POST['category']);
 $weight = str_replace("'","''",$_POST['weight']);
 
 if ($name == "" or $description == "") {
-	die(json_encode(-1));
+	echo "<div class='ui-state-error'><span class='ui-icon ui-icon-alert'></span>'Name' and 'Description' are required fields.</div>";
+} else {
+	if ($dbConn->query("INSERT INTO `products` (name,description,price,stock,category,weight) VALUES ('$name','$description','$price','$stock','$category','$weight')")) {
+		echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-circle-check'></span>Product Added to database with ID #".$dbConn->insert_id()."</div>";
+	} else {
+		echo "<div class='ui-state-error'><span class='ui-icon ui-icon-alert'></span>Failed to add item to database.</div>";
+	}
 }
 
-$dbConn->query("INSERT INTO `products` (name,description,price,stock,category,weight) VALUES ('$name','$description','$price','$stock','$category','$weight')");
-echo "Product Added to database with ID #".$dbConn->insert_id();
+include dirname(__FILE__)."/../create/newItem.php";
 ?>

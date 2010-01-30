@@ -1,6 +1,5 @@
 <?php
-$ajaxProvider = true;
-require_once dirname(__FILE__)."/../preload.php";
+require_once dirname(__FILE__)."/../header.php";
 $initTime = $dbConn->time();
 $result = $dbConn->query("SELECT * FROM `reserve` WHERE expire<='".$initTime."'");
 
@@ -17,5 +16,8 @@ while ($row = $dbConn->fetch($result)) {
 	eval(base64_decode($row['expiryAction']));
 }
 
-echo "Scheduled Tasks Completed.";
+//Store last run time
+$config->setNode("server","lastCron",time(),"Last Cron Run");
+
+echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-circle-check'></span>Scheduled Tasks Completed.</div>";
 ?>
