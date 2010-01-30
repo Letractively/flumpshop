@@ -33,7 +33,7 @@ echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->ge
 	$perPage = $config->getNode("pagination","categoryPerPage");
 	if (isset($_GET['page'])) $page = $_GET['page']; else $page = 1;
 	
-	$items = $dbConn->query("SELECT id FROM `products` WHERE category='".$category->getID()."' ORDER BY name ASC LIMIT ".($page-1)*$perPage.",".$perPage);
+	$items = $dbConn->query("SELECT id FROM `products` WHERE category='".$category->getID()."'$criteria ORDER BY name ASC LIMIT ".($page-1)*$perPage.",".$perPage);
 	
 	if ($dbConn->rows($items) == 0) {
 		echo "There are no products in this category.";
