@@ -37,7 +37,7 @@
 		  //Item 2 (Image Only)
 		  $row = $dbConn->fetch($result);
 		  $item = new Item($row['value']);
-		  echo "<a href='".$item->getURL()."'><img src='".$config->getNode("paths","root")."/item/imageProvider.php?id=".$item->getID()."&image=0&size=thumb' style='width: 100%;' /></a>";
+		  echo "<a href='".$item->getURL()."'><img src='".$config->getNode("paths","root")."/item/imageProvider.php?id=".$item->getID()."&image=0&size=thumb' style='width: 100%;' alt='".$item->getName()."' /></a>";
 		  echo "</td></tr></table>";
 	  }
 	  ?>

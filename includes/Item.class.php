@@ -341,14 +341,14 @@ class Item {
 			if (is_array($highlight)) {
 				$return = $this->itemName;
 				foreach ($highlight as $string) {
-					$return = preg_replace("/($string)/i","<span class='ui-state-highlight'>$1</span>",$return);
+					$return = htmlentities(preg_replace("/($string)/i","<span class='ui-state-highlight'>$1</span>",$return));
 				}
 				return $return;
 			} else {
-				return preg_replace("/($highlight)/i","<span class='ui-state-highlight'>$1</span>",$this->itemName);
+				return htmlentities(preg_replace("/($highlight)/i","<span class='ui-state-highlight'>$1</span>",$this->itemName));
 			}
 		} else {
-			return $this->itemName;
+			return htmlentities($this->itemName);
 		}
 	}
 	

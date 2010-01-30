@@ -48,11 +48,11 @@ class Category {
 	}
 	
 	function getName() {
-		return $this->name;
+		return htmlentities($this->name);
 	}
 	
 	function getFullName() {
-		return $this->fullName;
+		return htmlentities($this->fullName);
 	}
 	
 	function getDescription() {
