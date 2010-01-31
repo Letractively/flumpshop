@@ -841,7 +841,7 @@ class Securimage {
 			if (!is_int($this->gd_font_file)) { //is a file name
 				$font = @imageloadfont($this->gd_font_file);
 				if ($font == false) {
-					$fontFile = $this->gd_font_file
+					$fontFile = $this->gd_font_file;
 					trigger_error("Failed to load GD Font file $fontFile ", E_USER_WARNING);
 					return;
 				}
