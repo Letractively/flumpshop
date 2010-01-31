@@ -107,11 +107,15 @@ while ($dir = array_pop($dirs)) {
 	}
 }
 
-
-header("Content-Disposition: attachment; filename=exportdata.dat");
+//Check it isn't backup mode
+if (!isset($storeExport)) {
+	header("Content-Disposition: attachment; filename=exportdata.dat");
 
 //Waitwhat? Do this AFTER spending years generating the file?
 if (!isset($_SESSION['adminAuth']) || !$_SESSION['adminAuth']) die($config->getNode('messages','adminDenied'));
 
 echo base64_encode(serialize($export));
+} else {
+	file_put_contents($storeExport,base64_encode(serialize($export)));
+}
 ?>
