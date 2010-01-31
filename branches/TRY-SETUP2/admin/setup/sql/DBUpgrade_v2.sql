@@ -1,0 +1,1 @@
+ALTER TABLE `category` ADD COLUMN enabled TINYINT(1) DEFAULT '1';

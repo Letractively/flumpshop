@@ -1,0 +1,22 @@
+/*Overrides for Default JQuery Layout*/
+.ui-icon {
+	display: inline-block;
+	margin-top: -1px;
+	margin-right: 6px;
+}
+
+.ui-icon-right {
+	float: right;
+}
+
+.ui-widget-content {
+	padding: 0.2em 0.5em;
+}
+
+input.ui-widget-content, select.ui-widget-content {
+	padding: 0;
+}
+
+#mainContent .ui-widget { margin: 2em 0 2em 0; }
+#mainContent .ui-widget-header { border: none; background: none; color: #15324b; font-size: 1.5em; border-bottom: 1px dashed #15324b; }
+#mainContent .ui-widget-content { border: none; background: none; }
