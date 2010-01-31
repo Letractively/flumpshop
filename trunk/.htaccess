@@ -1,3 +1,4 @@
 RewriteEngine on
 RewriteRule category/([0-9]+)/?.*$ category/?id=$1
+RewriteRule item/([0-9]+)/?.*true$ item/?id=$1&modify=true [L]
 RewriteRule item/([0-9]+)/?.*$ item/?id=$1
