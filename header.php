@@ -69,12 +69,8 @@ if (stristr($_SERVER['REQUEST_URI'],"about.php")) {?><a class='tab active' href=
 /*ADMIN*/ if (isset($_SESSION['adminAuth']) and $_SESSION['adminAuth'] == true) echo "<a class='tab' href='".$config->getNode('paths','root')."/admin'>admin</a>";
 ?></div>
 </div>
-<!--End Header--><?php
-  //Send Feedback
-  if ((!isset($ajaxProvider) or $ajaxProvider == false) and $config->getNode('site','sendFeedback')) {
-	?><div style="position: fixed; top: 99px; text-align: center; margin: 0 auto 0 auto; "><a href='<?php echo $config->getNode('paths','root');?>/reportbug.php' class="ui-state-highlight">Send Feedback</a></div><?php
-	}
-?><div id='content_container_background'>
+<!--End Header-->
+<div id='content_container_background'>
 <div id="content_container">
 <center><table><tr><?php
 if (!isset($_SUBPAGE) or $_SUBPAGE == false) include $config->getNode("paths","path")."/includes/index_nav.inc.php";
