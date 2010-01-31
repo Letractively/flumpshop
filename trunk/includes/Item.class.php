@@ -293,7 +293,7 @@ class Item {
 						$reply .= " | A reduction is scheduled to start on ".date("d-m-y",strtotime($this->itemReductionStart)).".";
 					}
 				}
-				//Delivery Price (BETA)
+				//Delivery Price
 				if ($this->itemDeliveryCost == -1) {
 					$reply .= "&nbsp;Delivery is not available in your area.";
 				} else {
@@ -305,7 +305,7 @@ class Item {
 			}
 			//Description
 			if ($config->getNode("viewItem", "showID")) {
-				$reply .= "<p id='itemDesc'><strong>Product Code: </strong>".$this->getID()."<br /><br />";
+				$reply .= "<div class='ui-state-highlight'><strong>Product Code: </strong>".$this->getID()."</div><p id='itemDesc'>";
 			} else {
 				$reply .= "<p id='itemDesc'>";
 			}
