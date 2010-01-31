@@ -1,5 +1,5 @@
 <?php
-require_once dirname(__FILE__)."/../header.php";
+require_once dirname(__FILE__)."/../../../preload.php";
 $initTime = $dbConn->time();
 $result = $dbConn->query("SELECT * FROM `reserve` WHERE expire<='".$initTime."'");
 
@@ -20,4 +20,7 @@ while ($row = $dbConn->fetch($result)) {
 $config->setNode("server","lastCron",time(),"Last Cron Run");
 
 echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-circle-check'></span>Scheduled Tasks Completed.</div>";
+
+$_GET['frame'] = "main";
+include dirname(__FILE__)."/../../index.php";
 ?>
