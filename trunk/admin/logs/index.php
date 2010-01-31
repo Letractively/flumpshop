@@ -1,10 +1,11 @@
 <?php
-require_once dirname(__FILE__)."/../../preload.php";
+$logger = true;
+require_once dirname(__FILE__)."/../endpoints/header.php";
 if (!isset($_GET['file'])) {
 	?>
     <div class="ui-widget-header">Miscellaneous Logs</div><div class="ui-widget-content">
-    <a href="javascript:void(0);" onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./logs/index.php?file=errors.log&type=text');">Error Log</a><br />
-    <a href="javascript:void(0);" onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./logs/index.php?file=debug.log&type=text');">Debug Log</a><br />
+    <a href="?file=errors.log&type=text" onclick="$(body).html(loadMsg('Opening Log...'));$('#empty').html(null)">Error Log</a><br />
+    <a href="?file=debug.log&type=text" onclick="$(body).html(loadMsg('Opening Log...'));$('#empty').html(null);">Debug Log</a><br />
     <div class="ui-widget-header">Database Logs</div><div class="ui-widget-content">
     <?php
 	$dir = opendir($config->getNode('paths','logDir'));
