@@ -8,9 +8,9 @@ $categories = $dbConn->query("SELECT id FROM `category` WHERE parent='0' AND ena
 while ($category = $dbConn->fetch($categories)) {
 	$result = $dbConn->query("SELECT id FROM `category` WHERE parent='".$category['id']."' AND enabled='1' ORDER BY `name` ASC");
     $cat = new Category($category['id']);
-    if ($dbConn->rows($result) != 0) echo "<tr><td class='ui-corner-all' onclick='loadCat(\"".$category['id']."\");' id='cat".$category['id']."'><a class='navigation ui-widget' href='javascript:void(0);'>".ucwords(strtolower($cat->getName()))."</a></td></tr>";
+    if ($dbConn->rows($result) != 0) echo "<tr><td class='ui-corner-all' onclick='loadCat(\"".$category['id']."\");' id='cat".$category['id']."'><center><a class='navigation ui-widget' href='javascript:void(0);'>".ucwords(strtolower($cat->getName()))."</a></center></td></tr>";
 	
-	else echo "<tr><td class='ui-corner-all' id='cat".$category['id']."' onclick='window.location = \"".$cat->getURL()."\";'><a class='navigation ui-widget' href='".$cat->getURL()."'>".ucwords(strtolower($cat->getName()))."</a></td></tr>"; //No subcats
+	else echo "<tr><td class='ui-corner-all' id='cat".$category['id']."' onclick='window.location = \"".$cat->getURL()."\";'><center><a class='navigation ui-widget' href='".$cat->getURL()."'>".ucwords(strtolower($cat->getName()))."</a></center></td></tr>"; //No subcats
 	//Subcat Menu
 	$subcatstr .= "<table class='subcat ui-corner-right' id='subcat".$category['id']."'>";
 	

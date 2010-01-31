@@ -1,6 +1,6 @@
 <?php
 $ajaxProvider = true;
-require_once "../preload.php";
+require_once dirname(__FILE__)."/../preload.php";
 //Process Login
 if (isset($_POST['pass']) && md5($_POST['pass']) == $config->getNode("site","password")) {
 	$_SESSION['adminAuth'] = true;

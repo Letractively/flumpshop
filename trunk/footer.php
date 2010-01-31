@@ -4,6 +4,7 @@ ob_flush();
 ?>
 </td></tr></table></center>
 </div>
+<?php echo $cron; ?>
 <div id="dialog" class="ui-helper-hidden"></div>
 <div id='footer'><?php echo $config->getNode('messages','footer');?>
 <p><a href='<?php echo $config->getNode('paths','root');?>/legal/privacy.php'>Privacy Policy</a> &middot;
