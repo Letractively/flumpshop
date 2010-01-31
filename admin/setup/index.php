@@ -248,6 +248,7 @@
 						$config->setNode("server", "crawlerAgents", "Googlebot|msnbot|Slurp", "Web Crawler Useragents");
 						$config->setNode("server", "debug", true, "Enable Debug Mode");
 						$config->setNode("server", "cronFreq", 30, "Cron Frequency (mins)");
+						$config->setNode("server", "backupFreq", 48, "Backup Frequency (hrs)");
 						
 						//Messages
 						$config->addTree("messages", "Predefined Text Strings");
