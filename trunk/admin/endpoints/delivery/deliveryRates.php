@@ -53,7 +53,7 @@ foreach ($data as $lowerBound => $array1) {
 		foreach ($array2 as $price => $array3) {
 			//Price
 			$rows3 = sizeof($array3);
-			echo "<td rowspan='$rows3'>£$price</td>\n";
+			echo "<td rowspan='$rows3'>&pound;$price</td>\n";
 			echo "<td>";
 			foreach ($array3 as $country) {
 				//Countries

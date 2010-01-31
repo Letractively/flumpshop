@@ -21,10 +21,10 @@ while ($row = $dbConn->fetch($result)) {
 
 //Scheduled Backup
 if ($config->getNode("server","lastBackup") < $initTime-($config->getNode('server','backupFreq')*3600) and $config->getNode('server','backupFreq') >= 1) {
+	$config->setNode("server","lastBackup",time(),"Last Scheduled Backup");
 	$storeExport = $config->getNode("paths","offlineDir")."/backup/backup-".date("d-m-y_His").".fml";
 	echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-info'></span>Running backup - $storeExport</div>";
 	include dirname(__FILE__)."/doExport.php";
-	$config->setNode("server","lastBackup",time(),"Last Scheduled Backup");
 }
 
 //Store last run time

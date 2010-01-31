@@ -79,7 +79,8 @@
 			echo "</ol>";
 			$baseurl = "search.php?q=".$query;
 			if (isset($_GET['cat'])) $baseurl.="&cat=".$_GET['cat'];
-			echo paginate($page,intval($results/$perpage),$baseurl);
+			$paginate = new Paginator();
+			$paginate->paginate($page,intval($results/$perpage),$baseurl);
 		}
 		
 		if (!$resultFound) {
