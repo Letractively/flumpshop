@@ -50,6 +50,7 @@ Please enter your username and password to continue...
 <link href="style-nav.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" language="javascript" src="../js/jquery.js"></script>
 <script type="text/javascript" language="javascript" src="../js/jqueryui-1-8.js"></script>
+<script type="text/javascript" language="javascript" src="../js/jquery.validate.min.js"></script>
 <script type="text/javascript" language="javascript" src="../js/defaults.php"></script>
 </head>
 <body>
