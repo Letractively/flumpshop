@@ -267,7 +267,7 @@ class Item {
 			$reply .= "<div class='ui-widget'><div class='ui-widget-header' id='itemTitle'>".$this->getName()."</div><div class='ui-widget-content'>";
 			//Images
 			$scale = 150*$config->getNode("viewItem","imageScale");
-			$reply .= "<table style='height: auto;'><tr><td><div style='float: left; padding-right: 1em; width: ".$scale."px; height: ".$scale."px;'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' onclick='openImageViewer(0);' style='cursor: pointer' />";
+			$reply .= "<div style='padding-right: 1em; display: inline-block; vertical-align: text-bottom; float: left;'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' onclick='openImageViewer(0);' style='cursor: pointer' />";
 			
 			$num = 0;
 			while (file_exists($config->getNode('paths','offlineDir')."/images/item_".$this->getID()."/minithumb_$num.png")) {
@@ -276,7 +276,7 @@ class Item {
 				$num++;
 			}
 			
-			$reply .= "</div>";
+			$reply .= "</div>"; //Close Images Div
 			
 			/*Shop Mode (Removes Prices/Checkout)*/
 			if ($config->getNode("site","shopMode")) {
@@ -341,14 +341,14 @@ class Item {
 			if (is_array($highlight)) {
 				$return = $this->itemName;
 				foreach ($highlight as $string) {
-					$return = htmlentities(preg_replace("/($string)/i","<span class='ui-state-highlight'>$1</span>",$return));
+					$return = preg_replace("/($string)/i","<span class='ui-state-highlight'>$1</span>",$return);
 				}
 				return $return;
 			} else {
-				return htmlentities(preg_replace("/($highlight)/i","<span class='ui-state-highlight'>$1</span>",$this->itemName));
+				return preg_replace("/($highlight)/i","<span class='ui-state-highlight'>$1</span>",$this->itemName);
 			}
 		} else {
-			return htmlentities($this->itemName);
+			return $this->itemName;
 		}
 	}
 	
