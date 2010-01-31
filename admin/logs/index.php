@@ -2,19 +2,16 @@
 $logger = true;
 require_once dirname(__FILE__)."/../endpoints/header.php";
 if (!isset($_GET['file'])) {
-	?>
-    <div class="ui-widget-header">Miscellaneous Logs</div><div class="ui-widget-content">
+	?><div class="ui-widget-header">Miscellaneous Logs</div><div class="ui-widget-content">
     <a href="?file=errors.log&type=text" onclick="$(body).html(loadMsg('Opening Log...'));$('#empty').html(null)">Error Log</a><br />
-    <a href="?file=debug.log&type=text" onclick="$(body).html(loadMsg('Opening Log...'));$('#empty').html(null);">Debug Log</a><br />
-    <div class="ui-widget-header">Database Logs</div><div class="ui-widget-content">
-    <?php
+    <a href="?file=debug.log&type=text" onclick="$(body).html(loadMsg('Opening Log...'));$('#empty').html(null);">Debug Log</a>
+    </div>
+    <div class="ui-widget-header">Database Logs</div><div class="ui-widget-content"><?php
 	$dir = opendir($config->getNode('paths','logDir'));
 	if ($config->getNode('temp','simplexml')) {
 		while ($file = readdir($dir)) {
 			if (is_dir($config->getNode('paths','logDir')."/$file") && $file != "." && $file != "..") {
-				?>
-				<a href="javascript:void(0);" onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./logs/index.php?file=dbviewer&date=<?php echo $file; ?>');"><?php echo $file; ?></a><br />
-				<?php
+				?><a href="?file=dbviewer&date=<?php echo $file; ?>" onclick="$(body).html(loadMsg('Loading Content...'));"><?php echo $file; ?></a><br /><?php
 			}
 		}
 	} else {
@@ -30,12 +27,10 @@ if (!isset($_GET['file'])) {
 		}
 		echo "<div class='ui-widget-header'>Database Logs for $date</div>";
 		$dir = opendir($config->getNode('paths','logDir')."/$date");
-		readdir($dir); readdir($dir);
+		readdir($dir); readdir($dir); //. and ..
 		echo "<div class='ui-widget-content'>";
 		while ($file = readdir($dir)) {
-			?>
-            <a href="javascript:void(0);" onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./logs/index.php?file=<?php echo "$date/$file"; ?>&type=xml');"><?php echo $file; ?></a><br />
-            <?php
+			?><a href="?file=<?php echo "$date/$file"; ?>&type=xml" onclick="$(body).html(loadMsg('Opening Log...'));$('#empty').html(null);"><?php echo $file; ?></a><br /> <?php
 		}
 		echo "</div>";
 	} else {
@@ -44,11 +39,9 @@ if (!isset($_GET['file'])) {
 		}
 		if (isset($_GET['type'])) $type = $_GET['type']; else $type = "text";
 		if (strtolower($type) == "text") {
-			?>
-            <div class="ui-widget-header">Viewing <?php echo $file;?></div><div class="ui-widget-content">
-            <?php echo nl2br(file_get_contents($config->getNode('paths','logDir')."/$file"));?>
-            </div>
-            <?php
+			?><div class="ui-widget-header">Viewing <?php echo $file;?></div><div class="ui-widget-content">
+            <?php echo nl2br(file_get_contents($config->getNode('paths','logDir')."/$file"));
+			echo "</div>";
 		} elseif (strtolower($type) == "xml") {
 			if (isset($_GET['mode'])) {
 				$filter = true;
@@ -57,22 +50,18 @@ if (!isset($_GET['file'])) {
 				$filter = false;
 				$mode = "";
 			}
-			?>
-            <div class="ui-widget-header">Database Log <?php echo $file; ?></div>
-            <?php
+			?><div class="ui-widget-header">Database Log <?php echo $file; ?></div><?php
 			 if ($filter) {
 				 ?>
-                 <div class="ui-state-highlight"><span class="ui-icon ui-icon-info"></span>Only showing errors - <a href="javascript:void(0);" onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./logs/index.php?file=<?php echo "$file"; ?>&type=xml');">Show All</a>
+                 <div class="ui-state-highlight"><span class="ui-icon ui-icon-info"></span>Only showing errors - <a href="file=<?php echo "$file"; ?>&type=xml" onclick="$(body).html(loadMsg('Filtering Log...'));">Show All</a>
                  <?php
 			 } else {
 				 ?>
-                 <div class="ui-state-highlight"><span class="ui-icon ui-icon-info"></span>Showing all messages - <a href="javascript:void(0);" onclick="$('#adminContent').html(loadingString);$('#empty').html(null);$('#adminContent').load('./logs/index.php?file=<?php echo "$file"; ?>&type=xml&mode=error');">Show Errors Only</a></div>
+                 <div class="ui-state-highlight"><span class="ui-icon ui-icon-info"></span>Showing all messages - <a href="?file=<?php echo "$file"; ?>&type=xml&mode=error" onclick="$(body).html(loadMsg('Filtering Log...'));">Show Errors Only</a></div>
                 <?php
 			 }
-			 ?>
-            <table class="ui-widget-content">
-            <tr><th>Timestamp</th><th>Message</th>
-            <?php
+			 ?><table class="ui-widget-content">
+            <tr><th>Timestamp</th><th>Message</th><?php
             $log = new SimpleXMLElement($config->getNode('paths','logDir')."/$file",NULL,true);
 			$result = false;
 			foreach ($log->children() as $event) {
@@ -87,15 +76,14 @@ if (!isset($_GET['file'])) {
 				}
 			}
 			?>
-            </table>
-            <?php
+            </table><?php
 			if (!$result) {
 				?>
                 <div class="ui-state-highlight"><span class="ui-icon ui-icon-info"></span>There are no messages of the specified type.</div>
                 <?php
 			}
 		} else {
-			echo "That log type is currently not supported.";
+			echo "<div class='ui-state-error'><span class='ui-icon ui-icon-help'></span>That log type is currently not supported.</div>";
 		}
 	}
 }
