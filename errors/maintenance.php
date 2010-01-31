@@ -1,5 +1,7 @@
-<?php $page_title = "Unavailable"; require_once dirname(__FILE__)."/../header.php";?>
+<?php $page_title = "Unavailable";
+$maintPage = true;
+require_once dirname(__FILE__)."/../header.php";
 
-<?php echo $config->getNode('messages','maintenance'); ?>
+echo $config->getNode('messages','maintenance');
 
-<?php require_once dirname(__FILE__)."/../footer.php";?>
+require_once dirname(__FILE__)."/../footer.php";?>

@@ -56,8 +56,9 @@ if (!isset($_SESSION)) {
 	debug_message("Session Initialized");
 }
 
-if ($_SETUP == false && $config->getNode('site','enabled') != true && !strstr($_SERVER['REQUEST_URI'],"/admin/") && !strstr($_SERVER['REQUEST_URI'],"/acp2/")) {
-	require_once dirname(__FILE__)."/errors/maintenance.php";
+//Maintenance Page
+if ($_SETUP == false && $config->getNode('site','enabled') != true && !strstr($_SERVER['REQUEST_URI'],"/admin/") && !strstr($_SERVER['REQUEST_URI'],"/acp2/") && !isset($maintPage)) {
+	header("Location: ".$config->getNode("paths","root")."/errors/maintenance.php");
 	die();
 }
 
@@ -94,6 +95,7 @@ require_once(dirname(__FILE__)."/includes/Paginator.class.php");
 debug_message("Paginator Class Definition Loaded.");
 require_once(dirname(__FILE__)."/includes/Keycodes.class.php");
 debug_message("Keycodes Class Definition Loaded.");
+//Load Function Replacements (PHP 4)
 require_once(dirname(__FILE__)."/includes/json_encode.inc.php");
 debug_message("json_encode Function Definition Loaded.");
 require_once(dirname(__FILE__)."/includes/file_put_contents.inc.php");
