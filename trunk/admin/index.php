@@ -99,6 +99,7 @@ Please enter your username and password to continue...
         <h3>Advanced</h3>
         <div>
             <a href="endpoints/process/cron.php" onclick='loader("Executing Cron Script...");' target="main">Cron Script</a>
+            <a href="endpoints/advanced/upload.php" onclick='loader("Loading Content...");' target="main">File Upload</a>
             <a href="logs" onclick='loader("Loading Content...");' target="main">Log Viewer</a>
             <a href="endpoints/advanced/bugs.php" onclick='loader("Loading Content...");' target="main">Bugs</a>
             <a href="endpoints/advanced/query.php" onclick='loader("Loading Content...");' target="main">Execute SQL</a>

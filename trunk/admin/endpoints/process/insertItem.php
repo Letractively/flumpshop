@@ -1,11 +1,11 @@
 <?php
 require_once dirname(__FILE__)."/../header.php";
-$name = str_replace("'","''",$_POST['name']);
-$description = nl2br(str_replace("'","''",$_POST['description']));
-$price = str_replace("'","''",$_POST['price']);
-$stock = str_replace("'","''",$_POST['stock']);
-$category = str_replace("'","''",$_POST['category']);
-$weight = str_replace("'","''",$_POST['weight']);
+$name = htmlentities($_POST['name'],ENT_QUOTES);
+$description = nl2br(htmlentities($_POST['description'],ENT_QUOTES));
+$price = str_replace("'","\'",$_POST['price']);
+$stock = str_replace("'","\'",$_POST['stock']);
+$category = str_replace("'","\'",$_POST['category']);
+$weight = str_replace("'","\'",$_POST['weight']);
 
 if ($name == "" or $description == "") {
 	echo "<div class='ui-state-error'><span class='ui-icon ui-icon-alert'></span>'Name' and 'Description' are required fields.</div>";
