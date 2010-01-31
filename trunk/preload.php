@@ -251,7 +251,7 @@ function placeholder_callback($args) {
 
 //CRON RUNNER
 if (!$_SETUP) {
-	if ($config->getNode("server","lastCron") < $time-($config->getNode('server','cronFreq')*60) && !$ajaxEndpoint) {
+	if ($config->getNode("server","lastCron") < time()-($config->getNode('server','cronFreq')*60) && !$ajaxEndpoint) {
 		//Run in iFrame so it doesn't prevent loading of rest of page
 		echo "<iframe style='display: none;' src='".$config->getNode("paths","root")."/admin/endpoints/process/cron.php'></iframe>";
 	}
