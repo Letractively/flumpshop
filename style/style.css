@@ -226,7 +226,7 @@ h1.content
 
 .search_box
 {
-	background: #13191c url(../images/magnifying_glass.png) right no-repeat;
+	background: #13191c;
 	border: 1px solid #536766;
 	color: #FFF;
 	font-family: Verdana, Geneva, sans-serif;
@@ -235,6 +235,15 @@ h1.content
 	width: 200px;
 	padding-right: 40px;
 	height:19px;
+}
+#search_icon {
+	background: url(../images/magnifying_glass.png) no-repeat;
+	width: 30px;
+	height: 35px;
+	position: relative;
+	right: -210px;
+	top: -25px;
+	cursor: pointer;
 }
 #search_container
 {
