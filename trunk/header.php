@@ -37,7 +37,7 @@ if (!isset($_SUBPAGE) or $_SUBPAGE == true) {
 <h1 class='drop_shadow'><?php echo strtolower($config->getNode('messages','name')); ?></h1>
 <h1 class='slogan'><?php echo $config->getNode('messages','tagline');?></h1></div>
 </div>
-<div id='search_container'><form action='<?php echo $config->getNode('paths','root');?>/search.php' onsubmit='return $(this).validate();'><input class='search_box' value='Search...' onfocus="if(this.value=='Search...'){this.value=''}" onblur="if(this.value==''){this.value='Search...'}" type='text' name='q' id='q' maxlength="150" /></form></div>
+<div id='search_container'><form action='<?php echo $config->getNode('paths','root');?>/search.php' onsubmit='return $(this).validate();' id='search_form'><input class='search_box' value='Search...' onfocus="if(this.value=='Search...'){this.value=''}" onblur="if(this.value==''){this.value='Search...'}" type='text' name='q' id='q' maxlength="150" /><div id='search_icon' onclick='$("#search_form").submit();'></div></form></div>
 <div id='tab'>
 <?php
 //Home
