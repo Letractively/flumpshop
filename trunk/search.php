@@ -1,8 +1,7 @@
-<?php require_once dirname(__FILE__)."/preload.php"; $page_title = "Search"; require_once dirname(__FILE__)."/header.php";?>
-  <h1 class="content">Search</h1>
-    <?php
+<?php require_once dirname(__FILE__)."/preload.php"; $page_title = "Search"; require_once dirname(__FILE__)."/header.php";
+?><h1 class="content">Search</h1><?php
 	if (isset($_GET['q'])) {
-		$query = str_replace(" ","%20",($_GET['q']));
+		$query = $_GET['q'];
 		if (isset($_GET['cat'])) {
 			$query .= "&cat=".$_GET['cat'];
 		}
@@ -10,13 +9,11 @@
 			$query .= "&page=".$_GET['page'];
 		}
 	} else $query = "";
-	?>
-    <form action="search.php" method="get">
+	?><form action="search.php" method="get">
       <input type="text" name="q" class="ui-state-default" value="<?php echo $_GET['q'];?>" onfocus="if (this.value == 'Search...') this.value = '';" onblur="if (this.value == '') this.value = 'Search...'" />
       <input type="submit" value="Go!" class="ui-state-default" />
     </form>
-    <div id="searchResults">
-    <?php
+    <div id="searchResults"><?php
 		if ($query == "" || $query == "Search..." || $query == "%") {
 			die("Please enter a search query.");
 		}
