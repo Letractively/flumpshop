@@ -1,4 +1,5 @@
 <?php require_once dirname(__FILE__)."/../header.inc.php";
+if (isset($_SESSION['config'])) unset($_SESSION['config']);
 ?><h1>Compatibility Checker</h1>
 <p>Below, I've listed anything about your current server environment that I think should be bought to your attention. If you see a big red stripy box of doom, then it means that something is really wrong, and that you have to fix it before you can carry on. After that, click 'Customise' to do just that to your setup experience.</p><?php
 //Analyse System Configuratiion
@@ -24,10 +25,10 @@ if (PHP_VERSION < "4.4.9") {
 /*MySQLi Extension*/
 if (!extension_loaded("mysqli")) {
 	$warn[] = "The MySQLi extension is not installed. This extension is required for MySQL database access";
-	$_SERVER['additions']['mysqli'] = false;
+	$_SESSION['additions']['mysqli'] = false;
 } else {
 	$success[] = "The MySQLi extension is installed and loaded - You can use the MySQL database type";
-	$_SERVER['additions']['mysqli'] = false;
+	$_SESSION['additions']['mysqli'] = true;
 }
 /*Curl Extension*/
 if (!extension_loaded("curl")) {
@@ -63,11 +64,13 @@ if (!extension_loaded("fileinfo")) {
 		}
 	}
 }
-/*SQLite3 Extension*/
+/*SQLite2 Extension*/
 if (!extension_loaded("sqlite")) {
 		$warn[] = "The SQLite extension is not installed. This extension is required for SQLite Database Support";
+		$_SESSION['additions']['sqlite'] = false;
 } else {
 		$success[] = "The SQLite extension is installed and loaded - You can use the SQLite database mode";
+		$_SESSION['additions']['sqlite'] = true;
 }
 if (!sizeof($fail) == 0) {
 	echo "<div class='ui-widget ui-state-error'><div class='ui-widget-header ui-state-error'>Flumpshop needs the following resolved before it can continue</div><div class='ui-widget-content ui-state-error'>";
@@ -95,4 +98,5 @@ if (!sizeof($fail) == 0) {
 } else {
 	echo "<a onclick=\"parent.leftFrame.window.location='../?frame=leftFrame&p=1.3';\" href='./customise.php'><div class='ui-state-highlight'><span class='ui-icon ui-icon-circle-check'></span>Customise your setup experience</div></a>";
 }
+require_once dirname(__FILE__)."/../footer.inc.php";
 ?>
