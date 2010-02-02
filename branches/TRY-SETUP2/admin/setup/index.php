@@ -1,11 +1,13 @@
 <?php
 $_SETUP = true;
-require_once dirname(__FILE__)."/../../preload.php";
+require_once dirname(__FILE__)."/../../includes/vars.inc.php";
 //Process Login
-if (isset($_POST['pass']) && md5($_POST['pass']) == $config->getNode("site","password")) {
-	$_SESSION['adminAuth'] = true;
-	header("Location: ./");
-	die();
+if (isset($_POST['pass'])) {
+	if (md5($_POST['pass']) == $config->getNode("site","password")) {
+		$_SESSION['adminAuth'] = true;
+		header("Location: ./");
+		die();
+	}
 }
 //Not Logged In
 if ((!isset($_SESSION['adminAuth']) or $_SESSION['adminAuth'] !== true) and file_exists(dirname(__FILE__)."/../../conf.txt")) {
@@ -65,6 +67,26 @@ Please enter your username and password to continue...
         	<li><a href="?frame=leftFrame&p=1.1" id="1.1">Introduction</a></li>
         	<li><a href="?frame=leftFrame&p=1.2" id="1.2">Compatibility Checker</a></li>
             <li><a href="?frame=leftFrame&p=1.3">Customisation Level</a></li>
+        </ul>
+        <div class="head">Settings</div>
+        <ul>
+        	<li><a href="?frame=leftFrame&p=2.1" id="2.1">Paths and Directories</a></li>
+            <li><a href="?frame=leftFrame&p=2.2" id="2.2">Database</a></li>
+            <li><a href="?frame=leftFrame&p=2.3" id="2.3">About You</a></li>
+        </ul>
+        <div class="head">Customise</div>
+        <ul>
+        	<li><a href="?frame=leftFrame&p=3.1" id="3.1"></a></li>
+            <li><a href="?frame=leftFrame&p=3.2" id="3.2"></a></li>
+            <li><a href="?frame=leftFrame&p=3.3" id="3.3"></a></li>
+            <li><a href="?frame=leftFrame&p=3.4" id="3.4"></a></li>
+            <li><a href="?frame=leftFrame&p=3.5" id="3.5"></a></li>
+            <li><a href="?frame=leftFrame&p=3.6" id="3.6"></a></li>
+            <li><a href="?frame=leftFrame&p=3.7" id="3.7"></a></li>
+            <li><a href="?frame=leftFrame&p=3.8" id="3.8"></a></li>
+            <li><a href="?frame=leftFrame&p=3.9" id="3.9"></a></li>
+            <li><a href="?frame=leftFrame&p=3.10" id="3.10"></a></li>
+            <li><a href="?frame=leftFrame&p=3.11" id="3.11"></a></li>
         </ul>
     </div>
     </div>
