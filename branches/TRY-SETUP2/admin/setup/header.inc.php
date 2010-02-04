@@ -1,10 +1,19 @@
 <?php
+
+function getNextStage($stage) {
+	global $_SESSION;
+	if (isset($_SESSION['stage']['security']) && $_SESSION['stage']['security'] && $stage < 3) {
+		return "security.php";
+	}
+}
+
 $INIT_DEBUG = false;
 $_SETUP = true;
 function debug_message($arg1 = "", $arg2 = false) {}
 if (!isset($_SESSION)) session_start();
 require_once dirname(__FILE__)."/../../../includes/Config.class.php";
-//Serializing prefents EPIC PHAIL
+require_once dirname(__FILE__)."/../../../includes/file_put_contents.inc.php";
+//Serializing prevents EPIC PHAIL
 if (isset($_SESSION['config'])) {
 	$_SESSION['config'] = unserialize($_SESSION['config']);
 }
