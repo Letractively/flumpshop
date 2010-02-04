@@ -12,10 +12,13 @@ function saveSetup() {
 	setTimeout("update();",100);
 }
 function update() {
-	$('#status').load('../process/status.txt');
-	setTimeout("update();",100);
+	if ($('#status').html() == "Finished!") {
+		window.location = "goodbye.php";
+	} else {
+		$('#status').load('../process/status.txt');
+		setTimeout("update();",100);
+	}
 }
 </script><?php
-print_r($_SESSION['config']);
 require_once dirname(__FILE__)."/../footer.inc.php";
 ?>
