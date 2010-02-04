@@ -5,6 +5,7 @@ require_once dirname(__FILE__)."/../header.inc.php";
 switch ($_GET['mode']) {
 	case "express":
 		//Express Mode
+		$_SESSION['mode'] = "express";
 		$_SESSION['stage']['paths'] = true;
 		$_SESSION['stage']['database'] = true;
 		$_SESSION['stage']['about'] = true;
@@ -75,8 +76,8 @@ $_SESSION['config']->setNode("site", "loginTab", true, "Login Tab");
 //Paths and Directories Tree
 $_SESSION['config']->addTree("paths", "Site Paths and Directories");
 
-$_SESSION['config']->setNode("paths", "root", "http://".$_SERVER['HTTP_HOST'].preg_replace('/\/admin\/setup\/\?stage=.*/i','',$_SERVER['REQUEST_URI']), "Home URL");
-$_SESSION['config']->setNode("paths", "secureRoot", "https://".$_SERVER['HTTP_HOST'].preg_replace('/\/admin\/setup\/\?stage=.*/i','',$_SERVER['REQUEST_URI']), "Secure Home URL");
+$_SESSION['config']->setNode("paths", "root", "http://".$_SERVER['HTTP_HOST'].preg_replace('/\/admin\/setup\/.*$/i','',$_SERVER['REQUEST_URI']), "Home URL");
+$_SESSION['config']->setNode("paths", "secureRoot", "https://".$_SERVER['HTTP_HOST'].preg_replace('/\/admin\/setup\/.*$/i','',$_SERVER['REQUEST_URI']), "Secure Home URL");
 $_SESSION['config']->setNode("paths", "path", preg_replace("/(\\\\|\/)admin(\\\\|\/)setup(.*)/i","",dirname(__FILE__)), "Home Directory");
 $_SESSION['config']->setNode("paths", "offlineDir", "C:/inetpub/data", "Offline Directory");
 $_SESSION['config']->setNode("paths", "logDir", $_SESSION['config']->getNode("paths", "offlineDir")."/logs", "Server Log Directory");

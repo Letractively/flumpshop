@@ -1,4 +1,5 @@
 <?php
+if (!isset($_SESSION)) session_start();
 $_SETUP = true;
 require_once dirname(__FILE__)."/../../includes/vars.inc.php";
 //Process Login
@@ -76,17 +77,24 @@ Please enter your username and password to continue...
         </ul>
         <div class="head">Customise</div>
         <ul>
-        	<li><a href="?frame=leftFrame&p=3.1" id="3.1"></a></li>
-            <li><a href="?frame=leftFrame&p=3.2" id="3.2"></a></li>
-            <li><a href="?frame=leftFrame&p=3.3" id="3.3"></a></li>
-            <li><a href="?frame=leftFrame&p=3.4" id="3.4"></a></li>
-            <li><a href="?frame=leftFrame&p=3.5" id="3.5"></a></li>
-            <li><a href="?frame=leftFrame&p=3.6" id="3.6"></a></li>
-            <li><a href="?frame=leftFrame&p=3.7" id="3.7"></a></li>
-            <li><a href="?frame=leftFrame&p=3.8" id="3.8"></a></li>
-            <li><a href="?frame=leftFrame&p=3.9" id="3.9"></a></li>
-            <li><a href="?frame=leftFrame&p=3.10" id="3.10"></a></li>
-            <li><a href="?frame=leftFrame&p=3.11" id="3.11"></a></li>
+        	<li><a href="?frame=leftFrame&p=3.1" id="3.1">Security Settings</a></li>
+            <li><a href="?frame=leftFrame&p=3.2" id="3.2">Shop Settings</a></li>
+            <li><a href="?frame=leftFrame&p=3.3" id="3.3">Order Status Settings</a></li>
+            <li><a href="?frame=leftFrame&p=3.4" id="3.4">PayPal Settings</a></li>
+            <li><a href="?frame=leftFrame&p=3.5" id="3.5">Predefined Messages</a></li>
+            <li><a href="?frame=leftFrame&p=3.6" id="3.6">Pagination Settings</a></li>
+            <li><a href="?frame=leftFrame&p=3.7" id="3.7">User Account Settings</a></li>
+            <li><a href="?frame=leftFrame&p=3.8" id="3.8">SMTP Server Settings</a></li>
+            <li><a href="?frame=leftFrame&p=3.9" id="3.9">Log Settings</a></li>
+            <li><a href="?frame=leftFrame&p=3.10" id="3.10">Advanced Server Settings</a></li>
+            <li><a href="?frame=leftFrame&p=3.11" id="3.11">Tab Settings</a></li>
+            <li><a href="?frame=leftFrame&p=3.12" id="3.12">Carousel Widget Settings</a></li>
+            <li><a href="?frame=leftFrame&p=3.13" id="3.13">Item View Settings</a></li>
+        </ul>
+        <div class="head">Finish</div>
+        <ul>
+        	<li><a href="?frame=leftFrame&p=4.1" id="4.1">Save Settings</a></li>
+            <li><a href="?frame=leftFrame&p=4.2" id="4.2">Goodbye, and hello!</a></li>
         </ul>
     </div>
     </div>
@@ -135,7 +143,7 @@ Please enter your username and password to continue...
 			  </html><?php
 		}
 	} else {
-		?><html><head><title>Flumpshop | Admin CP</title></head>
+		?><html><head><title>Flumpshop | Setup</title></head>
 			<frameset cols="252px,*" framespacing="0" border="0" frameborder="0" frameborder="no" border="0">
 			<frame name="leftFrame" id="leftFrame" src="?frame=leftFrame#welcome" scrolling="yes" frameborder="0" marginwidth="0" marginheight="0" border="no" />
 			<frameset rows="60px,*" framespacing="0" border="0" frameborder="0" frameborder="no" border="0">

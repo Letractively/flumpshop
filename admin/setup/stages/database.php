@@ -42,7 +42,7 @@ require_once dirname(__FILE__)."/../header.inc.php";
 <div class="ui-helper-hidden helpDialog" id="typeHelp" title="Engine">This is the database engine that Flumpshop will use. If "No Engines Available" is displayed, then you must install the MySQLi or SQLite extension and restart setup to continue.</div>
 <div class="ui-helper-hidden helpDialog" id="addressHelp" title="Address/Path">For MySQL databases, this is the address of the MySQL Server. For SQLite, this is the the path to the database file, including the file name.</div>
 <div class="ui-helper-hidden helpDialog" id="portHelp" title="Port">The port used to connect to the MySQL Server.</div>
-<div class="ui-helper-hidden helpDialog" id="uname" title="Username">The username used to connect to the MySQL Server.</div>
+<div class="ui-helper-hidden helpDialog" id="unameHelp" title="Username">The username used to connect to the MySQL Server.</div>
 <div class="ui-helper-hidden helpDialog" id="passwordHelp" title="Password">The password used to connect to the MySQL Server.</div>
 <div class="ui-helper-hidden helpDialog" id="nameHelp" title="Database">The name of the database that Flumpshop will use. It must already have been created before you continue.</div>
 <script>
