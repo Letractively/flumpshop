@@ -34,20 +34,20 @@ echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->ge
 	if ($dbConn->rows($items) == 0) {
 		echo "There are no products in this category.";
 	} else {
-		echo "\n<table style='width: 100%'>\n\t<tr>";
+		echo "<table style='width: 100%; vertical-align: top;'><tr>";
 		if ($dbConn->rows($items) == 1) {
 			$item = $dbConn->fetch($items);
 			$item = new Item($item['id']);
 			header("Location: ".$item->getURL());
-			echo "\n\t\t<td>".$item->getDetails('CATEGORY')."\n\t\t</td>";
+			echo "<td>".$item->getDetails('CATEGORY')."</td>";
 		}
 		$i = 1;
 		while ($item = $dbConn->fetch($items)) {
-			echo "\n\t\t<td>";
+			echo "<td>";
 			$item = new Item($item['id']);
 			echo $item->getDetails('CATEGORY');
-			echo "\n\t\t</td>\n";
-			if (is_int($i/$config->getNode('viewItem','catCols'))) echo "\n\t</tr>\n\t<tr>";
+			echo "</td>";
+			if (is_int($i/$config->getNode('viewItem','catCols'))) echo "</tr><tr>";
 			$i++;
 		}
 		echo "</tr></table>";
