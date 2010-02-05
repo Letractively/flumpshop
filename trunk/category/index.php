@@ -23,7 +23,7 @@ echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->ge
 	foreach ($category->getChildren() as $child) {
 		$criteria .= " OR category='$child'";
 	}
-	$items = $dbConn->query("SELECT id FROM `products` WHERE category='".$category->getID()."'".$criteria);
+	$items = $dbConn->query("SELECT id FROM `products` WHERE category='".$category->getID()."' AND active=1".$criteria);
 	$num = $dbConn->rows($items);
 	
 	$perPage = $config->getNode("pagination","categoryPerPage");
