@@ -26,6 +26,11 @@ require_once(dirname(__FILE__)."/includes/Config.class.php");
 require_once(dirname(__FILE__)."/includes/vars.inc.php");
 error_reporting(E_ALL);
 
+/*ONEOFF
+$config->setNode('viewItem', 'catCols', 2, 'Category View Columns');
+$config->setNode('viewItem', 'catTextPos', 'bottom', 'Category Text Position');
+$config->setNode('viewItem', 'catChars', 50, 'Category Text Length');*/
+
 if (isset($config)) {
 	if($config->getNode('logs','errors')) $errLog = fopen($config->getNode('paths','logDir')."/errors.log","a+");
 	if($config->getNode('server','debug')) $debugLog = fopen($config->getNode('paths','logDir')."/debug.log","a+");
@@ -163,7 +168,6 @@ if ($_SETUP == false) {
 		init_err("Database Connection Failed.");
 	}
 	debug_message("Database Connection Established",true);
-	#$dbConn->multi_query(file_get_contents(__DIR__."/admin/install.sql")); //Debug for SQLite (Rebuilds DB)
 	$session = $dbConn->query("SELECT * FROM `sessions` WHERE session_id='".session_id()."' LIMIT 1");
 	if ($session === false && $_PRINTDATA) {
 		trigger_error($dbConn->error());
@@ -256,9 +260,9 @@ if (!$_SETUP) {
 	if ($config->getNode("server","lastCron") < time()-($config->getNode('server','cronFreq')*60) && !$ajaxProvider) {
 		//Run in iFrame so it doesn't prevent loading of rest of page
 		//Echoing here screws up CSS - Runs in footer.php
-		$cronStr = "<iframe style='display: none;' src='".$config->getNode("paths","root")."/admin/endpoints/process/cron.php'></iframe>";
+		$cron = "<iframe style='display: none;' src='".$config->getNode("paths","root")."/admin/endpoints/process/cron.php'></iframe>";
 	} else {
-		$cronStr = "";
+		$cron = "";
 	}
 }
 ?>
