@@ -1,14 +1,6 @@
 <?php require_once dirname(__FILE__)."/preload.php"; $page_title = "Search"; require_once dirname(__FILE__)."/header.php";
 ?><h1 class="content">Search</h1><?php
-	if (isset($_GET['q'])) {
-		$query = $_GET['q'];
-		if (isset($_GET['cat'])) {
-			$query .= "&cat=".$_GET['cat'];
-		}
-		if (isset($_GET['page'])) {
-			$query .= "&page=".$_GET['page'];
-		}
-	} else $query = "";
+	if (isset($_GET['q'])) $query = htmlentities($_GET['q']); else $query = "";
 	?><form action="search.php" method="get">
       <input type="text" name="q" class="ui-state-default" value="<?php echo $_GET['q'];?>" onfocus="if (this.value == 'Search...') this.value = '';" onblur="if (this.value == '') this.value = 'Search...'" />
       <input type="submit" value="Go!" class="ui-state-default" />
