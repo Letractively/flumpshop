@@ -17,6 +17,14 @@ class Upgrade {
 		$this->newVersion = $str;
 	}
 	
+	function setPrevRevision($str) {
+		$this->prevRevision = $str;
+	}
+	
+	function getPrevRevision() {
+		return $this->prevRevision;
+	}
+	
 	function getNotes() {
 		global $config;
 		$notices = $this->notices;

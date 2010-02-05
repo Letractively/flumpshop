@@ -4,6 +4,7 @@ require "./Upgrade.class.php";
 $upgrade = new Upgrade();
 
 //Easy Part
+$upgrade->setPrevRevision($_POST['prevRevision']);
 $upgrade->setVersion($_POST['version']);
 $upgrade->setNotes($_POST['notes']);
 $upgrade->setSQL($_POST['sql']);
@@ -34,7 +35,14 @@ while ($dir = array_pop($dirs)) {
 			array_push($dirs,$dir."/$file");
 		} elseif (preg_match("/(php|css|js|png|jpg|gif|mp3)$/i",$file)) {//Only include PHP, CSS, Image, Audio and JS Files
 			if (!is_dir(dirname(__FILE__)."/$dir/$file")) {
-				$package[$dir][$file] = file_get_contents(dirname(__FILE__)."/$dir/$file");
+				//Get the path for the previous file in the repository
+				$svnPath = "http://flumpshop.googlecode.com/svn-history/r".$upgrade->getPrevRevision()."/trunk/".str_replace("../../","",$dir."/".$file);
+				$svnFile = file_get_contents($svnpath);
+				//MD5 hashes are at risk from a collision, checking both the MD5 and SHA1 of a file prevents any collision
+				if((md5($svnFile)!=md5(file_get_contents((dirname(__FILE__)."/$dir/$file")() && (sha1(file_get_contents(($svnFile)!=sha1(dirname(__FILE__)."/$dir/$file"))))
+				{
+					$package[$dir][$file] = file_get_contents(dirname(__FILE__)."/$dir/$file");
+				}
 			}
 		}
 	}
