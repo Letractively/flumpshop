@@ -113,7 +113,9 @@ Please enter your username and password to continue...
     </div>
     </center>
     <script type="text/javascript">
-    $(document).ready(function() {$('#navAccordion').accordion({collapsible: true, active: false, autoHeight: false, icons: {'header': 'ui-icon-circle-arrow-e', 'headerSelected': 'ui-icon-circle-arrow-s'}});});
+    $(document).ready(function() {
+							   $('#navAccordion').accordion({collapsible: true, active: false, autoHeight: false, icons: {'header': 'ui-icon-circle-arrow-e', 'headerSelected': 'ui-icon-circle-arrow-s'}});
+							   });
 	function loader(str) {
 		parent.main.document.body.innerHTML = loadMsg(str);
 	}

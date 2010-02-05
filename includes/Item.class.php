@@ -229,13 +229,19 @@ class Item {
 			$reply .= "</td></tr></table><br />";
 		}
 		if ($type == "CATEGORY") {
-			$reply = "<table><tr><td width='100'><a href='".$this->getURL()."' class='ui-widget-content'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' style='float: left; margin-right: 1em; margin-top: 1em; max-height: ".(150*$config->getNode("viewItem","imageScale"))."px; max-width: ".(150*$config->getNode("viewItem","imageScale"))."px;' alt='".$this->getName()."' /></a></td>";
-			$reply .= "<td><h3 style='font-size: 0.8em;'><a href='".$this->getURL()."' class='ui-widget-content'>".$this->getName()."</a></h3>";
+			$reply = "<table><tr><td>";
+			//Image
+			$reply .= "<a href='".$this->getURL()."' class='ui-widget-content'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' style='margin-right: 1em; margin-top: 1em; max-height: ".(150*$config->getNode("viewItem","imageScale"))."px; max-width: ".(150*$config->getNode("viewItem","imageScale"))."px;' alt='".$this->getName()."' /></a>";
+			$reply .= "</td>";//End Image TD
+			if (strtolower($config->getNode('viewItem','catTextPos')) == "bottom") $reply .= "</tr><tr>";
+			$reply .= "<td>";//Start Content TD
+			$reply .= "<h3 style='font-size: 0.8em;'><a href='".$this->getURL()."' class='ui-widget-content'>".$this->getName()."</a></h3>"; //TITLE
 			if ($config->getNode("site","shopEnabled")) {
-				$reply .= "<em>&pound;".$this->itemPrice."</em><span class='ui-state-disabled'>&nbsp;ex.VAT</span>";
+				$reply .= "<em>&pound;".$this->itemPrice."</em><span class='ui-state-disabled'>&nbsp;ex.VAT</span>"; //Price
 			}
-			if (strlen($this->getDesc()) > 250) $reply .= "<p style='font-size: 0.8em; height: 125px;'>".substr($this->getDesc(),0,250)."...</p>";
-			else $reply .= "<p style='font-size: 0.8em; height: 125px;'>".$this->getDesc()."</p></td></tr></table>";
+			if (strlen($this->getDesc()) > $config->getNode('viewItem','catChars')) $reply .= "<p style='font-size: 0.8em;'>".substr($this->getDesc(),0,$config->getNode('viewItem','catChars'))."...</p>";
+			else $reply .= "<p style='font-size: 0.8em;'>".$this->getDesc()."</p>";
+			$reply .= "</td></tr></table>"; //Close Container
 		}
 		if ($type == "SEARCH") {
 			$reply = "<h3 style='margin-bottom: 0;'><a href='".$this->getURL()."' class='ui-widget-content'>".$this->getName($int)."</a></h3>";
