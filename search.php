@@ -44,8 +44,13 @@
 			$additions .= " AND (category = '".$category->getID()."'";
 			foreach ($cats as $cat) {
 				$additions .= " OR category = '$cat'";
+				//Recursion
+				$cat = new Category($cat);
+				foreach ($cat->getChildren(true) as $newCat) {
+					$cats[] = $newCat;
+				}
 			}
-			$additions .=")";
+			$additions .= ")";
 			echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-info'></span>Showing results in ".$category->getName()." only.</div>";
 		}
 		
