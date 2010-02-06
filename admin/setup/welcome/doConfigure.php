@@ -329,6 +329,12 @@ $_SESSION['config']->addTree("viewItem", "Item View Settings");
 
 $_SESSION['config']->setNode("viewItem", "showID", false, "Show Item ID");
 $_SESSION['config']->setNode("viewItem", "imageScale", 1, "Image Scale");
+$_SESSION['config']->setNode("viewItem", "catCols", 4, "Category Columns");
+$_SESSION['config']->setNode("viewItem", "catTextPos", "bottom", "Category Text Position");
+$_SESSION['config']->setNode("viewItem", "catChars", 30, "Category Item Summary Length");
+
+
+//Save
 $_SESSION['config'] = serialize($_SESSION['config']);
 ?><script type="text/javascript">parent.leftFrame.window.location = '../index.php?frame=leftFrame&p=1.3';</script>
 <h1>Ready To Go</h1>
