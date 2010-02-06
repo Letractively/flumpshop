@@ -8,5 +8,5 @@ The features listed on this page are for development use only. They are not full
 
 = Details =
 
- * [Waves] menu
  * [SendFeedback] Bug Report (May be replaced by an improved implementation)
+ * [UpgradeConfigure] Upgrade Configuration Utility
