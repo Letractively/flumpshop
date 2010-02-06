@@ -54,7 +54,7 @@ Released for free under a Creative Commons Attribution 2.5 License
 			  if (!isset($_GET['page'])) {
     		  ?><div id="colTwo">
     			<div class="bg1"><h2>Upgrade</h2>
-					<p>The latest upgrade file is now being downloaded. If you are having issues with this feature, please download the file http://flumpshop.googlecode.com/svn/updater/upgrade_<?php echo $latestVersion;?>.fml file and place it in the offline directory.</p>
+					<p>The latest upgrade file is now being downloaded. If you are having issues with this feature, please download the file http://flumpshop.googlecode.com/files/upgrade_v<?php echo $latestVersion;?>.fml file and place it in the offline directory.</p>
             		<p>Remember that PHP must have WRITE access to the Flumpshop root directory and all subdirectories for this process.</p>
             		<p><center id="downloader"><img src="../../images/loading.gif" /><br />Downloading upgrade_v<?php echo $latestVersion;?>.fml</center></p>
             		<script type="text/javascript">$('#downloader').load('downloader.php?file=upgrade_v<?php echo $latestVersion;?>.fml');</script>

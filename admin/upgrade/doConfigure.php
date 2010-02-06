@@ -17,10 +17,10 @@ $names = explode("\n",$_POST['confVarsName']);
 
 $config = array();
 for ($i = 0; isset($trees[$i]); $i++) {
-	$config[$i]['tree'] = $trees[$i];
-	$config[$i]['node'] = $nodes[$i];
-	$config[$i]['value'] = $defaults[$i];
-	$config[$i]['name'] = $names[$i];
+	$config[$i]['tree'] = trim($trees[$i]);
+	$config[$i]['node'] = trim($nodes[$i]);
+	$config[$i]['value'] = trim($defaults[$i]);
+	$config[$i]['name'] = trim($names[$i]);
 }
 if (!empty($config[0]['tree'])) {
 	$upgrade->setConfUpdate($config);
