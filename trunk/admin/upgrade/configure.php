@@ -9,6 +9,8 @@ New Conf Vars (Tree): <textarea name="confVarsTree" id="confVarsTree"></textarea
 New Conf Vars (Node): <textarea name="confVarsNode" id="confVarsNode"></textarea><br />
 New Conf Vars (Default): <textarea name="confVarsVal" id="confVarsVal"></textarea><br />
 New Conf Vars (Name): <textarea name="confVarsName" id="confVarsName"></textarea><br />
+Upgrade Notes: <textarea name="notes" id="notes">No additional details were provided for this release</textarea><br />
+Upgrade SQL: <textarea name="sql" id="sql"></textarea><br />
 <input type="submit" onClick="this.disabled = true; document.getElementById('form').submit();" />
 </form>
 <p>This form will automatically generate an Upgrade package based on the Flumpshop instance it resides in. This can then be placed in the Flumpshop downloads, and, once the versions.txt file has been updated, will automatically be detected by all other Flumpshop instances, which will then prompt users to update.</p>
