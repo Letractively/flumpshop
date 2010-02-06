@@ -40,7 +40,7 @@ if (!extension_loaded("curl")) {
 }
 /*SimpleXML Extension*/
 if (!extension_loaded("simplexml")) {
-	if (!dl("simplexml")) {
+	if (!function_exists("dl") or !dl("simplexml")) {
 		$warn[] = "The SimpleXML extension is not installed. Database logs will be disabled.";
 		$_SESSION['additions']['sxml'] = false;
 	} else {
@@ -56,7 +56,7 @@ if (!extension_loaded("gd")) {
 }
 /*Fileinfo Extension*/
 if (!extension_loaded("fileinfo")) {
-	if (!dl("fileinfo")) {
+	if (!function_exists("dl") or !dl("fileinfo")) {
 		if (PHP_VERSION >= "5.3.0") {
 			$fail[] = "The Fileinfo extension is not installed. This extension is required for general file purposes";
 		} else {
@@ -94,7 +94,7 @@ if (!sizeof($success) == 0) {
 	echo "</div></div><br />";
 }
 if (!sizeof($fail) == 0) {
-	echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-alert'></span>I need the above issue(s) fixed before I can continue!</div>";
+	echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-alert'></span>I need the above issue(s) fixed before I can continue! <a href='javascript:history.go(0);'>Try Again</a></div>";
 } else {
 	echo "<a onclick=\"parent.leftFrame.window.location='../?frame=leftFrame&p=1.3';\" href='./customise.php'><div class='ui-state-highlight'><span class='ui-icon ui-icon-circle-check'></span>Customise your setup experience</div></a>";
 }

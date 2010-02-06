@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__FILE__)."/../header.inc.php";
 ?><h1>Database</h1>
-<form action="../process/doDatabase.php" method="post"><table>
+<form action="../process/doDatabase.php" method="post" id="form"><table>
 <tr>
 	<td><label for="type">Engine</label></td>
     <td><select name='type' id="type" onchange='if ($(this).val() == "mysql") {$(".mysqli").show(); $("#address").val("localhost");} else {$(".mysqli").hide(); $("#address").val("<?php echo $_SESSION['config']->getNode('paths','offlineDir')?>/db.sqlite");}'><?php
@@ -37,8 +37,10 @@ require_once dirname(__FILE__)."/../header.inc.php";
     <td><span class='iconbutton' onclick='$("#nameHelp").dialog("open");'></span></td>
 </tr>
 </table>
-<input type="submit" value="Continue" />
+<button onclick='saveSetup(); this.disabled = true; $(this).html("Processing...")' id='continue'>Continue</button>
 </form>
+<div id="status" class="ui-state-highlight"></div>
+
 <div class="ui-helper-hidden helpDialog" id="typeHelp" title="Engine">This is the database engine that Flumpshop will use. If "No Engines Available" is displayed, then you must install the MySQLi or SQLite extension and restart setup to continue.</div>
 <div class="ui-helper-hidden helpDialog" id="addressHelp" title="Address/Path">For MySQL databases, this is the address of the MySQL Server. For SQLite, this is the the path to the database file, including the file name.</div>
 <div class="ui-helper-hidden helpDialog" id="portHelp" title="Port">The port used to connect to the MySQL Server.</div>
@@ -47,5 +49,24 @@ require_once dirname(__FILE__)."/../header.inc.php";
 <div class="ui-helper-hidden helpDialog" id="nameHelp" title="Database">The name of the database that Flumpshop will use. It must already have been created before you continue.</div>
 <script>
 document.logDirFocus = true;
+
+function saveSetup() {
+	$('#form').ajaxSubmit({timeout: 100000000});
+	$('#status').html('Please Wait...');
+	update();
+	document.aborted = false;
+}
+function update() {
+	if ($('#status').html() == "Finished!" && !document.aborted) {
+		window.location = "about.php";
+		document.aborted = true;
+	} else if ($('#status').html() == "Database Connection Failed!" && !document.aborted) {
+		$('#continue').removeAttr('disabled').html('Retry');
+		document.aborted = true;
+	} else {
+		$('#status').load('../process/status.txt');
+		setTimeout("update();",100);
+	}
+}
 </script><?php
 require_once dirname(__FILE__)."/../footer.inc.php";?>
