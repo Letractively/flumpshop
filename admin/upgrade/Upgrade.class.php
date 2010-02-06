@@ -4,6 +4,7 @@ class Upgrade {
 	var $notices;
 	var $confUpdate;
 	var $sqlUpdate;
+	var $prevRevision;
 	
 	function Upgrade() {
 		$this->confUpdate = array();

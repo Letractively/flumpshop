@@ -37,10 +37,10 @@ while ($dir = array_pop($dirs)) {
 			if (!is_dir(dirname(__FILE__)."/$dir/$file")) {
 				//Get the path for the previous file in the repository
 				$svnPath = "http://flumpshop.googlecode.com/svn-history/r".$upgrade->getPrevRevision()."/trunk/".str_replace("../../","",$dir."/".$file);
-				$svnFile = file_get_contents($svnpath);
+				$svnFile = file_get_contents($svnPath);
 				//MD5 hashes are at risk from a collision, checking both the MD5 and SHA1 of a file prevents any collision
-				if((md5($svnFile)!=md5(file_get_contents((dirname(__FILE__)."/$dir/$file")() && (sha1(file_get_contents(($svnFile)!=sha1(dirname(__FILE__)."/$dir/$file"))))
-				{
+				if(md5($svnFile) != md5(file_get_contents(dirname(__FILE__)."/$dir/$file")) &&
+				   sha1($svnFile) != sha1(file_get_contents(dirname(__FILE__)."/$dir/$file"))) {
 					$package[$dir][$file] = file_get_contents(dirname(__FILE__)."/$dir/$file");
 				}
 			}
