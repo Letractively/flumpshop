@@ -67,7 +67,7 @@ $_SESSION['config']->setNode("site", "enabled", true, "Enable Site");
 $_SESSION['config']->setNode("site", "password", md5("123456"), "Admin Password");
 $_SESSION['config']->setNode("site", "vat", 17.5, "VAT Rate");
 $_SESSION['config']->setNode("site", "country", "GB", "Default Country");
-$_SESSION['config']->setNode("site", "shopMode", false, "Shop Mode");
+$_SESSION['config']->setNode("site", "shopMode", true, "Shop Mode");
 $_SESSION['config']->setNode("site", "homeTab", true, "Home Tab");
 $_SESSION['config']->setNode("site", "sendFeedback", true, "Send Feedback");
 $_SESSION['config']->setNode("site", "version", "0.9.232", "Version");
@@ -91,23 +91,23 @@ $_SESSION['config']->setNode("secure", "admin", true, "Force Secure Admin CP");
 //Database
 $_SESSION['config']->addTree("database", "Database Server Settings");
 
-$_SESSION['config']->setNode("database", "type", "mysql", "mysql/sqlite - Experimental");
-$_SESSION['config']->setNode("database", "address", "127.0.0.1", "Server Address");
+$_SESSION['config']->setNode("database", "type", "mysql", "Database Engine");
+$_SESSION['config']->setNode("database", "address", "localhost", "Server Address");
 $_SESSION['config']->setNode("database", "port", "3306", "Server Port");
 $_SESSION['config']->setNode("database", "uname", "", "Username");
 $_SESSION['config']->setNode("database", "password", "", "Password");
-$_SESSION['config']->setNode("database", "name", "ecommerce", "Main Site Database Name");
+$_SESSION['config']->setNode("database", "name", "flumpshop", "Main Site Database Name");
 
 //Advanced Server
 $_SESSION['config']->addTree("server", "Advanced Server Configuration");
 
 $_SESSION['config']->setNode("server", "rewrite", false, "Enable URL Rewrite");
 $_SESSION['config']->setNode("server", "holdTimeout", 60, "Item Hold Timeout");
-$_SESSION['config']->setNode("server", "commitPayments", false, "Commit Payments (Debug)");
+$_SESSION['config']->setNode("server", "commitPayments", true, "Commit Payments (Debug)");
 $_SESSION['config']->setNode("server", "crawlerAgents", "Googlebot|msnbot|Slurp", "Web Crawler Useragents");
-$_SESSION['config']->setNode("server", "debug", true, "Enable Debug Mode");
+$_SESSION['config']->setNode("server", "debug", false, "Enable Debug Mode");
 $_SESSION['config']->setNode("server", "cronFreq", 30, "Cron Frequency (mins)");
-$_SESSION['config']->setNode("server", "backupFreq", 48, "Backup Frequency (hrs)");
+$_SESSION['config']->setNode("server", "backupFreq", 24, "Backup Frequency (hrs)");
 
 //Messages
 $_SESSION['config']->addTree("messages", "Predefined Text Strings");
@@ -115,10 +115,10 @@ $_SESSION['config']->addTree("messages", "Predefined Text Strings");
 $_SESSION['config']->setNode("messages", "footer", "Designed and built by Flumpnet", "Page Footer");
 $_SESSION['config']->setNode("messages", "adminDenied", "You must enter the administrator password in the Site Admin section before you can perform this action.", "Admin Access Denied");
 $_SESSION['config']->setNode("messages", "crawler", "A Crawler User Agent has been detected. Some site features are disabled to reduce server load.", "Crawler Agent");
-$_SESSION['config']->setNode("messages", "maintenance", "<div class='ui-state-error'><span class='ui-icon ui-icon-alert'></span>The site has been shut down for maintenance unexpectedly.</div>", "Site Disabled");
-$_SESSION['config']->setNode("messages", "name", "R&amp;middot;J&amp;middot;C Com", "Site Name");
-$_SESSION['config']->setNode("messages", "tagline", "Developer Preview", "Tagline");
-$_SESSION['config']->setNode("messages", "keywords", "RJC Commercial Catering equipment", "Keywords");
+$_SESSION['config']->setNode("messages", "maintenance", "<div class='ui-state-error'><span class='ui-icon ui-icon-alert'></span>We've shut down the site temporarily for scheduled maintenance. It should be back online in a few moments.</div>", "Site Disabled");
+$_SESSION['config']->setNode("messages", "name", "Flumpshop", "Site Name");
+$_SESSION['config']->setNode("messages", "tagline", "Beta!", "Tagline");
+$_SESSION['config']->setNode("messages", "keywords", "Flumpshop online shop buy ecommerce sales", "Keywords");
 $_SESSION['config']->setNode("messages", "defaultCategoryName", "Uncategorised", "Default Category Name");
 $_SESSION['config']->setNode("messages", "defaultCategoryDesc", "Details for this category are unavailable.", "Default Category Description");
 $_SESSION['config']->setNode("messages", "basketRemItemConf", "Are you sure you want to remove this item from your basket?", "Remove from Basket");
@@ -149,8 +149,8 @@ $_SESSION['config']->setNode("messages", "loginNeeded", "You must be logged in t
 $_SESSION['config']->setNode("messages", "countryNotSupported", "Sorry, but we can't deliver to your country online. We're working hard to expand our range, but you must call or email us to arrange delivery to this region.", "Unsupported Country");
 
 //Legal Additions
-$_SESSION['config']->setNode("messages", "email", "support@".$_SERVER['HTTP_HOST'], "Email Address");
-$_SESSION['config']->setNode("messages", "address", "24 Pendwyallt Road, BURNSIDE, EH52 8BS", "Address");
+$_SESSION['config']->setNode("messages", "email", "sales@".$_SERVER['HTTP_HOST'], "Email Address");
+$_SESSION['config']->setNode("messages", "address", "[Please enter your business address here]", "Address");
 
 //Full Page Content
 $_SESSION['config']->setNode("messages", "404", 
@@ -162,24 +162,14 @@ EOT
 , "404 Error Page");
 $_SESSION['config']->setNode("messages", "homePage", 
 <<<EOT
-We have some spectacular products with excellent sales and after-sales service, browse through our products - list the product codes and forward the information to us and we will be delighted to send you a formal quotation. If you would like extra information, brochures, drawings etc - please ask. 
+Hello, it's me again, the Flumpnet robot. I thought you might like to know this:
 
-We look forward to hearing from you.
-
-
-We pride ourselves in providing high-quality equipment with First Class aftercare service.
+This is another one of my magical placeholder messages. This means that as soon as you tell me to put something here, then I'll make sure you never see this thing again. To do this, simply login to the Administrator Control Panel, and click Home Page in the Pages section.
+It sounds great, right? That all you have to do is click a few buttons instead of spending hours digging through the thousands and thousands of lines of code the make this website, and more importantly, me, happen. Happy Interneting!
 EOT
-/*PUBLIC RELEASE VALUE:
-Hello, it's me again, the Flumpnet robot. I'm afraid there's three things I need to point out to you:
-
-This is another one of my magical placeholder messages. This means that as soon as you tell me to put something here, then this message will just fade away forever. To do this, simply log in to the Administrator Control Panel, and click Home Page in the Edit Object section.
-It sounds great, right? That all you have to do is click a few buttons instead of spending hours digging through the thousands and thousands of lines of code the make this website, and more importantly, me, happen. Well, you know how this is a Developer Preview release? And how this means that I'm still being developed? That's right. You've got it. Trying to edit the Home Page will merely result in the dreaded ERR_FEATURE_NOT_IMPLEMENTED message.
-I know what you were thinking when you saw the three. Yeah. I'm intelligent enough to know there was actually going to be three of them. Anyway, on with the point. As with a large portion of me (the default is around 25KB at the time this was written), the content of this page is stored in the wonderful conf.txt file, which means it can be accessed and edited using the Variable Manager. But shh. It's a secret.
-*/
 , "Home Page");
 $_SESSION['config']->setNode("messages", "privacyPolicy",
 <<<EOT
-<p>Hey, it's the Flumpnet robot. It is important that you know that the information given below is preliminary, and in some areas incomplete, and subject to change. Thought you ought to know.</p>
 <p>This privacy policy sets out how [[name]] uses and protects any information that you give [[name]] when you use this website.</p> 
 
 <p>[[name]] is committed to ensuring that your privacy is protected. Should we ask you to provide certain information by which you can be identified when using this website, then you can be assured that it will only be used in accordance with this privacy statement.</p> 
@@ -206,7 +196,7 @@ We may collect the following information:
 <p>We are committed to ensuring that your information is secure. In order to prevent unauthorised access or disclosure we have put in place suitable physical, electronic and managerial procedures to safeguard and secure the information we collect online.</p> 
 
 <h3 class="content">How we use cookies</h3> 
-<p>A cookie is a small file which asks permission to be placed on your computer's hard drive. Once you agree, the file is added and the cookie helps analyse web traffic or lets you know when you visit a particular site. Cookies allow web applications to respond to you as an individual. The web application can tailor its operations to your needs, likes and dislikes by gathering and remembering information about your preferences.</p> 
+<p>A cookie is a small file which asks permission to be placed on your device hard drive. Once you agree, the file is added and the cookie helps analyse web traffic or lets you know when you visit a particular site. Cookies allow web applications to respond to you as an individual. The web application can tailor its operations to your needs, likes and dislikes by gathering and remembering information about your preferences.</p> 
 
 <p>We use traffic log cookies to identify which pages are being used. This helps us analyse data about webpage traffic and improve our website in order to tailor it to customer needs. We only use this information for statistical analysis purposes and then the data is removed from the system.</p> 
 
@@ -263,45 +253,14 @@ EOT
 
 $_SESSION['config']->setNode("messages", "aboutPage",
 <<<EOT
-We have some spectacular products with excellent sales and after-sales service, browse through our products - list the product codes and forward the information to us and we will be delighted to send you a formal quotation.
-
-If you would like extra information, brochures, drawings etc - please ask. We look forward to hearing from you.
-
-We pride ourselves in providing high-quality equipment with First Class aftercare service
+<p>Hello, it's me again, the Flumpnet robot. It looks like this is another one of those placeholder messages. You'll have to head over to the Admin CP and set your own content for this page under Pages->About Page for this messages to go away.</p>
 EOT
-/*Release Value:
-<p>Hello, it's me again, the Flumpnet robot. I'm afraid there's three things I need to point out to you:</p>
-<ol>
-<li>This is another one of my magical placeholder messages. This means that as soon as you tell me to put something here, then this message will just fade away forever. To do this, simply log in to the Administrator Control Panel, and click About Page in the Edit Object section.</li>
-<li>It sounds great, right? That all you have to do is click a few buttons instead of spending hours digging through the thousands and thousands of lines of code the make this website, and more importantly, me, happen. Well, you know how this is a Developer Preview release? And how this means that I'm still being developed? That's right. You've got it. Trying to edit the About Page will merely result in the dreaded ERR_FEATURE_NOT_IMPLEMENTED message.</li>
-<li>I know what you were thinking when you saw the three. Yeah. I'm intelligent enough to know there was actually going to be three of them. Anyway, on with the point. As with a large portion of me (the default is around 15KB at the time this was generated), the content of this page is stored in the wonderful conf.txt file, which means it can be accessed and edited using the Variable Manager. But shh. It's a secret.</li>
-</ol>
-*/
 ,"About Page");
 
 $_SESSION['config']->setNode("messages", "contactPage",
 <<<EOT
-RJC Commercial Food Equipment<br />
-Brunel House,<br />
-Old Great North Road,<br />
-Sawtry,<br />
-Huntingdon,<br />
-Cambridgeshire,<br />
-PE28 5XN.<br />
-United Kingdom.<br />
-<br />
-Tel: +44 01487 830968<br />
-Fax: +44 01487 830968  Two lines<br />
-E-mail: sales@rjccom.co.uk<br />
+<p>Hello, it's me again, the Flumpnet robot. It looks like this is another one of those placeholder messages. You'll have to head over to the Admin CP and set your own content for this page under Pages->Contact Page for this messages to go away.</p>
 EOT
-/*Release Value:
-<p>Hello, it's me again, the Flumpnet robot. I'm afraid there's three things I need to point out to you:</p>
-<ol>
-<li>This is another one of my magical placeholder messages. This means that as soon as you tell me to put something here, then this message will just fade away forever. To do this, simply log in to the Administrator Control Panel, and click Contact Page in the Edit Object section.</li>
-<li>It sounds great, right? That all you have to do is click a few buttons instead of spending hours digging through the thousands and thousands of lines of code the make this website, and more importantly, me, happen. Well, you know how this is a Developer Preview release? And how this means that I'm still being developed? That's right. You've got it. Trying to edit the Contact Page will merely result in the dreaded ERR_FEATURE_NOT_IMPLEMENTED message.</li>
-<li>I know what you were thinking when you saw the three. Yeah. I'm intelligent enough to know there was actually going to be three of them. Anyway, on with the point. As with a large portion of me (the default is around 15KB at the time this was generated), the content of this page is stored in the wonderful conf.txt file, which means it can be accessed and edited using the Variable Manager. But shh. It's a secret.</li>
-</ol>
-*/
 ,"Contact Page");
 
 //Form Messages
@@ -327,7 +286,7 @@ $_SESSION['config']->setNode("orderstatus", "6", array("name" => "Acknowledged",
 //PayPal
 $_SESSION['config']->addTree("paypal","PayPal Settings");
 
-$_SESSION['config']->setNode("paypal", "enabled", true, "Enable PayPal"); //Not Used
+$_SESSION['config']->setNode("paypal", "enabled", true, "Enable PayPal");
 $_SESSION['config']->setNode("paypal", "uname", "", "PayPal API Username");
 $_SESSION['config']->setNode("paypal", "pass", "", "PayPal API Password");
 $_SESSION['config']->setNode("paypal", "apiKey", "", "PayPal API Key");
@@ -338,13 +297,13 @@ $_SESSION['config']->addTree("pagination", "Pagination Options");
 $_SESSION['config']->setNode("pagination", "sitemapPerPage", 10, "Per Page: Sitemap");
 $_SESSION['config']->setNode("pagination", "categoryPerPage", 10, "Per Page: Category View");
 $_SESSION['config']->setNode("pagination", "searchPerPage", 25, "Per Page: Search Results");
-$_SESSION['config']->setNode("pagination", "editItemsPerPage", 50, "Per Page: Edit Items List");
+$_SESSION['config']->setNode("pagination", "editItemsPerPage", 25, "Per Page: Edit Items List");
 
 //Account Settings
 $_SESSION['config']->addTree("account", "Account Settings");
 
 $_SESSION['config']->setNode("account", "requireAllAtSignup", false, "Require All Details at Signup");
-$_SESSION['config']->setNode("account", "requireEmailValidation", true, "Require Email Address Confirmation");
+$_SESSION['config']->setNode("account", "requireEmailValidation", false, "Require Email Address Confirmation");
 $_SESSION['config']->setNode("account", "validationTimeout", 48, "Email Validation Timeout (hrs)");
 
 //Mail Settings
@@ -352,9 +311,9 @@ $_SESSION['config']->addTree("smtp", "Mail Server Settings");
 
 $_SESSION['config']->setNode("smtp", "host", "localhost", "SMTP Server");
 $_SESSION['config']->setNode("smtp", "port", 25, "SMTP Port");
-$_SESSION['config']->setNode("smtp", "uname", "daemon@wallis2012.gotdns.com", "Username");
-$_SESSION['config']->setNode("smtp", "password", "Admin123", "Password");
-$_SESSION['config']->setNode("smtp", "email", "daemon@wallis2012.gotdns.com", "Email Address");
+$_SESSION['config']->setNode("smtp", "uname", "daemon", "Username");
+$_SESSION['config']->setNode("smtp", "password", "", "Password");
+$_SESSION['config']->setNode("smtp", "email", "daemon@".preg_replace("/^www\./i","",$_SERVER['HTTP_HOST']), "Email Address");
 
 //Carousel Widget
 $_SESSION['config']->addTree("widget_carousel", "Carousel Widget Settings");
@@ -363,13 +322,13 @@ $_SESSION['config']->setNode("widget_carousel", "onIndex", true, "Show on Home P
 $_SESSION['config']->setNode("widget_carousel", "indexPosition", "right", "Position on Home Page");
 $_SESSION['config']->setNode("widget_carousel", "indexHeight", 800, "Height on Home Page");
 $_SESSION['config']->setNode("widget_carousel", "images", 10, "Number of Images");
-$_SESSION['config']->setNode("widget_carousel", "imageScale", 1.5, "Image Scale");
+$_SESSION['config']->setNode("widget_carousel", "imageScale", 1, "Image Scale");
 
 //Item View Options
 $_SESSION['config']->addTree("viewItem", "Item View Settings");
 
-$_SESSION['config']->setNode("viewItem", "showID", true, "Show Item ID");
-$_SESSION['config']->setNode("viewItem", "imageScale", 2.5, "Image Scale");
+$_SESSION['config']->setNode("viewItem", "showID", false, "Show Item ID");
+$_SESSION['config']->setNode("viewItem", "imageScale", 1, "Image Scale");
 $_SESSION['config'] = serialize($_SESSION['config']);
 ?><script type="text/javascript">parent.leftFrame.window.location = '../index.php?frame=leftFrame&p=1.3';</script>
 <h1>Ready To Go</h1>
