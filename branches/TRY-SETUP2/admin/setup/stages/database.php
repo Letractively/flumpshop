@@ -46,7 +46,7 @@ require_once dirname(__FILE__)."/../header.inc.php";
 <div class="ui-helper-hidden helpDialog" id="portHelp" title="Port">The port used to connect to the MySQL Server.</div>
 <div class="ui-helper-hidden helpDialog" id="unameHelp" title="Username">The username used to connect to the MySQL Server.</div>
 <div class="ui-helper-hidden helpDialog" id="passwordHelp" title="Password">The password used to connect to the MySQL Server.</div>
-<div class="ui-helper-hidden helpDialog" id="nameHelp" title="Database">The name of the database that Flumpshop will use. It must already have been created before you continue.</div>
+<div class="ui-helper-hidden helpDialog" id="nameHelp" title="Database">The name of the database that Flumpshop will use. It must already have been created before you continue, as I don't create it automatically.</div>
 <script>
 document.logDirFocus = true;
 

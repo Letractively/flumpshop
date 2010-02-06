@@ -15,6 +15,6 @@ $_SESSION['config']->setNode("site","password",md5($_POST['password']));
 if (isset($_SESSION['mode']) and $_SESSION['mode'] == "express") {
 	echo "<script>parent.leftFrame.window.location = '../?frame=leftFrame&p=4.1'; window.location = '../stages/finish.php';</script>";
 }
-echo "<script>alert('We\'re working on the advanced features at the moment. Sorry.');//parent.leftFrame.window.location = '../?frame=leftFrame&p=2.3'; window.location = '../stages/about.php';</script>";
+echo "<script>window.location = '../stages/".getNextStage(3)."'</script>";
 require_once dirname(__FILE__)."/../footer.inc.php";
 ?>
