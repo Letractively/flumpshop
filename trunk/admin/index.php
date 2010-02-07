@@ -117,7 +117,7 @@ Please enter your username and password to continue...
 							   $('#navAccordion').accordion({collapsible: true, active: false, autoHeight: false, icons: {'header': 'ui-icon-circle-arrow-e', 'headerSelected': 'ui-icon-circle-arrow-s'}});
 							   });
 	function loader(str) {
-		parent.main.document.body.innerHTML = loadMsg(str);
+		$(parent.main.document.getElementById('dialog')).html(loadMsg(str)).dialog();
 	}
     </script>
 </body>
@@ -143,6 +143,7 @@ Please enter your username and password to continue...
 				<h1>Flumpshop Admin CP</h1>
 				<p>PHP v<?php echo PHP_VERSION;?></p>
 				<p>Database v<?php echo $dbConn->version();?>
+                <div id='dialog'></div>
 				</body>
 			  </html><?php
 		}
