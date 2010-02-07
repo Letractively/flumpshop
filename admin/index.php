@@ -46,7 +46,7 @@ Please enter your username and password to continue...
 			//Left Frame
 ?><html>
 <head>
-<link href="../style/jquery.css" rel="stylesheet" type="text/css" />
+<link href="jqueryui.css" rel="stylesheet" type="text/css" />
 <link href="style-nav.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" language="javascript" src="../js/jquery.js"></script>
 <script type="text/javascript" language="javascript" src="../js/jqueryui-1-8.js"></script>
