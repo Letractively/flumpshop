@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL);
+error_reporting(0);
 //Works out the next stage to go to
 function getNextStage($stage) {
 	global $_SESSION;
