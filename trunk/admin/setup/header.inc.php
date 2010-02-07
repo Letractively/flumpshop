@@ -62,9 +62,9 @@ $INIT_DEBUG = false;
 $_SETUP = true;
 function debug_message($arg1 = "", $arg2 = false) {}
 if (!isset($_SESSION)) session_start();
-require_once dirname(__FILE__)."/../../../includes/Config.class.php";
-require_once dirname(__FILE__)."/../../../includes/file_put_contents.inc.php";
-require_once dirname(__FILE__)."/../../../includes/Database.class.php";
+require_once dirname(__FILE__)."/../../includes/Config.class.php";
+require_once dirname(__FILE__)."/../../includes/file_put_contents.inc.php";
+require_once dirname(__FILE__)."/../../includes/Database.class.php";
 //Serializing prevents EPIC PHAIL
 if (isset($_SESSION['config']) && is_string($_SESSION['config'])) {
 	$_SESSION['config'] = unserialize($_SESSION['config']);
