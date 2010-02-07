@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__FILE__)."/../header.inc.php";
 ?><h1>Database</h1>
-<form action="../process/doDatabase.php" method="post" id="form"><table>
+<form action="../process/doDatabase.php" method="post" id="form" onsubmit="saveSetup(); return false;"><table>
 <tr>
 	<td><label for="type">Engine</label></td>
     <td><select name='type' id="type" onchange='if ($(this).val() == "mysql") {$(".mysqli").show(); $("#address").val("localhost");} else {$(".mysqli").hide(); $("#address").val("<?php echo $_SESSION['config']->getNode('paths','offlineDir')?>/db.sqlite");}'><?php

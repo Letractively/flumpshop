@@ -286,7 +286,7 @@ $_SESSION['config']->setNode("orderstatus", "6", array("name" => "Acknowledged",
 //PayPal
 $_SESSION['config']->addTree("paypal","PayPal Settings");
 
-$_SESSION['config']->setNode("paypal", "enabled", true, "Enable PayPal");
+$_SESSION['config']->setNode("paypal", "enabled", false, "Enable PayPal");
 $_SESSION['config']->setNode("paypal", "uname", "", "PayPal API Username");
 $_SESSION['config']->setNode("paypal", "pass", "", "PayPal API Password");
 $_SESSION['config']->setNode("paypal", "apiKey", "", "PayPal API Key");

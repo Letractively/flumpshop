@@ -55,6 +55,7 @@ function getNextStage($stage) {
 	if (isset($_SESSION['stage']['viewItem']) && $_SESSION['stage']['viewItem'] && $stage < 16) {
 		return "viewItem.php";
 	}
+	return "finish.php";
 }
 
 $INIT_DEBUG = false;
