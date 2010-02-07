@@ -49,7 +49,7 @@ Please enter your username and password to continue...
 			//Left Frame
 ?><html>
 <head>
-<link href="../../style/jquery.css" rel="stylesheet" type="text/css" />
+<link href="../jqueryui.css" rel="stylesheet" type="text/css" />
 <link href="../style-nav.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" language="javascript" src="../../js/jquery.js"></script>
 <script type="text/javascript" language="javascript" src="../../js/jqueryui-1-8.js"></script>
@@ -76,21 +76,47 @@ Please enter your username and password to continue...
             <li><a href="?frame=leftFrame&p=2.3" id="2.3">About You</a></li>
         </ul>
         <div class="head">Customise</div>
-        <ul>
-        	<li><a href="?frame=leftFrame&p=3.1" id="3.1">Security Settings</a></li>
-            <li><a href="?frame=leftFrame&p=3.2" id="3.2">Shop Settings</a></li>
-            <li><a href="?frame=leftFrame&p=3.3" id="3.3">Order Status Settings</a></li>
-            <li><a href="?frame=leftFrame&p=3.4" id="3.4">PayPal Settings</a></li>
-            <li><a href="?frame=leftFrame&p=3.5" id="3.5">Predefined Messages</a></li>
-            <li><a href="?frame=leftFrame&p=3.6" id="3.6">Pagination Settings</a></li>
-            <li><a href="?frame=leftFrame&p=3.7" id="3.7">User Account Settings</a></li>
-            <li><a href="?frame=leftFrame&p=3.8" id="3.8">SMTP Server Settings</a></li>
-            <li><a href="?frame=leftFrame&p=3.9" id="3.9">Log Settings</a></li>
-            <li><a href="?frame=leftFrame&p=3.10" id="3.10">Advanced Server Settings</a></li>
-            <li><a href="?frame=leftFrame&p=3.11" id="3.11">Tab Settings</a></li>
-            <li><a href="?frame=leftFrame&p=3.12" id="3.12">Carousel Widget Settings</a></li>
-            <li><a href="?frame=leftFrame&p=3.13" id="3.13">Item View Settings</a></li>
-        </ul>
+        <ul><?php
+        	if (isset($_SESSION['stage']['security']) and $_SESSION['stage']['security']) {
+				echo '<li><a href="?frame=leftFrame&p=3.1" id="3.1">Security Settings</a></li>';
+			}
+			if (isset($_SESSION['stage']['shop']) and $_SESSION['stage']['shop']) {
+				echo '<li><a href="?frame=leftFrame&p=3.2" id="3.2">Shop Settings</a></li>';
+			}
+			if (isset($_SESSION['stage']['orderstatus']) and $_SESSION['stage']['orderstatus']) {
+				echo '<li><a href="?frame=leftFrame&p=3.3" id="3.3">Order Status Settings</a></li>';
+			}
+            if (isset($_SESSION['stage']['paypal']) and $_SESSION['stage']['paypal']) {
+				echo '<li><a href="?frame=leftFrame&p=3.4" id="3.4">PayPal Settings</a></li>';
+			}
+            if (isset($_SESSION['stage']['messages']) and $_SESSION['stage']['messages']) {
+				echo '<li><a href="?frame=leftFrame&p=3.5" id="3.5">Predefined Messages</a></li>';
+			}
+            if (isset($_SESSION['stage']['pagination']) and $_SESSION['stage']['pagination']) {
+				echo '<li><a href="?frame=leftFrame&p=3.6" id="3.6">Pagination Settings</a></li>';
+			}
+            if (isset($_SESSION['stage']['account']) and $_SESSION['stage']['account']) {
+				echo '<li><a href="?frame=leftFrame&p=3.7" id="3.7">User Account Settings</a></li>';
+			}
+            if (isset($_SESSION['stage']['smtp']) and $_SESSION['stage']['smtp']) {
+				echo '<li><a href="?frame=leftFrame&p=3.8" id="3.8">SMTP Server Settings</a></li>';
+			}
+            if (isset($_SESSION['stage']['logs']) and $_SESSION['stage']['logs']) {
+				echo '<li><a href="?frame=leftFrame&p=3.9" id="3.9">Log Settings</a></li>';
+			}
+            if (isset($_SESSION['stage']['server']) and $_SESSION['stage']['server']) {
+				echo '<li><a href="?frame=leftFrame&p=3.10" id="3.10">Advanced Server Settings</a></li>';
+			}
+            if (isset($_SESSION['stage']['tabs']) and $_SESSION['stage']['tabs']) {
+				echo '<li><a href="?frame=leftFrame&p=3.11" id="3.11">Tab Settings</a></li>';
+			}
+            if (isset($_SESSION['stage']['widget_carousel']) and $_SESSION['stage']['widget_carousel']) {
+				echo '<li><a href="?frame=leftFrame&p=3.12" id="3.12">Carousel Widget Settings</a></li>';
+			}
+            if (isset($_SESSION['stage']['viewItem']) and $_SESSION['stage']['viewItem']) {
+				echo '<li><a href="?frame=leftFrame&p=3.13" id="3.13">Item View Settings</a></li>';
+			}
+        ?></ul>
         <div class="head">Finish</div>
         <ul>
         	<li><a href="?frame=leftFrame&p=4.1" id="4.1">Save Settings</a></li>
