@@ -117,7 +117,8 @@ Please enter your username and password to continue...
 							   $('#navAccordion').accordion({collapsible: true, active: false, autoHeight: false, icons: {'header': 'ui-icon-circle-arrow-e', 'headerSelected': 'ui-icon-circle-arrow-s'}});
 							   });
 	function loader(str) {
-		$(parent.main.document.getElementById('dialog')).html(loadMsg(str)).dialog();
+		$(parent.main.document.getElementById('dialog')).html(loadMsg(str));
+		parent.main.loadDialog();
 	}
     </script>
 </body>
@@ -138,7 +139,8 @@ Please enter your username and password to continue...
 		} elseif ($_GET['frame'] == "main") {
 			//Main Frame
 			?><html>
-				<head><link href="style-main.css" rel="stylesheet" type="text/css" /></head>
+				<head><link href="style-main.css" rel="stylesheet" type="text/css" /><link href="jqueryui.css" rel="stylesheet" type="text/css" /><script src="../js/jquery.js"></script><script src="../js/jqueryui.js"></script></head>
+                <script>function loadDialog() {$('#dialog').dialog();}</script>
 				<body>
 				<h1>Flumpshop Admin CP</h1>
 				<p>PHP v<?php echo PHP_VERSION;?></p>
