@@ -36,11 +36,10 @@ h3.ui-accordion-header {
 
 .ui-accordion-content-active, .ui-accordion-content-active a {
 	background: none;
-	background-color: #6786ac;
 	text-align: left;
 	margin: 0;
 	padding: 0;
-	width: 126px;
+	color: white;
 }
 
 .ui-accordion-content-active h4 {
@@ -56,5 +55,5 @@ h3.ui-accordion-header {
 }
 
 .ui-accordion-content-active a:hover {
-	background-color: #86cbff;
+	color: white;
 }
