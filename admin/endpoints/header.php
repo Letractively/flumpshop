@@ -16,4 +16,4 @@ if (isset($logger)) $prefix = "../"; else $prefix = "../../";
 <script type="text/javascript" src="<?php echo $prefix;?>../js/defaults.php"></script>
 <script type="text/javascript">$(document).ready(function() {$('input:submit, button').button();})</script>
 </head>
-<body>
+<body><div id="dialog"></div>
