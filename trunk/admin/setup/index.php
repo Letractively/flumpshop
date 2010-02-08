@@ -160,7 +160,7 @@ Please enter your username and password to continue...
                     <li>An email address</li>
                     <li>The address of your registered office, or one at which you can be written to</li>
                 </ul>
-                <p>Once you've scoured through you're brain, and possibly called tech support, click the button below and I'll perform a few basic tests to make sure that Flumpshop is compatible with the server environment.</p>
+                <p>Once you've scoured through your brain, and possibly called tech support, click the button below and I'll perform a few basic tests to make sure that Flumpshop is compatible with the server environment.</p>
                 <button onclick="parent.leftFrame.window.location='./index.php?frame=leftFrame&p=1.2'; window.location = './welcome/checker.php';">Continue</button>
                 <script type="text/javascript">
 				$(parent.frames[0].document.getElementById('1.1')).addClass('ui-state-active');

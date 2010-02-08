@@ -332,6 +332,8 @@ $_SESSION['config']->setNode("viewItem", "imageScale", 1, "Image Scale");
 $_SESSION['config']->setNode("viewItem", "catCols", 4, "Category Columns");
 $_SESSION['config']->setNode("viewItem", "catTextPos", "bottom", "Category Text Position");
 $_SESSION['config']->setNode("viewItem", "catChars", 30, "Category Item Summary Length");
+$_SESSION['config']->setNode("viewItem", "homeTextPos", "bottom", "Home Text Position");
+$_SESSION['config']->setNode("viewItem", "homeChars", 30, "Home Item Summary Length");
 
 
 //Save
