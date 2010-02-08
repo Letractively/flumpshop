@@ -263,6 +263,9 @@ $_SESSION['config']->setNode("messages", "contactPage",
 EOT
 ,"Contact Page");
 
+//Navigation Advert
+$_SESSION['config']->setNode("messages", "navAdvert", "Add custom text here in the Admin CP", "Navigation Bar Text");
+
 //Form Messages
 $_SESSION['config']->setNode("messages", "formFieldRequired", "This field is required.", "Required Field");
 
