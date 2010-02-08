@@ -24,4 +24,5 @@ while ($category = $dbConn->fetch($categories)) {
 	}
 	$subcatstr .= "</table>";
 }
+echo "<tr><td style='background: none;'>".$config->getNode('messages','navAdvert')."</td></tr>";
 ?></table><?php echo $subcatstr; ?></td>
