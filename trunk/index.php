@@ -1,6 +1,6 @@
 <?php $_SUBPAGE = false; require_once dirname(__FILE__)."/header.php";?>
   <h1 class='content'>Welcome to <?php echo $config->getNode('messages','name');?></h1>
-  <?php
+  <noscript><div class="ui-state-error"><span class="ui-icon ui-icon-script"></span>Sorry, you need JavaScript enabled in your web browser for this site to work properly. Please enable JavaScript and reload the page.</noscript><?php
   //GET Notices
   if (isset($_GET['loginSuccess'])) {
 	  echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-circle-check'></span>Login Successful!</div>";
@@ -19,8 +19,7 @@
   if (!$config->getNode("server","commitPayments")) {
 	  echo '<div class="ui-state-error"><span class="ui-icon ui-icon-info"></span>Hi, this site is currently in development mode. All products and services listed in this site will not genuninely be provided or are available for sale. Any attempt at purchasing will fail as the transaction is passed to a sandbox version of our payment processors.</div>';
   }
-  ?>
-  <div class="ui-widget">
+  ?><div class="ui-widget">
       <div class="ui-widget-header ui-corner-top"><?php echo $config->getNode("messages","featuredItemHeader");?></div>
       <div class="ui-widget-content" style='min-height: 150px;'>
       <?php
@@ -28,16 +27,16 @@
 	  if ($dbConn->rows($result) == 0) {
 		  echo "Hey, It's the Flumpnet robot and this is another one of my spectacular placeholders! You can set an item to appear here by selecting it in the Admin CP, under Edit Object->Featured Item";
 	  } else {
-		  echo '<table width="100%" style="min-height: 150px;"><tr><td style="width: 50%;">';
+		  echo '<table width="620" style="min-height: 150px;"><tr><td style="width: 320px;">';
 		  //Item 1
 		  $row = $dbConn->fetch($result);
 		  $item = new Item($row['value']);
 		  echo $item->getDetails("INDEX");
-		  echo '</td><td style="width: 50%; vertical-align: top;"><span style="width: 50%;">';
+		  echo '</td><td style="width: 50%; vertical-align: top;"><span style="width: 320px;">';
 		  //Item 2 (Image Only)
 		  $row = $dbConn->fetch($result);
 		  $item = new Item($row['value']);
-		  echo "<a href='".$item->getURL()."'><img src='".$config->getNode("paths","root")."/item/imageProvider.php?id=".$item->getID()."&image=0&size=thumb' style='width: 100%;' alt='".$item->getName()."' /></a>";
+		  echo "<a href='".$item->getURL()."'><img src='".$config->getNode("paths","root")."/item/imageProvider.php?id=".$item->getID()."&image=0&size=thumb' style='width: 384px;' alt='".$item->getName()."' /></a>";
 		  echo "</span></td></tr></table>";
 	  }
 	  ?>
@@ -76,7 +75,6 @@
 		  $news = $dbConn->fetch($result);
 		  echo "<h2>".$news['title']."</h2>";
 		  echo nl2br(nl2br($news['body']));
-		  echo "<br /><br />Posted: ".date("d/m/y",strtotime($news['timestamp']));
 	  }
 	  ?>
       </div>

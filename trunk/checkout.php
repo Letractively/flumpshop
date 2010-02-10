@@ -10,19 +10,16 @@ require_once(dirname(__FILE__)."/preload.php"); require_once dirname(__FILE__)."
 	echo "Redirecting...";
 	die("<script type='text/javascript'>window.location = '".$config->getNode('paths','secureRoot')."/checkout.php?".session_id()."';</script>");
 }
-?>
-<h1 class="content">Checkout</h1>
+?><h1 class="content">Checkout</h1>
 <p>Total: &pound;<?php echo $basket->getFriendlyTotal(); ?></p>
-ERR_FEATURE_NOT_IMPLEMENTED
 <div class='ui-widget'>
-  <div class='ui-widget-header'>Select Payment Method</div><div class='ui-widget-content'>
+  <div class='ui-widget-header'>Under Construction</div><div class='ui-widget-content'>
   <?php
   if (!$config->getNode('paypal','enabled')) {
-	  ?>Sorry! This site is currently still in development, and we're still working on adding payment methods for your area. To order your items, please call us on [NUM] and quote your temporary ID number <?php echo $basket->getID();?>.<?php
+	  ?>Sorry, we're still tweaking the online order system. In the meantime, we've created an ID number for your order. To order your items, please call us on 01487 830968 and quote your temporary ID number <?php echo $basket->getID();?>.<?php
+	  
   } else {
-	  ?>
-      <a href="checkout_paypal.php"><img src="images/paypal.png" /></a>
-      <?php
+	  ?><a href="checkout_paypal.php"><img src="images/paypal.png" /></a><?php
   }
 echo "</div></div>";
 //Check for sufficient stock on items
