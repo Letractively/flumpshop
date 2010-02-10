@@ -49,7 +49,7 @@ if ($config->getNode("site", "homeTab") == true) {
 }
 
 //Basket
-if ($config->getNode("site","shopEnabled")) {
+if ($config->getNode("site","shopMode")) {
 	if (stristr($_SERVER['REQUEST_URI'],"basket.php")) {?><a class='tab active' href='<?php echo $config->getNode('paths','root');?>/basket.php'>cart</a><?php } else {?><a class='tab' href='<?php echo $config->getNode('paths','root');?>/basket.php'>cart</a><?php }
 }
 

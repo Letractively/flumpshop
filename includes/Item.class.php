@@ -219,14 +219,14 @@ class Item {
 		global $config, $stats, $dbConn;
 		$type = strtoupper($type); //Standardize for easy comparison
 		if ($type == "INDEX") {
-			$reply = "<table width='100%'><tr><td><a href='".$this->getURL()."'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' style='border: none; width: 100%;' alt='".$this->getName()."' /></a></td>";
+			$reply = "<table width='100%'><tr><td><a href='".$this->getURL()."'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' style='border: none; width: 256px;' alt='".$this->getName()."' /></a></td>";
 			if (strtolower($config->getNode('viewItem','homeTextPos')) == "bottom") $reply .= "</tr><tr>";
 			$reply .= "<td><h3 style='font-size: 0.8em;'><a href='".$this->getURL()."' class='ui-widget-content'>".$this->getName()."</a></h3>";
 			if ($config->getNode("site","shopEnabled")) {
 				$reply .= "<em>&pound;".$this->itemPrice."</em><span class='ui-state-disabled'>&nbsp;ex.VAT</span>";
 			}
-			if (strlen($this->getDesc()) > $config->getNode('viewItem','homeChars')) $reply .= "<p style='font-size: 0.8em; padding-right: 1em; min-height: 100px;'>".substr($this->getDesc(),0,$config->getNode('viewItem','homeChars'))."...</p>";
-			else $reply .= "<p style='font-size: 0.8em; padding-right: 1em; min-height: 100px;'>".$this->getDesc()."</p>";
+			if (strlen($this->getDesc()) > $config->getNode('viewItem','homeChars')) $reply .= "<p style='font-size: 0.8em; padding-right: 1em;'>".substr($this->getDesc(),0,$config->getNode('viewItem','homeChars'))."...</p>";
+			else $reply .= "<p style='font-size: 0.8em; padding-right: 1em;'>".$this->getDesc()."</p>";
 			$reply .= "</td></tr></table><br />";
 		}
 		if ($type == "CATEGORY") {

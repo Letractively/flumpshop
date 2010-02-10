@@ -14,8 +14,14 @@ ob_flush();
 	}
 ?><a href='<?php echo $config->getNode('paths','root');?>/legal/privacy.php'>Privacy Policy</a> &middot;
 <a href='<?php echo $config->getNode('paths','root');?>/legal/terms.php'>Terms and Conditions</a> &middot;
-<a href='<?php echo $config->getNode('paths','root');?>/legal/disclaimer.php'>Disclaimer</a>&nbsp;&nbsp;</p>
-<!--Site Designed by Jake Mitchell. Programmed by Lloyd Wallis and John Maydew.-->
+<a href='<?php echo $config->getNode('paths','root');?>/legal/disclaimer.php'>Disclaimer</a>&nbsp;&nbsp;</p><?php
+if (isset($_SESSION['adminAuth']) && $_SESSION['adminAuth']) {
+	//Stats
+	echo "<p>Visitors: ";
+	echo $dbConn->rows($dbConn->query("SELECT basket FROM `sessions`"));
+	echo "</p>";
+}
+?><!--Site Designed by Jake Mitchell. Programmed by Lloyd Wallis and John Maydew.-->
 </div></div>
 <script type="text/javascript">
 function showSignupForm() {
