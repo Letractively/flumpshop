@@ -26,10 +26,13 @@ if (!isset($_SUBPAGE) or $_SUBPAGE == true) {
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jquery.init.js"></script>
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jMyCarousel.pack.js"></script>
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/defaults.php"></script>
-<link rel="stylesheet" type="text/css" href="<?php echo $config->getNode('paths','root');?>/style/skins/rjc/skin.php" />
 <link rel="stylesheet" type="text/css" href="<?php echo $config->getNode('paths','root');?>/style/jquery.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo $config->getNode('paths','root');?>/style/jquery-overrides.css" />
-</head>
+<link rel="stylesheet" type="text/css" href="<?php echo $config->getNode('paths','root');?>/style/jquery-overrides.css" /><?php
+//Browser-dependant CSS Overrides
+if (preg_match("/^Opera/",$_SERVER['HTTP_USER_AGENT'])) {
+	echo "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/opera-overrides.css' />";
+}
+?></head>
 <body>
 <div id='header'>
 <div id="title">

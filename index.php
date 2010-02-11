@@ -1,6 +1,6 @@
 <?php $_SUBPAGE = false; require_once dirname(__FILE__)."/header.php";?>
   <h1 class='content'>Welcome to <?php echo $config->getNode('messages','name');?></h1>
-  <noscript><div class="ui-state-error"><span class="ui-icon ui-icon-script"></span>Sorry, you need JavaScript enabled in your web browser for this site to work properly. Please enable JavaScript and reload the page.</noscript><?php
+  <noscript><div class="ui-state-error"><span class="ui-icon ui-icon-script"></span>Sorry, you need JavaScript enabled in your web browser for this site to work properly. Please enable JavaScript and reload the page.</div></noscript><?php
   //GET Notices
   if (isset($_GET['loginSuccess'])) {
 	  echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-circle-check'></span>Login Successful!</div>";

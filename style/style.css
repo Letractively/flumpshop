@@ -135,6 +135,15 @@ table.subcat td:hover {
 	background-repeat: no-repeat;
 }
 
+/*JS Disabled*/
+td.noscriptNav a {
+	color: #000;
+}
+
+td.noscriptNav a:hover {
+	color: #FFF;
+}
+
 /* Navigation Container*/
 #leftside 
 {
