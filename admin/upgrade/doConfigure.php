@@ -33,7 +33,7 @@ while ($dir = array_pop($dirs)) {
 	while ($file = readdir($handle)) {
 		if (is_dir(dirname(__FILE__)."/$dir/$file") && $file != "." && $file != "..") {
 			array_push($dirs,$dir."/$file");
-		} elseif (preg_match("/(php|css|js|png|jpg|gif|mp3|ico)$/i",$file)) {//Only include PHP, CSS, Image, Audio and JS Files
+		} elseif (preg_match("/(php|css|js|png|jpg|gif|mp3|ico|htaccess)$/i",$file)) {//Only include PHP, CSS, Image, Audio and JS Files
 			if (!is_dir(dirname(__FILE__)."/$dir/$file")) {
 				//Get the path for the previous file in the repository
 				$svnPath = "http://flumpshop.googlecode.com/svn-history/r".$upgrade->getPrevRevision()."/trunk/".str_replace("../../","",$dir."/".$file);
