@@ -2,32 +2,23 @@
 require_once dirname(__FILE__)."/../header.php";
 
 $result = $dbConn->query("SELECT * FROM `country` ORDER BY name ASC");
-?><div class="ui-widget-header">Supported Countries</div>
-<form action="../process/saveCountries.php" method="POST" onsubmit="loader(loadMsg('Saving Content...'));" class="ui-widget-content">
+?><form action="../process/saveCountries.php" method="POST" onsubmit="loader(loadMsg('Saving Content...'));" class="ui-widget-content">
+        <fieldset>
+        <legend>Supported Countries</legend>
+        <span class='ui-state-highlight'>Select: <a href='javascript:' onclick="$('input').attr('checked',true);">All</a> | <a href='javascript:' onclick="$('input').attr('checked',false);">None</a> | <a href='javascript:' onclick="$('input').each(function() {$(this).attr('checked',!$(this).attr('checked'))});">Invert</a></span>
         <table>
-        	<tr>
-            	<th>Country</th>
+                <tr>
+                <th>Country</th>
                 <th>Delivery</th>
             </tr>
             <?php
-			while ($row = $dbConn->fetch($result)) {
-				if ($row['supported'] == 1) {
-					$checked = " checked='checked'";
-					$checked2 = "";
-				} else {
-					$checked = "";
-					$checked2 = " checked='checked'";
-				}
-				echo "<tr><td><label for='".$row['iso']."'>".$row['name']."</label></td><td id='".$row['iso']."' class='buttonSet'>";
-				echo "<input type='radio' name='".$row['iso']."' id='".$row['iso']."on' class='on' value='On'$checked />";
-				echo "<label for='".$row['iso']."on'>On</label>";
-				echo "<input type='radio' name='".$row['iso']."' id='".$row['iso']."off' class='off' value='Off'$checked2 />";
-				echo "<label for='".$row['iso']."off'>Off</label></td>";
-			}
-			?>
+                        while ($row = $dbConn->fetch($result)) {
+                                if ($row['supported'] == 1) $checked = " checked='checked'"; else $checked="";
+                                echo "<tr><td><label for='".$row['iso']."'>".$row['name']."</label></td><td><input type='checkbox' name='".$row['iso']."' id='".$row['iso']."'$checked /></td>";
+                        }
+                        ?>
         </table>
-        <script type="text/javascript">
-		$('.buttonSet').each(function() {$(this).buttonset();});
-		</script>
         <input type="submit" value="Save" class="ui-widget-content" />
-</form></body></html>
+    </fieldset>
+</form>
+</body></html>

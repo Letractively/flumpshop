@@ -1,14 +1,12 @@
 <?php
 require_once dirname(__FILE__)."/../header.php";
 
-//Set all countries as disabled
+//Set all countries as disabled (unchecked boxes don't get submitted)
 $dbConn->query("UPDATE `country` SET supported=0");
 
-$query = "UPDATE `country` SET `supported`=1 WHERE false";
+$query = "UPDATE `country` SET `supported`=1 WHERE supported!=0";
 foreach (array_keys($_POST) as $country) {
-	if ($_POST[$country] == "On") {
-		$query .= " OR `iso`='$country'";
-	}
+        $query .= " OR `iso`='$country'";
 }
 
 if ($dbConn->query($query)) {
