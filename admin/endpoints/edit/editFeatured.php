@@ -17,7 +17,7 @@ if ($dbConn->rows($result) == 0) {
 	$id2 = $result['value'];
 }
 ?><div class="ui-widget-header">Featured Items</div>
-<form action="../process/saveFeatured.php" method="get" class="ui-widget-content" onsubmit="$(body).html(loadMsg('Saving Content...'));">
+<form action="../process/saveFeatured.php" method="get" class="ui-widget-content" onsubmit="loader(loadMsg('Saving Content...'));">
 <p>The two items identified below with their ID # will appear on the home page, in the Featured Item section.</p>
 <label for="featuredItem1">Featured Item ID 1: </label><input type="text" name="featuredItem1" id="featuredItem1" class="ui-state-default" value="<?php echo $id;?>" /><br />
 <label for="featuredItem2">Featured Item ID 2: </label><input type="text" name="featuredItem2" id="featuredItem2" class="ui-state-default" value="<?php echo $id2;?>" /><br />

@@ -8,9 +8,5 @@
     <input type="checkbox" name="includeImages" id="includeImages" style="font-size: 12px; padding: .2em .4em;" />
     <label for='includeImages'>Import images</label><br /><br />
     <input type="submit" id="submitButton" value="Import" class="ui-widget-content" />
-    <div class="ui-state-highlight"><span class="ui-icon ui-icon-lightbulb"></span>If you haven't already noticed, the boxes above are actually checkboxes. Use them to toggle the replacement of certain items. Default: All Disabled</div>
 </form>
-<script type="text/javascript">
-$('#includeConf, #includeImages').button();
-</script>
 </body></html>

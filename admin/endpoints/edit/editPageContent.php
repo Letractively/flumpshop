@@ -8,7 +8,7 @@ if (isset($_POST['content'])) {
 													 array("","<br />"),
 													 $_POST['content'])));
 	echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-circle-check'></span>Page Saved</div>";
-}?><form action='./editPageContent.php?pageid=<?php echo $content;?>' method='POST' onsubmit='if ($(this).valid()) {$(body).html(loadMsg("Saving Content...")); return true;} else return false;'>
+}?><form action='./editPageContent.php?pageid=<?php echo $content;?>' method='POST' onsubmit='if ($(this).valid()) {loader(loadMsg("Saving Content...")); return true;} else return false;'>
     <textarea name="content" id="content" class="ui-state-default required" style="width: 99%; height: 250px;">
     <?php echo trim(str_replace("<br />", "\n",$config->getNode('messages',$content))); ?>
     </textarea>

@@ -11,10 +11,17 @@ h1 {
 	margin: 0;
 }
 
+h1.title {
+	position: absolute;
+	top: 0;
+}
+
 .version {
 	font: Verdana, Geneva, sans-serif;
 	padding: 0;
 	margin: 0;
+	position: absolute;
+	top: 30px;
 }
 
 .right {

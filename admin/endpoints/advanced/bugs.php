@@ -10,7 +10,7 @@ if ($dbConn->rows($result) == 0) {
 echo "<table class='ui-widget-content'>";
 
 while ($bug = $dbConn->fetch($result)) {
-	echo "<tr><td><strong>".$bug['header']."</strong><span style='color: red;'>&nbsp; Assigned to ".$bug['assignedTo']."</span><p>".nl2br($bug['body'])."</p><a href='../process/bugresolved.php?id=".$bug['id']."' onclick=\"$(body).html(loadMsg('Closing Bug...'));');\">Resolved?</a><hr /></td></tr>";
+	echo "<tr><td><strong>".$bug['header']."</strong><span style='color: red;'>&nbsp; Assigned to ".$bug['assignedTo']."</span><p>".nl2br($bug['body'])."</p><a href='../process/bugresolved.php?id=".$bug['id']."' onclick=\"$(body).html(loadMsg('Closing Bug...'));');\">Mark as Read</a><hr /></td></tr>";
 }
 echo "</table>";
 ?>

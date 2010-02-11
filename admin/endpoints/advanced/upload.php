@@ -6,7 +6,7 @@ if (!file_exists($config->getNode("paths","offlineDir")."/files")) {
 ?><div class="ui-widget-header">File Upload</div>
 <div class="ui-widget-content">
 <p>This feature allows you to upload files to Flumpshop, which can then be linked to in messages, or on item/category pages.</p>
-<form action="../process/doUpload.php" method="post" enctype="multipart/form-data" onsubmit="$(body).html(loadMsg('Uploading File. Please Wait...'));">
+<form action="../process/doUpload.php" method="post" enctype="multipart/form-data" onsubmit="loader(loadMsg('Uploading File. Please Wait...'));">
 File: <input type="file" name="file" id="file" />
 <input type="submit" value="Upload" style="font-size: 12px; padding: .2em .4em" />
 </form>
