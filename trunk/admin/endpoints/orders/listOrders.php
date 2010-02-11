@@ -43,7 +43,7 @@ if ($dbConn->rows($orders) == 0) {
 }
 while ($order = $dbConn->fetch($orders)) {
 	$status = $config->getNode('orderstatus',$order['status']);
-	echo "<a href='javascript:void(0);' onclick=\"$('#adminContent').html(loadingString);$('#adminContent').load('./endpoints/orders/order.php?id=".$order['id']."',{},function() {\$('#".$order['id']."').editable('./endpoints/process/updateStatus.php',{loadurl: './endpoints/orders/statuses.php',type: 'select',submit: 'Save'})});\">Order #".$order['id']." (".$status['name'].")</a><br />";
+	echo "<a href='javascript:void(0);' onclick=\"loader(loadMsg('Loading Content...'));$(body).load('order.php?id=".$order['id']."',{},function() {\$('#".$order['id']."').editable('./endpoints/process/updateStatus.php',{loadurl: 'statuses.php',type: 'select',submit: 'Save'})});\">Order #".$order['id']." (".$status['name'].")</a><br />";
 }
 
 echo "</div></div>";

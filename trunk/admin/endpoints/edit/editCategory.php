@@ -16,7 +16,7 @@ if (!isset($_GET['id'])) {
 	while ($row = $dbConn->fetch($result)) {
 		$category = new Category($row['id']);
 		if ($category->enabled == false) $disabled = " <strong>(Hidden)</a><span class='iconbutton' onclick='disabledDialog();'></span></strong>"; else $disabled = "</a>";
-		echo "<a href='javascript:void(0);' onclick='$(body).html(loadMsg(\"Loading Content...\")).load(\"editCategory.php?id=".$category->getID()."\");'>".$category->getFullName().$disabled."<br />";
+		echo "<a href='javascript:void(0);' onclick='loader(loadMsg(\"Loading Content...\")).load(\"editCategory.php?id=".$category->getID()."\");'>".$category->getFullName().$disabled."<br />";
 	}
 	
 	$paginator = new Paginator();
@@ -26,7 +26,7 @@ if (!isset($_GET['id'])) {
 	$category = new Category(intval($_GET['id']));
 	?><div class="ui-widget-header">Edit Category</div><div class="ui-widget-content">
     <a href="../process/disableCategory.php?cid=<?php echo $category->getID();?>" onclick="$(body).html(loadMsg('Hiding Category...'));">Hide Category</a>
-    <form action="../process/updateCategory.php?id=<?php echo $category->getID();?>" method="post" class="ui-widget-content" onsubmit="if ($(this).valid()) {$(body).html(loadMsg('Saving Content...')); return true;} else return false;">
+    <form action="../process/updateCategory.php?id=<?php echo $category->getID();?>" method="post" class="ui-widget-content" onsubmit="if ($(this).valid()) {loader(loadMsg('Saving Content...')); return true;} else return false;">
     <label for="name">Name: </label><input type="text" maxlength="255" name="name" id="name" class="ui-widget-content ui-state-default required" value="<?php echo $category->getName();?>" /><br />
     <label for="description">Description: </label><br /><textarea rows="4" cols="45" name="description" id="description" class="ui-widget-content ui-state-default"><?php echo $category->getDescription();?></textarea><br />
     <label for="parent">Parent: </label>

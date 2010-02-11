@@ -3,7 +3,7 @@ require_once dirname(__FILE__)."/../header.php";
 
 $result = $dbConn->query("SELECT * FROM `country` ORDER BY name ASC");
 ?><div class="ui-widget-header">Supported Countries</div>
-<form action="../process/saveCountries.php" method="POST" onsubmit="$(body).html(loadMsg('Saving Content...'));" class="ui-widget-content">
+<form action="../process/saveCountries.php" method="POST" onsubmit="loader(loadMsg('Saving Content...'));" class="ui-widget-content">
         <table>
         	<tr>
             	<th>Country</th>

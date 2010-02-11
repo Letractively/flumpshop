@@ -10,6 +10,6 @@ $customer = new Customer(intval($_GET['id']));
     	Name: <?php echo $customer->getName(); ?>
     	<div class="ui-widget-header">Address</div>
         <div class="ui-widget-content"><?php echo $customer->getAddress();?></div>
-        <a href="javascript:void(0);" onclick="$('#adminContent').html(loadingString);$('#adminContent').load('./endpoints/orders/listOrders.php?filter=customer&id=<?php echo $customer->getID(); ?>');">Orders by this User</a>
+        <a href="javascript:void(0);" onclick="loader(loadMsg('Loading Content...'));window.location = './endpoints/orders/listOrders.php?filter=customer&id=<?php echo $customer->getID(); ?>';">Orders by this User</a>
     </div>
 </div>

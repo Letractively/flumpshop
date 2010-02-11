@@ -128,7 +128,7 @@ Please enter your username and password to continue...
 			?><html>
 				<head><link href="style-header.css" rel="stylesheet" type="text/css" /></head>
 				<body>
-				<h1>ADMINISTRATOR CONTROL PANEL</h1>
+				<h1 class="title">ADMINISTRATOR CONTROL PANEL</h1>
 				<p class="version">Latest Version Available: <?php echo file_get_contents("http://flumpshop.googlecode.com/svn/updater/version.txt");?> <a href='upgrade' target='_top'>Upgrade Wizard</a></p>
 				<div class="right">
 					<h1>flump<span class="header2">shop</span> <?php echo $config->getNode("site","version");?></h1>

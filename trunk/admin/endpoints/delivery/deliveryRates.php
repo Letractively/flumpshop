@@ -2,7 +2,7 @@
 require_once dirname(__FILE__)."/../header.php";
 ?><div class="ui-widget-content">
 <a href="javascript:" onclick="$('#newRateForm').toggle('fold');">New Rate</a>
-<form action="../process/insertDeliveryRate.php" method="post" onsubmit="if ($(this).valid()) {$(body).html(loadMsg('Saving Content')); return true;} else return false;" name="newRateForm" id="newRateForm" class="ui-widget-content ui-helper-hidden">
+<form action="../process/insertDeliveryRate.php" method="post" onsubmit="if ($(this).valid()) {loader(loadMsg('Saving Content')); return true;} else return false;" name="newRateForm" id="newRateForm" class="ui-widget-content ui-helper-hidden">
 	<input type="hidden" id="counter" name="counter" value="1">
     Weight From <input type="text" name="lowerBound" id="lowerBound" class="ui-widget-content required number" value="0.00" />kg To <input type="text" name="upperBound" id="upperBound" class="ui-widget-content required number" value="0.00" />kg<br />
     Costs &pound;<input type="text" name="price" id="price" class="ui-widget-content required number" value="0.00" /> Exc. VAT

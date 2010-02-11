@@ -2,7 +2,7 @@
 require_once dirname(__FILE__)."/../header.php";
 ?>
 <div class="ui-widget-header">Add Category</div>
-<form action="../process/insertCategory.php" method="post" class="ui-widget-content" onsubmit="if ($(this).valid()) {$(body).html(loadMsg('Saving Content...')); return true;} else return false;">
+<form action="../process/insertCategory.php" method="post" class="ui-widget-content" onsubmit="if ($(this).valid()) {loader(loadMsg('Saving Content...')); return true;} else return false;">
 <label for="name">Name: </label><input type="text" maxlength="255" name="name" id="name" class="ui-widget-content ui-state-default required" /><br />
 <label for="description">Description: </label><br /><textarea rows="4" cols="45" name="description" id="description" class="ui-widget-content ui-state-default"></textarea><br />
 <label for="parent">Parent: </label>
