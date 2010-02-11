@@ -35,7 +35,7 @@ echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->ge
 		echo "There are no products in this category.";
 	} else {
 		echo "<table style='width: 100%; vertical-align: top;'><tr>";
-		if ($dbConn->rows($items) == 1) {
+		if ($dbConn->rows($items) == 1 && $page == 1) {
 			$item = $dbConn->fetch($items);
 			$item = new Item($item['id']);
 			header("Location: ".$item->getURL());
