@@ -55,7 +55,7 @@ echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->ge
 		$paginator = new Paginator();
 		
 		if ($config->getNode('server','rewrite')) {
-			echo $paginator->paginate($page,$perPage,$num,"");
+			echo $paginator->paginate($page,$perPage,$num,"",NULL,true);
 		} else {
 			echo $paginator->paginate($page,$perPage,$num,"?id=".$category->getID());
 		}
