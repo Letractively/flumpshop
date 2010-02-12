@@ -2,7 +2,7 @@
 require_once dirname(__FILE__)."/../header.php";
 
 if (!isset($_GET['id'])) {
-	$count = $dbConn->rows($dbConn->query("SELECT id FROM `category`"));
+	$count = $dbConn->rows($dbConn->query("SELECT id FROM `category` ORDER BY name"));
 	$perPage = $config->getNode("pagination","editItemsPerPage");
 	if (isset($_GET['page'])) $page = $_GET['page']; else $page = 1;
 	

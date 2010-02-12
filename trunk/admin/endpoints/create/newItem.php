@@ -19,5 +19,7 @@ require_once dirname(__FILE__)."/../header.php";
 	}
 ?></select>
 
+<label for="number">Number to Create: </label><input type="text" value="1" name="number" id="number" class="ui-widget-content ui-state-default required number" /><br />
+
 <br /><input type="submit" value="Save" name="submit" id="submit" style="font-size: 13px; padding: .2em .4em;" />
 </form></body></html>
