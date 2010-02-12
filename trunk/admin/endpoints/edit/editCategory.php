@@ -2,25 +2,35 @@
 require_once dirname(__FILE__)."/../header.php";
 
 if (!isset($_GET['id'])) {
-	$count = $dbConn->rows($dbConn->query("SELECT id FROM `category` ORDER BY name"));
+	
+	if (isset($_GET['filter'])) $criteria = " AND name LIKE '%".$_GET['filter']."%'"; else $criteria = "";
+	
+	$count = $dbConn->rows($dbConn->query("SELECT id FROM `category` WHERE id>0".$criteria." ORDER BY name"));
 	$perPage = $config->getNode("pagination","editItemsPerPage");
 	if (isset($_GET['page'])) $page = $_GET['page']; else $page = 1;
 	
-	$result = $dbConn->query("SELECT id FROM `category` ORDER BY name ASC LIMIT ".(($page-1)*$perPage).",$perPage");
+	$result = $dbConn->query("SELECT id FROM `category` WHERE id>0".$criteria." ORDER BY name ASC LIMIT ".(($page-1)*$perPage).",$perPage");
 	
 	$pageStart = (($page-1)*$perPage)+1;
 	$pageEnd = $page*$perPage; if ($pageEnd > $count) $pageEnd = $count;
 	
 	echo "<div class='ui-widget-header'>Edit Category (Showing ".$pageStart."-".$pageEnd." of $count)</div>";
-	echo "<div class='ui-widget-content'>";
+	?><div class='ui-widget-content'>
+<form action='editCategory.php' method="GET">
+<input type="text" name="filter" id="filter" class="ui-state-default" value="<?php if (isset($_GET['filter'])) echo $_GET['filter'];?>" />
+<input type="submit" value="Search" style="width: 100px; height: 30px; font-size: 13px;" /><br />
+</form><?php
 	while ($row = $dbConn->fetch($result)) {
 		$category = new Category($row['id']);
 		if ($category->enabled == false) $disabled = " <strong>(Hidden)</a><span class='iconbutton' onclick='disabledDialog();'></span></strong>"; else $disabled = "</a>";
 		echo "<a href='javascript:void(0);' onclick='loader(loadMsg(\"Loading Content...\"));window.location = \"editCategory.php?id=".$category->getID()."\";'>".$category->getFullName().$disabled."<br />";
 	}
 	
+	if (isset($_GET['filter'])) $prefix = "editCategory.php?filter=".$_GET['filter']; else $prefix = "editCategory.php";
+
 	$paginator = new Paginator();
-	echo $paginator->paginate($page,$perPage,$count,"editCategory.php");
+	echo $paginator->paginate($page,$perPage,$count,$prefix);
+
 	echo "</div>";
 } else {
 	$category = new Category(intval($_GET['id']));
@@ -51,5 +61,6 @@ if (!isset($_GET['id'])) {
 $('#hiddenDialog').dialog({autoOpen: false});
 $('.iconbutton').button({icons: {primary: 'ui-icon-help'}}).width('16px');
 function disabledDialog() {$('#hiddenDialog').dialog('open');}
+$('#filter').autocomplete({source: 'searchCategory.php'});
 </script>
 </body></html>
