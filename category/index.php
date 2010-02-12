@@ -20,6 +20,7 @@ echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->ge
 			echo "<a href='".$subCat->getURL()."'>".$subCat->getName()."</a><br />";
 		}
 	}
+	$criteria = "";
 	foreach ($category->getChildren() as $child) {
 		$criteria .= " OR category='$child'";
 	}

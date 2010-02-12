@@ -26,7 +26,7 @@ if (strstr($_GET['file'],"..")) {
 		}
 	}
 	
-	if ($type == "application/pdf") header("Content-Disposition: attachment; filename=".$_GET['file']); //Show PDFs in Browser
+	if ($type != "application/pdf") header("Content-Disposition: attachment; filename=".$_GET['file']); //Show PDFs in Browser
 	header("Content-Type: ".$type);
 	echo file_get_contents($config->getNode("paths","offlineDir")."/files/".$_GET['file']);
 }

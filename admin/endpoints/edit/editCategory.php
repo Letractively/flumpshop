@@ -16,7 +16,7 @@ if (!isset($_GET['id'])) {
 	while ($row = $dbConn->fetch($result)) {
 		$category = new Category($row['id']);
 		if ($category->enabled == false) $disabled = " <strong>(Hidden)</a><span class='iconbutton' onclick='disabledDialog();'></span></strong>"; else $disabled = "</a>";
-		echo "<a href='javascript:void(0);' onclick='loader(loadMsg(\"Loading Content...\")).load(\"editCategory.php?id=".$category->getID()."\");'>".$category->getFullName().$disabled."<br />";
+		echo "<a href='javascript:void(0);' onclick='loader(loadMsg(\"Loading Content...\"));window.location = \"editCategory.php?id=".$category->getID()."\";'>".$category->getFullName().$disabled."<br />";
 	}
 	
 	$paginator = new Paginator();
