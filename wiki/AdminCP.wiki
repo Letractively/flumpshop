@@ -3,6 +3,8 @@
 
 = Introduction =
 
+*The Admin CP has been completely redesigned, however this page has been kept for reference.*
+
 The Admin CP is the first port of call for changing anything on the site. It lets you do anything, from creating a new product or category to viewing orders and changing the content of static pages. It can be accessed by navigation to the /admin directory within the main directory of the shop.
 
 The Admin CP currently uses a single authentication method - an Administrator Password stored in the [ConfigurationObject Configuration Object]. This is set up as part of the [SetupWizard Setup Wizard], and cannot currently be changed within the system.
