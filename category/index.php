@@ -24,13 +24,13 @@ echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->ge
 	foreach ($category->getChildren() as $child) {
 		$criteria .= " OR category='$child'";
 	}
-	$items = $dbConn->query("SELECT id FROM `products` WHERE category='".$category->getID()."' AND active=1".$criteria);
+	$items = $dbConn->query("SELECT id FROM `products` WHERE (category='".$category->getID()."'".$criteria.") AND active=1");
 	$num = $dbConn->rows($items);
 	
 	$perPage = $config->getNode("pagination","categoryPerPage");
 	if (isset($_GET['page'])) $page = $_GET['page']; else $page = 1;
 	
-	$items = $dbConn->query("SELECT id FROM `products` WHERE category='".$category->getID()."'$criteria AND active=1 ORDER BY name ASC LIMIT ".($page-1)*$perPage.",".$perPage);
+	$items = $dbConn->query("SELECT id FROM `products` WHERE (category='".$category->getID()."'$criteria) AND active=1 ORDER BY name ASC LIMIT ".($page-1)*$perPage.",".$perPage);
 	
 	if ($dbConn->rows($items) == 0) {
 		echo "There are no products in this category.";
