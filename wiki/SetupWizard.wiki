@@ -7,86 +7,9 @@ The information on this page is preliminary and subject to change at any time.
 <wiki:toc max_depth="3" />
 
 = Introduction =
+The Setup Wizard is the first thing you will see when you extract your Flumpshop Installation. However, the entire Setup Wizard has followed the path of the ACP, and has been completely designed to be more dynamic and extensive.
 
-Although designed to be as easy as possible, the Setup Wizard was also designed with versatility in mind, making various aspects of it dynamic and automatically expanding with each change to the system, and with a wide range of settings to suit your needs.
+= Notes =
+There is not enough reason (or willpower) to rewrite this page for the new setup wizard, as it now provides helpful tips during setup, in the way of question mark buttons and witty humour.
 
-
-= Starting the Setup Wizard =
-
-The first time you navigate to your new shop, you will automatically be redirected to the Setup Wizard, where the helpful [FlumpnetRobot Flumpnet Robot] will happily assist you in its initial configuration.
-
-To run the Wizard again later, navigate to /admin/setup, or if you have forgotten your password, by deleting conf.txt in the root directory of the flumpshop.
-
-= Completing the Setup Wizard =
-The Setup Wizard has several required steps that you must go through so the Flumpnet Robot can be set up properly. You can then leave when it says so, or continue to configure advanced options.
-
-== Required Stages ==
-These stages must be completed or the flumpshop will not work.
-
-=== 0: Welcome! ===
-
-This stage completes an analysis of the server environment, and will point out any possible issues, splitting them between Fail, Warn, and Pass. Details about this can be found under [SystemRequirements].
-
-You can continue once there are no fatal issues.
-
-*Note: Write permissions currently aren't set to fatal as detection fails in some environments. You can continue if you are CERTAIN that the Flumpnet Robot can indeed access the directories.*
-
-=== 1. Name ===
-This stage may take a moment or two to load on slow servers, as it generates the default configuration file. All you need to do in this stage is enter a name, which will be used in the title, header, footer, and anywhere else the Flumpnet Robot wants to stick it.
-
-=== 2. Paths and Directories ===
-After being complimented on your decision, you will be asked to review a few paths. These should be correctly detected automatically, but review them and click next.
-
-=== 3. Database Configuration ===
-flumpshop currently supports MySQL databases, and has experimental support for SQLite. If you have a host without a MySQL server, and only want a small site, then SQLite is not an issue. Remember to ensure that the necessary extension was detected as installed on Stage 0.
-
-Note: With SQLite, only the first to fields are used, the first being "sqlite", and the second being the path to where the database should be stored, including the filename, e.g. /home/theflump/data/flumpshop.db
-
-=== 4. !PayPal ===
-*Note:* The checkout flow currently needs major redevelopment and may be insecure. It is recommended that you do not use the checkout at this time.
-
-This page allows you to enter your access details for you !PayPal Express Checkout, if you have it. Simple untick the "Enable !PayPal" box if you don't want or have this.
-
-=== 5. Password ===
-Here you set a password for the [AdminCP Admin CP]. *THIS PASSWORD CANNOT BE CHANGED*.
-
-=== 6. An Important Decision ===
-If you want to jump straight in, you can click Finish here to generate the [ConfigurationObject Configuration Object] and exit the Setup Wizard.
-
-Alternatively, you can continue to change advanced settings, which at this stage is recommended.
-
-== Advanced Options ==
-These aren't required, but it's recommended you at least review them.
-
-You can give up at any time by clicking Cancel and Finish. This button will remember all settings from the Advanced Options so far, but will disregard any changes to the current page.
-
-=== 8. Security Settings ===
-You're probably asking "What happened to stage 7?" Well, the answer is simple - we don't know.
-
-Moving on, here you can change when HTTPS is used.
-
-=== 9. Logging ===
-Here you can toggle server logs.
-
-=== 10. Predefined Text Strings ===
-This one's a doozy. Continually expanding, this page allows you to edit all the canned messages in the site. You can change these later using [ConfigurationManager Configuration Manager].
-
-=== 11. Super Really Advanced ===
-These settings are dangerous. The default values are often being changed by the developers, so if you have configured IIS, or have mod_rewrite, then make sure URL Rewrite is on, otherwise keep it off, Commit Payments (Debug) is on (Even if you don't want the shop enabled, this gets rid of an ugly message on the home page), and that Debug Mode is off, unless you want random messages thrown up all over every page.
-
-=== 12. Finished ===
-That's it. Click Save and Finish.
-
-== -1: Install ==
-This stage processes all the information and does all the other computer-y stuff needed for your flumpshop to work. This includes:
-  * Validating all the information
-  * Transferring the contents of [setup_files] to [offlineDir]
-  * Saving the Configuration Object
-  * Cleaning up the temporary files created by the wizard
-This page is also in abundance of debug information for developers. It can throw out anything from a series of Hellos, Yess and Blahs, to showing you a copy of the Configuration Object in all it's glory. Just scroll down, and click the tiny link at the bottom.
-
-= Finished? =
-The site is evolving, and with it, are the configuration options. However, the Setup Wizard doesn't always grow as fast, and does not contain all the steps required for a fully functional flumpshop.
-
-== Next Steps ==
-To make sure everything works, continue on to [InitialConfiguration] to learn what extra tidbits of information the Flumpnet Robot forgot about.
+The new setup wizard is not currently stage complete, but regardless of the chosen setup mode, incomplete ones will automatically forward to the new one.
