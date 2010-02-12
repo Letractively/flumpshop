@@ -3,7 +3,4 @@
 
 = Introduction =
 
-The [SetupWizard Setup Wizard] currently doesn't cover all of the bases. Please ensure you make the changes below in [ConfigurationManager Configuration Manager].
-
-  * Configure the [SMTPServer SMTP Server] Settings
-  * Toggle [shopMode]
+The [SetupWizard Setup Wizard] may not always be completely up to date. For this reason, this page contains important additional steps that you may need to take. However, at the current time, there are no showstopper configuration issues. However, is should be noted that there are some optional stages that have not yet been written, but these can all be configured in the [ConfigurationManager Configuration Manager].
