@@ -14,17 +14,18 @@ if ($name == "" or $description == "") {
 		if ($dbConn->query("INSERT INTO `products` (name,description,price,stock,category,weight) VALUES ('$name','$description','$price','$stock','$category','$weight')")) {
 			$id = $dbConn->insert_id();
 			echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-circle-check'></span>Product Added to database with ID #".$id."</div>";
+			//Upload Image
+			if (isset($_FILES['image$i'])) {
+				$item = new Item($id);
+				$error = !$item->saveImage($_FILES['image$i']['tmp_name'],$_FILES['image$i']['type']);
+				if ($error) {
+					echo "<div class='ui-state-error'><span class='ui-icon ui-icon-info'></span>The image file you uploaded is not supported.</div>";
+				}
+			}
 		} else {
+			//Query Exec Failed
 			echo "<div class='ui-state-error'><span class='ui-icon ui-icon-alert'></span>Failed to add item to database.</div>";
 		}
-	}
-}
-
-if (isset($_FILES['image'])) {
-	$item = new Item($id);
-	$error = !$item->saveImage($_FILES['image']['tmp_name'],$_FILES['image']['type']);
-	if ($error) {
-		echo "<div class='ui-state-error'><span class='ui-icon ui-icon-info'></span>The image file you uploaded is not supported.</div>";
 	}
 }
 

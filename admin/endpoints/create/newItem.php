@@ -37,14 +37,25 @@ require_once dirname(__FILE__)."/../header.php";
 </tr>
 <tr>
 	<td><label for="number">Repeat: </label></td>
-    <td><input type="text" value="1" name="number" id="number" class="ui-widget-content ui-state-default required number" /></td>
+    <td><input type="text" value="1" name="number" id="number" class="ui-widget-content ui-state-default required number" onchange="updateImageField();" /></td>
 </tr>
 <tr>
     <td><label for="image">Image: </label></td>
-    <td><input type="file" name="image" id="image" class="ui-widget-content ui-state-default" /></td>
+    <td><input type="file" name="image0" id="image" class="ui-widget-content ui-state-default" /></td>
 </tr>
 </table>
 <input type="submit" value="Save" name="submit" id="submit" style="font-size: 13px; padding: .2em .4em;" />
 </form>
-<script>$('form').validate();</script>
+<script>
+$('form').validate();
+
+//Recursive Image support
+document.imageNo = 0;
+function updateImageField() {
+	while ($('#number').val() - 1 > document.imageNo) {
+		document.imageNo++;
+		$('table').append("<tr><td><label for='image"+document.imageNo+"'>Image "+(document.imageNo+1)+": </label></td><td><input type='file' name='image"+document.imageNo+"' id='image"+document.imageNo+"' class='ui-widget-content ui-state-default' /></td></tr>");
+	}
+}
+</script>
 </body></html>
