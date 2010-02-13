@@ -53,7 +53,7 @@ if (!isset($_GET['file'])) {
 			?><div class="ui-widget-header">Database Log <?php echo $file; ?></div><?php
 			 if ($filter) {
 				 ?>
-                 <div class="ui-state-highlight"><span class="ui-icon ui-icon-info"></span>Only showing errors - <a href="file=<?php echo "$file"; ?>&type=xml" onclick="$(body).html(loadMsg('Filtering Log...'));">Show All</a>
+                 <div class="ui-state-highlight"><span class="ui-icon ui-icon-info"></span>Only showing errors - <a href="?file=<?php echo "$file"; ?>&type=xml" onclick="$(body).html(loadMsg('Filtering Log...'));">Show All</a>
                  <?php
 			 } else {
 				 ?>
