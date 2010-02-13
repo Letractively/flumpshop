@@ -1,6 +1,13 @@
 <?php
 $ajaxProvider = true;
 require_once dirname(__FILE__)."/../preload.php";
+
+//Secure Redirect
+if ($config->getNode('secure','admin') and $_SERVER['HTTPS'] == "off") {
+	header("Location: ".$config->getNode('paths','secureRoot')."/admin");
+	exit;
+}
+
 //Process Login
 if (isset($_POST['pass']) && md5($_POST['pass']) == $config->getNode("site","password")) {
 	$_SESSION['adminAuth'] = true;
