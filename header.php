@@ -32,6 +32,9 @@ if (!isset($_SUBPAGE) or $_SUBPAGE == true) {
 if (preg_match("/^Opera/",$_SERVER['HTTP_USER_AGENT'])) {
 	echo "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/opera-overrides.css' />";
 }
+if (preg_match("/MSIE 8\.0/",$_SERVER['HTTP_USER_AGENT'])) {
+	echo "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/ie8-overrides.css' />";
+}
 ?></head>
 <body>
 <div id='header'>
