@@ -101,7 +101,7 @@ Please enter your username and password to continue...
             <a href="endpoints/process/cron.php" onclick='loader("Executing Cron Script...");' target="main">Cron Script</a>
             <a href="endpoints/advanced/upload.php" onclick='loader("Loading Content...");' target="main">File Upload</a>
             <a href="logs" onclick='loader("Loading Content...");' target="main">Log Viewer</a>
-            <a href="endpoints/advanced/bugs.php" onclick='loader("Loading Content...");' target="main">Bugs</a>
+            <a href="endpoints/advanced/bugs.php" onclick='loader("Loading Content...");' target="main">Feedback</a>
             <a href="endpoints/advanced/query.php" onclick='loader("Loading Content...");' target="main">Execute SQL</a>
             <a href="endpoints/advanced/varMan.php" onclick='loader("Loading Content...");' target="main">Configuration Manager</a>
             <a href="endpoints/advanced/export.php" onclick='loader("Loading Content...");' target="main">Export</a>
@@ -142,10 +142,39 @@ Please enter your username and password to continue...
 				<head><link href="style-main.css" rel="stylesheet" type="text/css" /><link href="jqueryui.css" rel="stylesheet" type="text/css" /><script src="../js/jquery.js"></script><script src="../js/jqueryui.js"></script></head>
                 <script>function loadDialog() {$('#dialog').dialog();}</script>
 				<body>
-				<h1>Flumpshop Admin CP</h1>
-				<p>PHP v<?php echo PHP_VERSION;?></p>
-				<p>Database v<?php echo $dbConn->version();?>
-                <div id='dialog'></div>
+				<h1>Flumpshop v<?php echo $config->getNode('site','version');?></h1>
+                <h2>Admin CP</h2><?php
+				$notice = false;
+				//Check for possible security issues
+				if (is_writable($config->getNode('paths','path'))) {
+					echo "<div class='ui-state-error'><span class='ui-icon ui-icon-alert'></span><strong>Security Issue</strong> - I am able to write to the home directory of this site (".$config->getNode('paths','path')."). This should be disabled except when running the Upgrade or Setup Wizards.</div>";
+					$notice = true;
+				}
+				if (file_exists("setup")) {
+					echo "<div class='ui-state-error'><span class='ui-icon ui-icon-alert'></span><strong>Security Issue</strong> - After initial installation, it is recommended that your rename or delete the /admin/setup folder in order to increase security.</div>";
+					$notice = true;
+				}
+				
+				//Check for Updates
+				if (!$latestVer = file_get_contents("http://flumpshop.googlecode.com/svn/updater/version.txt")) {
+					echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-extlink'></span><strong>Connection Failure</strong> - An error occured checking for updates.</div>";
+					$notice = true;
+				} elseif ($config->getNode('site','version') != $latestVer) {
+					echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-notice'></span><strong>Update Available</strong> - An update is available for installation. To install, click the Upgrade Wizard button above.</div>";
+					$notice = true;
+				}
+				
+				//Check for unread feedback
+				$result = $dbConn->query("SELECT * FROM `bugs` WHERE resolved = 0");
+				if ($dbConn->rows($result) != 0) {
+					echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-notice'></span><strong>New Feedback</strong> - Unread Feedback is available in Advanced->Feedback</div>";
+					$notice = true;
+				}
+				
+				if (!$notice) {
+					echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-circle-check'></span>There is nothing that needs to be bought to your attention right now. Well done on creating a robust and secure installation.</div>";
+				}
+				?><div id='dialog'></div>
 				</body>
 			  </html><?php
 		}
