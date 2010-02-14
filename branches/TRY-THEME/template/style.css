@@ -1,0 +1,144 @@
+@charset "utf-8";
+/* CSS Document */
+
+* {padding: 0; margin: 0; border: 1px solid #000;}
+
+#header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100px;
+	background-color: #000;
+	cursor: default;
+	z-index: 9;
+}
+
+#site_name {
+	color: #06F;
+	position: absolute;
+	top: 5px;
+	left: 10px;
+	font-size: 48px;
+	font-family: Tahoma, Geneva, sans-serif;
+}
+
+#site_tagline {
+	color: #06C;
+	position: absolute;
+	bottom: 5px;
+	left: 75px;
+}
+
+#tabs {
+	position: fixed;
+	top: 75px;
+	right: 10px;
+	z-index: 10;
+}
+
+#tabs li {
+	display: inline;
+	padding-right: 10px;
+}
+
+#tabs li a {
+	color: #36F;
+	text-decoration: none;
+}
+
+#tabs li a:hover {
+	color: #FFF;
+}
+
+#category_container {
+	position: absolute;
+	top: 115px;
+	left: 115px;
+	background: #000;
+}
+
+#categories, .subcategory_container {
+	list-style: none;
+}
+
+#categories li {
+	padding: 5px 10px;
+	height: 15px;
+	overflow: hidden;
+}
+
+#categories li a {color: #FFF; text-decoration: none;}
+
+#categories li:hover {
+	padding: 5px 10px;
+	height: auto;
+	overflow: hidden;
+}
+
+#categories li:hover a.category {
+	background-color: #06F;
+}
+
+#categories li a {color: #FFF; text-decoration: none;}
+a.subcategory_link:hover {margin-bottom: -5px; background: #06C;}
+
+#page_text {
+	position: absolute;
+	top: 135px;
+	left: 275px;
+	height: 150px;
+	overflow: hidden;
+	min-width: 600px;
+}
+
+#page_title {
+	font-size: 36px;
+	color: #30C;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+
+#featured_items {
+	position: absolute;
+	top: 300px;
+	left: 275px;
+	width: 175px;
+	height: 500px;
+}
+
+#featured_items img {
+	width: 100%;
+}
+
+#popular_items {
+	position: absolute;
+	top: 300px;
+	left: 475px;
+	width: 175px;
+	height: 500px;
+}
+
+#latest_news {
+	position: absolute;
+	top: 825px;
+	left: 275px;
+	min-width: 600px;
+	padding-bottom: 100px; /*Makes sure the news isn't covered by the footer*/
+}
+
+#tech_tips {
+	position: absolute;
+	top: 300px;
+	left: 675px;
+	width: 175px;
+	height: 500px;
+}
+
+#footer {
+	position: fixed;
+	bottom: 0;
+	height: 25px;
+	background-color: #000;
+	color: #36F;
+	width: 100%;
+}
