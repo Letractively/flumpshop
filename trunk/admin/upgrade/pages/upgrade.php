@@ -1,5 +1,9 @@
 <?php
 require_once "header.inc.php";
+//Run Backup
+$storeExport = $config->getNode("paths","offlineDir")."/backup/backup-".date("d-m-y_His").".fml";
+echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-info'></span>Creating backup - $storeExport</div>";
+include dirname(__FILE__)."/../../endpoints/process/doExport.php";
 //Commit the upgrade
 echo "Saving Configuration Changes...<br />";
 $newConf = $upgrade->getConfUpdate();
