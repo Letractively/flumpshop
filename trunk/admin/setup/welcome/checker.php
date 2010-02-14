@@ -6,13 +6,9 @@ if (isset($_SESSION['config'])) unset($_SESSION['config']);
 $success = array();
 $fail = array();
 $warn = array();
-/*Log directory permissions*/
-if (!is_writable(dirname(__FILE__)."/../../logs/")) {
-		$warn[] = "I don't have access to the {siteroot}/admin/logs directory. The use of this is deprecated, but it's best you keep it open, just in case.";
-}
 /*Root directory permissions*/
 if (!is_writable(dirname(__FILE__)."/../../../")) {
-		$fail[] = "I don't have access to the {siteroot} directory. However, it is possible that ";
+		$fail[] = "I don't have access to the {siteroot} directory.";
 }
 /*PHP Version*/
 if (PHP_VERSION < "4.4.9") {
@@ -80,7 +76,7 @@ if (!sizeof($fail) == 0) {
 	echo "</div></div><br />";
 }
 if (!sizeof($warn) == 0) {
-	echo "<div class='ui-widget ui-state-highlight'><div class='ui-widget-header'>Configuring these will enable advanced featured</div><div class='ui-widget-content'>";
+	echo "<div class='ui-widget ui-state-highlight'><div class='ui-widget-header'>Configuring these will enable advanced features</div><div class='ui-widget-content'>";
 	foreach ($warn as $win) {
 			echo $win."<br />";
 	}
