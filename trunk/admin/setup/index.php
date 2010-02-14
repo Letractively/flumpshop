@@ -83,9 +83,7 @@ Please enter your username and password to continue...
 			if (isset($_SESSION['stage']['shop']) and $_SESSION['stage']['shop']) {
 				echo '<li><a href="?frame=leftFrame&p=3.2" id="3.2">Shop Settings</a></li>';
 			}
-			if (isset($_SESSION['stage']['orderstatus']) and $_SESSION['stage']['orderstatus']) {
-				echo '<li><a href="?frame=leftFrame&p=3.3" id="3.3">Order Status Settings</a></li>';
-			}
+			//Order Status Removed
             if (isset($_SESSION['stage']['paypal']) and $_SESSION['stage']['paypal']) {
 				echo '<li><a href="?frame=leftFrame&p=3.4" id="3.4">PayPal Settings</a></li>';
 			}
