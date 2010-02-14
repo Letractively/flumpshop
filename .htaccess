@@ -3,3 +3,5 @@ RewriteRule category/([0-9]+)/?.*/([0-9]+)/?$ category/?id=$1&page=$2 [L]
 RewriteRule category/([0-9]+)/?.*$ category/?id=$1
 RewriteRule item/([0-9]+)/?.*true$ item/?id=$1&modify=true [L]
 RewriteRule item/([0-9]+)/?.*$ item/?id=$1
+
+ErrorDocument 404 errors/404.php

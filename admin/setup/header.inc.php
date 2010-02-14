@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+error_reporting(E_ALL);
 //Works out the next stage to go to
 function getNextStage($stage) {
 	global $_SESSION;
@@ -60,7 +60,11 @@ function getNextStage($stage) {
 
 $INIT_DEBUG = false;
 $_SETUP = true;
-function debug_message($arg1 = "", $arg2 = false) {}
+
+function debug_message($arg1 = "", $arg2 = false) {
+	echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-info'></span>$arg1</div>";
+}
+
 if (!isset($_SESSION)) session_start();
 require_once dirname(__FILE__)."/../../includes/Config.class.php";
 require_once dirname(__FILE__)."/../../includes/file_put_contents.inc.php";
