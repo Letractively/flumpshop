@@ -47,16 +47,17 @@ $('.required').each(function() {
 											 }
 											 })
 							   });
-</script>
-<!--Google-->
-<script type="text/javascript">
+</script><?php
+//Google Analytics
+if ($config->getNode("server","analyticsID") != "") {
+	?><script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
+</script><script type="text/javascript">
 try {
-var pageTracker = _gat._getTracker("UA-12986193-1");
+var pageTracker = _gat._getTracker("<?php echo $config->getNode('server','analyticsID');?>");
 pageTracker._trackPageview();
-} catch(err) {}</script>
-</body>
+} catch(err) {}</script><?php
+}
+?></body>
 </html>

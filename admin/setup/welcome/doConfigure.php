@@ -108,6 +108,7 @@ $_SESSION['config']->setNode("server", "crawlerAgents", "Googlebot|msnbot|Slurp"
 $_SESSION['config']->setNode("server", "debug", false, "Enable Debug Mode");
 $_SESSION['config']->setNode("server", "cronFreq", 30, "Cron Frequency (mins)");
 $_SESSION['config']->setNode("server", "backupFreq", 24, "Backup Frequency (hrs)");
+$_SESSION['config']->setNode("server", "analyticsID", "Google Analytics ID");
 
 //Messages
 $_SESSION['config']->addTree("messages", "Predefined Text Strings");
