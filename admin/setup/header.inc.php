@@ -11,10 +11,7 @@ function getNextStage($stage) {
 	if (isset($_SESSION['stage']['shop']) && $_SESSION['stage']['shop'] && $stage < 5) {
 		return "shop.php";
 	}
-	//Order Status
-	if (isset($_SESSION['stage']['orderstatus']) && $_SESSION['stage']['orderstatus'] && $stage < 6) {
-		return "orderstatus.php";
-	}
+	//Order Status was removed (CBA)
 	//PayPal
 	if (isset($_SESSION['stage']['paypal']) && $_SESSION['stage']['paypal'] && $stage < 7) {
 		return "paypal.php";

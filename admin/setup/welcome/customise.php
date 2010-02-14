@@ -23,7 +23,6 @@ Method:
     <ol start="4">
     	<li>Security Settings</li>
         <li>Shop Settings</li>
-        <li>Order Status Settings</li>
         <li>PayPal Settings</li>
         <li>Predefined Messages</li>
         <li>Pagination Settings</li>
@@ -56,7 +55,6 @@ Method:
     <ol start="4">
     	<li><input type="checkbox" name="security" id="security" /><label for="security">Security Settings</label></li>
         <li><input type="checkbox" name="shop" id="shop" /><label for="shop">Shop Settings</label></li>
-        <li><input type="checkbox" name="orderstatus" id="orderstatus" /><label for="orderstatus">Order Status Settings</label></li>
         <li><input type="checkbox" name="paypal" id="paypal" /><label for="paypal">PayPal Settings</label></li>
         <li><input type="checkbox" name="messages" id="messages" /><label for="messages">Predefined Messages</label></li>
         <li><input type="checkbox" name="pagination" id="pagination" /><label for="pagination">Pagination Settings</label></li>
