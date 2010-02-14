@@ -96,7 +96,7 @@ Please enter the second tier password to continue...
 				<p class="version">Current Version: v<?php echo $config->getNode("site","version");?></p>
 				<div class="right">
 					<h1>flump<span class="header2">powered</span></h1>
-                    <p><a href='http://theflump.com' target='_blank'>TheFlump</a> | <a href='http://flumpshop.googlecode.com' target='_blank'>Flumpshop</a> | <a href='../../' target="_top">Admin CP</a> | <a href='../../../'>Home</a></p>
+                    <p><a href='http://theflump.com' target='_blank'>TheFlump</a> | <a href='http://flumpshop.googlecode.com' target='_blank'>Flumpshop</a> | <a href='../' target="_top">Admin CP</a> | <a href='../../'>Home</a></p>
 				</div>
 				</body>
 			  </html><?php
