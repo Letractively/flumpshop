@@ -94,3 +94,6 @@ This basic structure is both friendly to both SEO and design flexibility, as a d
 Add drag/drop elements and widgets on the home page as well as removing/adding new ones
 
 Import .fml theme files (Flump Magic Language) and store them in a library (offlineDir again)
+
+= Current Restrictions =
+For security, the Flumpshop image provider can only serve PNG files.
