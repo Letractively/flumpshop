@@ -2,8 +2,7 @@
 #labels Phase-Requirements,Phase-Design,Phase-Implementation
 
 = Introduction =
-A planned feature for flumpshop is complete customisation of the theme.
-When sufficient time is available, themeing may be created and tested in the TRY-THEME branch of the repository.
+A feature that development has now started on in the TRY-THEME branch, it will allow complete customisation of the way the site is displayed, including:
 
   * Widgets
   * Colours
@@ -16,6 +15,82 @@ When sufficient time is available, themeing may be created and tested in the TRY
 Basic styles can already be changed by creating a custom JQueryUI Theme at http://www.jqueryui.com/themeroller.
 
 The system should be able to dynamically generate new styles (use [offlineDir]) within the [AdminCP Admin CP]
+
+= Basic Markup =
+Below is the basic structure of the Home page of the Flumpshop, as it currently stands
+
+{{{
+<div id="container">
+    <div id="header">
+        <h1 id="site_name">Site Name</h1>
+        <h2 id="site_tagline">Site Tagline</h2>
+    </div><!--End Header-->
+    <ul id="tabs">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Login</a></li>
+        <li><a href="#">Cart</a></li>
+        <li><a href="#">Admin</a></li>
+    </ul><!-- End Tabs-->
+    <div id="category_container">
+        <ul id="categories">
+            <li>
+                <a class='category' href='#'>Category Name</a>
+                <ul class="subcategory_container">
+                    <li><a class="subcategory_link" href="#">Subcategory Name</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div><!-- End Navigation-->
+    <div id="page_text">
+        <h3 id="page_title">Page Header</h3>
+        <p>Page Text Content</p>
+    </div><!-- End Page Text -->
+    <div id="featured_items">
+        <h4 id="featured_items_header">Featured Items</h4>
+        <div class="featured_item" id="featured_item_1">
+            <a href='#'><img src='item image' /></a>
+            <h5><a href='#'>Item Name</a></h5>
+            <p>Item Description</p>
+        </div>
+        <div class="featured_item" id="featured_item_2">
+            <a href='#'><img src='item image' /></a>
+            <h5><a href='#'>Item Name</a></h5>
+            <p>Item Description</p>
+	</div>
+    </div><!-- End Featured Items -->
+    <div id="popular_items">
+        <h4 id="popular_items_header">Popular Items</h4>
+        <div class="popular_item" id="popular_item_1">
+            <a href='#'><img src='item image' /></a>
+            <h5><a href='#'>Item Name</a></h5>
+            <p>Item Description</p>
+        </div>
+        <div class="popular_item" id="popular_item_2">
+            <a href='#'><img src='item image' /></a>
+            <h5><a href='#'>Item Name</a></h5>
+            <p>Item Description</p>
+	</div>
+    </div><!-- End Popular Items -->
+    <div id="latest_news">
+        <h4>Latest News</h4>
+        <p>Latest News</p>
+    </div><!-- End Latest News -->
+    <div id="tech_tips">
+        <h4>Technical Tips News</h4>
+        <ul>
+            <li>Tech Tips Post</li>
+        </il>
+    </div><!-- End Tech Tips -->
+    <div id="footer">
+    <p>Copyright &copy; 2009-2010 Flumpnet. All Rights Reserved.</p>
+    </div>
+</div><!--End Container-->
+</body>
+</html>
+
+}}}
 
 = Possible Advanced Features =
 Add drag/drop elements and widgets on the home page as well as removing/adding new ones
