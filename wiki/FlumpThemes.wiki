@@ -87,10 +87,8 @@ Below is the basic structure of the Home page of the Flumpshop, as it currently 
     <p>Copyright &copy; 2009-2010 Flumpnet. All Rights Reserved.</p>
     </div>
 </div><!--End Container-->
-</body>
-</html>
-
 }}}
+This basic structure is both friendly to both SEO and design flexibility, as a different CSS setups could completely change the layout of the site.
 
 = Possible Advanced Features =
 Add drag/drop elements and widgets on the home page as well as removing/adding new ones
