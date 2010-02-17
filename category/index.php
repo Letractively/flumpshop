@@ -1,25 +1,27 @@
 <?php
-require_once dirname(__FILE__)."/../preload.php";
+require_once dirname(__FILE__)."/../header.php";
 if (isset($_GET['id'])) $cid = $_GET['id']; else $cid = 1;
+echo $cid;
 $category = new Category($cid);
 $page_title = $category->getName();
-require_once dirname(__FILE__)."/../header.php";
 echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->getBreadcrumb();
-?><h1 class="content"><?php echo $category->getName();?></h1>
+?><div id="page_text"><h3 id="page_title"><?php echo $category->getName();?></h3>
     <p><?php echo $category->getDescription();?></p>
-    <form action="<?php echo $config->getNode('paths','root');?>/search.php" method="get">
-        <input type="text" name="q" id="q" class="ui-state-default" value="Search <?php echo $category->getName();?>" onfocus="if (this.value == 'Search <?php echo $category->getName();?>') this.value = '';" onblur="if (this.value == '') this.value = 'Search <?php echo $category->getName();?>'" />
+    <form action="<?php echo $config->getNode('paths','root');?>/search.php" method="get" id="category_search_form">
+        <input type="text" name="q" id="q" value="Search <?php echo $category->getName();?>" onfocus="if (this.value == 'Search <?php echo $category->getName();?>') this.value = '';" onblur="if (this.value == '') this.value = 'Search <?php echo $category->getName();?>'" />
         <input type="hidden" name="cat" id="cat" value="<?php echo $category->getID(); ?>" />
-        <input type="submit" value="Go!" class="ui-state-default" />
+        <input type="submit" value="Go!" />
     </form><?php
 	if ($dbConn->rows($dbConn->query("SELECT id FROM `category` WHERE parent='".$category->getID()."'")) != 0) {
-		?><h3>This section has the following subcategories:</h3><?php
+		?><h4>Subcategories:</h4><ul class='list_subcat'><?php
 		$result = $dbConn->query("SELECT id FROM `category` WHERE parent='".$category->getID()."' ORDER BY `name` ASC");
 		while ($row = $dbConn->fetch($result)) {
 			$subCat = new Category($row['id']);
-			echo "<a href='".$subCat->getURL()."'>".$subCat->getName()."</a><br />";
+			echo "<li><a href='".$subCat->getURL()."'>".$subCat->getName()."</a></li>";
 		}
+		echo "</ul>";
 	}
+	echo "</div><!-- End Page Text -->";
 	$criteria = "";
 	foreach ($category->getChildren() as $child) {
 		$criteria .= " OR category='$child'";
@@ -33,25 +35,21 @@ echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->ge
 	$items = $dbConn->query("SELECT id FROM `products` WHERE (category='".$category->getID()."'$criteria) AND active=1 ORDER BY name ASC LIMIT ".($page-1)*$perPage.",".$perPage);
 	
 	if ($dbConn->rows($items) == 0) {
-		echo "There are no products in this category.";
+		echo "<div id='item_container'>There are no products in this category.</div>";
 	} else {
-		echo "<table style='width: 100%; vertical-align: top;'><tr>";
+		echo "<div id='item_container'>";
+		//Only one item - Redirect
 		if ($dbConn->rows($items) == 1 && $page == 1) {
 			$item = $dbConn->fetch($items);
 			$item = new Item($item['id']);
 			header("Location: ".$item->getURL());
-			echo "<td>".$item->getDetails('CATEGORY')."</td>";
+			echo $item->getDetails('CATEGORY');
 		}
-		$i = 1;
+		//Print all items
 		while ($item = $dbConn->fetch($items)) {
-			echo "<td>";
 			$item = new Item($item['id']);
 			echo $item->getDetails('CATEGORY');
-			echo "</td>";
-			if (is_int($i/$config->getNode('viewItem','catCols'))) echo "</tr><tr>";
-			$i++;
 		}
-		echo "</tr></table>";
 		
 		$paginator = new Paginator();
 		
@@ -60,6 +58,7 @@ echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->ge
 		} else {
 			echo $paginator->paginate($page,$perPage,$num,"?id=".$category->getID());
 		}
+		echo "</div>";
 	}
 require_once dirname(__FILE__)."/../footer.php";
 ?>
