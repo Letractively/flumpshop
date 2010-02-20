@@ -223,6 +223,15 @@ if ($_SETUP == false) {
 //Locale
 if (isset($_SESSION['locale']) && !$_SETUP) $config->setNode("temp","country",$_SESSION['locale']);
 
+/*PLUGINS*/
+//Each plugin that has /includes/preload.inc.php will have an option displayed here
+$dir = opendir($config->getNode('paths','offlineDir')."/plugins");
+while ($module = readdir($dir)) {
+	if (file_exists($config->getNode('paths','offlineDir')."/plugins/".$module."/includes/preload.inc.php")) {
+		include $config->getNode('paths','offlineDir')."/plugins/".$module."/includes/preload.inc.php";
+	}
+}
+
 //Admin Functions
 //Validation
 function get_valid_class($tree,$node) {

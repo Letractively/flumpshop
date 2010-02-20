@@ -78,10 +78,6 @@ require_once "header.php";
 		  	}
 	  	}
 	  ?></ul>
-    </div><!-- End Tech Tips -->
-    <div id="footer">
-    <p><?php echo $config->getNode('messages','footer');?></p>
-    </div>
-</div><!--End Container-->
-</body>
-</html>
+    </div><!-- End Tech Tips --><?php
+require_once "footer.php";
+?>

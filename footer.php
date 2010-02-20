@@ -1,10 +1,17 @@
 <?php require_once dirname(__FILE__)."/preload.php";
 echo "<!--Page Generated in ".(microtime_float()-$time_start)." Seconds-->";
 ob_flush();
+echo $cron;
+
+/*PLUGINS*/
+//Each plugin that has /includes/footer.inc.php will have an option displayed here
+$dir = opendir($config->getNode('paths','offlineDir')."/plugins");
+while ($module = readdir($dir)) {
+	if (file_exists($config->getNode('paths','offlineDir')."/plugins/".$module."/includes/footer.inc.php")) {
+		include $config->getNode('paths','offlineDir')."/plugins/".$module."/includes/footer.inc.php";
+	}
+}
 ?>
-</td></tr></table></center>
-</div>
-<?php echo $cron; ?>
 <div id="dialog" class="ui-helper-hidden"></div>
 <div id='footer'><?php echo $config->getNode('messages','footer');?>
 <p><?php

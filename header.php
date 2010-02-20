@@ -35,6 +35,15 @@ if (preg_match("/^Opera/",$_SERVER['HTTP_USER_AGENT'])) {
 if (preg_match("/MSIE 8\.0/",$_SERVER['HTTP_USER_AGENT'])) {
 	echo "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=default&sub=ie8' />";
 }
+
+/*PLUGINS*/
+//Each plugin that has /includes/header.inc.php will have an option displayed here
+$dir = opendir($config->getNode('paths','offlineDir')."/plugins");
+while ($module = readdir($dir)) {
+	if (file_exists($config->getNode('paths','offlineDir')."/plugins/".$module."/includes/header.inc.php")) {
+		include $config->getNode('paths','offlineDir')."/plugins/".$module."/includes/header.inc.php";
+	}
+}
 ?></head>
 <body>
 <div id="container">
