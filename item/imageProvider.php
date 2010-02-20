@@ -1,8 +1,6 @@
 <?php
 //die();
-$_PRINTDATA = false;
-$ajaxProvider = true;
-require_once dirname(__FILE__)."/../preload.php";
+require_once dirname(__FILE__)."/../includes/vars.inc.php";
 
 if (!isset($_GET['random'])) {
 	$item = strval($_GET['id']);
