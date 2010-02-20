@@ -35,6 +35,9 @@ if (preg_match("/^Opera/",$_SERVER['HTTP_USER_AGENT'])) {
 if (preg_match("/MSIE 8\.0/",$_SERVER['HTTP_USER_AGENT'])) {
 	echo "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=default&sub=ie8' />";
 }
+if (preg_match("/MSIE 7\.0/",$_SERVER['HTTP_USER_AGENT'])) {
+	echo "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=default&sub=ie7' />";
+}
 
 /*PLUGINS*/
 //Each plugin that has /includes/header.inc.php will have an option displayed here
@@ -48,8 +51,10 @@ while ($module = readdir($dir)) {
 <body>
 <div id="container">
     <div id="header">
-        <h1 id="site_name"><?php echo $config->getNode('messages','name');?></h1>
-        <h2 id="site_tagline"><?php echo $config->getNode('messages','tagline');?></h2>
+    	<div onclick="window.location = '<?php $config->getNode('paths','root');?>';">
+        	<h1 id="site_name"><?php echo $config->getNode('messages','name');?></h1>
+        	<h2 id="site_tagline"><?php echo $config->getNode('messages','tagline');?></h2>
+        </div>
     </div><!--End Header-->
     <ul id="tabs">
         <li><a href="<?php echo $config->getNode('paths','root');?>">Home</a></li>
