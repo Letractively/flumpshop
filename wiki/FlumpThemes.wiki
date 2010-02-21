@@ -43,6 +43,7 @@ Below is the basic structure of the Home page of the Flumpshop, as it currently 
             </li>
         </ul>
     </div><!-- End Navigation-->
+<div id="content_container">
     <div id="page_text">
         <h3 id="page_title">Page Header</h3>
         <p>Page Text Content</p>
@@ -83,6 +84,7 @@ Below is the basic structure of the Home page of the Flumpshop, as it currently 
             <li>Tech Tips Post</li>
         </il>
     </div><!-- End Tech Tips -->
+</div><!--End Content Container-->
     <div id="footer">
     <p>Copyright &copy; 2009-2010 Flumpnet. All Rights Reserved.</p>
     </div>
