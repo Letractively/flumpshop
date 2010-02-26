@@ -19,37 +19,41 @@ require_once "header.php";
 	?></div><!-- End Page Text -->
     <div id="featured_items">
         <h4 id="featured_items_header"><?php echo $config->getNode("messages","featuredItemHeader");?></h4>
-        <div class="featured_item" id="featured_item_1"><?php
-            //Find Featured Items in DB
-            $result = $dbConn->query("SELECT value FROM `stats` WHERE `key` LIKE 'featuredItem%'");
-            //Load first item
-            $row = $dbConn->fetch($result);
-            $item = new Item($row['value']);
-            echo $item->getDetails("INDEX");
-        ?></div>
-        <div class="featured_item" id="featured_item_2"><?php
-			//Load second item
-        	$row = $dbConn->fetch($result);
-			$item = new Item($row['value']);
-            echo $item->getDetails("INDEX");
-		?></div>
+		<div id="featured_items_container">
+			<div class="featured_item" id="featured_item_1"><?php
+				//Find Featured Items in DB
+				$result = $dbConn->query("SELECT value FROM `stats` WHERE `key` LIKE 'featuredItem%'");
+				//Load first item
+				$row = $dbConn->fetch($result);
+				$item = new Item($row['value']);
+				echo $item->getDetails("INDEX");
+			?></div>
+			<div class="featured_item" id="featured_item_2"><?php
+				//Load second item
+				$row = $dbConn->fetch($result);
+				$item = new Item($row['value']);
+				echo $item->getDetails("INDEX");
+			?></div>
+		</div>
     </div><!-- End Featured Items -->
     <div id="popular_items">
         <h4 id="popular_items_header"><?php echo $config->getNode("messages","popularItemHeader");?></h4>
-        <div class="popular_item" id="popular_item_1"><?php
-		//Find most popular items
-        $popular = $stats->getHighestStat("item%Hits",2);
-		//First Item
-		$popular1 = intval(preg_replace("/item([0-9]*)Hits/","$1",$popular[0]));
-		$item = new Item($popular1);
-		echo $item->getDetails("INDEX");
-		?></div>
-        <div class="popular_item" id="popular_item_2"><?php
-		//Second Item
-        $popular2 = intval(preg_replace("/item([0-9]*)Hits/","$1",$popular[1]));
-		$item = new Item($popular2);
-		echo $item->getDetails("INDEX");
-		?></div>
+		<div id="popular_items_container">
+			<div class="popular_item" id="popular_item_1"><?php
+			//Find most popular items
+			$popular = $stats->getHighestStat("item%Hits",2);
+			//First Item
+			$popular1 = intval(preg_replace("/item([0-9]*)Hits/","$1",$popular[0]));
+			$item = new Item($popular1);
+			echo $item->getDetails("INDEX");
+			?></div>
+			<div class="popular_item" id="popular_item_2"><?php
+			//Second Item
+			$popular2 = intval(preg_replace("/item([0-9]*)Hits/","$1",$popular[1]));
+			$item = new Item($popular2);
+			echo $item->getDetails("INDEX");
+			?></div>
+		</div>
     </div><!-- End Popular Items -->
     <div id="latest_news">
         <h4><?php echo $config->getNode("messages","latestNewsHeader");?></h4>

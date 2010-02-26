@@ -7,7 +7,7 @@ while ($category = $dbConn->fetch($categories)) {
 	$subcatNoJS = ""; //Displayed after each main category
 	$result = $dbConn->query("SELECT id FROM `category` WHERE parent='".$category['id']."' AND enabled='1' ORDER BY `name` ASC");
     $cat = new Category($category['id']);
-    echo "<li><a class='category' href='".$cat->getURL()."'>".ucwords(strtolower($cat->getName()))."</a>";
+    echo "<li onclick='window.location = \"".$cat->getURL()."\";'><a class='category' href='".$cat->getURL()."'>".ucwords(strtolower($cat->getName()))."</a>";
 	
 	//Subcat Menu
 	echo "<ul class='subcategory_container'>";
@@ -18,7 +18,7 @@ while ($category = $dbConn->fetch($categories)) {
 	
 	while ($subcat = $dbConn->fetch($result)) {
 		$subCat = new Category($subcat['id']);
-		echo "<li><a class='subcategory_link' href='".$subCat->getURL()."'>".ucwords(strtolower($subCat->getName()))."</a></li>";
+		echo "<li onclick='window.location = \"".$subCat->getURL()."\";'><a class='subcategory_link' href='".$subCat->getURL()."'>".ucwords(strtolower($subCat->getName()))."</a></li>";
 	}
 	echo "</ul></li>";
 }

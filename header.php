@@ -11,10 +11,7 @@ if (!isset($_SUBPAGE)) $_SUBPAGE = true;
 <meta name='keywords' content='<?php echo $config->getNode('messages','keywords');?>' />
 <meta name='description' content='<?php echo $config->getNode('messages','tagline');?>' />
 <title><?php echo $config->getNode('messages','name');?> | <?php echo $page_title;?></title>
-<link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/cssprovider.php?theme=default&sub=main' type='text/css' /><?php
-if (!isset($_SUBPAGE) or $_SUBPAGE == true) {
-	?><link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/cssprovider.php?theme=default&sub=sub' type='text/css' /><?php
-}?><link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/style_carousel.css' type='text/css' />
+<link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/style_carousel.css' type='text/css' />
 <script src='<?php echo $config->getNode('paths','root');?>/js/jquery.js' type='text/javascript'></script>
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jcarousel.js"></script> 
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jqueryui.js"></script> 
@@ -28,6 +25,21 @@ if (!isset($_SUBPAGE) or $_SUBPAGE == true) {
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/defaults.php"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo $config->getNode('paths','root');?>/style/jquery.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo $config->getNode('paths','root');?>/style/jquery-overrides.css" /><?php
+
+/*PLUGINS*/
+//Each plugin that has /includes/header.inc.php will have an option displayed here
+$dir = opendir($config->getNode('paths','offlineDir')."/plugins");
+while ($module = readdir($dir)) {
+	if (file_exists($config->getNode('paths','offlineDir')."/plugins/".$module."/includes/header.inc.php")) {
+		include $config->getNode('paths','offlineDir')."/plugins/".$module."/includes/header.inc.php";
+	}
+}
+//THEME
+?><link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/cssprovider.php?theme=default&sub=main' type='text/css' /><?php
+if (!isset($_SUBPAGE) or $_SUBPAGE == true) {
+	?><link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/cssprovider.php?theme=default&sub=sub' type='text/css' /><?php
+}
+
 //Browser-dependant CSS Overrides
 if (preg_match("/^Opera/",$_SERVER['HTTP_USER_AGENT'])) {
 	echo "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=default&sub=opera' />";
@@ -38,20 +50,11 @@ if (preg_match("/MSIE 8\.0/",$_SERVER['HTTP_USER_AGENT'])) {
 if (preg_match("/MSIE 7\.0/",$_SERVER['HTTP_USER_AGENT'])) {
 	echo "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=default&sub=ie7' />";
 }
-
-/*PLUGINS*/
-//Each plugin that has /includes/header.inc.php will have an option displayed here
-$dir = opendir($config->getNode('paths','offlineDir')."/plugins");
-while ($module = readdir($dir)) {
-	if (file_exists($config->getNode('paths','offlineDir')."/plugins/".$module."/includes/header.inc.php")) {
-		include $config->getNode('paths','offlineDir')."/plugins/".$module."/includes/header.inc.php";
-	}
-}
 ?></head>
 <body>
 <div id="container">
     <div id="header">
-    	<div onclick="window.location = '<?php $config->getNode('paths','root');?>';">
+    	<div onclick="window.location = '<?php echo $config->getNode('paths','root');?>';">
         	<h1 id="site_name"><?php echo $config->getNode('messages','name');?></h1>
         	<h2 id="site_tagline"><?php echo $config->getNode('messages','tagline');?></h2>
         </div>
@@ -66,4 +69,4 @@ while ($module = readdir($dir)) {
     </ul><!-- End Tabs-->
     <div id="category_container"><?php
 		require "includes/index_nav.inc.php";
-        ?></div><!-- End Navigation-->
+        ?></div><!-- End Navigation--><div id="content_container">
