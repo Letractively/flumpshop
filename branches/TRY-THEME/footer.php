@@ -1,4 +1,4 @@
-<?php require_once dirname(__FILE__)."/preload.php";
+</div><!--End Content Container--><?php require_once dirname(__FILE__)."/preload.php";
 echo "<!--Page Generated in ".(microtime_float()-$time_start)." Seconds-->";
 ob_flush();
 echo $cron;
@@ -29,7 +29,7 @@ if (isset($_SESSION['adminAuth']) && $_SESSION['adminAuth']) {
 	echo "</p>";
 }
 ?><!--Site Designed by Jake Mitchell. Programmed by Lloyd Wallis and John Maydew.-->
-</div></div>
+</div><!--End Footer--></div><!--End Container-->
 <script type="text/javascript">
 function showSignupForm() {
 	window.location.href = "<?php echo $config->getNode('paths','root');?>/account/signup.php";

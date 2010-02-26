@@ -130,10 +130,16 @@ $_SESSION['config']->setNode("messages", "featuredItemHeader", "Featured Item", 
 $_SESSION['config']->setNode("messages", "popularItemHeader", "Most Popular", "Popular Item Header");
 $_SESSION['config']->setNode("messages", "latestNewsHeader", "Latest News", "Latest News Header");
 $_SESSION['config']->setNode("messages", "technicalHeader", "Technical Tips", "Technical Help Header");
+
+//Category Messages
+$_SESSION['config']->setNode("messages", "subcatHeader", "This section has these subcategories", "Subcategory Header");
+
+//Payment Messages
 $_SESSION['config']->setNode("messages", "transactionCancelled", "<h1>Transaction Cancelled</h1><p>You cancelled the purchase before it was completed.</p>","Transaction Cancelled");
 $_SESSION['config']->setNode("messages", "transactionFailed", "The payment server reported that the transaction did not complete succesfully. Please try again later.","Transaction Failed");
 $_SESSION['config']->setNode("messages", "paymentComplete", "Your payment is being processed by PayPal and you will receive e-mail confirmation shortly. Your order has now been stored in our database and you will receive an additional e-mail once the item(s) have been dispatched.","Payment Complete");
 
+//AJAX Errors
 $_SESSION['config']->setNode("messages", "ajax500", "An 500 Internal Server error occured when trying to load a remote endpoint.", "AJAX 500 Error");
 $_SESSION['config']->setNode("messages", "ajax404", "A remote endpoint was not found.", "AJAX 404 Error");
 $_SESSION['config']->setNode("messages", "ajaxError", "An unknown error was encountered loading a remote endpoint.", "AJAX Error");

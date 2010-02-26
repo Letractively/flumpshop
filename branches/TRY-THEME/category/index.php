@@ -1,7 +1,6 @@
 <?php
 require_once dirname(__FILE__)."/../header.php";
 if (isset($_GET['id'])) $cid = $_GET['id']; else $cid = 1;
-echo $cid;
 $category = new Category($cid);
 $page_title = $category->getName();
 echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->getBreadcrumb();
@@ -13,7 +12,7 @@ echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->ge
         <input type="submit" value="Go!" />
     </form><?php
 	if ($dbConn->rows($dbConn->query("SELECT id FROM `category` WHERE parent='".$category->getID()."'")) != 0) {
-		?><h4>Subcategories:</h4><ul class='list_subcat'><?php
+		?><h4><?php echo $config->getNode("messages","subcatHeader");?></h4><ul class='list_subcat'><?php
 		$result = $dbConn->query("SELECT id FROM `category` WHERE parent='".$category->getID()."' ORDER BY `name` ASC");
 		while ($row = $dbConn->fetch($result)) {
 			$subCat = new Category($row['id']);
