@@ -1,4 +1,5 @@
 <?php
+$_SUBPAGE = false;
 require_once "header.php";
     ?><div id="page_text">
         <h3 id="page_title">Welcome to <?php echo $config->getNode('messages','name');?></h3>

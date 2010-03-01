@@ -22,5 +22,6 @@ while ($category = $dbConn->fetch($categories)) {
 	}
 	echo "</ul></li>";
 }
+echo "</ul>";
 echo "<div id='category_advert'>".$config->getNode('messages','navAdvert')."</div>";
-?></ul>
+?>

@@ -1,5 +1,7 @@
-<?php require_once dirname(__FILE__)."/preload.php"; $page_title = "Cart"; require_once dirname(__FILE__)."/header.php";?>
-<script type='text/javascript'>
+<?php require_once dirname(__FILE__)."/preload.php";
+$page_title = $config->getNode('messages','basketPageHeader');
+require_once dirname(__FILE__)."/header.php";
+?><script type='text/javascript'>
 function removeItem(id) {
 	document.RemoveItemTempid = id;
 	$("#dialog").html("<?php echo $config->getNode('messages','basketRemItemConf');?>");
@@ -41,16 +43,16 @@ if ($config->getNode('temp','crawler') == true) {echo $config->getNode('messages
 		echo "<script type='text/javascript'>window.location = 'basket.php';</script>";
 	}
 	debug_message(print_r($basket,true));
-	?>
-<a href="javascript:history.go(-1);">Go Back</a>
-<h1 class="content">Basket</h1>
-    <?php
+?><a href="javascript:history.go(-1);"><?php echo $config->getNode("messages","basketGoBackLink");?></a>
+<div id="page_text">
+<h3 id="page_title"><?php echo $config->getNode('messages','basketPageHeader');?></h3><?php
 	if ($basket->getItems() != 0) {
 		echo $basket->listItems();
-		echo "<div class='ui-widget-content' onclick='$(this).addClass(\"ui-state-disabled\").html(\"Loading...\"); window.location.href =\"checkout.php\";'><a href='checkout.php'>Go to Checkout<span class='ui-icon ui-icon-circle-arrow-e ui-icon-right'></span></a></div>";
+		echo "<div class='ui-widget-content' onclick='$(this).addClass(\"ui-state-disabled\").html(\"Loading...\"); window.location.href =\"checkout.php\";'><a href='checkout.php'>".$config->getNode('messages','basketLinkToCheckout')."<span class='ui-icon ui-icon-circle-arrow-e ui-icon-right'></span></a></div>";
 	} else {
-		echo "<div class='ui-corner-all ui-state-highlight'><span class='ui-icon ui-icon-info'></span>Your basket is empty.</div>";
+		echo "<div class='ui-corner-all ui-state-highlight'><span class='ui-icon ui-icon-info'></span>".$config->getNode("messages", "basketEmpty")."</div>";
 	}
 }
+echo "</div>"; //End Page Content
 require_once dirname(__FILE__)."/footer.php";
 ?>

@@ -35,20 +35,20 @@ while ($module = readdir($dir)) {
 	}
 }
 //THEME
-?><link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/cssprovider.php?theme=default&sub=main' type='text/css' /><?php
+?><link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/cssprovider.php?theme=<?php echo $config->getNode("site", "theme");?>&amp;sub=main' type='text/css' /><?php
 if (!isset($_SUBPAGE) or $_SUBPAGE == true) {
-	?><link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/cssprovider.php?theme=default&sub=sub' type='text/css' /><?php
+	?><link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/cssprovider.php?theme=<?php echo $config->getNode("site", "theme");?>&amp;sub=sub' type='text/css' /><?php
 }
 
 //Browser-dependant CSS Overrides
 if (preg_match("/^Opera/",$_SERVER['HTTP_USER_AGENT'])) {
-	echo "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=default&sub=opera' />";
+	echo "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=".$config->getNode("site","theme")."&amp;sub=opera' />";
 }
 if (preg_match("/MSIE 8\.0/",$_SERVER['HTTP_USER_AGENT'])) {
-	echo "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=default&sub=ie8' />";
+	echo "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=".$config->getNode("site","theme")."&amp;sub=ie8' />";
 }
 if (preg_match("/MSIE 7\.0/",$_SERVER['HTTP_USER_AGENT'])) {
-	echo "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=default&sub=ie7' />";
+	echo "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=".$config->getNode("site","theme")."&amp;sub=ie7' />";
 }
 ?></head>
 <body>
@@ -59,14 +59,24 @@ if (preg_match("/MSIE 7\.0/",$_SERVER['HTTP_USER_AGENT'])) {
         	<h2 id="site_tagline"><?php echo $config->getNode('messages','tagline');?></h2>
         </div>
     </div><!--End Header-->
-    <ul id="tabs">
-        <li><a href="<?php echo $config->getNode('paths','root');?>">Home</a></li>
-        <li><a href="<?php echo $config->getNode('paths','root');?>/about.php">About</a></li>
-        <li><a href="<?php echo $config->getNode('paths','root');?>/contact.php">Contact</a></li>
-        <li><a href="#">Login</a></li>
-        <li><a href="<?php echo $config->getNode('paths','root');?>/basket.php">Cart</a></li>
-        <li><a href="<?php echo $config->getNode('paths','root');?>/admin">Admin</a></li>
-    </ul><!-- End Tabs-->
+    <ul id="tabs"><?php
+if (isset($_SUBPAGE) and $_SUBPAGE == false) $homeActive = "active"; else $homeActive = "";
+if (stristr($_SERVER['REQUEST_URI'],"about.php")) $aboutActive = "active"; else $aboutActive = "";
+if (stristr($_SERVER['REQUEST_URI'],"contact.php")) $contactActive = "active"; else $contactActive = "";
+if (stristr($_SERVER['REQUEST_URI'],"basket.php")) $basketActive = "active"; else $basketActive = "";
+        ?><li><a href="<?php echo $config->getNode('paths','root');?>" class="<?php echo $homeActive;?>">Home</a></li>
+        <li><a href="<?php echo $config->getNode('paths','root');?>/about.php" class="<?php echo $aboutActive;?>">About</a></li>
+        <li><a href="<?php echo $config->getNode('paths','root');?>/contact.php" class="<?php echo $contactActive;?>">Contact</a></li><?php
+        //Login only shown if enabled
+		if ($config->getNode("site","loginTab")) {?>
+		<li><a href="javascript:" onclick="loginForm();">Login</a></li><?php }
+		//Cart only shown if shop enabled
+        if ($config->getNode("site","shopEnabled")) {?>
+		<li><a href="<?php echo $config->getNode('paths','root');?>/basket.php" class="<?php echo $basketActive;?>">Cart</a></li><?php }
+        //Admin only shown if Admin logged in
+		if (isset($_SESSION['adminAuth']) and $_SESSION['adminAuth']) {?>
+		<li><a href="<?php echo $config->getNode('paths','root');?>/admin">Admin</a></li><?php }
+    ?></ul><!-- End Tabs-->
     <div id="category_container"><?php
 		require "includes/index_nav.inc.php";
         ?></div><!-- End Navigation--><div id="content_container">
