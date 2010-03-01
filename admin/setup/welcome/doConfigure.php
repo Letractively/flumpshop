@@ -72,6 +72,7 @@ $_SESSION['config']->setNode("site", "homeTab", true, "Home Tab");
 $_SESSION['config']->setNode("site", "sendFeedback", true, "Send Feedback");
 $_SESSION['config']->setNode("site", "version", "0.9.232", "Version");
 $_SESSION['config']->setNode("site", "loginTab", true, "Login Tab");
+$_SESSION['config']->setNode("site", "theme", "default", "Theme");
 
 //Paths and Directories Tree
 $_SESSION['config']->addTree("paths", "Site Paths and Directories");
@@ -122,8 +123,6 @@ $_SESSION['config']->setNode("messages", "tagline", "Beta!", "Tagline");
 $_SESSION['config']->setNode("messages", "keywords", "Flumpshop online shop buy ecommerce sales", "Keywords");
 $_SESSION['config']->setNode("messages", "defaultCategoryName", "Uncategorised", "Default Category Name");
 $_SESSION['config']->setNode("messages", "defaultCategoryDesc", "Details for this category are unavailable.", "Default Category Description");
-$_SESSION['config']->setNode("messages", "basketRemItemConf", "Are you sure you want to remove this item from your basket?", "Remove from Basket");
-$_SESSION['config']->setNode("messages", "basketEmptyConf", "Are you sure you want to empty your basket?", "Empty Basket");
 $_SESSION['config']->setNode("messages", "noScript", "<div class='ui-state-error'><span class='ui-icon ui-icon-alert'></span>Please enable JavaScript for this page to function properly.</div>", "JavaScript Disabled");
 $_SESSION['config']->setNode("messages", "insufficientStock", "There is insufficient stock for this item. Please reduce the size of your order or try again later.", "Insufficient Stock");
 $_SESSION['config']->setNode("messages", "featuredItemHeader", "Featured Item", "Featured Item Header");
@@ -158,6 +157,29 @@ $_SESSION['config']->setNode("messages", "countryNotSupported", "Sorry, but we c
 //Legal Additions
 $_SESSION['config']->setNode("messages", "email", "sales@".$_SERVER['HTTP_HOST'], "Email Address");
 $_SESSION['config']->setNode("messages", "address", "[Please enter your business address here]", "Address");
+
+//Basket Messages
+$_SESSION['config']->setNode("messages", "basketRemItemConf", "Are you sure you want to remove this item from your basket?", "Remove from Basket");
+$_SESSION['config']->setNode("messages", "basketEmptyConf", "Are you sure you want to empty your basket?", "Empty Basket Confirmation");
+$_SESSION['config']->setNode("messages","basketLinkToCheckout", "Go to Checkout ->", "Go to Checkout Link");
+$_SESSION['config']->setNode("messages","basketEmpty", "Your basket is empty. Items you have selected to buy will appear here.", "Basket Empty Notice");
+$_SESSION['config']->setNode("messages", "basketGoBackLink", "Go Back", "Basket Go Back Link");
+
+//Item Default Strings
+$_SESSION['config']->setNode("messages", "itemDefaultName", "Unknown", "Default Item Name");
+$_SESSION['config']->setNode("messages", "itemDefaultDesc", "Sorry, I can't seem to find the information you requested. My operators have been notified about the issue.", "Default Item Description");
+
+//Item View Strings
+$_SESSION['config']->setNode("messages", "exVAT", "Exc. VAT", "Excluding VAT");
+$_SESSION['config']->setNode("messages", "itemReductionUntil", "Until", "Item Reduction Available 'Until'");
+$_SESSION['config']->setNode("messages", "itemDelivery", "Delivery: ", "Item Delivery");
+$_SESSION['config']->setNode("messages", "itemDeliveryUnavail", "Online Delivery is not available in your area", "Item Delivery Unavailable");
+$_SESSION['config']->setNode("messages", "itemStockAvail", "Available.", "Stock Available Suffix");
+
+//Page Header
+$_SESSION['config']->setNode("messages", "aboutPageHeader", "About Us", "About Us Page Header");
+$_SESSION['config']->setNode("messages", "basketPageHeader", "Basket", "Basket Page Header");
+$_SESSION['config']->setNode("messages", "contactPageHeader", "Contact Us", "Contact Us Page Header");
 
 //Full Page Content
 $_SESSION['config']->setNode("messages", "404", 

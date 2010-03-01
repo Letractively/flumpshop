@@ -1,7 +1,10 @@
 <?php
-$page_title = "About Us";
+require_once dirname(__FILE__)."/preload.php";
+$page_title = $config->getNode('messages','aboutPageHeader');
 require_once dirname(__FILE__)."/header.php";
-echo "<h1 class='content'>About Us</h1>";
-echo $config->getNode("messages","aboutPage");
+echo "<div id='page_text'>";
+echo "<h3 id='page_title'>".$config->getNode('messages','aboutPageHeader')."</h3>";
+echo "<p>".$config->getNode("messages","aboutPage")."</p>";
+echo "</div>"; //End Page Text
 require_once dirname(__FILE__)."/footer.php";
 ?>

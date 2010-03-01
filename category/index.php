@@ -21,32 +21,58 @@ echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->ge
 		echo "</ul>";
 	}
 	echo "</div><!-- End Page Text -->";
-	$criteria = "";
-	foreach ($category->getChildren() as $child) {
-		$criteria .= " OR category='$child'";
+	
+	if (!isset($_SESSION['cache']['catid']) or $_SESSION['cache']['catid'] != $cid) {
+		//Don't repeat if already cached
+		$criteria = "";
+		foreach ($category->getChildren() as $child) {
+			$criteria .= " OR catid='$child'";
+		}
+		$items = $dbConn->query("SELECT itemid FROM `item_category` WHERE (catid='".$category->getID()."'".$criteria.")");
+		
+		//List item IDs that match category
+		$criteria = "";
+		while ($row = $dbConn->fetch($items)) {
+			$criteria .= " OR id=".$row['itemid'];
+		}
+		
+		//Get those IDs from database
+		$items = $dbConn->query("SELECT id FROM `products` WHERE (false".$criteria.") AND active=1 ORDER BY name ASC");
+		
+		//Store sorted results in the session for future loads
+		$_SESSION['cache']['catid'] = $cid;
+		$_SESSION['cache']['catitems'] = array();
+		$criteria = "";
+		while ($row = $dbConn->fetch($items)) {
+			$_SESSION['cache']['catitems'][] = $row['id'];
+			$criteria .= "OR id=".$row['id'];
+		}
+		
+		//Count after to prevent including deleted items
+		$num = $dbConn->rows($items);
 	}
-	$items = $dbConn->query("SELECT id FROM `products` WHERE (category='".$category->getID()."'".$criteria.") AND active=1");
-	$num = $dbConn->rows($items);
 	
 	$perPage = $config->getNode("pagination","categoryPerPage");
 	if (isset($_GET['page'])) $page = $_GET['page']; else $page = 1;
 	
-	$items = $dbConn->query("SELECT id FROM `products` WHERE (category='".$category->getID()."'$criteria) AND active=1 ORDER BY name ASC LIMIT ".($page-1)*$perPage.",".$perPage);
+	//Get items for current page
+	for ($i = $page*$perPage; $i < $perPage; $i++) {
+		$items[] = $_SESSION['cache']['catitems'][$i];
+	}
 	
-	if ($dbConn->rows($items) == 0) {
+	if (sizeof($_SESSION['cache']['catitems']) == 0) {
 		echo "<div id='item_container'>There are no products in this category.</div>";
 	} else {
 		echo "<div id='item_container'>";
 		//Only one item - Redirect
-		if ($dbConn->rows($items) == 1 && $page == 1) {
-			$item = $dbConn->fetch($items);
-			$item = new Item($item['id']);
+		if (sizeof($_SESSION['cache']['catitems']) == 1 && $page == 1) {
+			$item = new Item($_SESSION['cache']['catitems'][0]);
 			header("Location: ".$item->getURL());
 			echo $item->getDetails('CATEGORY');
 		}
 		//Print all items
-		while ($item = $dbConn->fetch($items)) {
-			$item = new Item($item['id']);
+		foreach ($_SESSION['cache']['catitems'] as $item) {
+			$item = new Item($item);
 			echo $item->getDetails('CATEGORY');
 		}
 		
