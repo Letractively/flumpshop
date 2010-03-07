@@ -10,17 +10,15 @@ while ($category = $dbConn->fetch($categories)) {
     echo "<li onclick='window.location = \"".$cat->getURL()."\";'><a class='category' href='".$cat->getURL()."'>".ucwords(strtolower($cat->getName()))."</a>";
 	
 	//Subcat Menu
-	echo "<ul class='subcategory_container'>";
+	if ($dbConn->rows($result) != 0) {
+		echo "<ul class='subcategory_container'>";
 	
-	if ($dbConn->rows($result) == 0) {
-		echo "<li>There are no subcategories in this section.</li>";
+		while ($subcat = $dbConn->fetch($result)) {
+			$subCat = new Category($subcat['id']);
+			echo "<li onclick='window.location = \"".$subCat->getURL()."\";'><a class='subcategory_link' href='".$subCat->getURL()."'>".ucwords(strtolower($subCat->getName()))."</a></li>";
+		}
+		echo "</ul></li>";
 	}
-	
-	while ($subcat = $dbConn->fetch($result)) {
-		$subCat = new Category($subcat['id']);
-		echo "<li onclick='window.location = \"".$subCat->getURL()."\";'><a class='subcategory_link' href='".$subCat->getURL()."'>".ucwords(strtolower($subCat->getName()))."</a></li>";
-	}
-	echo "</ul></li>";
 }
 echo "</ul>";
 echo "<div id='category_advert'>".$config->getNode('messages','navAdvert')."</div>";

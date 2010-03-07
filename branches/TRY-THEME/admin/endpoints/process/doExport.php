@@ -95,13 +95,13 @@ $package = array();
 //Upgrade Object Generated, now package files
 $dirs = array($config->getNode('paths','offlineDir')."/images/");
 while ($dir = array_pop($dirs)) {
-	$handle = opendir($config->getNode('paths','offlineDir')."/$dir");
+	$handle = opendir("$dir");
 	while ($file = readdir($handle)) {
-		if (is_dir($config->getNode('paths','offlineDir')."/$dir/$file") && $file != "." && $file != "..") {
+		if (is_dir("$dir/$file") && $file != "." && $file != "..") {
 			array_push($dirs,$dir."/$file");
 		} elseif (preg_match("/(png|jpg|gif)$/i",$file)) {//Only include Image Files
-			if (!is_dir($config->getNode('paths','offlineDir')."/$dir/$file")) {
-				$export['images'][$dir][$file] = file_get_contents($config->getNode('paths','offlineDir')."/$dir/$file");
+			if (!is_dir("$dir/$file")) {
+				$export['images'][$dir][$file] = file_get_contents("$dir/$file");
 			}
 		}
 	}

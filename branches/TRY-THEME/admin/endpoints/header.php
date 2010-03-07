@@ -5,6 +5,9 @@ if ((!isset($_SESSION['adminAuth']) or $_SESSION['adminAuth'] !== true) and !iss
 	die($config->getNode("messages","adminDenied"));
 }
 if (isset($logger)) $prefix = "../"; else $prefix = "../../";
+
+ob_flush();
+flush();
 ?><html>
 <head>
 <link href="<?php echo $prefix;?>style-main.css" rel="stylesheet" type="text/css" />
