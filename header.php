@@ -44,6 +44,9 @@ if (!isset($_SUBPAGE) or $_SUBPAGE == true) {
 if (preg_match("/^Opera/",$_SERVER['HTTP_USER_AGENT'])) {
 	echo "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=".$config->getNode("site","theme")."&amp;sub=opera' />";
 }
+if (preg_match("/MSIE 6\.0/",$_SERVER['HTTP_USER_AGENT'])) {
+	echo "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=".$config->getNode("site","theme")."&amp;sub=ie6' />";
+}
 if (preg_match("/MSIE 8\.0/",$_SERVER['HTTP_USER_AGENT'])) {
 	echo "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=".$config->getNode("site","theme")."&amp;sub=ie8' />";
 }
