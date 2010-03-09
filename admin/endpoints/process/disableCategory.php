@@ -1,6 +1,6 @@
 <?php
 require_once dirname(__FILE__)."/../header.php";
-
+// Needs more comments, Lloyd - Jake
 $id = intval($_GET['cid']);
 
 $dbConn->query("UPDATE `category` SET enabled=0 WHERE id='$id' LIMIT 1");

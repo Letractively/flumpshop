@@ -1,4 +1,5 @@
 <?php
+// Needs more comments Lloyd - Jake
 require_once dirname(__FILE__)."/../header.php";
 $name = htmlentities($_POST['name'],ENT_QUOTES);
 $description = nl2br(htmlentities($_POST['description'],ENT_QUOTES));
