@@ -6,7 +6,7 @@ $categories = $dbConn->query("SELECT id FROM `category` WHERE parent='0' AND ena
 while ($category = $dbConn->fetch($categories)) {
 	$subcatNoJS = ""; //Displayed after each main category
 	$result = $dbConn->query("SELECT id FROM `category` WHERE parent='".$category['id']."' AND enabled='1' ORDER BY `name` ASC");
-    $cat = new Category($category['id']);
+    $cat = new Category($category['id'],'noparent'); //Don't need fullname/breadcrumb
     echo "<li onclick='window.location = \"".$cat->getURL()."\";'><a class='category' href='".$cat->getURL()."'>".ucwords(strtolower($cat->getName()))."</a>";
 	
 	//Subcat Menu
@@ -14,7 +14,7 @@ while ($category = $dbConn->fetch($categories)) {
 		echo "<ul class='subcategory_container'>";
 	
 		while ($subcat = $dbConn->fetch($result)) {
-			$subCat = new Category($subcat['id']);
+			$subCat = new Category($subcat['id'],'noparent');
 			echo "<li onclick='window.location = \"".$subCat->getURL()."\";'><a class='subcategory_link' href='".$subCat->getURL()."'>".ucwords(strtolower($subCat->getName()))."</a></li>";
 		}
 		echo "</ul></li>";

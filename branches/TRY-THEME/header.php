@@ -13,7 +13,6 @@ if (!isset($_SUBPAGE)) $_SUBPAGE = true;
 <title><?php echo $config->getNode('messages','name');?> | <?php echo $page_title;?></title>
 <link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/style_carousel.css' type='text/css' />
 <script src='<?php echo $config->getNode('paths','root');?>/js/jquery.js' type='text/javascript'></script>
-<script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jcarousel.js"></script> 
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jqueryui.js"></script> 
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jeditable.js"></script> 
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jquery.validate.min.js"></script> 
@@ -41,17 +40,17 @@ if (!isset($_SUBPAGE) or $_SUBPAGE == true) {
 }
 
 //Browser-dependant CSS Overrides
-if (preg_match("/^Opera/",$_SERVER['HTTP_USER_AGENT'])) {
+if (strstr($_SERVER['HTTP_USER_AGENT'],"Opera")) {
 	echo "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=".$config->getNode("site","theme")."&amp;sub=opera' />";
 }
-if (preg_match("/MSIE 6\.0/",$_SERVER['HTTP_USER_AGENT'])) {
+if (strstr($_SERVER['HTTP_USER_AGENT'],"MSIE 6.0")) {
 	echo "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=".$config->getNode("site","theme")."&amp;sub=ie6' />";
 }
-if (preg_match("/MSIE 8\.0/",$_SERVER['HTTP_USER_AGENT'])) {
-	echo "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=".$config->getNode("site","theme")."&amp;sub=ie8' />";
-}
-if (preg_match("/MSIE 7\.0/",$_SERVER['HTTP_USER_AGENT'])) {
+if (strstr($_SERVER['HTTP_USER_AGENT'],"MSIE 7.0")) {
 	echo "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=".$config->getNode("site","theme")."&amp;sub=ie7' />";
+}
+if (strstr($_SERVER['HTTP_USER_AGENT'],"MSIE 8.0")) {
+	echo "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=".$config->getNode("site","theme")."&amp;sub=ie8' />";
 }
 ?></head>
 <body>
@@ -74,7 +73,7 @@ if (stristr($_SERVER['REQUEST_URI'],"basket.php")) $basketActive = "active"; els
 		if ($config->getNode("site","loginTab")) {?>
 		<li><a href="javascript:" onclick="loginForm();">Login</a></li><?php }
 		//Cart only shown if shop enabled
-        if ($config->getNode("site","shopEnabled")) {?>
+        if ($config->getNode("site","shopMode")) {?>
 		<li><a href="<?php echo $config->getNode('paths','root');?>/basket.php" class="<?php echo $basketActive;?>">Cart</a></li><?php }
         //Admin only shown if Admin logged in
 		if (isset($_SESSION['adminAuth']) and $_SESSION['adminAuth']) {?>
