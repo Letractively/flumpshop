@@ -35,7 +35,7 @@ if (!isset($_GET['random'])) {
 	$file = $dir."/thumb_0.png";
 }
 
-header('Content-type: image/png');
-
-echo file_get_contents($file);
+header('Content-type: image/gif');
+$im = imagecreatefrompng($file);
+echo imagegif($im);
 ?>

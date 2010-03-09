@@ -11,11 +11,11 @@ echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->ge
         <input type="hidden" name="cat" id="cat" value="<?php echo $category->getID(); ?>" />
         <input type="submit" value="Go!" />
     </form><?php
-	if ($dbConn->rows($dbConn->query("SELECT id FROM `category` WHERE parent='".$category->getID()."'")) != 0) {
+	$result = $dbConn->query("SELECT id FROM `category` WHERE parent='".$category->getID()."' ORDER BY `name` ASC");
+	if ($dbConn->rows($result) != 0) {
 		?><h4><?php echo $config->getNode("messages","subcatHeader");?></h4><ul class='list_subcat'><?php
-		$result = $dbConn->query("SELECT id FROM `category` WHERE parent='".$category->getID()."' ORDER BY `name` ASC");
 		while ($row = $dbConn->fetch($result)) {
-			$subCat = new Category($row['id']);
+			$subCat = new Category($row['id'],"noparent"); //Noparent addition reduces unnecessary queries
 			echo "<li><a href='".$subCat->getURL()."'>".$subCat->getName()."</a></li>";
 		}
 		echo "</ul>";
@@ -39,7 +39,7 @@ echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->ge
 		//Get those IDs from database
 		$items = $dbConn->query("SELECT id FROM `products` WHERE (false".$criteria.") AND active=1 ORDER BY name ASC");
 		
-		//Store sorted results in the session for future loads
+		//Store sorted results in the session for future loads (the query gets all results, not just for that page)
 		$_SESSION['cache']['catid'] = $cid;
 		$_SESSION['cache']['catitems'] = array();
 		$criteria = "";
@@ -61,9 +61,9 @@ echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->ge
 	}
 	
 	if (sizeof($_SESSION['cache']['catitems']) == 0) {
-		echo "<div id='item_container'>There are no products in this category.</div>";
+		echo "<div id='cat_item_container'>There are no products in this category.</div>";
 	} else {
-		echo "<div id='item_container'>";
+		echo "<div id='cat_item_container'>";
 		//Only one item - Redirect
 		if (sizeof($_SESSION['cache']['catitems']) == 1 && $page == 1) {
 			$item = new Item($_SESSION['cache']['catitems'][0]);
@@ -75,6 +75,7 @@ echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->ge
 			$item = new Item($item);
 			echo $item->getDetails('CATEGORY');
 		}
+		echo "</div>"; //End item container
 		
 		$paginator = new Paginator();
 		
@@ -83,7 +84,6 @@ echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->ge
 		} else {
 			echo $paginator->paginate($page,$perPage,$num,"?id=".$category->getID());
 		}
-		echo "</div>";
 	}
 require_once dirname(__FILE__)."/../footer.php";
 ?>
