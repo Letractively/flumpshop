@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__FILE__)."/../../../preload.php";
 if (!isset($_SESSION['adminAuth']) || !$_SESSION['adminAuth']) die($config->getNode('messages','adminDenied'));
-
+// Needs more comments Lloyd - Jake
 $id = intval($_GET['id']);
 
 $dbConn->query("UPDATE `products` SET active=0 WHERE id='$id' LIMIT 1");

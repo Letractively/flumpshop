@@ -1,4 +1,5 @@
 <?php
+// It Needs more comments Lloyd - Jake
 $ajaxProvider = true;
 $_PRINTDATA = false;
 require_once dirname(__FILE__)."/../../../preload.php";

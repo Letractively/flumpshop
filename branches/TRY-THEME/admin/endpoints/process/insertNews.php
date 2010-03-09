@@ -1,4 +1,5 @@
 <?php
+// Needs more comments Lloyd - Jake
 require_once dirname(__FILE__)."/../header.php";
 
 $title = str_replace("'","''",$_POST['postTitle']);

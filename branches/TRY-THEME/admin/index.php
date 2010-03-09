@@ -98,6 +98,11 @@ Please enter your username and password to continue...
             <a href='endpoints/orders/listOrders.php?filter=closed' onclick='loader("Loading Content...");' target="main">Closed</a>
             <a href='endpoints/orders/queryOrder.php' onclick='loader("Loading Content...");' target="main">Query</a>
         </div>
+		<h3>Clients</h3>
+		<div>
+			<a href="endpoints/clients/listCustomers.php" onclick='loader("Loading Content...");' target="main">Customer Manager</a>
+			<a href="endpoints/clients/addCustomers.php" onclick='loader("Loading Content...");' target="main">Import Customer Data</a>
+		</div>
         <h3>Deliveries</h3>
         <div>
         	<a href="endpoints/delivery/countries.php" onClick="loader('Loading Content...');" target="main">Supported Countries</a>

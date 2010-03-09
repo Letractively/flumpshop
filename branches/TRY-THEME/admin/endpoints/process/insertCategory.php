@@ -1,4 +1,4 @@
-<?php
+<?php // Needs more comments Lloyd - Jake
 require_once dirname(__FILE__)."/../header.php";
 $name = str_replace("'","''",$_POST['name']);
 $description = str_replace("'","''",$_POST['description']);
