@@ -29,18 +29,17 @@ class User {
 		}
 	}
 	
-	function populate($uname,$password,$customerID = 0,$active = 0,$canContact = 0) {
+	function populate($uname,$password,$customerID = 0,$active = 0) {
 		global $dbConn;
 		$this->uname = $uname;
 		$this->password = $password;
 		$this->customerID = $customerID;
 		$this->active = $active;
-		$this->canContact = 0;
 		if ($this->id != 0) {
-			$query = "UPDATE `login` SET uname='".$this->uname."', password='".$this->password."', customer=".$this->customerID.", active=$this->active, can_contact=$this->canContact WHERE id=".$this->id." LIMIT 1";
+			$query = "UPDATE `login` SET uname='".$this->uname."', password='".$this->password."', customer=".$this->customerID.", active=$this->active WHERE id=".$this->id." LIMIT 1";
 			return $dbConn->query($query);
 		} else {
-			$query = "INSERT INTO `login` (uname,password,customer,active,can_contact) VALUES ('$this->uname','$this->password','$this->customerID',$this->active,$this->canContact)";
+			$query = "INSERT INTO `login` (uname,password,customer,active) VALUES ('$this->uname','$this->password','$this->customerID',$this->active)";
 			if (!$dbConn->query($query)) return false;
 			$this->id = $dbConn->insert_id();
 			return true;
