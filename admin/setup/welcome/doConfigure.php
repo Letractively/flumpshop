@@ -72,6 +72,7 @@ $_SESSION['config']->setNode("site", "homeTab", true, "Home Tab");
 $_SESSION['config']->setNode("site", "sendFeedback", true, "Send Feedback");
 $_SESSION['config']->setNode("site", "version", "0.9.232", "Version");
 $_SESSION['config']->setNode("site", "loginTab", true, "Login Tab");
+$_SESSION['config']->setNode("site", "theme", "rjccom", "Theme");
 
 //Paths and Directories Tree
 $_SESSION['config']->addTree("paths", "Site Paths and Directories");

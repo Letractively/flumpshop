@@ -1,0 +1,43 @@
+@charset "utf-8";
+*{padding:0;margin:0}
+body{background-color:#E6DAC0;background-repeat:repeat-y;font-family:Verdana,Geneva,sans-serif;margin:auto;width:960px;font-size:11px}
+a{color:#263137;text-decoration:none}
+a:hover{text-decoration:underline}
+#header{position:fixed;top:0;left:0;width:100%;height:100px;background-color:#263137;z-index:9}
+#site_name{color:#FFF;text-decoration:none;font-family:"Rockwell",arial;font-size:44px;font-weight:bold;height:54px;vertical-align:center;position:absolute;top:10px;left:32px;z-index:2;cursor:pointer}
+#site_name_shadow{font-family:"Rockwell",arial;font-size:44px;height:54px;vertical-align:center;position:absolute;top:12px;left:32px;color:#666;z-index:1;font-weight:bold}
+#site_tagline{font-family:"Rockwell",arial;font-size:15px;padding:0;margin:0;vertical-align:center;position:absolute;top:55px;left:110px;z-index:1;font-style:italic;color:#FFF}
+#tabs{z-index:10;position:fixed;right:10px;top:75px;vertical-align:middle;width:auto;max-width:100%;height:25px;overflow:auto}
+#tabs li{display:inline-block;text-align:center}
+#tabs li a{min-width:85px;height:25px;display:inline-block;margin:0;background:url(../images/cssprovider.php?theme=rjccom&image=tab_inactive);font-family:"Century Schoolbook",serif;color:#516161;font-size:18px;text-decoration:none;cursor:pointer;font-variant:small-caps}
+#tabs li a:hover, #tabs li a.active{background:url(../images/cssprovider.php?theme=rjccom&image=tab_active)}
+#category_container{position:absolute;z-index:8;top:150px;left:100px;width:160px;padding:10px 0 25px 0;background:#263137;background-image:url(../images/cssprovider.php?theme=rjccom&image=box_top);background-repeat:no-repeat;border-bottom:1px solid #263137;font-family:serif;font-variant:small-caps;font-size:14px;font-weight:bold;text-align:center;color:#000}
+#category_container a{color:#263137;text-decoration:none}
+#categories, .subcategory_container{list-style:none}
+#categories li{padding:5px 0 0 0;margin-left:2px;margin-bottom:-3px;height:56px;width:155px;overflow:hidden;background-image:url(../images/cssprovider.php?theme=rjccom&image=nav_regular);background-repeat:no-repeat}
+#categories li a{color:#FFF;text-decoration:none}
+#categories li:hover{background-image:url(../images/cssprovider.php?theme=rjccom&image=nav_hover)}
+#categories li:hover ul{display:block}
+#categories li a{color:#000;text-decoration:none}
+.subcategory_container{height:80%;display:none;position:fixed;left:260px;top:160px;background-image:url(../images/cssprovider.php?theme=rjccom&image=subcat_top);background-color:#635F54;background-repeat:no-repeat;padding-top:5px}
+ul.subcategory_container li{background:none !important;display:block;width:100%;height:36px;position:relative;background:none !important;background:url(../images/cssprovider.php?theme=rjccom&image=nav_sub_regular) no-repeat 3px 0 !important;color:#FFF !important;/*Stops the menu from closing*/left:-5px;padding-left:10px !important}
+ul.subcategory_container li:hover{background-image:url(../images/cssprovider.php?theme=rjccom&image=nav_sub_hover) !important}
+#content_container{position:absolute;top:150px;left:300px;width:670px;background-color:#F7F3E9;border:1px solid #ABA492;padding:10px 15px;font-weight:bold}
+#page_text{}
+#page_title{font-size:22px;height:26px;color:#15324B;font-family:Verdana,Geneva,sans-serif;margin-bottom:10px}
+#featured_items, #popular_items{width:100%}
+.featured_item, .popular_item{display:table-cell}
+.featured_item, .popular_item{width:335px}
+.popular_item img, .featured_item img{width:320px}
+#footer{position:fixed;bottom:0;left:0;min-height:25px;height:auto;background-color:#263137;color:#36F;width:100%;z-index:9;text-align:right}
+#footer_text{float:left;color:#EEE}
+#footer_links a{color:#FFF;text-decoration:none}
+#footer_links a:hover{text-decoration:underline}
+/*Overrides for Default JQuery Layout*/
+.ui-icon{display:inline-block;margin-top:-1px;margin-right:6px}
+.ui-icon-right{float:right}
+.ui-widget-content{padding:0.2em 0.5em}
+input.ui-widget-content, select.ui-widget-content{padding:0}
+#content_container .ui-widget{margin:2em 0 2em 0}
+#content_container .ui-widget-header{border:none;background:none;margin:1em 0 1em 0;color:#15324b;font-size:1.5em;border-bottom:1px dotted #15324b}
+#content_container .ui-widget-content{border:none;background:none}
