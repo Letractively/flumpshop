@@ -33,6 +33,12 @@ Below is the basic structure of the Home page of the Flumpshop, as it currently 
         <li><a href="#">Cart</a></li>
         <li><a href="#">Admin</a></li>
     </ul><!-- End Tabs-->
+    <div id="search_container">
+        <form action='(dynamic)' method='post' id='search_form'>
+            <input type='text' name='q' id='q' value='Search...' onfocus='if(this.value="Search..."){this.value="";}' onblur='if(this.value=""){this.value="Search...";}' />
+            <input type='submit' id='search_submit' />
+        </form>
+    </div>
     <div id="category_container">
         <ul id="categories">
             <li>
@@ -98,4 +104,4 @@ Add drag/drop elements and widgets on the home page as well as removing/adding n
 Import .fml theme files (Flump Magic Language) and store them in a library (offlineDir again)
 
 = Current Restrictions =
-For security, the Flumpshop image provider can only serve PNG files.
+For security, the Flumpshop image provider can only serve PNG and GIF files.
