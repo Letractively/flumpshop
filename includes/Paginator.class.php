@@ -9,6 +9,7 @@ class Paginator {
 		if (stristr($urlprefix,"?")) $join = "&"; else $join = "?";
 		$return = "<div class='ui-state-default' style='text-align: center;'>";
 		if ($cpage != 1) {
+			//First/Previous page links
 			if ($ajax != NULL) {
 				//Ajax mode
 				$return .= "<a href='javascript:void(0);' onclick='$(\"#".$ajax."\").html(loadMsg(\"Loading Content...\")).load(\"".$urlprefix.$join."page=1\");'>".$config->getNode('messages','firstPage')."</a>&nbsp;";
@@ -25,6 +26,7 @@ class Paginator {
 		}
 		
 		for ($i = $cpage-10; $i < $cpage; $i++) {
+			//Previous 10 pages links
 			if ($i > 0) {
 				if ($ajax != NULL) {
 					//AJAX
@@ -39,9 +41,11 @@ class Paginator {
 			}
 		}
 		
+		//Current Page
 		$return .= "<span class='ui-state-active'>".$cpage."</span>&nbsp;";
 		
-		for ($i = $cpage+1; $i <= $pages && $i <$cpage+10; $i++) {
+		//Next 10 pages links
+		for ($i = $cpage+1; $i <= $pages && $i < $cpage+10; $i++) {
 			if ($ajax != NULL) {
 				//Ajax
 				$return .= "<a href='javascript:void(0);' onclick='$(\"#$ajax\").html(loadMsg(\"Loading Content...\")).load(\"".$urlprefix.$join."page=$i\");'>".$i."</a>&nbsp;";
@@ -55,6 +59,7 @@ class Paginator {
 		}
 		
 		if ($cpage != $pages) {
+			//Next and last pages links
 			if ($ajax != NULL) {
 				//Ajax
 				$return .= "<a href='javascript:void(0);' onclick='$(\"#$ajax\").html(loadMsg(\"Loading Content...\")).load(\"".$urlprefix.$join."page=".($cpage+1)."\");'>".$config->getNode('messages','nextPage')."</a>&nbsp;";

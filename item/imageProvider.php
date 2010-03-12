@@ -1,8 +1,6 @@
 <?php
 //die();
-$_PRINTDATA = false;
-$ajaxProvider = true;
-require_once dirname(__FILE__)."/../preload.php";
+require_once dirname(__FILE__)."/../includes/vars.inc.php";
 
 if (!isset($_GET['random'])) {
 	$item = strval($_GET['id']);
@@ -37,7 +35,7 @@ if (!isset($_GET['random'])) {
 	$file = $dir."/thumb_0.png";
 }
 
-header('Content-type: image/png');
-
-echo file_get_contents($file);
+header('Content-type: image/gif');
+$im = imagecreatefrompng($file);
+echo imagegif($im);
 ?>

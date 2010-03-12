@@ -1,5 +1,3 @@
-<html>
-<body>
 <p>Hello, this is the Flumpshop Update configuration utility. This system is for use by the Flumpshop development team only, and has absolutely no use to the regular user.</p>
 <p>This form will return the Update object for placing on the update server.
 <form action='doConfigure.php' method="post" id="form">
@@ -14,5 +12,3 @@ Upgrade SQL: <textarea name="sql" id="sql"></textarea><br />
 <input type="submit" onClick="this.disabled = true; document.getElementById('form').submit();" />
 </form>
 <p>This form will automatically generate an Upgrade package based on the Flumpshop instance it resides in. This can then be placed in the Flumpshop downloads, and, once the versions.txt file has been updated, will automatically be detected by all other Flumpshop instances, which will then prompt users to update.</p>
-</body>
-</html>
