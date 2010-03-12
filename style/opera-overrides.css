@@ -1,6 +1,0 @@
-/*Overrides for Opera Browser*/
-
-/*Opera always seems to scroll the tab bar*/
-#tab {
-	overflow: hidden;
-}
