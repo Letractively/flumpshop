@@ -1,34 +1,44 @@
-<?php require_once dirname(__FILE__)."/preload.php"; $page_title = "Search"; require_once dirname(__FILE__)."/header.php";
-echo '<h1 class="content">Search</h1>';
-if (isset($_GET['q'])) $query = htmlentities($_GET['q']); else $query = "";
+<?php $page_title = "Search"; require_once dirname(__FILE__)."/header.php";
+echo '<h3 id="page_title">Search</h3>';
+//Get search query
+if (isset($_GET['q'])) $query = htmlentities($_GET['q']); elseif (isset($_GET['searchfield'])) $query = $_GET['searchfield']; else $query = "";
 ?><form action="search.php" method="get">
-  <input type="text" name="q" class="ui-state-default" value="<?php echo $_GET['q'];?>" onfocus="if (this.value == 'Search...') this.value = '';" onblur="if (this.value == '') this.value = 'Search...'" />
+  <input type="text" name="searchfield" class="ui-state-default" value="<?php echo $_GET['q'];?>" onfocus="if (this.value == 'Search...') this.value = '';" onblur="if (this.value == '') this.value = 'Search...';" />
   <input type="submit" value="Go!" class="ui-state-default" />
 </form>
 <div id="searchResults"><?php
-	if ($query == "" || $query == "Search..." || $query == "%") {
+	//Prevent sql injection
+	$query = htmlentities($query,ENT_QUOTES);
+	//Filter out magic characters
+	$query = str_replace(array(".","%"),"",$query);
+	
+	//Filter out invalid queries
+	if ($query == "" || $query == "Search...") {
 		die("Please enter a search query.");
 	}
+	
 	echo "<h3>Search Results for '$query':</h3>";
 	$query = str_replace("'","''",$query);
 	
+	//Get current page
 	if (isset($_GET['page'])) $page = $_GET['page']; else $page = 1;
 	
+	//Track whether any results have been found
 	$resultFound = false;
 	
 	//Direct ID Search
-	if (!preg_match("/[a-z]/",$query)) {
+	if (!preg_match("/[a-z]/",$query)) { //Check just number
 		$result = $dbConn->query("SELECT id FROM `products` WHERE id='$query' LIMIT 1");
 		if ($dbConn->rows($result) == 1) {
+			//Found an item with that ID
 			$item = $dbConn->fetch($result);
 			$item = new Item($item['id']);
 			$resultFound = true;
-			?>
-			<div class="ui-widget">
+			?><div class="ui-widget">
 				<div class="ui-widget-header">Product #<?php echo $query;?></div>
-				<div class="ui-widget-content"><?php echo "<a href='".$item->getURL()."'>".$item->getName()."</a>";?><br />
-				<?php echo $item->getDesc();?>
-				</div>
+				<div class="ui-widget-content"><?php echo "<a href='".$item->getURL()."'>".$item->getName()."</a>";?><br /><?php
+				echo $item->getDesc();
+				?></div>
 			</div>
 			<?php
 		}
@@ -67,14 +77,14 @@ if (isset($_GET['q'])) $query = htmlentities($_GET['q']); else $query = "";
 		while ($row = $dbConn->fetch($result)) {
 			$item = new Item($row['id']);
 			?>
-			<li><div><?php echo $item->getDetails("SEARCH",$highlight);?></div></li>
+			<li class="result_container"><div class="result"><?php echo $item->getDetails("SEARCH",$highlight);?></div></li>
 			<?php
 		}
 		echo "</ol>";
 		$baseurl = "search.php?q=".$query;
 		if (isset($_GET['cat'])) $baseurl.="&cat=".$_GET['cat'];
 		$paginate = new Paginator();
-		$paginate->paginate($page,intval($results/$perpage),$baseurl);
+		echo $paginate->paginate($page,$perpage,$results,$baseurl);
 	}
 	
 	if (!$resultFound) {

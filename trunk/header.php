@@ -11,74 +11,78 @@ if (!isset($_SUBPAGE)) $_SUBPAGE = true;
 <meta name='keywords' content='<?php echo $config->getNode('messages','keywords');?>' />
 <meta name='description' content='<?php echo $config->getNode('messages','tagline');?>' />
 <title><?php echo $config->getNode('messages','name');?> | <?php echo $page_title;?></title>
-<link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/style.css' type='text/css' /><?php
-if (!isset($_SUBPAGE) or $_SUBPAGE == true) {
-	?><link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/style-subpage.css' type='text/css' /><?php
-}?><link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/style_carousel.css' type='text/css' />
+<link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/style_carousel.css' type='text/css' />
 <script src='<?php echo $config->getNode('paths','root');?>/js/jquery.js' type='text/javascript'></script>
-<script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jcarousel.js"></script> 
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jqueryui.js"></script> 
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jeditable.js"></script> 
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jquery.validate.min.js"></script> 
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/additional-methods.js"></script> 
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jquery.validate.password.js"></script> 
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jquery.form.js"></script>
-<script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jquery.init.js"></script>
-<script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jMyCarousel.pack.js"></script>
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/defaults.php"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo $config->getNode('paths','root');?>/style/jquery.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo $config->getNode('paths','root');?>/style/jquery-overrides.css" /><?php
-//Browser-dependant CSS Overrides
-if (preg_match("/^Opera/",$_SERVER['HTTP_USER_AGENT'])) {
-	echo "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/opera-overrides.css' />";
+
+/*PLUGINS*/
+//Each plugin that has /includes/header.inc.php will have an option displayed here
+$dir = opendir($config->getNode('paths','offlineDir')."/plugins");
+while ($module = readdir($dir)) {
+	if (file_exists($config->getNode('paths','offlineDir')."/plugins/".$module."/includes/header.inc.php")) {
+		include $config->getNode('paths','offlineDir')."/plugins/".$module."/includes/header.inc.php";
+	}
 }
-if (preg_match("/MSIE 8\.0/",$_SERVER['HTTP_USER_AGENT'])) {
-	echo "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/ie8-overrides.css' />";
+//THEME
+?><link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/cssprovider.php?theme=<?php echo $config->getNode("site", "theme");?>&amp;sub=main' type='text/css' /><?php
+if (isset($_SUBPAGE) and $_SUBPAGE == true) {
+	?><link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/cssprovider.php?theme=<?php echo $config->getNode("site", "theme");?>&amp;sub=sub' type='text/css' /><?php
+}
+
+//Browser-dependant CSS Overrides
+if (strstr($_SERVER['HTTP_USER_AGENT'],"Opera")) {
+	echo "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=".$config->getNode("site","theme")."&amp;sub=opera' />";
+}
+if (strstr($_SERVER['HTTP_USER_AGENT'],"MSIE 6.0")) {
+	echo "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=".$config->getNode("site","theme")."&amp;sub=ie6' />";
+}
+if (strstr($_SERVER['HTTP_USER_AGENT'],"MSIE 7.0")) {
+	echo "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=".$config->getNode("site","theme")."&amp;sub=ie7' />";
+}
+if (strstr($_SERVER['HTTP_USER_AGENT'],"MSIE 8.0")) {
+	echo "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=".$config->getNode("site","theme")."&amp;sub=ie8' />";
 }
 ?></head>
 <body>
-<div id='header'>
-<div id="title">
-<div onclick='window.location = "<?php echo $config->getNode('paths','root');?>";' style="cursor: pointer"><h1><?php echo strtolower($config->getNode('messages','name')); ?></h1>
-<h1 class='drop_shadow'><?php echo strtolower($config->getNode('messages','name')); ?></h1>
-<h1 class='slogan'><?php echo $config->getNode('messages','tagline');?></h1></div>
-</div>
-<div id='search_container'><form action='<?php echo $config->getNode('paths','root');?>/search.php' onsubmit='return $(this).validate();' id='search_form'><input class='search_box' value='Search...' onfocus="if(this.value=='Search...'){this.value=''}" onblur="if(this.value==''){this.value='Search...'}" type='text' name='q' id='q' maxlength="150" /><div id='search_icon' onclick='$("#search_form").submit();'></div></form></div>
-<div id='tab'>
-<?php
-//Home
-if ($config->getNode("site", "homeTab") == true) {
-	if (isset($_SUBPAGE) and $_SUBPAGE == false) {?>
-    <a class='tab active' href='<?php echo $config->getNode('paths','root');?>'>home</a>
-	<?php } else {?>
-    <a class='tab' href='<?php echo $config->getNode('paths','root');?>'>home</a><?php }
-}
-
-//Basket
-if ($config->getNode("site","shopMode")) {
-	if (stristr($_SERVER['REQUEST_URI'],"basket.php")) {?><a class='tab active' href='<?php echo $config->getNode('paths','root');?>/basket.php'>cart</a><?php } else {?><a class='tab' href='<?php echo $config->getNode('paths','root');?>/basket.php'>cart</a><?php }
-}
-
-if ($config->getNode("site","loginTab")) {
-	if (!isset($_SESSION['login']['active']) or $_SESSION['login']['active'] == false) echo "<a class='tab' onclick='loginForm();'>login</a>"; else {
-		//Login/Account
-		if (stristr($_SERVER['REQUEST_URI'],"/account")) {echo "<a class='tab active' href='".$config->getNode("paths","root")."/account/'>account</a>";} else {echo "<a class='tab' href='".$config->getNode("paths","root")."/account/'>account</a>";}
-	}
-}
-
-//Contact
-if (stristr($_SERVER['REQUEST_URI'],"contact.php")) {?><a class='tab active' href='<?php echo $config->getNode('paths','root');?>/contact.php'>contact</a><?php } else {?><a class='tab' href='<?php echo $config->getNode('paths','root');?>/contact.php'>contact</a><?php }
-
-//About
-if (stristr($_SERVER['REQUEST_URI'],"about.php")) {?><a class='tab active' href='<?php echo $config->getNode('paths','root');?>/about.php'>about</a><?php } else {?><a class='tab' href='<?php echo $config->getNode('paths','root');?>/about.php'>about</a><?php }
-
-/*ADMIN*/ if (isset($_SESSION['adminAuth']) and $_SESSION['adminAuth'] == true) echo "<a class='tab' href='".$config->getNode('paths','root')."/admin'>admin</a>";
-?></div>
-</div>
-<!--End Header-->
-<div id='content_container_background'>
-<div id="content_container">
-<center><table><tr><?php
-if (!isset($_SUBPAGE) or $_SUBPAGE == false) include $config->getNode("paths","path")."/includes/index_nav.inc.php";
-echo '<td id="mainContent">';
-if ($_PRINTDATA) echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-alert'></span>Debug Mode Enabled.</div>";?>
+<div id="container">
+    <div id="header">
+    	<div onclick="window.location = '<?php echo $config->getNode('paths','root');?>';">
+        	<h1 id="site_name"><?php echo $config->getNode('messages','name');?></h1>
+        	<h2 id="site_tagline"><?php echo $config->getNode('messages','tagline');?></h2>
+        </div>
+    </div><!--End Header-->
+	<div id="search_container">
+        <form action='<?php echo $config->getNode('paths','root');?>/search.php' method='get' id='search_form'>
+            <input type='text' name='q' id='q' value='Search...' onfocus='if(this.value=="Search..."){this.value="";}' onblur='if(this.value==""){this.value="Search...";}' />
+            <input type='submit' id='search_submit' title='Click to search' />
+        </form>
+    </div><!--End Search-->
+    <ul id="tabs"><?php
+if (isset($_SUBPAGE) and $_SUBPAGE == false) $homeActive = "active"; else $homeActive = "";
+if (stristr($_SERVER['REQUEST_URI'],"about.php")) $aboutActive = "active"; else $aboutActive = "";
+if (stristr($_SERVER['REQUEST_URI'],"contact.php")) $contactActive = "active"; else $contactActive = "";
+if (stristr($_SERVER['REQUEST_URI'],"basket.php")) $basketActive = "active"; else $basketActive = "";
+        ?><li><a href="<?php echo $config->getNode('paths','root');?>" class="<?php echo $homeActive;?>">Home</a></li>
+        <li><a href="<?php echo $config->getNode('paths','root');?>/about.php" class="<?php echo $aboutActive;?>">About</a></li>
+        <li><a href="<?php echo $config->getNode('paths','root');?>/contact.php" class="<?php echo $contactActive;?>">Contact</a></li><?php
+        //Login only shown if enabled
+		if ($config->getNode("site","loginTab")) {?>
+		<li><a href="javascript:" onclick="loginForm();">Login</a></li><?php }
+		//Cart only shown if shop enabled
+        if ($config->getNode("site","shopMode")) {?>
+		<li><a href="<?php echo $config->getNode('paths','root');?>/basket.php" class="<?php echo $basketActive;?>">Cart</a></li><?php }
+        //Admin only shown if Admin logged in
+		if (isset($_SESSION['adminAuth']) and $_SESSION['adminAuth']) {?>
+		<li><a href="<?php echo $config->getNode('paths','root');?>/admin">Admin</a></li><?php }
+    ?></ul><!-- End Tabs-->
+    <div id="category_container"><?php
+		require "includes/index_nav.inc.php";
+        ?></div><!-- End Navigation--><div id="content_container">

@@ -12,7 +12,7 @@ function db_factory() {
 			return new MySQL_Database($config->getNode('database','address'),$config->getNode('database','uname'),$config->getNode('database','password'),$config->getNode('database','port'),$config->getNode('database','name'));
 		}
 	}
-	//SQLite (Experimental)
+	//SQLite
 	if ($config->getNode('database','type') == "sqlite") {
 		//Check SQLite Installed
 		if (!extension_loaded("sqlite")) {

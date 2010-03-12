@@ -9,8 +9,7 @@ class Item {
 	var $itemDesc;
 	var $itemURL;
 	var $itemModifyURL;
-	var $itemCategory;
-	var $itemCategoryName;
+	var $itemCategory = array();
 	var $itemReducedPrice;
 	var $itemReductionStart;
 	var $itemReductionEnd;
@@ -25,7 +24,7 @@ class Item {
 		global $dbConn, $config;
 		$this->itemQuery = $dbConn->query("SELECT * FROM `products` WHERE id='$id' LIMIT 1");
 		if ($dbConn->rows($this->itemQuery) == 0) {
-			trigger_error("Failed to locate item in Database");
+			trigger_error("Failed to locate item in Database (id: $id)");
 			$this->setDefaults();
 		} else {
 			$this->itemResult = $dbConn->fetch($this->itemQuery);
@@ -39,7 +38,12 @@ class Item {
 				$this->itemPrice = $this->itemResult['price'];
 				$this->itemStock = $this->itemResult['stock'];
 				$this->itemDesc = str_replace("\\","",$this->itemResult['description']);
-				$this->itemCategory = $this->itemResult['category'];
+				//Categories
+				$result = $dbConn->query("SELECT catid FROM `item_category` WHERE id='".$id."'");
+				while ($row = $dbConn->fetch($result)) {
+					$this->itemCategory[] = $row['catid'];
+				}
+				//Price Reduction
 				$this->itemReducedPrice = $this->itemResult['reducedPrice'];
 				$this->itemReductionStart = $this->itemResult['reducedValidFrom'];
 				$this->itemReductionEnd = $this->itemResult['reducedExpiry'];
@@ -67,15 +71,15 @@ class Item {
 	}
 	
 	function setDefaults() {
+		global $config;
 		if (!stristr($_SERVER['HTTP_REFERER'],"admin/doImport.php")) {//Stop reset on import
 			$this->itemID = -1;
-			$this->itemName = "Unknown";
+			$this->itemName = $config->getNode("messages", "itemDefaultName");
 			$this->itemPrice = 0;
 			$this->itemStock = 0;
-			$this->itemDesc = "Error: This item is no longer available for purchase.";
+			$this->itemDesc = $config->getNode("messages", "itemDefaultDesc");
 			$this->itemURL = "javascript:void(0);";
-			$this->itemCategory = 0;
-			$this->itemCategoryName = "Uncategorised";
+			$this->itemCategory[0] = 0;
 			$this->itemReducedPrice = 0;
 			$this->itemReductionStart = strtotime(0);
 			$this->itemReductionEnd = strtotime(0);
@@ -219,15 +223,22 @@ class Item {
 		global $config, $stats, $dbConn;
 		$type = strtoupper($type); //Standardize for easy comparison
 		if ($type == "INDEX") {
-			$reply = "<table width='100%'><tr><td><a href='".$this->getURL()."'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' style='border: none; width: 256px;' alt='".$this->getName()."' /></a></td>";
-			if (strtolower($config->getNode('viewItem','homeTextPos')) == "bottom") $reply .= "</tr><tr>";
-			$reply .= "<td><h3 style='font-size: 0.8em;'><a href='".$this->getURL()."' class='ui-widget-content'>".$this->getName()."</a></h3>";
+			//Image
+			$reply = "<a href='".$this->getURL()."'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' alt='".$this->getName()."' /></a>";
+			//Title
+			$reply .= "<h5><a href='".$this->getURL()."'>".$this->getName()."</a></h5>";
+			//Price (TODO)
 			if ($config->getNode("site","shopEnabled")) {
-				$reply .= "<em>&pound;".$this->itemPrice."</em><span class='ui-state-disabled'>&nbsp;ex.VAT</span>";
+				//$reply .= "<em>&pound;".$this->itemPrice."</em><span class='ui-state-disabled'>&nbsp;ex.VAT</span>";
 			}
-			if (strlen($this->getDesc()) > $config->getNode('viewItem','homeChars')) $reply .= "<p style='font-size: 0.8em; padding-right: 1em;'>".substr($this->getDesc(),0,$config->getNode('viewItem','homeChars'))."...</p>";
-			else $reply .= "<p style='font-size: 0.8em; padding-right: 1em;'>".$this->getDesc()."</p>";
-			$reply .= "</td></tr></table><br />";
+			//Description
+			if (strlen($this->getDesc()) > $config->getNode('viewItem','homeChars')) {
+				//Trim
+				$string = substr($this->getDesc(),0,$config->getNode('viewItem','homeChars'))."...";
+			} else {
+				$string = $this->getDesc();
+			}
+			$reply .= "<p>".$string."</p>";
 		}
 		if ($type == "CATEGORY") {
 			$reply = "<table><tr><td>";
@@ -238,7 +249,7 @@ class Item {
 			$reply .= "<td>";//Start Content TD
 			$reply .= "<h3 style='font-size: 0.8em;'><a href='".$this->getURL()."' class='ui-widget-content'>".$this->getName()."</a></h3>"; //TITLE
 			if ($config->getNode("site","shopEnabled")) {
-				$reply .= "<em>&pound;".$this->itemPrice."</em><span class='ui-state-disabled'>&nbsp;ex.VAT</span>"; //Price
+				$reply .= "<em>&pound;".$this->itemPrice."</em><span class='ui-state-disabled'>".$config->getNode("messages","exVAT")."</span>"; //Price
 			}
 			if (strlen($this->getDesc()) > $config->getNode('viewItem','catChars')) $reply .= "<p style='font-size: 0.8em;'>".substr($this->getDesc(),0,$config->getNode('viewItem','catChars'))."...</p>";
 			else $reply .= "<p style='font-size: 0.8em;'>".$this->getDesc()."</p>";
@@ -262,7 +273,7 @@ class Item {
 				while ($row = $dbConn->fetch($result)) {
 					$parentCategory = new Category($row['id']);
 					$selected = "";
-					if ($this->getCategory() == $row['id']) $selected = " selected='selected'";
+					if ($this->getCategory(0) == $row['id']) $selected = " selected='selected'";
 					$reply .= "<option value='".$parentCategory->getID()."'$selected>".$parentCategory->getFullName()."</option>";
 				}
 				$reply .= "</select><input type='submit' class='ui-state-default' value='Change Category' /><input type='hidden' name='id' id='id' value='".$this->getID()."' /></form>";
@@ -271,15 +282,15 @@ class Item {
 				$reply .= '<a href="javascript:void(0);" onclick="$(\'#notice\').html(loadMsg(\'Hiding Product...\')).load(\''.$config->getNode('paths','root').'/admin/endpoints/process/disableItem.php?id='.$this->getID().'\');">Hide Product</a>';
 			}
 			
-			$reply .= "<div class='ui-widget'><div class='ui-widget-header' id='itemTitle'>".$this->getName()."</div><div class='ui-widget-content'>";
+			$reply .= "<div id='page_text'><h3 id='page_title'>".$this->getName()."</h3>";
 			//Images
 			$scale = 150*$config->getNode("viewItem","imageScale");
-			$reply .= "<div style='padding-right: 1em; display: inline-block; vertical-align: text-bottom; float: left;'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' onclick='openImageViewer(0);' style='cursor: pointer' />";
+			$reply .= "<div id='item_image_container'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&amp;image=0&amp;size=thumb' onclick='openImageViewer(0);' style='cursor: pointer' alt='Image (Click to view full size)' />";
 			
 			$num = 0;
 			while (file_exists($config->getNode('paths','offlineDir')."/images/item_".$this->getID()."/minithumb_$num.png")) {
 				if (is_int(($num)/3)) $reply .= "<br />";
-				$reply .= "<span style='width: 45px; height: 45px;'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=$num&size=minithumb' onclick='openImageViewer($num);' style='border: 1px solid #000; cursor: pointer;' /></span>";
+				$reply .= "<span style='width: 45px; height: 45px;'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&amp;image=$num&amp;size=minithumb' onclick='openImageViewer($num);' style='border: 1px solid #000; cursor: pointer;' alt='Image (Click to view full size)' /></span>";
 				$num++;
 			}
 			
@@ -289,10 +300,10 @@ class Item {
 			if ($config->getNode("site","shopMode")) {
 				//Price
 				if (time() > strtotime($this->itemReductionStart) && (time() < strtotime($this->itemReductionEnd) xor $this->itemReductionEnd == "1970-01-01 01:00:00")) {//Is there a special offer?
-					$reply .= "<span style='text-decoration: line-through;'>&pound;".$this->itemPrice."</span>&nbsp;<strong>&pound;<span id='itemPrice'>".$this->itemReducedPrice."</span><span class='ui-state-disabled'>&nbsp;ex.VAT</span></strong>";
-					if ($this->itemReductionEnd != "1970-01-01 01:00:00") $reply .= "<em>Until ".date("d-m-y",strtotime($this->itemReductionEnd))."</em>";
+					$reply .= "<span style='text-decoration: line-through;'>&pound;".$this->itemPrice."</span>&nbsp;<strong>&pound;<span id='itemPrice'>".$this->itemReducedPrice."</span><span class='ui-state-disabled'>&nbsp;".$config->getNode("messages","exVAT")."</span></strong>";
+					if ($this->itemReductionEnd != "1970-01-01 01:00:00") $reply .= "<em>".$config->getNode("messages","itemReductionUntil")." ".date("d-m-y",strtotime($this->itemReductionEnd))."</em>";
 				} else {
-					$reply .= "<em>&pound;<span id='itemPrice'>".$this->itemPrice."</span></em><span class='ui-state-disabled'>&nbsp;ex.VAT</span>";
+					$reply .= "<em>&pound;<span id='itemPrice'>".$this->itemPrice."</span></em><span class='ui-state-disabled'>&nbsp;".$config->getNode("messages","exVAT")."</span>";
 				}
 				if ($int === true) {
 					$reply .= "&nbsp;<a href='javascript:void(0);' onclick='reduceItem();'>Create Special Offer</a>";
@@ -302,9 +313,9 @@ class Item {
 				}
 				//Delivery Price
 				if ($this->itemDeliveryCost == -1) {
-					$reply .= "&nbsp;Delivery is not available in your area.";
+					$reply .= "&nbsp;".$config->getNode("messages","itemDeliveryUnavail");
 				} else {
-					$reply .= "&nbsp;Delivery: &pound;".$this->itemDeliveryCost;
+					$reply .= "&nbsp;".$config->getNode("messages","itemDelivery")." &pound;".$this->itemDeliveryCost;
 				}
 				//Stock
 				if ($this->getStock() != 0) $reply .= "<div class='ui-state-default'><span id='itemStock'>".$this->getStock()."</span> Available. <a href='".$config->getNode('paths','root')."/basket.php?item=".$this->getID()."'>Add to Basket</a></div>";
@@ -314,14 +325,14 @@ class Item {
 			if ($config->getNode("viewItem", "showID")) {
 				$reply .= "<div class='ui-state-highlight'><strong>Product Code: </strong>".$this->getID()."</div><p id='itemDesc'>";
 			} else {
-				$reply .= "<p id='itemDesc'>";
+				$reply .= '<p id="itemDesc">';
 			}
 			$reply .= $this->getDesc()."</p>";
 			//Tracker
 			//TODO: Unique only - Store Visited Array in session obj?
 			$stats->incStat("item".$this->getID()."Hits");
 			if ($int && (isset($_SESSION['adminAuth']) && $_SESSION['adminAuth'] == true)) $reply .= "This page has been viewed ".$stats->getStat("item".$this->getID()."Hits")." times.";
-			$reply .= "</div></div></td></tr></table>";
+			$reply .= "</div>";
 		}
 		if ($type == "BASKET") {
 			$reply = "<div class='ui-widget-header ui-corner-top'><a href='".$this->getURL()."'>".$this->getName()."</a></div>";
@@ -402,7 +413,11 @@ class Item {
 		return $this->itemModifyURL;
 	}
 	
-	function getCategory() {
+	function getCategory($int = 0) {
+		return $this->itemCategory[$int];
+	}
+	
+	function getCategories() {
 		return $this->itemCategory;
 	}
 	

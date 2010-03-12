@@ -55,11 +55,12 @@ if ($error) {
 	$user->populate($username,md5($pass1),0,$active);
 	if ($address and $doEmail) {
 		$customer = new Customer();
-		$customer->populate($name,$address1,$address2,$address3,$postcode,$country,$email,$contact);
+		$customer->populate($name,$address1,$address2,$address3,$postcode,$country,$email,NULL,$contact);
 		$user->replaceCustomerObj($customer);
 	} elseif ($doEmail and !$address) {
 		$customer = new Customer();
-		$customer->populate(NULL,NULL,NULL,NULL,NULL,NULL,$email);
+		$customer->populate(NULL,NULL,NULL,NULL,NULL,NULL,$email,NULL,$contact);
+		$user->replaceCustomerObj($customer);
 	}
 	//{} Not Supported in PHP 4
 	$name = $config->getNode("messages","name");

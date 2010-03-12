@@ -320,15 +320,6 @@ $_SESSION['config']->setNode("smtp", "uname", "daemon", "Username");
 $_SESSION['config']->setNode("smtp", "password", "", "Password");
 $_SESSION['config']->setNode("smtp", "email", "daemon@".preg_replace("/^www\./i","",$_SERVER['HTTP_HOST']), "Email Address");
 
-//Carousel Widget
-$_SESSION['config']->addTree("widget_carousel", "Carousel Widget Settings");
-
-$_SESSION['config']->setNode("widget_carousel", "onIndex", true, "Show on Home Page");
-$_SESSION['config']->setNode("widget_carousel", "indexPosition", "right", "Position on Home Page");
-$_SESSION['config']->setNode("widget_carousel", "indexHeight", 800, "Height on Home Page");
-$_SESSION['config']->setNode("widget_carousel", "images", 10, "Number of Images");
-$_SESSION['config']->setNode("widget_carousel", "imageScale", 1, "Image Scale");
-
 //Item View Options
 $_SESSION['config']->addTree("viewItem", "Item View Settings");
 

@@ -98,6 +98,11 @@ Please enter your username and password to continue...
             <a href='endpoints/orders/listOrders.php?filter=closed' onclick='loader("Loading Content...");' target="main">Closed</a>
             <a href='endpoints/orders/queryOrder.php' onclick='loader("Loading Content...");' target="main">Query</a>
         </div>
+		<h3>Clients</h3>
+		<div>
+			<a href="endpoints/clients/listCustomers.php" onclick='loader("Loading Content...");' target="main">Customer Manager</a>
+			<a href="endpoints/clients/addCustomers.php" onclick='loader("Loading Content...");' target="main">Import Customer Data</a>
+		</div>
         <h3>Deliveries</h3>
         <div>
         	<a href="endpoints/delivery/countries.php" onClick="loader('Loading Content...');" target="main">Supported Countries</a>
@@ -116,6 +121,17 @@ Please enter your username and password to continue...
             <a href="endpoints/advanced/phpinfo.php" onclick='loader("Loading Content...");' target="main">PHP Info</a>
             <a href="endpoints/advanced/recreateImages.php" onclick='loader("Rebuilding Images. This process may take several hours.");' target="main">Rebuild Images</a>
         </div>
+        <h3>Plugins</h3>
+        <div>
+        	<a href="endpoints/plugins/plugins.php" onclick='loader("Loading Content...");' target="main">Plugin Manager</a><?php
+			//Each plugin that has /endpoints/index.php will have an option displayed here
+			$dir = opendir($config->getNode('paths','offlineDir')."/plugins");
+			while ($module = readdir($dir)) {
+				if (file_exists($config->getNode('paths','offlineDir')."/plugins/".$module."/endpoints/index.php")) {
+					echo '<a href="endpoints/plugins/pluginProvider.php?mod='.$module.'&page=index" onclick=\'loader("Loading Content...");\' target="main">'.$module.'</a>';
+				}
+			}
+        ?></div>
     </div>
     </div>
     </center>

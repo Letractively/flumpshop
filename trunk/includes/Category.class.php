@@ -8,7 +8,9 @@ class Category {
 	var $breadcrumb = "<a href='javascript:void(0);'>Uncategorised</a>";
 	var $enabled = true;
 	
-	function Category($id) {
+	function Category($id,$params) {
+		$params = strtolower($params);
+		//Possible $params values: 'noparent' - disables breadcrumb & fullname features, but reduces queries
 		global $dbConn, $config;
 		$this->id = $id;
 		$this->name = $config->getNode('messages','defaultCategoryName');
@@ -17,11 +19,15 @@ class Category {
 		$result = $dbConn->fetch($result);
 		if (is_array($result)) {
 			$this->fullName = "";
-			$this->breadcrumb = "";
-			if ($result['parent'] != 0) {
-				$temp = new Category($result['parent']);
-				$this->fullName .= $temp->getFullName()." -> ";
-				$this->breadcrumb .= $temp->getBreadcrumb()." -> ";
+			if (!strstr($params,"noparent")) {
+				$this->breadcrumb = "";
+				if ($result['parent'] != 0) {
+					$temp = new Category($result['parent']);
+					$this->fullName .= $temp->getFullName()." -> ";
+					$this->breadcrumb .= $temp->getBreadcrumb()." -> ";
+				}
+			} else {
+				$this->breadcrumb = "Error: noparent Enabled.";
 			}
 			$this->fullName .= $result['name'];
 			$this->breadcrumb .= "<a href='".$this->getURL()."'>".$result['name']."</a>";

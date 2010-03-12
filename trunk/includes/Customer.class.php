@@ -11,6 +11,7 @@ class Customer {
 	var $countryName;
 	var $email;
 	var $paypalid;
+	var $can_contact;
 	var $supportedCountry = false;
 	
 	//Constructor
@@ -56,16 +57,16 @@ class Customer {
 	}
 	
 	//Setters
-	function populate($name = NULL,$address1 = NULL,$address2 = NULL,$address3 = NULL,$postcode = NULL,$country = NULL,$email = NULL,$paypalid = NULL) {
+	function populate($name = NULL,$address1 = NULL,$address2 = NULL,$address3 = NULL,$postcode = NULL,$country = NULL,$email = NULL,$paypalid = NULL,$can_contact = 1) {
 		global $dbConn;
-		$vars = array("name","address1","address2","address3","postcode","country","email","paypalid");
+		$vars = array("name","address1","address2","address3","postcode","country","email","paypalid","can_contact");
 		foreach ($vars as $var) {
 			if ($$var != NULL) {
 				$this->$var = str_replace("'","''",$$var);
 			}
 		}
 		if ($this->id == 0) {
-			$dbConn->query("INSERT INTO `customers` (name,address1,address2,address3,postcode,country,email,paypalid) VALUES ('$this->name','$this->address1','$this->address2','$this->address3','$this->postcode','$this->country','$this->email','$this->paypalid')");
+			$dbConn->query("INSERT INTO `customers` (name,address1,address2,address3,postcode,country,email,paypalid,can_contact) VALUES ('$this->name','$this->address1','$this->address2','$this->address3','$this->postcode','$this->country','$this->email','$this->paypalid','$this->can_contact')");
 			$this->id = $dbConn->insert_id();
 		}
 		$country = $dbConn->fetch($dbConn->query("SELECT * FROM `country` WHERE iso='".$this->country."' LIMIT 1"));
