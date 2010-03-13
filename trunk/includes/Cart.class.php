@@ -1,5 +1,5 @@
 <?php
-class Basket {
+class Cart {
 	var $items = array();
 	var $total = 0;
 	var $id;
@@ -7,7 +7,7 @@ class Basket {
 	var $lock = 0;
 	
 	//Constructor
-	function Basket($id) {
+	function Cart($id) {
 		global $dbConn;
 		debug_message("Initializing Basket");
 		$this->id = intval($id);
@@ -20,7 +20,7 @@ class Basket {
 	
 	function restore() {
 		debug_message("Restoring Basket");
-		$this->Basket($this->id);
+		$this->Cart($this->id);
 		$this->checkPrice();
 	}
 	

@@ -34,7 +34,7 @@ while ($customer = $dbConn->fetch($customers)) {
 $baskets = $dbConn->query("SELECT id FROM `basket`");
 $export['baskets'] = array();
 while ($basket = $dbConn->fetch($baskets)) {
-	$export['baskets'][] = serialize(new Basket($basket['id']));
+	$export['baskets'][] = serialize(new Cart($basket['id']));
 }
 
 $orders = $dbConn->query("SELECT id FROM `orders`");
