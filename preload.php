@@ -70,8 +70,8 @@ if ($_SETUP == false && $config->getNode('site','enabled') != true && !strstr($_
 //Load Classes
 require_once(dirname(__FILE__)."/includes/Item.class.php");
 debug_message("Item Class Definition Loaded.");
-require_once(dirname(__FILE__)."/includes/Basket.class.php");
-debug_message("Basket Class Definition Loaded.");
+require_once(dirname(__FILE__)."/includes/Cart.class.php");
+debug_message("Cart Class Definition Loaded.");
 require_once(dirname(__FILE__)."/includes/Customer.class.php");
 debug_message("Customer Class Definition Loaded.");
 require_once(dirname(__FILE__)."/includes/User.class.php");
@@ -179,14 +179,14 @@ if ($_SETUP == false) {
 		//Web Crawler Exception
 		if (array_search($_SERVER['HTTP_USER_AGENT'],explode($config->getNode('server','crawlerAgents'),"|"))) {
 			$config->setNode('temp','crawler',true);
-			$basket = new Basket(0);
+			$basket = new Cart(0);
 			$basket->lock();
 			debug_message("Basket Disabled for Crawlers");
 		} else {
 			$config->setNode('temp','crawler',false);
 			$dbConn->query("INSERT INTO `basket` (obj) VALUES ('')");
 			$basketid = $dbConn->insert_id();
-			$basket = new Basket($basketid);
+			$basket = new Cart($basketid);
 			debug_message("Created basket #$basketid",true);
 		}
 		if (!isset($_SERVER['REMOTE_ADDR'])) $ip = "127.0.0.1"; else $ip = $_SERVER['REMOTE_ADDR'];
@@ -194,7 +194,7 @@ if ($_SETUP == false) {
 		debug_message("Remote IP: $ip");
 	} else {
 		if (array_search($_SERVER['HTTP_USER_AGENT'],explode($config->getNode('server','crawlerAgents'),"|"))) {
-			$basket = new Basket(0);
+			$basket = new Cart(0);
 			$basket->lock();
 			$config->setNode('temp','crawler',true);
 		} else {
@@ -206,7 +206,7 @@ if ($_SETUP == false) {
 			if (!is_object($basket)) {
 				//Just load empty basket if shop disabled - Not used for major reasons
 				if ($config->getNode('site','shopMode') == false) {
-					$basket = new Basket(-1);
+					$basket = new Cart(-1);
 				} else {
 					trigger_error("Fatal Error: Basket Corrupted. Aborting.");
 					die();

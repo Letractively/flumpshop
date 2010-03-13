@@ -1,4 +1,6 @@
-<?php require_once dirname(__FILE__)."/preload.php";
+<?php
+define("PAGE_TYPE","basket");
+require_once dirname(__FILE__)."/preload.php";
 $page_title = $config->getNode('messages','basketPageHeader');
 require_once dirname(__FILE__)."/header.php";
 ?><script type='text/javascript'>

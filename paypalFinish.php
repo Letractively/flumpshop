@@ -65,7 +65,7 @@
 			$dbConn->query("INSERT INTO `basket` (obj) VALUES (' ')");
 			$bid = $dbConn->insert_id();
 			$dbConn->query("UPDATE `sessions` SET basket=$bid WHERE session_id='".session_id()."' LIMIT 1");
-			$basket = new Basket($bid);
+			$basket = new Cart($bid);
 			?>
 			<h1>Payment Confirmed</h1>
 			<div class="ui-widget ui-widget-title ui-corner-top">Your Order</div>
