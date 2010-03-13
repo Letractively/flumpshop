@@ -14,6 +14,7 @@ function DBUpgrade($current_version = 1) {
 	global $dbConn;
 	$current_version++;
 	while (file_exists(dirname(__FILE__)."/../sql/DBUpgrade_v".$current_version.".sql")) {
+		file_put_contents(dirname(__FILE__)."/status.txt", "Running DBUpgrade (v$current_version...)");
 		$qry = implode("",file(dirname(__FILE__)."/../sql/DBUpgrade_v".$current_version.".sql"));
 		$dbConn->multi_query($qry);
 		$dbConn->query("UPDATE `stats` SET value = '$current_version' WHERE `key`='dbVer' LIMIT 1");
