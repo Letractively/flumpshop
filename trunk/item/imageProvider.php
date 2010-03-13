@@ -1,5 +1,7 @@
 <?php
 //die();
+//gzip compression
+ob_start("ob_gzhandler");
 require_once dirname(__FILE__)."/../includes/vars.inc.php";
 
 if (!isset($_GET['random'])) {

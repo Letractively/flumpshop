@@ -114,12 +114,13 @@ Please enter your username and password to continue...
             <a href="endpoints/advanced/upload.php" onclick='loader("Loading Content...");' target="main">File Upload</a>
             <a href="logs" onclick='loader("Loading Content...");' target="main">Log Viewer</a>
             <a href="endpoints/advanced/bugs.php" onclick='loader("Loading Content...");' target="main">Feedback</a>
+			<a href="endpoints/advanced/duplicates.php" onclick='loader("Checking for duplicates......");' target="main">Duplicate Content</a>
             <a href="endpoints/advanced/query.php" onclick='loader("Loading Content...");' target="main">Execute SQL</a>
             <a href="endpoints/advanced/varMan.php" onclick='loader("Loading Content...");' target="main">Configuration Manager</a>
             <a href="endpoints/advanced/export.php" onclick='loader("Loading Content...");' target="main">Export</a>
             <a href="endpoints/advanced/import.php" onclick='loader("Loading Content...");' target="main">Import</a>
             <a href="endpoints/advanced/phpinfo.php" onclick='loader("Loading Content...");' target="main">PHP Info</a>
-            <a href="endpoints/advanced/recreateImages.php" onclick='loader("Rebuilding Images. This process may take several hours.");' target="main">Rebuild Images</a>
+            <a href="endpoints/advanced/recreateImages.php" onclick='loader("Loading Content...");' target="main">Rebuild Images</a>
         </div>
         <h3>Plugins</h3>
         <div>
