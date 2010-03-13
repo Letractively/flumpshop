@@ -18,6 +18,12 @@ if (!isset($_GET['random'])) {
 			if (!file_exists($file)) {
 				$file = $config->getNode('paths','offlineDir')."/images/item_placeholder.png";
 			}
+		} elseif (preg_match("/^0/",$item)) {
+			$item = preg_replace("/^0*/","",$item);
+			$file = $config->getNode('paths','offlineDir')."/images/item_$item/".$size."_".$image.".png";
+			if (!file_exists($file)) {
+				$file = $config->getNode('paths','offlineDir')."/images/item_placeholder.png";
+			}
 		} else {
 			$file = $config->getNode('paths','offlineDir')."/images/item_placeholder.png";
 		}
