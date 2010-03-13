@@ -1,6 +1,4 @@
 <?php
-//Some headers sent later
-ob_start();
 require_once dirname(__FILE__)."/preload.php";
 if (!isset($page_title)) $page_title = "Welcome";
 if (!isset($_SUBPAGE)) $_SUBPAGE = true;

@@ -1,4 +1,6 @@
 <?php
+//Some headers sent later & gzip compression
+ob_start("ob_gzhandler");
 //Timer
 function microtime_float()
 {

@@ -12,7 +12,7 @@ if (!$i = file_get_contents($config->getNode("paths","offlineDir")."/admin_image
 if ($i != 0) {
 	$n = $i;
 	while ($n > 0) {
-		readdir($dp)
+		readdir($dp);
 	}
 }
 while ($dir = readdir($dp)) {
