@@ -102,11 +102,23 @@ class Item {
 			$price = str_replace("'","''",$this->getPrice());
 			$stock = str_replace("'","''",$this->getStock());
 			$desc = str_replace("'","''",$this->getDesc());
-			$category = $this->getCategory();
+			$categories = $this->getCategories();
 			$reducedPrice = $this->itemReducedPrice;
 			$reduceStart = $this->itemReductionStart;
 			$reduceEnd = $this->itemReductionEnd;
-			$dbConn->query("UPDATE `products` SET name='$name', price='$price', stock='$stock', description='$desc', reducedPrice='$reducedPrice', reducedValidFrom='$reduceStart', reducedExpiry='$reduceEnd', category='$category' WHERE id=".$this->getID()." LIMIT 1");
+			$dbConn->query("UPDATE `products` SET name='$name', price='$price', stock='$stock', description='$desc', reducedPrice='$reducedPrice', reducedValidFrom='$reduceStart', reducedExpiry='$reduceEnd' WHERE id=".$this->getID()." LIMIT 1");
+			$catstring = "";
+			foreach ($categories as $category) {
+				//Update each category reference
+				if ($dbConn->rows($dbConn->query("SELECT id FROM `item_category` WHERE itemid=".$this->getID()." AND catid=".$category." LIMIT 1")) == 0) {
+					//Category reference not yet created
+					$dbConn->query("INSERT INTO `item_category` (itemid,catid) VALUES (".$this->getID().",$category)");
+				}
+				//Append category string for old category clearing
+				$catstring .= " AND catid!=".$category;
+			}
+			//Check there are no old category references
+			$dbConn->query("DELETE FROM `item_category` WHERE itemid=".$this->getID().$catstring);
 		}
 	}
 	
