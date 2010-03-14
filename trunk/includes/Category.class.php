@@ -8,7 +8,7 @@ class Category {
 	var $breadcrumb = "<a href='javascript:void(0);'>Uncategorised</a>";
 	var $enabled = true;
 	
-	function Category($id,$params) {
+	function Category($id,$params = "") {
 		$params = strtolower($params);
 		//Possible $params values: 'noparent' - disables breadcrumb & fullname features, but reduces queries
 		global $dbConn, $config;
