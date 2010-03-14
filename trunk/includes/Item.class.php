@@ -347,12 +347,12 @@ class Item {
 			$reply .= "</div>";
 		}
 		if ($type == "BASKET") {
-			$reply = "<div class='ui-widget-header ui-corner-top'><a href='".$this->getURL()."'>".$this->getName()."</a></div>";
+			$reply = "<h4>".$this->getName()."</h4>";
 			$reply .= "<div class='ui-widget-content ui-corner-bottom'>&pound;".$this->itemPrice." (x$int)";
 			$reply .= "<div style='float: right;'>".$this->getStock()." Available</div>";
 			$reply .= "<div class='ui-state-default'>";
 			$reply .= "<span class='ui-icon ui-icon-trash' onclick='removeItem(".$this->getID().");' title='Remove' style='cursor: pointer;'>&nbsp;</span>";
-			$reply .= "<span class='ui-icon ui-icon-plus' onclick='notImplemented(".$this->getID().");' title='Quantity' style='cursor: pointer;'>&nbsp;</span>";
+			$reply .= "<span class='ui-icon ui-icon-plus' onclick='editQuantity(".$this->getID().",".$int.",".$this->getStock().");' title='Quantity' style='cursor: pointer;'>&nbsp;</span>";
 			$reply .= "&nbsp;</div></div>";
 		}
 		if ($type == "ORDER") {

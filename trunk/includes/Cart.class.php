@@ -58,9 +58,9 @@ class Cart {
 		$dbConn->query("UPDATE `basket` SET `lock`='0' WHERE id=".$this->id." LIMIT 1");
 	}
 	
-	function addItem($id) {
+	function addItem($id,$stock=1) {
 		if (!isset($this->items[$id])) $this->items[$id] = 0;
-		$this->items[$id]++;
+		$this->items[$id]+=$stock;
 		$item = new Item($id);
 		$this->incTotal($item->getPrice());
 	}
@@ -73,6 +73,10 @@ class Cart {
 			unset($this->items[$id]);
 			$this->incTotal(-$price);
 		}
+	}
+	
+	function changeQuantity($itemid,$stock) {
+		$this->items[$itemid] = $stock;
 	}
 	
 	function incTotal($int) {
