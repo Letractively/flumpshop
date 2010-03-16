@@ -70,7 +70,7 @@ $_SESSION['config']->setNode("site", "country", "GB", "Default Country");
 $_SESSION['config']->setNode("site", "shopMode", true, "Shop Mode");
 $_SESSION['config']->setNode("site", "homeTab", true, "Home Tab");
 $_SESSION['config']->setNode("site", "sendFeedback", true, "Send Feedback");
-$_SESSION['config']->setNode("site", "version", "0.9.232", "Version");
+$_SESSION['config']->setNode("site", "version", "0.9.6-dev", "Version");
 $_SESSION['config']->setNode("site", "loginTab", true, "Login Tab");
 $_SESSION['config']->setNode("site", "theme", "rjccom", "Theme");
 

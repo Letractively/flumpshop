@@ -131,15 +131,15 @@ Please enter your username and password to continue...
         </div>
         <h3>Advanced</h3>
         <div>
+			<a href="endpoints/advanced/varMan.php" onclick='loader("Loading Content...");' target="main">Configuration Manager</a>
             <a href="endpoints/process/cron.php" onclick='loader("Executing Cron Script...");' target="main">Cron Script</a>
-            <a href="endpoints/advanced/upload.php" onclick='loader("Loading Content...");' target="main">File Upload</a>
-            <a href="logs" onclick='loader("Loading Content...");' target="main">Log Viewer</a>
-            <a href="endpoints/advanced/bugs.php" onclick='loader("Loading Content...");' target="main">Feedback</a>
 			<a href="endpoints/advanced/duplicates.php" onclick='loader("Checking for duplicates......");' target="main">Duplicate Content</a>
-            <a href="endpoints/advanced/query.php" onclick='loader("Loading Content...");' target="main">Execute SQL</a>
-            <a href="endpoints/advanced/varMan.php" onclick='loader("Loading Content...");' target="main">Configuration Manager</a>
-            <a href="endpoints/advanced/export.php" onclick='loader("Loading Content...");' target="main">Export</a>
-            <a href="endpoints/advanced/import.php" onclick='loader("Loading Content...");' target="main">Import</a>
+			<a href="endpoints/advanced/query.php" onclick='loader("Loading Content...");' target="main">Execute SQL</a>
+			<a href="endpoints/advanced/export.php" onclick='loader("Loading Content...");' target="main">Export</a>
+			<a href="endpoints/advanced/bugs.php" onclick='loader("Loading Content...");' target="main">Feedback</a>
+            <a href="endpoints/advanced/upload.php" onclick='loader("Loading Content...");' target="main">File Upload</a>
+			<a href="endpoints/advanced/import.php" onclick='loader("Loading Content...");' target="main">Import</a>
+            <a href="logs" onclick='loader("Loading Content...");' target="main">Log Viewer</a>
             <a href="endpoints/advanced/phpinfo.php" onclick='loader("Loading Content...");' target="main">PHP Info</a>
             <a href="endpoints/advanced/recreateImages.php" onclick='loader("Loading Content...");' target="main">Rebuild Images</a>
 			<a href="endpoints/advanced/userManager.php" onclick='loader("Loading Content...");' target="main">User Manager</a>
