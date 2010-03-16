@@ -1,6 +1,7 @@
 @charset "utf-8";
 *{padding:0;margin:0}
-body{background-color:#E6DAC0;background-repeat:repeat-y;font-family:Verdana,Geneva,sans-serif;margin:auto;width:960px;font-size:11px}
+body{background-color:#E6DAC0;background-repeat:repeat-y;font-family:Verdana,Geneva,sans-serif;font-size:11px;margin:auto;width:1000px}
+#container{position:absolute}
 a{color:#263137;text-decoration:none}
 a:hover{text-decoration:underline}
 #header{position:fixed;top:0;left:0;width:100%;height:100px;background-color:#263137;z-index:9}
@@ -16,18 +17,19 @@ a:hover{text-decoration:underline}
 #tabs li{display:inline-block;text-align:center}
 #tabs li a{min-width:85px;height:25px;display:inline-block;margin:0;background:url(../images/cssprovider.php?theme=rjccom&image=tab_inactive);font-family:"Century Schoolbook",serif;color:#516161;font-size:18px;text-decoration:none;cursor:pointer;font-variant:small-caps}
 #tabs li a:hover, #tabs li a.active{background:url(../images/cssprovider.php?theme=rjccom&image=tab_active)}
-#category_container{position:absolute;z-index:8;top:150px;left:100px;width:160px;padding:10px 0 25px 0;background:#263137;background-image:url(../images/cssprovider.php?theme=rjccom&image=box_top);background-repeat:no-repeat;border-bottom:1px solid #263137;font-family:serif;font-variant:small-caps;font-size:14px;font-weight:bold;text-align:center;color:#000}
+#category_container{position:relative;z-index:8;top:150px;width:160px;padding:10px 0 25px 0;background:#263137;background-image:url(../images/cssprovider.php?theme=rjccom&image=box_top);background-repeat:no-repeat;border-bottom:1px solid #263137;font-family:serif;font-variant:small-caps;font-size:14px;font-weight:bold;text-align:center;color:#000}
 #category_container a{color:#263137;text-decoration:none}
 #categories, .subcategory_container{list-style:none}
-#categories li{padding:5px 0 0 0;margin-left:2px;margin-bottom:-3px;height:56px;width:155px;overflow:hidden;background-image:url(../images/cssprovider.php?theme=rjccom&image=nav_regular);background-repeat:no-repeat}
+#categories li{padding:5px 0 0 0;margin-left:2px;margin-bottom:-3px;height:56px;width:155px;overflow:visible;background-image:url(../images/cssprovider.php?theme=rjccom&image=nav_regular);background-repeat:no-repeat}
 #categories li a{color:#FFF;text-decoration:none}
 #categories li:hover{background-image:url(../images/cssprovider.php?theme=rjccom&image=nav_hover)}
 #categories li:hover ul{display:block}
 #categories li a{color:#000;text-decoration:none}
-.subcategory_container{height:80%;display:none;position:fixed;left:260px;top:160px;background-image:url(../images/cssprovider.php?theme=rjccom&image=subcat_top);background-color:#635F54;background-repeat:no-repeat;padding-top:5px}
-ul.subcategory_container li{background:none !important;display:block;width:100%;height:36px;position:relative;background:none !important;background:url(../images/cssprovider.php?theme=rjccom&image=nav_sub_regular) no-repeat 3px 0 !important;color:#FFF !important;left:-5px;padding-left:10px !important}
-ul.subcategory_container li:hover{background-image:url(../images/cssprovider.php?theme=rjccom&image=nav_sub_hover) !important}
-#content_container{position:absolute;top:150px;left:300px;width:670px;background-color:#F7F3E9;border:1px solid #ABA492;padding:10px 15px;font-weight:bold}
+.subcategory_container{height:80%;display:none;position:relative;left:155px;top:-40px;background-image:url(../images/cssprovider.php?theme=rjccom&image=subcat_top) no-repeat;padding-top:5px}
+ul.subcategory_container li{background:none!important;display:block;width:160px!important;height:60px;position:relative;background:none !important;background:url(../images/cssprovider.php?theme=rjccom&image=nav_sub_regular) no-repeat!important;color:#FFF!important;padding-left: 5px!important}
+ul.subcategory_container li a{position:relative;left:-5px}
+ul.subcategory_container li:hover{background-image:url(../images/cssprovider.php?theme=rjccom&image=nav_sub_hover)!important}
+#content_container{position:absolute;top:150px;left:200px;width:670px;background-color:#F7F3E9;border:1px solid #ABA492;padding:10px 15px;font-weight:bold}
 #page_text{}
 #page_title{font-size:22px;height:26px;color:#15324B;font-family:Verdana,Geneva,sans-serif;margin-bottom:10px}
 #featured_items, #popular_items{width:100%;clear:both;display:block}
@@ -36,11 +38,11 @@ ul.subcategory_container li:hover{background-image:url(../images/cssprovider.php
 .popular_item img, .featured_item img{width:320px}
 .result_container{margin:15px 20px}
 .result_container .result p{padding-top:10px}
-#footer{position:fixed;bottom:0;left:0;min-height:25px;height:auto;background-color:#263137;color:#36F;width:100%;z-index:9;text-align:right}
+#footer{position:fixed;bottom:0;left:0;height:25px;overflow:hidden;background-color:#263137;color:#36F;width:1000px;z-index:9;text-align:right}
 #footer_text{float:left;color:#EEE}
 #footer_links a{color:#FFF;text-decoration:none}
 #footer_links a:hover{text-decoration:underline}
-/*Overrides for Default JQuery Layout*/
+/*Overrides for Default jQuery Layout*/
 .ui-icon{display:inline-block;margin-top:-1px;margin-right:6px}
 .ui-icon-right{float:right}
 .ui-widget-content{padding:0.2em 0.5em}
@@ -48,4 +50,4 @@ input.ui-widget-content, select.ui-widget-content{padding:0}
 #content_container .ui-widget{margin:2em 0 2em 0}
 #content_container .ui-widget-header{border:none;background:none;margin:1em 0 1em 0;color:#15324b;font-size:1.5em;border-bottom:1px dotted #15324b}
 #content_container .ui-widget-content{border:none;background:none}
-.jMyCarousel{position:absolute;top:150px;margin-left:820px;width:150px}
+.carousel_container{position:absolute;top:150px;left:925px}
