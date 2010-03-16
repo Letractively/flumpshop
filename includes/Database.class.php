@@ -57,7 +57,10 @@ class Database {
 	}
 	
 	function time($time = 0) {
-		if ($time == 0)	return date("Y-m-d H:i:s"); else return date("Y-m-d H:i:s",strtotime($time));
+		if ($time == 0)	return date("Y-m-d H:i:s"); else {
+			if (!is_int($time)) $time = strtotime($time);
+			return date("Y-m-d H:i:s",$time);
+		}
 	}
 	
 	function getQueryCount() {

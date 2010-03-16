@@ -1,22 +1,24 @@
 <?php
 $requires_tier2 = true;
 require_once "../header.php";
+
+if (isset($_GET['error'])) echo "<p>".$_GET['error']."</p>";
 ?><h1>User Manager</h1>
 <p>Fill out the form below to add a new ACP user account. Please note that an ACP login is different than a login for the site frontend.</p>
-<form action="../process/createUser.php" method="post">
+<form action="../process/createUser.php" method="post" id="addUsrFrm">
 <h2>Details</h2>
 <table>
 	<tr>
 		<td><label for="uname">Username:</label></td>
-		<td><input type="text" name="uname" id="uname" /></td>
+		<td><input type="text" name="uname" id="uname" class="ui-state-default required" maxlength="8" /></td>
 	</tr>
 	<tr>
 		<td><label for="pass">Password:</label></td>
-		<td><input type="password" name="pass" id="pass" /></td>
+		<td><input type="password" name="pass" id="pass" class="ui-state-default required" minlength="8" /></td>
 	</tr>
 	<tr>
 		<td><label for="pass_confirm">Confirm Password:</label></td>
-		<td><input type="password" name="pass_confirm" id="pass_confirm" /></td>
+		<td><input type="password" name="pass_confirm" id="pass_confirm" class="ui-state-default required" minlength="8" equalto="#pass" /></td>
 	</tr>
 </table>
 <h2>Permissions</h2>
@@ -80,4 +82,7 @@ require_once "../header.php";
 </table>
 <br /><input type="submit" value="Create User" />
 </form>
+<script type="text/javascript">
+$('#addUsrFrm').validate();
+</script>
 </body></html>
