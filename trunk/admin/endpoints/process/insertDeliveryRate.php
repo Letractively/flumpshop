@@ -1,4 +1,6 @@
 <?php
+$USR_REQUIREMENT = "can_edit_delivery_rates";
+
 require_once dirname(__FILE__)."/../header.php";
 
 $lowerBound = $_POST['lowerBound'];

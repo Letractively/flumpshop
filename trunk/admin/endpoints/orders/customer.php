@@ -1,4 +1,5 @@
 <?php
+$USR_REQUIREMENT = "can_view_customers";
 $ajaxProvider = true;
 require_once dirname(__FILE__)."/../../../preload.php";
 if (!isset($_SESSION['adminAuth']) || $_SESSION['adminAuth'] == false) die($config->getNode('messages','adminDenied'));

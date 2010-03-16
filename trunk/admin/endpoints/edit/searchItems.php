@@ -1,4 +1,5 @@
 <?php
+$USR_REQUIREMENT = "can_edit_products";
 require_once "../../../preload.php";
 
 if (!isset($_SESSION['adminAuth']) or !$_SESSION['adminAuth']) exit;

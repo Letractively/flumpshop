@@ -1,4 +1,5 @@
 <?php
+$USR_REQUIREMENT = "can_add_customers";
 require_once "../header.php";
 ?><h1>Import Customer Data</h1>
 <p>Currently in heavy development, this feature will enable you to import customer data from various sources. At the current time, only manual entry of information is supported.</p>

@@ -1,4 +1,6 @@
 <?php
+$USR_REQUIREMENT = "can_edit_orders";
+
 $ajaxProvider = true;
 //Updates the status of an order
 require_once dirname(__FILE__)."/../../../preload.php";

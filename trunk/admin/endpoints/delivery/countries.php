@@ -1,4 +1,5 @@
 <?php
+$USR_REQUIREMENT = "can_edit_delivery_rates";
 require_once dirname(__FILE__)."/../header.php";
 
 $result = $dbConn->query("SELECT * FROM `country` ORDER BY name ASC");

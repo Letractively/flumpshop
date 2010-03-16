@@ -1,8 +1,16 @@
 <?php
 require_once dirname(__FILE__)."/../../preload.php";
-if ((!isset($_SESSION['adminAuth']) or $_SESSION['adminAuth'] !== true) and !isset($auth)) {
-	header("HTTP/1.1 403 Forbidden");
-	die($config->getNode("messages","adminDenied"));
+
+if (isset($USR_REQUIREMENT)) {
+	if (!acpusr_validate($USR_REQUIREMENT)) {
+		header("HTTP/1.1 403 Forbidden");
+		die($config->getNode("messages","adminDenied"));
+	}
+} else {
+	if (!acpusr_validate()) {
+		header("HTTP/1.1 403 Forbidden");
+		die($config->getNode("messages","adminDenied"));
+	}
 }
 if (isset($logger)) $prefix = "../"; else $prefix = "../../";
 

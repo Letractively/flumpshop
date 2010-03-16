@@ -1,6 +1,7 @@
 <?php
+$USR_REQUIREMENT = "can_delete_products";
+
 require_once dirname(__FILE__)."/../../../preload.php";
-if (!isset($_SESSION['adminAuth']) || !$_SESSION['adminAuth']) die($config->getNode('messages','adminDenied'));
 
 $id = intval($_GET['id']);
 

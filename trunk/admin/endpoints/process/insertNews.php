@@ -1,4 +1,6 @@
 <?php
+$USR_REQUIREMENT = "can_post_news";
+
 require_once dirname(__FILE__)."/../header.php";
 
 $title = str_replace("'","''",$_POST['postTitle']);

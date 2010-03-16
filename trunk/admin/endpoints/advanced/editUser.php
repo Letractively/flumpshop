@@ -10,6 +10,7 @@ $row = $dbConn->fetch($result);
 <p>Below are the permissions for the user <?php echo $row['uname'];?>.</p>
 <form action="../process/saveUser.php" method="post">
 <input type="hidden" name="id" id="id" value="<?php echo $userid;?>" />
+<p>Please note that this feature has not been implemented yet.</p>
 <table>
 	<tr>
 		<th>Action</th>

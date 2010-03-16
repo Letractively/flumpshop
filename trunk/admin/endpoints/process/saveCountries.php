@@ -1,4 +1,6 @@
 <?php
+$USR_REQUIREMENT = "can_edit_delivery_rates";
+
 require_once dirname(__FILE__)."/../header.php";
 
 //Set all countries as disabled (unchecked boxes don't get submitted)

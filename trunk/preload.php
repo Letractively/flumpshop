@@ -276,4 +276,20 @@ if (!$_SETUP) {
 		$cron = "";
 	}
 }
+
+//Validate ACP Login
+function acpusr_validate($requirement = NULL) {
+	global $dbConn;
+	if (!isset($_SESSION['acpusr'])) return false;
+	$auth = base64_decode($_SESSION['acpusr']);
+	$auth = explode("~",$auth);
+	if ($requirement == NULL) {
+		$result = $dbConn->query("SELECT pass FROM `acp_login` WHERE uname='".$auth[0]."' LIMIT 1");
+	} else {
+		$result = $dbConn->query("SELECT pass FROM `acp_login` WHERE uname='".$auth[0]."' AND $requirement=1 LIMIT 1");
+	}
+	if ($dbConn->rows($result) == 0) return false;
+	$row = $dbConn->fetch($result);
+	return sha1($row['pass']) == $auth[1];
+}
 ?>

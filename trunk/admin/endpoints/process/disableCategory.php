@@ -1,4 +1,5 @@
 <?php
+$USR_REQUIREMENT = "can_delete_categories";
 require_once dirname(__FILE__)."/../header.php";
 
 $id = intval($_GET['cid']);

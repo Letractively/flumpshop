@@ -64,6 +64,10 @@ if (isset($_GET['error'])) echo "<p>".$_GET['error']."</p>";
 		<td><input type="checkbox" name="can_post_news" id="can_post_news" /></td>
 	</tr>
 	<tr>
+		<td><label for="can_add_customers">Add Customers</label></td>
+		<td><input type="checkbox" name="can_add_customers" id="can_add_customers" /></td>
+	</tr>
+	<tr>
 		<td><label for="can_contact_customers">Contact Customers</label></td>
 		<td><input type="checkbox" name="can_contact_customers" id="can_contact_customers" /></td>
 	</tr>

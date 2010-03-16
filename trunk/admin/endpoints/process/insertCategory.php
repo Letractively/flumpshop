@@ -1,4 +1,6 @@
 <?php
+$USR_REQUIREMENT = "can_add_categories";
+
 require_once dirname(__FILE__)."/../header.php";
 $name = str_replace("'","''",$_POST['name']);
 $description = str_replace("'","''",$_POST['description']);

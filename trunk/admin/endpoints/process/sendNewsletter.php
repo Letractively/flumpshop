@@ -1,4 +1,6 @@
 <?php
+$USR_REQUIREMENT = "can_contact_customers";
+
 require_once "../header.php";
 //Takes the preview snapshot stored in $_SESSION and emails it to everyone.
 
