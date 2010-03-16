@@ -1,17 +1,19 @@
 <?php
 require_once dirname(__FILE__)."/../header.inc.php";
+require_once "../../../includes/vars.inc.php";
+$dbConn = db_factory();
 
 function randStr() {
 	$chars = array("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z",1,2,3,4,5,6,7,8,9,0,"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","@","=","+","-","_","&","*","%","$");
 	$str = "";
-	foreach ($i=0;$i<10;$i++) {
+	for ($i=0;$i<10;$i++) {
 		$num = rand(0,70);
 		$str .= $chars[$num];
 	}
 	return $str;
 }
 
-$adminPass = $str;
+$adminPass = randStr();
 
 //Create default user account
 $dbConn->query("INSERT INTO `acp_login` (uname,pass,pass_expires,can_add_products,can_edit_products,can_delete_products,can_add_categories,can_edit_categories,can_delete_categories,can_edit_pages,can_edit_delivery_rates,can_post_news,can_add_customers,can_contact_customers,can_view_customers,can_view_orders,can_edit_orders) VALUES ('inituser','".md5(sha1($adminPass))."',

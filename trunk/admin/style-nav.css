@@ -34,12 +34,17 @@ h3.ui-accordion-header {
 	padding-left: 25px;
 }
 
-.ui-accordion-content-active, .ui-accordion-content-active a {
+.ui-accordion-content, .ui-accordion-content a {
 	background: none;
 	text-align: left;
 	margin: 0;
 	padding: 0;
 	color: white;
+	overflow:visible;
+}
+
+.ui-accordion-content a {
+	position:relative;left:-20px;width:180px;
 }
 
 .ui-accordion-content-active h4 {
