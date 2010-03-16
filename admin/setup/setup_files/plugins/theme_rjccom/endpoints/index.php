@@ -1,0 +1,1 @@
+This plugin is used to provide Javascript enhancements to the rjccom theme for Flumpshop. No configuration is necessary.

@@ -70,7 +70,7 @@ $_SESSION['config']->setNode("site", "country", "GB", "Default Country");
 $_SESSION['config']->setNode("site", "shopMode", true, "Shop Mode");
 $_SESSION['config']->setNode("site", "homeTab", true, "Home Tab");
 $_SESSION['config']->setNode("site", "sendFeedback", true, "Send Feedback");
-$_SESSION['config']->setNode("site", "version", "0.9.6-dev", "Version");
+$_SESSION['config']->setNode("site", "version", "0.9.6.358", "Version");
 $_SESSION['config']->setNode("site", "loginTab", true, "Login Tab");
 $_SESSION['config']->setNode("site", "theme", "rjccom", "Theme");
 
@@ -109,7 +109,7 @@ $_SESSION['config']->setNode("server", "crawlerAgents", "Googlebot|msnbot|Slurp"
 $_SESSION['config']->setNode("server", "debug", false, "Enable Debug Mode");
 $_SESSION['config']->setNode("server", "cronFreq", 30, "Cron Frequency (mins)");
 $_SESSION['config']->setNode("server", "backupFreq", 24, "Backup Frequency (hrs)");
-$_SESSION['config']->setNode("server", "analyticsID", "Google Analytics ID");
+$_SESSION['config']->setNode("server", "analyticsID", "", "Google Analytics ID");
 
 //Messages
 $_SESSION['config']->addTree("messages", "Predefined Text Strings");
