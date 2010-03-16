@@ -1,4 +1,5 @@
 <?php
+$USR_REQUIREMENT = "can_add_products";
 require_once dirname(__FILE__)."/../header.php";
 ?><div class="ui-widget-header">Add Item</div>
 <form action="../process/insertItem.php" method="post" class="ui-widget-content" enctype="multipart/form-data" onsubmit="if ($(this).valid()) loader(loadMsg('Saving Content. If you are uploading an image, this may take a few moments...'));">

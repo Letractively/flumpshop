@@ -1,4 +1,5 @@
 <?php
+$USR_REQUIREMENT = "can_edit_pages";
 require_once dirname(__FILE__)."/../header.php";
 
 $content = $_GET['pageid'];

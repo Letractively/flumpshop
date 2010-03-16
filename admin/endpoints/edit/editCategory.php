@@ -1,4 +1,5 @@
 <?php
+$USR_REQUIREMENT = "can_edit_categories";
 require_once dirname(__FILE__)."/../header.php";
 
 if (!isset($_GET['id'])) {

@@ -1,4 +1,5 @@
 <?php
+$USR_REQUIREMENT = "can_edit_delivery_rates";
 require_once dirname(__FILE__)."/../header.php";
 ?><div class="ui-widget-content">
 <a href="javascript:" onclick="$('#newRateForm').toggle('fold');">New Rate</a>

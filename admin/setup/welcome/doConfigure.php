@@ -115,7 +115,7 @@ $_SESSION['config']->setNode("server", "analyticsID", "Google Analytics ID");
 $_SESSION['config']->addTree("messages", "Predefined Text Strings");
 
 $_SESSION['config']->setNode("messages", "footer", "Designed and built by Flumpnet", "Page Footer");
-$_SESSION['config']->setNode("messages", "adminDenied", "You must enter the administrator password in the Site Admin section before you can perform this action.", "Admin Access Denied");
+$_SESSION['config']->setNode("messages", "adminDenied", "You do not have permission to perform that action.", "Admin Access Denied");
 $_SESSION['config']->setNode("messages", "crawler", "A Crawler User Agent has been detected. Some site features are disabled to reduce server load.", "Crawler Agent");
 $_SESSION['config']->setNode("messages", "maintenance", "<div class='ui-state-error'><span class='ui-icon ui-icon-alert'></span>We've shut down the site temporarily for scheduled maintenance. It should be back online in a few moments.</div>", "Site Disabled");
 $_SESSION['config']->setNode("messages", "name", "Flumpshop", "Site Name");

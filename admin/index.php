@@ -9,13 +9,34 @@ if ($config->getNode('secure','admin') and $_SERVER['HTTPS'] == "off") {
 }
 
 //Process Login
+
+if (isset($_POST['uname'])) {
+	$fail = false;
+	$result = $dbConn->query("SELECT * FROM `acp_login` WHERE uname='".htmlentities($_POST['uname'],ENT_QUOTES)."' LIMIT 1");
+	if ($dbConn->rows($result) == 0) {
+		$fail = true;
+	} else {
+		$row = $dbConn->fetch($result);
+		if ($row['pass'] != md5(sha1($_POST['pass']))) {
+			$fail = true;
+		} else {
+			$dbConn->query("UDPATE `acp_login` SET last_login='".$dbConn->time()."' WHERE id=".$row['id']." LIMIT 1");
+			$_SESSION['acpusr'] = base64_encode($row['uname']."~".sha1($row['pass']));
+			header("Location: ./");
+		}
+	}
+}
+
+/*
 if (isset($_POST['pass']) && md5($_POST['pass']) == $config->getNode("site","password")) {
 	$_SESSION['adminAuth'] = true;
 	header("Location: ./");
 	die();
 }
+*/
+
 //Not Logged In
-if (!isset($_SESSION['adminAuth']) or $_SESSION['adminAuth'] !== true) {
+if (!acpusr_validate()) {
 	//Login Page
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
@@ -39,7 +60,7 @@ input.submit {width: auto; position: relative; left: 220px; border: 3px outset #
 <div class="content">
 Please enter your username and password to continue...
 <table>
-<tr><td><label for='uname'>Username: </label></td><td><input type="text" name="uname" id="uname" disabled="disabled" /></td></tr>
+<tr><td><label for='uname'>Username: </label></td><td><input type="text" name="uname" id="uname" /></td></tr>
 <tr><td><label for='pass'>Password: </label></td><td><input type="password" name="pass" id="pass" /></td></tr>
 </table>
 <input type="submit" class="submit" value="Login" />

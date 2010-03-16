@@ -1,4 +1,5 @@
 <?php
+$USR_REQUIREMENT = "can_view_orders";
 require_once dirname(__FILE__)."/../header.php";
 $filter = $_GET['filter'];
 $query = "SELECT * FROM `orders` WHERE false";

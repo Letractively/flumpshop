@@ -1,4 +1,6 @@
 <?php
+$USR_REQUIREMENT = "can_edit_pages";
+
 require_once dirname(__FILE__)."/../header.php";
 if ($dbConn->rows($dbConn->query("SELECT id FROM `stats` WHERE `key`='featuredItem1' LIMIT 1")) == 0) {
 	$dbConn->query("INSERT INTO `stats` (`key`,value) VALUES ('featuredItem1',".intval($_GET['featuredItem1']).")");

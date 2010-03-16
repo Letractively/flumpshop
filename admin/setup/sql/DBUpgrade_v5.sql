@@ -13,6 +13,7 @@ CREATE TABLE  `acp_login` (
 `can_edit_pages` BOOL NOT NULL DEFAULT  '0',
 `can_edit_delivery_rates` BOOL NOT NULL DEFAULT  '0',
 `can_post_news` BOOL NOT NULL DEFAULT  '0',
+`can_add_customers` BOOL NOT NULL DEFAULT  '0',
 `can_contact_customers` BOOL NOT NULL DEFAULT  '0',
 `can_view_customers` BOOL NOT NULL DEFAULT  '0',
 `can_view_orders` BOOL NOT NULL DEFAULT  '0',

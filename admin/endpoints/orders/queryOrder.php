@@ -1,4 +1,5 @@
 <?php
+$USR_REQUIREMENT = "can_view_orders";
 require_once dirname(__FILE__)."/../header.php";
 
 if (isset($_GET['orderid'])) {

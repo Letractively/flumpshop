@@ -1,4 +1,5 @@
 <?php
+$USR_REQUIREMENT = "can_post_news";
 require_once dirname(__FILE__)."/../header.php";
 ?><div class="ui-widget-header">New News Post</div>
 <form action="../process/insertNews.php" method="post" onsubmit="if ($(this).valid()) {loader(loadMsg('Saving Content...')); return true;} else return false;" class="ui-widget-content">
