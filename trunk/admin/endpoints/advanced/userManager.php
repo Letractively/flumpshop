@@ -21,10 +21,10 @@ require_once "../header.php";
 </ul>
 <p>The following user accounts are currently configured on this Flumpshop instance:</p><ul><?php
 //Get a list of Admin users
-$result = $dbConn->query("SELECT id,uname `acp_login` ORDER BY uname ASC");
+$result = $dbConn->query("SELECT id,uname FROM `acp_login` ORDER BY uname ASC");
 
 while ($row = $dbConn->fetch($result)) {
-	echo "<li><a href='editUser.php?id=".$result['id']."'>".$result['uname']."</a></li>";
+	echo "<li><a href='editUser.php?id=".$row['id']."'>".$row['uname']."</a></li>";
 }
 ?></ul>
 <a href="addUser.php">Add new user</a>
