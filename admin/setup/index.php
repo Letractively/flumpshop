@@ -33,9 +33,8 @@ input.submit {width: auto; position: relative; left: 220px; border: 3px outset #
 <div class="header"><img src="../images/logo.jpg" alt="Flumpshop Logo" />flump<span class='header2'>shop</span></div>
 <div class="title">please login...</div>
 <div class="content">
-Please enter your username and password to continue...
+Please enter the configuration password to continue...
 <table>
-<tr><td><label for='uname'>Username: </label></td><td><input type="text" name="uname" id="uname" disabled="disabled" /></td></tr>
 <tr><td><label for='pass'>Password: </label></td><td><input type="password" name="pass" id="pass" /></td></tr>
 </table>
 <input type="submit" class="submit" value="Login" />

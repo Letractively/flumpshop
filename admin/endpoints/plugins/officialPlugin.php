@@ -1,4 +1,5 @@
 <?php
+$requires_tier2 = true;
 require_once "../header.php";
 require_once "../../../includes/PluginPackage.class.php";
 error_reporting(E_ALL);

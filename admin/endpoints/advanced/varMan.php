@@ -1,4 +1,5 @@
 <?php
+$requires_tier2 = true;
 require_once dirname(__FILE__)."/../header.php";
 $disabled = "";
 if (!$config->getEditable()) {

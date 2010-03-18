@@ -1,9 +1,7 @@
 <?php
-//Use different session for dedicated logfile
-if (!isset($_SESSION)) session_start();
-if (!isset($_SESSION['adminAuth']) || !$_SESSION['adminAuth']) die("Authentication failed.");
-$_DBSESLOGFILE = "SYS_IMPORT_LOG";
-require_once dirname(__FILE__)."/../../../preload.php";
+$requires_tier2 = true;
+require_once dirname(__FILE__)."/../header.php";
+
 $import = unserialize(base64_decode(file_get_contents($_FILES['file']['tmp_name'])));
 
 //Import Baskets

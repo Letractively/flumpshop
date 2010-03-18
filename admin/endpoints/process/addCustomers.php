@@ -1,5 +1,5 @@
 <?php
-can_add_customers
+$USR_REQUIREMENT = "can_add_customers";
 require_once "../header.php";
 
 if ($_GET['method'] != "manual") {

@@ -1,4 +1,5 @@
 <?php
+$requires_tier2 = true;
 require_once "../header.php";
 ?><h1>Rebuild Images</h1>
 <p>This utility should be run after changing themes or image scaling settings in the Configuration Manager in order to optimise product images. Please note that this process can take several hours.</p>

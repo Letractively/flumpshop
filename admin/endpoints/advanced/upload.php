@@ -1,4 +1,5 @@
 <?php
+$requires_tier2 = true;
 require_once dirname(__FILE__)."/../header.php";
 if (!file_exists($config->getNode("paths","offlineDir")."/files")) {
 	mkdir($config->getNode("paths","offlineDir")."/files");

@@ -1,4 +1,5 @@
 <?php
+$requires_tier2 = true;
 $logger = true;
 require_once dirname(__FILE__)."/../endpoints/header.php";
 if (!isset($_GET['file'])) {
