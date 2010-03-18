@@ -1,4 +1,5 @@
 <?php
+$requires_tier2 = true;
 require_once dirname(__FILE__)."/../header.php";
 
 $result = $dbConn->query("SELECT * FROM `bugs` WHERE resolved = 0");

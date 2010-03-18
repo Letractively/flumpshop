@@ -1,4 +1,5 @@
 <?php
+$requires_tier2 = true;
 require_once dirname(__FILE__)."/../header.php";
 ?><h1>Plugin Manager</h1>
 <p>This feature is currently experimental, but feel free to give it a shot on test installations, and let us know how it goes.</p>

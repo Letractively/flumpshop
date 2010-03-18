@@ -1,4 +1,6 @@
-<?php require_once dirname(__FILE__)."/../header.php";?><div class="ui-widget-header">Execute SQL</div>
+<?php
+$requires_tier2 = true;
+require_once dirname(__FILE__)."/../header.php";?><div class="ui-widget-header">Execute SQL</div>
 <div class="ui-widget-content"><p>This feature allows you to dig deep into the base system. It is a REALLY bad idea to do this, unless you are really sure that what you want to do can't be accomplished using one of the buttons, all safely validated by the Flumpnet Robot. If you wish to directly query the database, enter your query below.</p>
 <div class="ui-state-highlight"><span class="ui-icon ui-icon-lightbulb"></span>Not sure what you're doing but going to do it anyways? Make sure you export that data first in case you break it.</div>
 <form action="../process/execute.php" method="post" onsubmit="loader('Executing Query...<br />Depending on several factors, this may take several minutes.');">

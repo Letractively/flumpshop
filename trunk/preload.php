@@ -292,4 +292,33 @@ function acpusr_validate($requirement = NULL) {
 	$row = $dbConn->fetch($result);
 	return sha1($row['pass']) == $auth[1];
 }
+
+//Tier 2 authentication
+if (isset($requires_tier2) && $requires_tier2 == true) {
+	if (!isset($_SESSION['adminAuth']) or $_SESSION['adminAuth'] == 0) {
+		acpusr_tier2();
+	} else {
+		//Check login ID timer (15min disco)
+		$result = $dbConn->query("SELECT last_tier2_login FROM `acp_login` WHERE id=".intval($_SESSION['adminAuth'])." LIMIT 1");
+		if ($dbConn->rows($result) == 0) {
+			acpusr_tier2();
+		} else {
+			$row = $dbConn->fetch($result);
+			if (strtotime($row['last_tier2_login'])+900 < time()) {
+				//Session expired
+				acpusr_tier2();
+			} else {
+				//Yes, valid, extend timeout
+				$dbConn->query("UPDATE `acp_login` SET last_tier2_login='".$dbConn->time()."' WHERE id=".intval($_SESSION['adminAuth'])." LIMIT 1");
+			}
+		}
+	}
+}
+
+//Tier 2 login form
+function acpusr_tier2() {
+	global $config;
+	?><html><body bgcolor='#E7E7E7'><h1>Second Tier Login Required</h1><p>The operation you are trying to perform requires you to enter the Instance Managemement password. This is an extra layer of security that was hard-coded into this system when it was installed, which is needed for you to perform major tasks that could potentially break the system. Even if you know the password, make sure that you know what you are doing before you access this area.</p><p>All access to this area is logged.</p><form action='<?php echo $config->getNode('paths','root');?>/admin/tier2_auth.php' method='post'>Password:&nbsp;<input type='password' name='passkey' id='passkey' /><input type="submit" /></form></body></html><?php
+	exit;
+}
 ?>

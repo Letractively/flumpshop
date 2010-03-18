@@ -1,4 +1,5 @@
 <?php
+$requires_tier2 = true;
 require_once dirname(__FILE__)."/../header.php";
 
 echo "<h1>Duplicate Content</h1>";

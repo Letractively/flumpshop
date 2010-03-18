@@ -1,4 +1,6 @@
-<?php require_once dirname(__FILE__)."/../header.php";?>
+<?php
+$requires_tier2 = true;
+require_once dirname(__FILE__)."/../header.php";?>
 <div class="ui-widget-header">Import</div>
 <p>This feature uses a previously exported copy of my database to fix altered or missing data. However, I'll write over any conflicting data I find whilst updating the database.</p>
 <form action="../process/doImport.php" method="post" enctype="multipart/form-data" onsubmit="$(this).ajaxSubmit({target: '#adminContent'}); $('#submitButton').attr('disabled',true).addClass('ui-state-disabled').val('Importing Data. This may take some time.'); return false;">

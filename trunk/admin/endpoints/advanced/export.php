@@ -1,4 +1,5 @@
 <?php
+$requires_tier2 = true;
 require_once dirname(__FILE__)."/../header.php";
 ?><div class="ui-widget-header">Export</div>
 <center class="ui-helper-hidden" id="exportLoading"><img src="<?php echo $config->getNode('paths','root');?>/images/loading.gif" /><br />My Database is now being exported. It might take me some time to gather all the data.<br />Important: This file is not encrypted and can easily be accessed by hackers. Make sure you keep it safe!</center>

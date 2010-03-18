@@ -1,4 +1,5 @@
 <?php
+$requires_tier2 = true;
 //Extend timeout period
 set_time_limit(0);
 //Updates images to correct aspect ratio (Issue 30, r188)

@@ -1,4 +1,5 @@
 <?php
+$requires_tier2 = true;
 $ajaxProvider = true;
 $_PRINTDATA = false;
 require_once dirname(__FILE__)."/../../../preload.php";
@@ -112,7 +113,8 @@ if (!isset($storeExport)) {
 	header("Content-Disposition: attachment; filename=exportdata.dat");
 
 //Waitwhat? Do this AFTER spending years generating the file?
-if (!isset($_SESSION['adminAuth']) || !$_SESSION['adminAuth']) die($config->getNode('messages','adminDenied'));
+$requires_tier2 = true;
+if (!acpusr_validate()) die($config->getNode('messages','adminDenied'));
 
 echo base64_encode(serialize($export));
 } else {
