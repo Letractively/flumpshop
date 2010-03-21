@@ -96,7 +96,7 @@ Below is the basic structure of the Home page of the Flumpshop, as it currently 
     </div>
 </div><!--End Container-->
 }}}
-This basic structure is both friendly to both SEO and design flexibility, as a different CSS setups could completely change the layout of the site.
+This basic structure is friendly to both SEO and design flexibility, as a different CSS setup could completely change the layout of the site.
 
 = Possible Advanced Features =
 Add drag/drop elements and widgets on the home page as well as removing/adding new ones
