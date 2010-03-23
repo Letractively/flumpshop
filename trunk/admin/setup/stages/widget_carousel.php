@@ -3,22 +3,10 @@ require_once dirname(__FILE__)."/../header.inc.php";
 $section = 'widget_carousel';
 ?><script>parent.leftFrame.window.location = '../?frame=leftFrame&p=3.12';</script>
 <h1>Carousel Widget Settings</h1>
-<form action="../process/doWidget_carousel.php" method="post"><table><?php
-foreach ($_SESSION['config']->getNodes($section) as $node) {
-//Nothing special in this stage. Just use a generic handler
-$type = "text";
-$checked = "";
-if (is_bool($_SESSION['config']->getNode($section,$node))) {
-	$type = "checkbox";
-	if ($_SESSION['config']->getNode($section,$node)) $checked = " checked='checked'";
-}
-?><tr>
-	<td><label for="<?php echo $node;?>"><?php echo $_SESSION['config']->getFriendName($section, $node);?></label></td>
-    <td><input type="<?php echo $type;?>" name="<?php echo $node;?>" id="<?php echo $node;?>" value="<?php echo $_SESSION['config']->getNode($section,$node);?>"<?php echo $checked;?> /></td>
-    <td><span class='iconbutton' onclick='$("#<?php echo $node;?>Help").dialog("open");'></span></td>
-</tr><?php
-}
-?></table>
+<form action="../process/doWidget_carousel.php" method="post">
+<h2>Oops!</h2>
+<p>Sorry, it looks like I made a mistake. This stage of the setup wizard is no longer needed, and the developers should remove it. Hint hint. If you still want the functionality of the Carousel widget, install the index_carousel plugin after setup.</p>
+<p>You have succesfully configured this section. Click Continue to proceed.</p>
 <input type="submit" value="Continue" />
 </form>
 <div class="ui-helper-hidden helpDialog" id="enabledHelp" title="Enable Secure Transaction Processing">Whether the server should redirect to the HTTPS site for transaction processing.</div>
