@@ -31,7 +31,7 @@ Method:
         <li>Log Settings</li>
         <li>Advanced Server Settings</li>
         <li>Tab Settings</li>
-        <li>Carousel Widget Settings</li>
+        <li>Home Page Settings</li>
         <li>Item View Settings</li>
     </ol>
     <button onclick='window.location = "doConfigure.php?mode=complete";'>Choose Complete</button>
@@ -63,7 +63,7 @@ Method:
         <li><input type="checkbox" name="logs" id="logs" /><label for="logs">Log Settings</label></li>
         <li><input type="checkbox" name="server" id="server" /><label for="server">Advanced Server Settings</label></li>
         <li><input type="checkbox" name="tabs" id="tabs" /><label for="tabs">Tab Settings</label></li>
-        <li><input type="checkbox" name="widget_carousel" id="widget_carousel" /><label for="widget_carousel">Carousel Widget Settings</label></li>
+        <li><input type="checkbox" name="homePage" id="homePage" /><label for="homePage">Home Page Settings</label></li>
         <li><input type="checkbox" name="viewItem" id="viewItem" /><label for="viewItem">Item View Settings</label></li>
     </ol>
     <button onclick="$('#custom').submit();">Choose Custom</button>

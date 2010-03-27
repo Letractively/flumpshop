@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__FILE__)."/../header.inc.php";
 
-$tree = "widget_carousel";
+$tree = "homePage";
 
 $_SESSION['config']->falseify($tree);
 
