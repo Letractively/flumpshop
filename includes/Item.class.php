@@ -39,7 +39,7 @@ class Item {
 				$this->itemStock = $this->itemResult['stock'];
 				$this->itemDesc = str_replace("\\","",$this->itemResult['description']);
 				//Categories
-				$result = $dbConn->query("SELECT catid FROM `item_category` WHERE id='".$id."'");
+				$result = $dbConn->query("SELECT catid FROM `item_category` WHERE itemid='".$id."'");
 				while ($row = $dbConn->fetch($result)) {
 					$this->itemCategory[] = $row['catid'];
 				}
@@ -461,8 +461,10 @@ class Item {
 		$this->change = true;
 	}
 	
-	function setCategory($str) {
-		$this->itemCategory = $str;
+	function setCategory($id,$index = 0) {
+		//ID: ID of the category
+		//Index: The index of the old category to update in the categories array
+		$this->itemCategory[$index] = $id;
 		$this->change = true;
 	}
 }
