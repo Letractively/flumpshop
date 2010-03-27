@@ -26,7 +26,7 @@ switch ($_GET['mode']) {
 		$_SESSION['stage']['logs'] = true;
 		$_SESSION['stage']['server'] = true;
 		$_SESSION['stage']['tabs'] = true;
-		$_SESSION['stage']['widget_carousel'] = true;
+		$_SESSION['stage']['homePage'] = true;
 		$_SESSION['stage']['viewItem'] = true;
 		break;
 	case "tailored":
@@ -52,7 +52,7 @@ switch ($_GET['mode']) {
 		$_SESSION['stage']['logs'] = isset($_POST['logs']);
 		$_SESSION['stage']['server'] = isset($_POST['server']);
 		$_SESSION['stage']['tabs'] = isset($_POST['tabs']);
-		$_SESSION['stage']['widget_carousel'] = isset($_POST['widget_carousel']);
+		$_SESSION['stage']['homePage'] = isset($_POST['homePage']);
 		$_SESSION['stage']['viewItem'] = isset($_POST['viewItem']);
 		break;
 }
@@ -114,30 +114,40 @@ $_SESSION['config']->setNode("server", "analyticsID", "", "Google Analytics ID")
 //Messages
 $_SESSION['config']->addTree("messages", "Predefined Text Strings");
 
+//Global Messages
 $_SESSION['config']->setNode("messages", "footer", "Designed and built by Flumpnet", "Page Footer");
-$_SESSION['config']->setNode("messages", "adminDenied", "You do not have permission to perform that action.", "Admin Access Denied");
 $_SESSION['config']->setNode("messages", "crawler", "A Crawler User Agent has been detected. Some site features are disabled to reduce server load.", "Crawler Agent");
-$_SESSION['config']->setNode("messages", "maintenance", "<div class='ui-state-error'><span class='ui-icon ui-icon-alert'></span>We've shut down the site temporarily for scheduled maintenance. It should be back online in a few moments.</div>", "Site Disabled");
 $_SESSION['config']->setNode("messages", "name", "Flumpshop", "Site Name");
-$_SESSION['config']->setNode("messages", "tagline", "Beta!", "Tagline");
+$_SESSION['config']->setNode("messages", "tagline", "Make it happen", "Tagline");
 $_SESSION['config']->setNode("messages", "keywords", "Flumpshop online shop buy ecommerce sales", "Keywords");
 $_SESSION['config']->setNode("messages", "defaultCategoryName", "Uncategorised", "Default Category Name");
 $_SESSION['config']->setNode("messages", "defaultCategoryDesc", "Details for this category are unavailable.", "Default Category Description");
-$_SESSION['config']->setNode("messages", "basketRemItemConf", "Are you sure you want to remove this item from your basket?", "Remove from Basket");
-$_SESSION['config']->setNode("messages", "basketEmptyConf", "Are you sure you want to empty your basket?", "Empty Basket");
-$_SESSION['config']->setNode("messages", "noScript", "<div class='ui-state-error'><span class='ui-icon ui-icon-alert'></span>Please enable JavaScript for this page to function properly.</div>", "JavaScript Disabled");
-$_SESSION['config']->setNode("messages", "insufficientStock", "There is insufficient stock for this item. Please reduce the size of your order or try again later.", "Insufficient Stock");
+$_SESSION['config']->setNode("messages", "navAdvert", "Add custom text here in the Admin CP", "Navigation Bar Text");
+
+//Index Page
 $_SESSION['config']->setNode("messages", "featuredItemHeader", "Featured Item", "Featured Item Header");
 $_SESSION['config']->setNode("messages", "popularItemHeader", "Most Popular", "Popular Item Header");
 $_SESSION['config']->setNode("messages", "latestNewsHeader", "Latest News", "Latest News Header");
 $_SESSION['config']->setNode("messages", "technicalHeader", "Technical Tips", "Technical Help Header");
-$_SESSION['config']->setNode("messages", "transactionCancelled", "<h1>Transaction Cancelled</h1><p>You cancelled the purchase before it was completed.</p>","Transaction Cancelled");
-$_SESSION['config']->setNode("messages", "transactionFailed", "The payment server reported that the transaction did not complete succesfully. Please try again later.","Transaction Failed");
-$_SESSION['config']->setNode("messages", "paymentComplete", "Your payment is being processed by PayPal and you will receive e-mail confirmation shortly. Your order has now been stored in our database and you will receive an additional e-mail once the item(s) have been dispatched.","Payment Complete");
 
+//Error Messages
 $_SESSION['config']->setNode("messages", "ajax500", "An 500 Internal Server error occured when trying to load a remote endpoint.", "AJAX 500 Error");
 $_SESSION['config']->setNode("messages", "ajax404", "A remote endpoint was not found.", "AJAX 404 Error");
 $_SESSION['config']->setNode("messages", "ajaxError", "An unknown error was encountered loading a remote endpoint.", "AJAX Error");
+$_SESSION['config']->setNode("messages", "adminDenied", "You do not have permission to perform that action.", "Admin Access Denied");
+$_SESSION['config']->setNode("messages", "maintenance", "<div class='ui-state-error'><span class='ui-icon ui-icon-alert'></span>We've shut down the site temporarily for scheduled maintenance. It should be back online in a few moments.</div>", "Site Disabled");
+$_SESSION['config']->setNode("messages", "transactionFailed", "The payment server reported that the transaction did not complete succesfully. Please try again later.","Transaction Failed");
+$_SESSION['config']->setNode("messages", "transactionCancelled", "<h1>Transaction Cancelled</h1><p>You cancelled the purchase before it was completed.</p>","Transaction Cancelled");
+$_SESSION['config']->setNode("messages", "noScript", "<div class='ui-state-error'><span class='ui-icon ui-icon-alert'></span>Please enable JavaScript for this page to function properly.</div>", "JavaScript Disabled");
+$_SESSION['config']->setNode("messages", "insufficientStock", "There is insufficient stock for this item. Please reduce the size of your order or try again later.", "Insufficient Stock");
+$_SESSION['config']->setNode("messages", "formFieldRequired", "This field is required.", "Required Field");
+
+//Confirmation Messages
+$_SESSION['config']->setNode("messages", "paymentComplete", "Your payment is being processed by PayPal and you will receive e-mail confirmation shortly. Your order has now been stored in our database and you will receive an additional e-mail once the item(s) have been dispatched.","Payment Complete");
+
+//Questions
+$_SESSION['config']->setNode("messages", "basketRemItemConf", "Are you sure you want to remove this item from your basket?", "Remove from Basket");
+$_SESSION['config']->setNode("messages", "basketEmptyConf", "Are you sure you want to empty your basket?", "Empty Basket");
 
 //Pagination Messages
 $_SESSION['config']->setNode("messages", "firstPage", "&lt;&lt;", "First Page Link");
@@ -153,6 +163,14 @@ $_SESSION['config']->setNode("messages", "countryNotSupported", "Sorry, but we c
 //Legal Additions
 $_SESSION['config']->setNode("messages", "email", "sales@".$_SERVER['HTTP_HOST'], "Email Address");
 $_SESSION['config']->setNode("messages", "address", "[Please enter your business address here]", "Address");
+
+//Page Titles
+$_SESSION['config']->setNode("messages", "titlesIndexPrefix", "Welcome to ", "Home Page Totle Prefix");
+
+//Content Placeholders
+$_SESSION['config']->setNode("messages", "featuredItemsPlaceholder", "You can tell the Flumpnet Robot to show two items in this section, by accessing the Admin CP, then clicking Products->Featured Items.", "Featured Items Placeholder");
+$_SESSION['config']->setNode("messages", "popularItemsPlaceholder", "Sorry, our site has yet to gather sufficient information to show you here yet. Please come back later to see what everyone else is looking at!", "Popular Items Placeholder");
+$_SESSION['config']->setNode("messages", "noNewsPlaceholder", "No items of the specified type have ever been posted here.", "No News Placeholder");
 
 //Full Page Content
 $_SESSION['config']->setNode("messages", "404", 
@@ -265,12 +283,6 @@ $_SESSION['config']->setNode("messages", "contactPage",
 EOT
 ,"Contact Page");
 
-//Navigation Advert
-$_SESSION['config']->setNode("messages", "navAdvert", "Add custom text here in the Admin CP", "Navigation Bar Text");
-
-//Form Messages
-$_SESSION['config']->setNode("messages", "formFieldRequired", "This field is required.", "Required Field");
-
 //Log Files
 $_SESSION['config']->addTree("logs", "Server Log Files");
 
@@ -331,6 +343,14 @@ $_SESSION['config']->setNode("viewItem", "catChars", 30, "Category Item Summary 
 $_SESSION['config']->setNode("viewItem", "homeTextPos", "bottom", "Home Text Position");
 $_SESSION['config']->setNode("viewItem", "homeChars", 30, "Home Item Summary Length");
 
+//Home Page Options
+$_SESSION['config']->addTree("homePage", "Home Page Options");
+
+$_SESSION['config']->setNode("homePage", "pageText", true, "Show Page Text");
+$_SESSION['config']->setNode("homePage", "featuredItems", true, "Show Featured Items");
+$_SESSION['config']->setNode("homePage", "popularItems", true, "Show Popular Items");
+$_SESSION['config']->setNode("homePage", "latestNews", true, "Show Latest News");
+$_SESSION['config']->setNode("homePage", "techTips", true, "Show Tech Tips");
 
 //Save
 $_SESSION['config'] = serialize($_SESSION['config']);

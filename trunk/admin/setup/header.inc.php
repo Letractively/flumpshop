@@ -44,9 +44,9 @@ function getNextStage($stage) {
 	if (isset($_SESSION['stage']['tabs']) && $_SESSION['stage']['tabs'] && $stage < 14) {
 		return "tabs.php";
 	}
-	//Carousel
-	if (isset($_SESSION['stage']['widget_carousel']) && $_SESSION['stage']['widget_carousel'] && $stage < 15) {
-		return "widget_carousel.php";
+	//Home Page
+	if (isset($_SESSION['stage']['homePage']) && $_SESSION['stage']['homePage'] && $stage < 15) {
+		return "homePage.php";
 	}
 	//View Item
 	if (isset($_SESSION['stage']['viewItem']) && $_SESSION['stage']['viewItem'] && $stage < 16) {
