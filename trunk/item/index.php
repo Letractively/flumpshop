@@ -80,7 +80,7 @@ function reduceItem() {
 function openImageViewer(imageID) {
 	$("#dialog").html("<img src='<?php echo $config->getNode('paths','root');?>/item/imageProvider.php?id="+document.id+"&amp;image="+imageID+"&amp;size=full' style='max-width: 800px; max-height: 500px;' />")
 	document.getElementById("dialog").title = "View Image";
-	$("#dialog").dialog({height: 650, width: 800, draggable: true, resizable: true, position: "top", buttons: {"Close": function() {$(this).dialog("destroy");}}});
+	$("#dialog").dialog({height: "auto", width: "auto", resizable: true, position: "left", buttons: {"Close": function() {$(this).dialog("destroy");}}});
 
 }
 </script>
