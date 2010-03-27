@@ -308,6 +308,8 @@ class Item {
 			
 			$reply .= "</div>"; //Close Images Div
 			
+			$reply .= "<div id='item_details'>";//Open Item Content Div
+			
 			/*Shop Mode (Removes Prices/Checkout)*/
 			if ($config->getNode("site","shopMode")) {
 				//Price
@@ -344,7 +346,7 @@ class Item {
 			//TODO: Unique only - Store Visited Array in session obj?
 			$stats->incStat("item".$this->getID()."Hits");
 			if ($int && (isset($_SESSION['adminAuth']) && $_SESSION['adminAuth'] == true)) $reply .= "This page has been viewed ".$stats->getStat("item".$this->getID()."Hits")." times.";
-			$reply .= "</div>";
+			$reply .= "</div></div>";//Close Containers
 		}
 		if ($type == "BASKET") {
 			$reply = "<h4>".$this->getName()."</h4>";
