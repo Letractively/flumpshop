@@ -13,8 +13,12 @@ if ($name == "" or $description == "") {
 	echo "<div class='ui-state-error'><span class='ui-icon ui-icon-alert'></span>'Name' and 'Description' are required fields.</div>";
 } else {
 	for ($i = 0; $i < $_POST['number']; $i++) {
-		if ($dbConn->query("INSERT INTO `products` (name,description,price,stock,category,weight) VALUES ('$name','$description','$price','$stock','$category','$weight')")) {
+		if ($dbConn->query("INSERT INTO `products` (name,description,price,stock,weight) VALUES ('$name','$description','$price','$stock','$weight')")) {
 			$id = $dbConn->insert_id();
+			//Product added, now add categories
+			$dbConn->query("INSERT INTO `item_category` (itemid,catid) VALUES ($id,$category)");
+			//TODO: Frontend support for multiple categories before this block can be finished
+			//Output success message
 			echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-circle-check'></span>Product Added to database with ID #".$id."</div>";
 			//Upload Image
 			if (isset($_FILES['image$i'])) {
