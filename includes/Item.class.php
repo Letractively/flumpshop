@@ -17,6 +17,7 @@ class Item {
 	var $itemDeliveryCost;
 	var $itemActive = 1;
 	var $change = false;
+	var $itemFeatures = array();
 	
 	//Constructor
 	function Item($id) {
@@ -42,6 +43,11 @@ class Item {
 				$result = $dbConn->query("SELECT catid FROM `item_category` WHERE itemid='".$id."'");
 				while ($row = $dbConn->fetch($result)) {
 					$this->itemCategory[] = $row['catid'];
+				}
+				//Features (Experimental)
+				$result = $dbConn->query("SELECT feature_id,value FROM `item_feature` WHERE item_id='".$id."'");
+				while ($row = $dbConn->fetch($result)) {
+					$this->itemFeatures[$row['feature_id']] = $row['value'];
 				}
 				//Price Reduction
 				$this->itemReducedPrice = $this->itemResult['reducedPrice'];
@@ -342,6 +348,13 @@ class Item {
 				$reply .= '<p id="itemDesc">';
 			}
 			$reply .= $this->getDesc()."</p>";
+			//Features (Experimental)
+			$reply .= "<h4>".$config->getNode("messages","featuresName")."<sup>labs</sup></h4><ul>";
+			foreach ($this->itemFeatures as $featureId => $featureValue) {
+				$feature = new Feature($featureId);
+				$reply .= "<li>".$feature->getName().": ".$feature->parseValue($featureValue)."</li>";
+			}
+			$reply .= "</ul>";
 			//Tracker
 			//TODO: Unique only - Store Visited Array in session obj?
 			$stats->incStat("item".$this->getID()."Hits");
