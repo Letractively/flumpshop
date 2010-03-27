@@ -123,6 +123,7 @@ $_SESSION['config']->setNode("messages", "keywords", "Flumpshop online shop buy 
 $_SESSION['config']->setNode("messages", "defaultCategoryName", "Uncategorised", "Default Category Name");
 $_SESSION['config']->setNode("messages", "defaultCategoryDesc", "Details for this category are unavailable.", "Default Category Description");
 $_SESSION['config']->setNode("messages", "navAdvert", "Add custom text here in the Admin CP", "Navigation Bar Text");
+$_SESSION['config']->setNode("messages", "featuresName", "Features", "Item Features Name");
 
 //Index Page
 $_SESSION['config']->setNode("messages", "featuredItemHeader", "Featured Item", "Featured Item Header");

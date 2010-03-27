@@ -6,9 +6,8 @@ require_once dirname(__FILE__)."/../header.php";
 
     $category = new Category($item->getCategory());
     echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->getBreadcrumb()." -> ".$item->getName();
-	?>
-  	<div id="notice"></div>
-    <?php if (isset($_GET['reductionHappened'])) {?><div class="ui-state-highlight"><span class="ui-icon ui-icon-circle-check"></span>The price reduction has been scheduled.</div><?php }
+	?><div id="notice"></div><?php
+	if (isset($_GET['reductionHappened'])) {?><div class="ui-state-highlight"><span class="ui-icon ui-icon-circle-check"></span>The price reduction has been scheduled.</div><?php }
 	if (isset($_GET['imageHappened'])) {?><div class="ui-state-highlight"><span class="ui-icon ui-icon-circle-check"></span>The image has been added.</div><?php
 	}
         echo $item->getDetails("FULL", isset($_GET['modify']) && $_GET['modify'] == "true");
