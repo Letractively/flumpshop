@@ -8,7 +8,7 @@ if (!isset($_SUBPAGE)) $_SUBPAGE = true;
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name='keywords' content='<?php echo $config->getNode('messages','keywords');?>' />
 <meta name='description' content='<?php echo $config->getNode('messages','tagline');?>' />
-<title><?php echo $config->getNode('messages','name');?> | <?php echo $page_title;?></title>
+<title><?php echo preg_replace("/<(.*?)>/","",$config->getNode('messages','name')); //preg strips HTML tags?> | <?php echo $page_title;?></title>
 <link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/style_carousel.css' type='text/css' />
 <script src='<?php echo $config->getNode('paths','root');?>/js/jquery.js' type='text/javascript'></script>
 <script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jqueryui.js"></script> 
