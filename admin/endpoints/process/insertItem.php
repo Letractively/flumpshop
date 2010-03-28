@@ -21,9 +21,12 @@ if ($name == "" or $description == "") {
 			//Output success message
 			echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-circle-check'></span>Product Added to database with ID #".$id."</div>";
 			//Upload Image
-			if (isset($_FILES['image$i'])) {
+			echo "Checking for image $i<br />";
+			print_r($_FILES);
+			if (isset($_FILES["image$i"])) {
+				echo "Found image $i<br />";
 				$item = new Item($id);
-				$error = !$item->saveImage($_FILES['image$i']['tmp_name'],$_FILES['image$i']['type']);
+				$error = !$item->saveImage($_FILES["image$i"]['tmp_name'],$_FILES["image$i"]['type']);
 				if ($error) {
 					echo "<div class='ui-state-error'><span class='ui-icon ui-icon-info'></span>The image file you uploaded is not supported.</div>";
 				}
