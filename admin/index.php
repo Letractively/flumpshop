@@ -98,6 +98,7 @@ Please enter your username and password to continue...
         <div>
             <a href='endpoints/create/newCategory.php' onclick='loader("Loading Content...");' target="main">New Category</a>
             <a href='endpoints/edit/editCategory.php' onclick='loader("Loading Content...");' target="main">Edit Category</a>
+			<a href='endpoints/edit/manageFeatures.php' onclick='loader("Loading Content...");' target="main">Features<sup>labs</sup></a>
         </div>
         <h3>News</h3>
         <div>
