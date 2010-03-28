@@ -26,7 +26,7 @@ require_once dirname(__FILE__)."/../header.php";
 </tr>
 <tr>
 	<td><label for="category">Category: </label></td>
-   <td><select name="category" id="category" class="ui-widget-content ui-state-default required" onchange="updateFeatureFields()">
+   <td><select name="category" id="category" class="ui-widget-content ui-state-default required" onchange="updateFeatures();">
    		<option selected="selected" disabled="disabled"></option>
    		<option value="0">Uncategorised</option><?php
 	$result = $dbConn->query("SELECT id FROM `category` ORDER BY `parent` ASC");
@@ -37,7 +37,10 @@ require_once dirname(__FILE__)."/../header.php";
 		?></select></td>
 </tr>
 <tr>
-	<td><label for="number">Duplicates: </label></td>
+	<td colspan="2" id="category_feature_fields"><!--Placeholder element for features--></td>
+</tr>
+<tr>
+	<td><label for="number">Number to create: </label></td>
     <td><input type="text" value="1" name="number" id="number" class="ui-widget-content ui-state-default required number" onchange="updateImageField();" /></td>
 </tr>
 <tr>
@@ -57,6 +60,11 @@ function updateImageField() {
 		document.imageNo++;
 		$('table').append("<tr><td><label for='image"+document.imageNo+"'>Image "+(document.imageNo+1)+": </label></td><td><input type='file' name='image"+document.imageNo+"' id='image"+document.imageNo+"' class='ui-widget-content ui-state-default' /></td></tr>");
 	}
+}
+
+function updateFeatures() {
+	$('#category_feature_fields').html("<img src='../../../images/loading.gif' />Retrieving feature list...");
+	$('#category_feature_fields').load('featureFields.php?id='+$('#category').val());
 }
 </script>
 </body></html>

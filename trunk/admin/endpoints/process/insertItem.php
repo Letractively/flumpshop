@@ -21,14 +21,31 @@ if ($name == "" or $description == "") {
 			//Output success message
 			echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-circle-check'></span>Product Added to database with ID #".$id."</div>";
 			//Upload Image
-			echo "Checking for image $i<br />";
-			print_r($_FILES);
 			if (isset($_FILES["image$i"])) {
-				echo "Found image $i<br />";
 				$item = new Item($id);
 				$error = !$item->saveImage($_FILES["image$i"]['tmp_name'],$_FILES["image$i"]['type']);
 				if ($error) {
 					echo "<div class='ui-state-error'><span class='ui-icon ui-icon-info'></span>The image file you uploaded is not supported.</div>";
+				}
+			}
+			
+			//Add Features
+			$features = array_keys($_POST);
+			foreach ($features as $feature) {
+				if (preg_match("/^feature_([0-9]*)$/",$feature)) {
+					//Is a feature definition
+					$feature_id = preg_replace("/^feature_([0-9]*)$/","$1",$feature);
+					$feature_value = htmlentities($_POST[$feature],ENT_QUOTES);
+					//Check for units
+					if (isset($_POST[$feature."_unit"])) {
+						$unit = htmlentities($_POST[$feature."_unit"],ENT_QUOTES);
+						//Get multiplier from DB
+						$result = $dbConn->query("SELECT multiple FROM `feature_units` WHERE feature_id=$feature_id AND unit='$unit' LIMIT 1");
+						$row = $dbConn->fetch($result);
+						$feature_value *= $row['multiple'];
+					}
+					//Save attribute
+					$dbConn->query("INSERT INTO `item_feature` (item_id,feature_id,value) VALUES ($id,$feature_id,'$feature_value')");
 				}
 			}
 		} else {

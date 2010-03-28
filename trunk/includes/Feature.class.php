@@ -21,12 +21,32 @@ class Feature {
 		}
 	}
 	
+	function getID() {
+		return $this->id;
+	}
+	
 	function getName() {
 		return $this->name;
 	}
 	
 	function getDataType() {
 		return $this->datatype;
+	}
+	
+	function getDefault() {
+		return $this->default;
+	}
+	
+	function getUnits() {
+		global $dbConn;
+		$result = $dbConn->query("SELECT unit FROM `feature_units` WHERE feature_id = ".$this->id." ORDER BY multiple ASC");
+		
+		$return = array();
+		
+		while ($row = $dbConn->fetch($result)) {
+			$return[] = $row['unit'];
+		}
+		return $return;
 	}
 	
 	function parseValue($input) {
