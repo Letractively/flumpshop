@@ -1,5 +1,3 @@
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-
 CREATE TABLE IF NOT EXISTS `category_feature` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `category_id` int(10) unsigned NOT NULL,

@@ -3,6 +3,7 @@ $USR_REQUIREMENT = "can_edit_categories";
 require_once dirname(__FILE__)."/../header.php";
 
 if (!isset($_GET['id'])) {
+	//No category selected yet, show list
 	
 	if (isset($_GET['filter'])) $criteria = " AND name LIKE '%".$_GET['filter']."%'"; else $criteria = "";
 	
@@ -34,6 +35,7 @@ if (!isset($_GET['id'])) {
 
 	echo "</div>";
 } else {
+	//Category selected, load edit form
 	$category = new Category(intval($_GET['id']));
 	?><div class="ui-widget-header">Edit Category</div><div class="ui-widget-content">
     <a href="../process/disableCategory.php?cid=<?php echo $category->getID();?>" onclick="$(body).html(loadMsg('Hiding Category...'));">Hide Category</a>
@@ -53,7 +55,39 @@ if (!isset($_GET['id'])) {
         }
         ?>
     </select>
-    <br /><input type="submit" value="Save" name="submit" id="submit" class="ui-state-default ui-corner-all" style="font-size: 13px; padding: .2em .4em;" />
+	<h3>Features<sup>labs</sup></h3>
+	<p>Features allows users to compare different products depending on different attributes that you define. Below are the attributes that are currently applicable to this catgeory.</p>
+	<h4>Current Features</h4><?php
+	//List current features applicable to this category
+	$result = $dbConn->query("SELECT feature_id FROM `category_feature` WHERE category_id=".$category->getID());
+	if ($dbConn->rows($result) == 0) {
+		echo "<p>This category currently has no features applied to it.</p>";
+	} else {
+		echo "<ul>";
+		while ($row = $dbConn->fetch($result)) {
+			$feature = new Feature($row['feature_id']);
+			echo "<li>".$feature->getName()." (".$feature->getDataType().")</li>";
+		}
+		echo "</ul>";
+	}
+	//Assign a new feature to this category
+	?><h4>Add Feature</h4>
+	<p>Select an attribute from the menu below to add it to the category specification.</p>
+	<select name="new_feature" class="ui-state-default">
+	<option selected="selected"></option><?php
+	
+	//Retrieve a list of features
+	$result = $dbConn->query("SELECT id,feature_name FROM `compare_features`");
+	if ($dbConn->rows($result) == 0) {
+		//There are no features
+		echo "<option disabled='disabled'>No features found.</option>";
+	} else {
+		//Create an option for each feature
+		while ($row = $dbConn->fetch($result)) {
+			echo "<option value='".$row['id']."'>".$row['feature_name']."</option>";
+		}
+	}
+    ?></select><br /><input type="submit" value="Save" name="submit" id="submit" class="ui-state-default ui-corner-all" style="font-size: 13px; padding: .2em .4em;" />
     <input type="hidden" name="catid" id="catid" value="<?php echo $category->getID(); ?>" />
     </form></div><?php
 }

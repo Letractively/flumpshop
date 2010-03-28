@@ -25,6 +25,10 @@ class Feature {
 		return $this->name;
 	}
 	
+	function getDataType() {
+		return $this->datatype;
+	}
+	
 	function parseValue($input) {
 		if ($this->datatype == "number") {
 			//Numbers require unit parsing

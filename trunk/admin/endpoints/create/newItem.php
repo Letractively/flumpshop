@@ -26,7 +26,7 @@ require_once dirname(__FILE__)."/../header.php";
 </tr>
 <tr>
 	<td><label for="category">Category: </label></td>
-   <td><select name="category" id="category" class="ui-widget-content ui-state-default required">
+   <td><select name="category" id="category" class="ui-widget-content ui-state-default required" onchange="updateFeatureFields()">
    		<option selected="selected" disabled="disabled"></option>
    		<option value="0">Uncategorised</option><?php
 	$result = $dbConn->query("SELECT id FROM `category` ORDER BY `parent` ASC");
@@ -37,7 +37,7 @@ require_once dirname(__FILE__)."/../header.php";
 		?></select></td>
 </tr>
 <tr>
-	<td><label for="number">Repeat: </label></td>
+	<td><label for="number">Duplicates: </label></td>
     <td><input type="text" value="1" name="number" id="number" class="ui-widget-content ui-state-default required number" onchange="updateImageField();" /></td>
 </tr>
 <tr>
