@@ -26,8 +26,12 @@ $result = $dbConn->query("SELECT id FROM `compare_features` ORDER BY feature_nam
 		//Fetch Units
 		$units = $dbConn->query("SELECT multiple,unit FROM `feature_units` WHERE feature_id=".$feature->getID()." ORDER BY multiple ASC");
 		echo "<td><ul>";
-		while ($unit = $dbConn->fetch($units)) {
-			echo "<li>".$unit['unit']."(".$unit['multiple'].")</li>";
+		if ($dbConn->rows($units) == 0) {
+			echo "Not Applicable";
+		} else {
+			while ($unit = $dbConn->fetch($units)) {
+				echo "<li>".$unit['unit']."(".$unit['multiple'].")</li>";
+			}
 		}
 		echo "</ul></td>";
 		//Fetch Categories

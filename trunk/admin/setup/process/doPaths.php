@@ -2,7 +2,13 @@
 require_once dirname(__FILE__)."/../header.inc.php";
 
 if (!is_writable($_POST['offlineDir'])) {
-	echo "<h1>Oops!</h1><p>As part of making this installation 'John-proof', I just ran an extra test. Unfortunately, it appears that the Offline Directory either doesn't exist, or I don't have necessary permissoins to write to it. <a href='javascript:history.go(-1)'>Click here</a> to go back and try again.";
+	echo "<h1>Oops!</h1><p>As part of making this installation 'John-proof', I just ran an extra test. Unfortunately, it appears that the Offline Directory either doesn't exist, or I don't have necessary permissions to write to it. <a href='javascript:history.go(-1)'>Click here</a> to go back and try again.";
+	require_once dirname(__FILE__)."/../footer.inc.php";
+	exit;
+}
+
+if (!is_writable($_POST['logDir'])) {
+	echo "<h1>Oops!</h1><p>As part of making this installation 'Lloyd-proof', I just ran an extra test. Unfortunately, it appears that the Log Directory either doesn't exist, or I don't have necessary permissions to write to it. <a href='javascript:history.go(-1)'>Click here</a> to go back and try again.";
 	require_once dirname(__FILE__)."/../footer.inc.php";
 	exit;
 }

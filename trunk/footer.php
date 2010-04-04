@@ -35,7 +35,7 @@ function showSignupForm() {
 function loginForm() {
 	loginFormHTML = '<form action="<?php echo $config->getNode('paths','root');?>/account/login.php" method="post"><input type="text" name="uname" id="uname" class="ui-widget-content" value="Username" onfocus="if (this.value == \'Username\') this.value = \'\';" onblur="if (this.value == \'\') this.value = \'Username\'" /><br /><input type="password" name="password" id="password" class="ui-widget-content" value="Password" onfocus="if (this.value == \'Password\') this.value = \'\';" onblur="if (this.value == \'\') this.value = \'Password\'" /><br /><input type="submit" value="Login!" class="ui-state-default" /><input type="button" value="Sign Up" class="ui-state-highlight" onclick="$(\'#dialog\').dialog(\'destroy\');showSignupForm();" /></form>';
 	
-	$("#dialog").html(loginFormLOLJAKEBROKETHISHTML).dialog({title: "Login",
+	$("#dialog").html(loginFormHTML).dialog({title: "Login",
 											buttons: {
 												Cancel: function() {$(this).dialog('destroy');}
 												},
