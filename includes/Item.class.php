@@ -45,7 +45,9 @@ class Item {
 					$this->itemCategory[] = $row['catid'];
 				}
 				//Features (Experimental)
-				$result = $dbConn->query("SELECT feature_id,value FROM `item_feature` WHERE item_id='".$id."'");
+				$result = $dbConn->query("SELECT feature_id,value FROM `item_feature_number` WHERE item_id='".$id."'
+										 UNION SELECT feature_id,value FROM `item_feature_string` WHERE item_id='".$id."'
+										 UNION SELECT feature_id,value FROM `item_feature_date` WHERE item_id='".$id."'");
 				while ($row = $dbConn->fetch($result)) {
 					$this->itemFeatures[$row['feature_id']] = $row['value'];
 				}
@@ -135,9 +137,9 @@ class Item {
 		if (!isset($this->itemActive)) $this->itemActive = 1;
 		//Do
 		if ($dbConn->rows($dbConn->query("SELECT id FROM `products` WHERE id=".$this->getID()." LIMIT 1"))) {
-			$query = "UPDATE `products` SET name='$this->itemName', price='$this->itemPrice', stock='$this->itemPrice', description='$this->itemDesc', reducedPrice='$this->itemReducedPrice', reducedValidFrom='$this->itemReductionStart', reducedExpiry='$this->itemReductionEnd', category='$this->itemCategory',weight='$this->itemWeight', active='$this->itemActive' WHERE id=".$this->getID()." LIMIT 1";
+			$query = "UPDATE `products` SET name='$this->itemName', price='$this->itemPrice', stock='$this->itemPrice', description='$this->itemDesc', reducedPrice='$this->itemReducedPrice', reducedValidFrom='$this->itemReductionStart', reducedExpiry='$this->itemReductionEnd', ,weight='$this->itemWeight', active='$this->itemActive' WHERE id=".$this->getID()." LIMIT 1";
 		} else {
-			$query = "INSERT INTO `products` (id,name,price,stock,description,category,reducedPrice,reducedValidFrom,reducedExpiry,weight,active) VALUES ($this->itemID,'$this->itemName','$this->itemPrice','$this->itemStock','$this->itemDesc','$this->itemCategory','$this->itemReducedPrice','$this->itemReductionStart','$this->itemReductionEnd','$this->itemWeight','$this->itemActive')";
+			$query = "INSERT INTO `products` (id,name,price,stock,description,reducedPrice,reducedValidFrom,reducedExpiry,weight,active) VALUES ($this->itemID,'$this->itemName','$this->itemPrice','$this->itemStock','$this->itemDesc','$this->itemReducedPrice','$this->itemReductionStart','$this->itemReductionEnd','$this->itemWeight','$this->itemActive')";
 		}
 		return $dbConn->query($query);
 	}

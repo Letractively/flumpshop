@@ -44,8 +44,11 @@ if ($name == "" or $description == "") {
 						$row = $dbConn->fetch($result);
 						$feature_value *= $row['multiple'];
 					}
+					//Get attribute type
+					$featureObj = new Feature($feature_id);
+					$dataType = $featureObj->getDataType();
 					//Save attribute
-					$dbConn->query("INSERT INTO `item_feature` (item_id,feature_id,value) VALUES ($id,$feature_id,'$feature_value')");
+					$dbConn->query("INSERT INTO `item_feature_$dataType` (item_id,feature_id,value) VALUES ($id,$feature_id,'$feature_value')");
 				}
 			}
 		} else {
