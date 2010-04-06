@@ -83,6 +83,10 @@ if (isset($_GET['error'])) echo "<p>".$_GET['error']."</p>";
 		<td><label for="can_edit_orders">Update Orders</label></td>
 		<td><input type="checkbox" name="can_edit_orders" id="can_edit_orders" /></td>
 	</tr>
+	<tr>
+		<td><label for="can_view_reports">View/Generate Reports</label></td>
+		<td><input type="checkbox" name="can_view_reports" id="can_view_reports" /></td>
+	</tr>
 </table>
 <br /><input type="submit" value="Create User" />
 </form>

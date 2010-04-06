@@ -144,7 +144,12 @@ class Item {
 		if ($dbConn->rows($dbConn->query("SELECT id FROM `products` WHERE id=".$this->getID()." LIMIT 1"))) {
 			$query = "UPDATE `products` SET name='$this->itemName', price='$this->itemPrice', stock='$this->itemPrice', description='$this->itemDesc', reducedPrice='$this->itemReducedPrice', reducedValidFrom='$this->itemReductionStart', reducedExpiry='$this->itemReductionEnd', ,weight='$this->itemWeight', active='$this->itemActive' WHERE id=".$this->getID()." LIMIT 1";
 		} else {
-			$query = "INSERT INTO `products` (id,name,price,stock,description,reducedPrice,reducedValidFrom,reducedExpiry,weight,active) VALUES ($this->itemID,'$this->itemName','$this->itemPrice','$this->itemStock','$this->itemDesc','$this->itemReducedPrice','$this->itemReductionStart','$this->itemReductionEnd','$this->itemWeight','$this->itemActive')";
+			$query = "INSERT INTO `products` (id,name,price,stock,description,reducedPrice,reducedValidFrom,reducedExpiry,weight,active,sku,cost) VALUES ($this->itemID,'$this->itemName','$this->itemPrice','$this->itemStock','$this->itemDesc','$this->itemReducedPrice','$this->itemReductionStart','$this->itemReductionEnd','$this->itemWeight','$this->itemActive','$this->itemSKU',".$this->getCost().")";
+			//Update categories
+			$categories = $this->getCategories();
+			foreach ($categories as $category) {
+				$dbConn->query("INSERT INTO `item_category` (itemid,catid) VALUES ($this->itemID,$category)");
+			}
 		}
 		return $dbConn->query($query);
 	}
@@ -256,14 +261,6 @@ class Item {
 			if ($config->getNode("site","shopEnabled")) {
 				//$reply .= "<em>&pound;".$this->itemPrice."</em><span class='ui-state-disabled'>&nbsp;ex.VAT</span>";
 			}
-			//Description
-			if (strlen($this->getDesc()) > $config->getNode('viewItem','homeChars')) {
-				//Trim
-				$string = substr($this->getDesc(),0,$config->getNode('viewItem','homeChars'))."...";
-			} else {
-				$string = $this->getDesc();
-			}
-			$reply .= "<p>".$string."</p>";
 		}
 		if ($type == "CATEGORY") {
 			$reply = "<table><tr><td>";
@@ -421,6 +418,7 @@ class Item {
 	}
 	
 	function getCost() {
+		if ($this->itemCost == 0) return 0;
 		return $this->itemCost;
 	}
 	

@@ -1,6 +1,7 @@
 <?php
 //Initialises Configuration Object
 require_once dirname(__FILE__)."/Config.class.php";
+require_once dirname(__FILE__)."/file_get_contents.inc.php";
 //Debug Purposes Only
 $INIT_DEBUG = true;
 if (!$INIT_DEBUG) error_reporting(0);
@@ -9,6 +10,9 @@ $SYSTEM_DEBUG = $INIT_DEBUG;
 //Allow use without preloader
 if (!function_exists("debug_message")) {
 	function debug_message($str,$bool = false) {return;}
+}
+if (!function_exists("init_err")) {
+	function init_err($str) {die($str);}
 }
 
 //Global Vars Across Site

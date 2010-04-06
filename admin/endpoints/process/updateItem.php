@@ -68,5 +68,10 @@ if ($name == "" or $description == "") {
 
 unset($item); //Crashes in include if already defined (Don't know why)
 
+if (isset($_POST['return'])) {
+	header("Location: ".$_POST['return']);
+	exit;
+}
+
 include dirname(__FILE__)."/../edit/editItems.php";
 ?>

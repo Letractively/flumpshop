@@ -5,8 +5,11 @@ require_once dirname(__FILE__)."/../header.php";
 $item = new Item(intval($_GET['id']));
 ?><div class="ui-widget-header">Edit Item</div>
 <form action="../process/updateItem.php" method="post" class="ui-widget-content" enctype="multipart/form-data" onsubmit="if ($(this).valid()) loader(loadMsg('Saving Content. If you are uploading an image, this may take a few moments...'));">
-<input type="hidden" name="id" id="id" value="<?php echo intval($_GET['id']);?>" />
-<table>
+<input type="hidden" name="id" id="id" value="<?php echo intval($_GET['id']);?>" /><?php
+if (isset($_GET['return']) and $_GET['return'] == "report") {
+	echo "<input type='hidden' name='return' id='return' value='".$_SERVER['HTTP_REFERER']."' />";
+}
+?><table>
 <tr>
 	<td><label for="sku">SKU: </label></td>
     <td><input type="text" maxlength="25" name="sku" id="sku" class="ui-widget-content ui-state-default required" value="<?php echo $item->getSKU();?>" /></td>
