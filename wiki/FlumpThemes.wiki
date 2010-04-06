@@ -17,7 +17,7 @@ Basic styles can already be changed by creating a custom JQueryUI Theme at http:
 The system should be able to dynamically generate new styles (use [offlineDir]) within the [AdminCP Admin CP]
 
 = Basic Markup =
-Below is the basic structure of the Home page of the Flumpshop, as it currently stands
+Below is the basic structure of the Home page of the Flumpshop, as it currently stands. Once a default theme has been created, it will be highly commented and will allow you to understand other tags that appear on other pages
 
 {{{
 <div id="container">
@@ -66,7 +66,7 @@ Below is the basic structure of the Home page of the Flumpshop, as it currently 
             <h5><a href='#'>Item Name</a></h5>
             <p>Item Description</p>
 	</div>
-    </div><!-- End Featured Items -->
+    </div><!-- End Featured Items --><div class='clear'>&nbsp;</div>
     <div id="popular_items">
         <h4 id="popular_items_header">Popular Items</h4>
         <div class="popular_item" id="popular_item_1">
@@ -79,11 +79,11 @@ Below is the basic structure of the Home page of the Flumpshop, as it currently 
             <h5><a href='#'>Item Name</a></h5>
             <p>Item Description</p>
 	</div>
-    </div><!-- End Popular Items -->
+    </div><!-- End Popular Items --><div class='clear'>&nbsp;</div>
     <div id="latest_news">
         <h4>Latest News</h4>
         <p>Latest News</p>
-    </div><!-- End Latest News -->
+    </div><!-- End Latest News --><div class='clear'>&nbsp;</div>
     <div id="tech_tips">
         <h4>Technical Tips News</h4>
         <ul>
