@@ -3,8 +3,10 @@ class Item {
 	//Define Variables
 	var $itemResult;
 	var $itemID;
+	var $itemSKU;
 	var $itemName;
 	var $itemPrice;
+	var $itemCost;
 	var $itemStock;
 	var $itemDesc;
 	var $itemURL;
@@ -35,8 +37,11 @@ class Item {
 				$this->itemName = str_replace("\\","",$this->itemResult['name']);
 			} else {
 				$this->itemID = $id;
+				$this->itemSKU = $this->itemResult['SKU'];
+				if ($this->itemSKU == "") $this->itemSKU = "N/A";
 				$this->itemName = str_replace("\\","",$this->itemResult['name']);
 				$this->itemPrice = $this->itemResult['price'];
+				$this->itemCost = $this->itemResult['cost'];
 				$this->itemStock = $this->itemResult['stock'];
 				$this->itemDesc = str_replace("\\","",$this->itemResult['description']);
 				//Categories
@@ -383,6 +388,10 @@ class Item {
 		return $this->itemID;
 	}
 	
+	function getSKU() {
+		return $this->itemSKU;
+	}
+	
 	function getName($highlight = NULL) {
 		if ($highlight != NULL) {
 			if (is_array($highlight)) {
@@ -405,6 +414,14 @@ class Item {
 	
 	function getFriendlyPrice() {
 		return number_format($this->itemPrice,2);
+	}
+	
+	function getFriendlyCost() {
+		return number_format($this->itemCost,2);
+	}
+	
+	function getCost() {
+		return $this->itemCost;
 	}
 	
 	function getStock() {
@@ -456,6 +473,11 @@ class Item {
 	
 	function getDeliveryCost() {
 		return $this->itemDeliveryCost;
+	}
+	
+	function getFriendlyDeliveryCost() {
+		if ($this->itemDeliveryCost == -1) return "Unavailable";
+		return number_format($this->itemDeliveryCost,2);
 	}
 	
 	function setName($str) {

@@ -17,7 +17,7 @@ $result = $dbConn->query("SELECT id FROM `products` WHERE id>0".$criteria." ORDE
 </form><?php
 while ($row = $dbConn->fetch($result)) {
 	$item = new Item($row['id']);
-	echo "<a href='".$item->getModifyURL()."'>".$item->getName()."</a><br />";
+	echo "<a href='../edit/editItem.php?id=".$row['id']."'>".$item->getName()."</a><br />";
 }
 
 if (isset($_GET['filter'])) $prefix = "editItems.php?filter=".$_GET['filter']; else $prefix = "editItems.php";
