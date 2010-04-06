@@ -72,8 +72,12 @@ if (stristr($_SERVER['REQUEST_URI'],"basket.php")) $basketActive = "active"; els
         <li><a href="<?php echo $config->getNode('paths','root');?>/about.php" class="<?php echo $aboutActive;?>">About</a></li>
         <li><a href="<?php echo $config->getNode('paths','root');?>/contact.php" class="<?php echo $contactActive;?>">Contact</a></li><?php
         //Login only shown if enabled
-		if ($config->getNode("site","loginTab")) {?>
-		<li><a href="javascript:" onclick="loginForm();">Login</a></li><?php }
+		if ($config->getNode("site","loginTab")) {
+			if (!isset($_SESSION['login']['active']) or $_SESSION['login']['active'] != true) {?>
+				<li><a href="javascript:" onclick="loginForm();">Login</a></li><?php }
+			else {?>
+				<li><a href="<?php echo $config->getNode("paths","root");?>/account">Account</a></li><?php }
+		}
 		//Cart only shown if shop enabled
         if ($config->getNode("site","shopMode")) {?>
 		<li><a href="<?php echo $config->getNode('paths','root');?>/basket.php" class="<?php echo $basketActive;?>">Cart</a></li><?php }

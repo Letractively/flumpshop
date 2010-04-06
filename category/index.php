@@ -84,16 +84,6 @@ echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->ge
 	}
 	$totalItems = $dbConn->rows($dbConn->query("SELECT products.id FROM `products` WHERE id IN (SELECT itemid FROM `item_category` WHERE (catid='".$category->getID()."'".$criteria.")) AND active=1"));
 	
-	/*//Build the ORDER BY clause of the query
-	if ($sortType == "FEATURES") {
-		$sortClause = "id IN (SELECT item_id FROM `item_feature` WHERE feature_id = ".intval($sort)." AND item_id IN (SELECT itemid FROM `item_category` WHERE catid='".$category->getID()."'".$criteria.") ORDER BY value $order)";
-	} else {
-		$sortClause = $sort." ".$order;
-	}
-	
-	$itemsResult = $dbConn->query("SELECT products.id FROM `products` WHERE id IN (SELECT itemid FROM `item_category` WHERE (catid='".$category->getID()."'".$criteria.")) AND active=1 ORDER BY $sortClause LIMIT $start,$perPage");*/
-	
-	//New version
 	if ($sortType == "PRODUCTS") {
 		//This is simple - Just order by the field
 		$sql = "SELECT products.id FROM `products` WHERE id IN (SELECT itemid FROM `item_category` WHERE (catid='".$category->getID()."'".$criteria.")) AND active=1 ORDER BY $sort $order LIMIT $start,$perPage";
@@ -103,6 +93,7 @@ echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->ge
 		$result = $dbConn->query("SELECT data_type FROM `compare_features` WHERE id=".intval($sort)." LIMIT 1");
 		$row = $dbConn->fetch($result);
 		$dataType = $row['data_type'];
+		//Seriously, WTF does this do. Meh, it works. NO TOUCHY.
 		$sql = "SELECT * FROM (
 							   SELECT products.id, t1.value
 								FROM products LEFT JOIN (SELECT * FROM `item_feature_$dataType` WHERE feature_id = ".intval($sort).") AS t1
