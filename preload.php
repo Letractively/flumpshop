@@ -258,7 +258,8 @@ function get_valid_class($tree,$node) {
 //Used for CMS pages
 function placeholders($string) {
 	global $config;
-	$string = preg_replace_callback("/\[\[([a-z]*)?\]\]/i","placeholder_callback",$string);
+	$string = html_entity_decode(preg_replace_callback("/\[\[([a-z]*)?\]\]/i","placeholder_callback",$string));
+	$string = str_replace("&apos;","'",$string);
 	return $string;
 }
 
