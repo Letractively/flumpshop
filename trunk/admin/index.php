@@ -27,14 +27,6 @@ if (isset($_POST['uname'])) {
 	}
 }
 
-/*
-if (isset($_POST['pass']) && md5($_POST['pass']) == $config->getNode("site","password")) {
-	$_SESSION['adminAuth'] = true;
-	header("Location: ./");
-	die();
-}
-*/
-
 //Not Logged In
 if (!acpusr_validate()) {
 	//Login Page
@@ -130,6 +122,10 @@ Please enter your username and password to continue...
         	<a href="endpoints/delivery/countries.php" onClick="loader('Loading Content...');" target="main">Supported Countries</a>
             <a href="endpoints/delivery/deliveryRates.php" onClick="loader('Loading Content...');" target="main">Delivery Rates</a>
         </div>
+		<h3>Reports<sup>labs</sup></h3>
+		<div>
+			<a href='endpoints/reports/itemReport.php' onclick='loader("Generating Report...");' target="main">Item Report<sup>labs</sup></a>
+		</div>
         <h3>Advanced</h3>
         <div>
 			<a href="endpoints/advanced/varMan.php" onclick='loader("Loading Content...");' target="main">Configuration Manager</a>

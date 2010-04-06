@@ -72,6 +72,10 @@ $row = $dbConn->fetch($result);
 		<td><label for="can_edit_orders">Update Orders</label></td>
 		<td><input type="checkbox" name="can_edit_orders" id="can_edit_orders"<?php if($row['can_add_products']) echo ' checked="checked"';?> /></td>
 	</tr>
+	<tr>
+		<td><label for="can_view_reports">View/Generate Reports</label></td>
+		<td><input type="checkbox" name="can_view_reports" id="can_view_reports"<?php if($row['can_view_reports']) echo ' checked="checked"';?> /></td>
+	</tr>
 </table>
 <br /><input type="submit" value="Save" />
 </form>

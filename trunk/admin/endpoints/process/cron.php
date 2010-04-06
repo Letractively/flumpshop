@@ -1,5 +1,6 @@
 <?php
-exit; // I broked it
+echo "Hi.";
+die(); // I broked it
 $auth = false; //Disables need for admin login
 require_once dirname(__FILE__)."/../header.php";
 $initTime = $dbConn->time();

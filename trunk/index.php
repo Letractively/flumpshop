@@ -47,7 +47,7 @@ require_once "header.php";
 					}
 				?></div>
 			</div>
-		</div><?php
+		</div><div class='clear'>&nbsp;</div><?php
 	} //End Featured Items
 	//Check if Featured Items is enabled
 	if ($config->getNode("homePage", "popularItems")) {
@@ -74,7 +74,7 @@ require_once "header.php";
 				}
 				?></div>
 			</div>
-		</div><?php
+		</div><div class='clear'>&nbsp;</div><?php
 	} //End Popular Items
 	//Check if Latest News is enabled
 	if ($config->getNode("homePage", "latestNews")) {
@@ -91,7 +91,7 @@ require_once "header.php";
 				echo nl2br(nl2br($news['body']));
 			}
 			?></p>
-		</div><?php
+		</div><div class='clear'>&nbsp;</div><?php
 	} //End Latest News
 	//Check if Tech Tips is enabled
 	if ($config->getNode("homePage", "techTips")) {
@@ -109,7 +109,7 @@ require_once "header.php";
 				}
 			}
 		  ?></ul>
-		</div><?php
+		</div><div class='clear'>&nbsp;</div><?php
 	} //End Tech Tips
 require_once "footer.php";
 ?>

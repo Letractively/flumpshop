@@ -286,6 +286,7 @@ function acpusr_validate($requirement = NULL) {
 	if (!isset($_SESSION['acpusr'])) return false;
 	$auth = base64_decode($_SESSION['acpusr']);
 	$auth = explode("~",$auth);
+	$GLOBALS['acp_uname'] = $auth[0];
 	if ($requirement == NULL) {
 		$result = $dbConn->query("SELECT pass FROM `acp_login` WHERE uname='".$auth[0]."' LIMIT 1");
 	} else {

@@ -19,7 +19,8 @@ if (!$dbConn->query("INSERT INTO `acp_login` (uname,
 										 can_contact_customers,
 										 can_view_customers,
 										 can_view_orders,
-										 can_edit_orders)
+										 can_edit_orders,
+										 can_view_reports)
 			   VALUES
 			   							('".htmlentities($_POST['uname'],ENT_QUOTES)."',
 										 '".md5(sha1($_POST['pass']))."',
@@ -37,7 +38,8 @@ if (!$dbConn->query("INSERT INTO `acp_login` (uname,
 										 ".intval(isset($_POST['can_contact_customers'])).",
 										 ".intval(isset($_POST['can_view_customers'])).",
 										 ".intval(isset($_POST['can_view_orders'])).",
-										 ".intval(isset($_POST['can_edit_orders'])).")
+										 ".intval(isset($_POST['can_edit_orders'])).",
+										 ".intval(isset($_POST['can_view_reports'])).")
 										")) {
 	$errorString = "?error=An error occured executing a query, and the user creation failed. Please ensure the database structure is up to date, particularly that DBUpgrade_v5.sql has been executed."; } else {
 	$errorString = "?error=User created successfully.";
