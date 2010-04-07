@@ -60,7 +60,7 @@ if (strstr($_SERVER['HTTP_USER_AGENT'],"MSIE 8.0")) {
 	<div id="search_container">
         <form action='<?php echo $config->getNode('paths','root');?>/search.php' method='get' id='search_form'>
             <input type='text' name='q' id='q' value='Search...' onfocus='if(this.value=="Search..."){this.value="";}' onblur='if(this.value==""){this.value="Search...";}' />
-            <input type='submit' id='search_submit' title='Click to search' />
+            <input type='submit' id='search_submit' title='Click to search' value='&nbsp;&nbsp;' />
         </form>
     </div><!--End Search-->
     <ul id="tabs"><?php

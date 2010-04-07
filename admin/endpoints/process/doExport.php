@@ -62,11 +62,11 @@ while ($reserve = $dbConn->fetch($reserves)) {
 	$export['reserves'][] = serialize(new Reserve($reserve['id']));
 }
 
-$sessions = $dbConn->query("SELECT id FROM `session`");
+//$sessions = $dbConn->query("SELECT id FROM `session`");
 $export['sessions'] = array();
-while ($session = $dbConn->fetch($sessions)) {
+/*while ($session = $dbConn->fetch($sessions)) {
 	$export['sessions'][] = serialize(new Session($session['id']));
-}
+}*/
 
 $techhelps = $dbConn->query("SELECT * FROM `techhelp`");
 $export['techhelp'] = array();
@@ -75,7 +75,7 @@ while ($techhelp = $dbConn->fetch($techhelps)) {
 }
 
 $stats = new Stats();
-$stats->cacheAll();
+//$stats->cacheAll();
 $export['stats'] = serialize($stats);
 
 $countries = $dbConn->query("SELECT iso FROM `country` WHERE supported = 1");
@@ -90,7 +90,7 @@ $export['keycodes'] = serialize($keycodes);
 //Config
 $export['config'] = serialize($config);
 
-//Images
+/*Images
 $export['images'] == array();
 $package = array();
 //Upgrade Object Generated, now package files
@@ -107,7 +107,7 @@ while ($dir = array_pop($dirs)) {
 		}
 	}
 }
-
+*/
 //Check it isn't backup mode
 if (!isset($storeExport)) {
 	header("Content-Disposition: attachment; filename=exportdata.dat");
