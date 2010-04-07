@@ -166,7 +166,9 @@ $_SESSION['config']->setNode("messages", "email", "sales@".$_SERVER['HTTP_HOST']
 $_SESSION['config']->setNode("messages", "address", "[Please enter your business address here]", "Address");
 
 //Page Titles
-$_SESSION['config']->setNode("messages", "titlesIndexPrefix", "Welcome to ", "Home Page Totle Prefix");
+$_SESSION['config']->setNode("messages", "titlesIndexPrefix", "Welcome to ", "Home Page Title Prefix");
+$_SESSION['config']->setNode("messages", "contactPageHeader", "Contact Us", "Contact Us Page Header");
+$_SESSION['config']->setNode("messages", "aboutPageHeader", "About Us", "About Us Page Header");
 
 //Content Placeholders
 $_SESSION['config']->setNode("messages", "featuredItemsPlaceholder", "You can tell the Flumpnet Robot to show two items in this section, by accessing the Admin CP, then clicking Products->Featured Items.", "Featured Items Placeholder");

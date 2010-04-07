@@ -252,7 +252,7 @@ class SQLite_Database extends Database {
 		$str = preg_replace("/(\s*)?ENGINE=.*?;/i",";",$str);
 		$str = preg_replace("/AUTO_INCREMENT/i","AUTOINCREMENT",$str);
 		//Add Column
-		$str = preg_replace_callback("/ALTER (TABLE )?`(.*?)` ADD (COLUMN )?(.*?)((\r)?\n|;|$)/i", 'SQLite_Database_addColumn',$str);
+		$str = preg_replace_callback("/ALTER (TABLE )?`(.*?)` ADD (COLUMN )?(.*?)(;|$)/i", 'SQLite_Database_addColumn',$str);
 		//Random
 		$str = preg_replace("/RAND\(\)/i","RANDOM()",$str);
 		//Datatypes

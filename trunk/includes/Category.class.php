@@ -44,7 +44,7 @@ class Category {
 		if ($dbConn->rows($dbConn->query("SELECT id FROM `category` WHERE id='".$this->id."' LIMIT 1"))) {
 			$query = "UPDATE `category` SET name='".$this->name."', description='".$this->description."', parent='".$this->parent."' WHERE id=".$this->id.", enabled='".intval($this->enabled)."' LIMIT 1";
 		} else {
-			$query = "INSERT INTO `category` (id,name,description,parent,enabled) VALUES (".$this->id.",'".$this->name."','".$this->description."',".$this->parent.",".intval($this->enabled).");";
+			$query = "INSERT INTO `category` (id,name,description,parent,enabled) VALUES (".$this->id.",'".$this->name."','".htmlentities($this->description,ENT_QUOTES)."',".$this->parent.",".intval($this->enabled).");";
 		}
 		return $dbConn->query($query);
 	}
