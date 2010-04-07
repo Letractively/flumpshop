@@ -8,7 +8,7 @@ CREATE TABLE `category_feature` (
 CREATE TABLE `compare_features` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `feature_name` varchar(50) NOT NULL DEFAULT 'Unnamed Attribute',
-  `data_type` enum('number','string','date') NOT NULL,
+  `data_type` varchar(6) NOT NULL,
   `default_value` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 );

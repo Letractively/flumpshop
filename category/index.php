@@ -119,7 +119,7 @@ echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->ge
 		}
 		//Print all items
 		while ($item = $dbConn->fetch($itemsResult)) {
-			$item = new Item($item['id']);
+			$item = new Item($item['products.id']);
 			echo $item->getDetails('CATEGORY');
 		}
 		echo "</div>"; //End item container
