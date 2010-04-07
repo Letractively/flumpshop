@@ -18,6 +18,7 @@ CREATE TABLE  `acp_login` (
 `can_view_customers` BOOL NOT NULL DEFAULT  '0',
 `can_view_orders` BOOL NOT NULL DEFAULT  '0',
 `can_edit_orders` BOOL NOT NULL DEFAULT  '0',
+`can_view_reports` BOOL NOT NULL DEFAULT  '0',
 `pass_expires` TIMESTAMP NOT NULL,
 PRIMARY KEY (`id`)
 );

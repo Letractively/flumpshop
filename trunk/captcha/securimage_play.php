@@ -1,5 +1,5 @@
 <?php
-
+if (!isset($_SESSION)) session_start();
 /**
  * Project:     Securimage: A PHP class for creating and managing form CAPTCHA images<br />
  * File:        securimage_play.php<br />

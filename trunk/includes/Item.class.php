@@ -140,6 +140,7 @@ class Item {
 		global $dbConn;
 		//Upgrade
 		if (!isset($this->itemActive)) $this->itemActive = 1;
+		if (!is_array($this->itemCategory)) $this->itemCategory = array($this->itemCategory);
 		//Do
 		if ($dbConn->rows($dbConn->query("SELECT id FROM `products` WHERE id=".$this->getID()." LIMIT 1"))) {
 			$query = "UPDATE `products` SET name='$this->itemName', price='$this->itemPrice', stock='$this->itemPrice', description='$this->itemDesc', reducedPrice='$this->itemReducedPrice', reducedValidFrom='$this->itemReductionStart', reducedExpiry='$this->itemReductionEnd', ,weight='$this->itemWeight', active='$this->itemActive' WHERE id=".$this->getID()." LIMIT 1";

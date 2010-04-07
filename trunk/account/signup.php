@@ -9,15 +9,18 @@ require_once dirname(__FILE__)."/../header.php";
     <table>
     	<tr>
         	<td><label for="username">Username</label></td>
-            <td><input type="text" name="username" id="username" class="required alphanumeric" minlength="5" maxlength="75" remote="./checkuname.php" title="Invalid" /></td>
+            <td><input type="text" name="username" id="username" class="required alphanumeric" minlength="5" maxlength="75" remote="./checkuname.php" /></td>
+			<td>Please choose a username, minimum 5 letters</td>
         </tr>
         <tr>
         	<td><label for="pass1">Password</label></td>
             <td><input type="password" name="pass1" id="pass1" class="required" minlength="6" /></td>
+			<td>Please enter a password of at least 6 characters</td>
         </tr>
         <tr>
         	<td><label for="pass2">Confirm Password</label></td>
             <td><input type="password" name="pass2" id="pass2" class="required" equalto="#pass1" minlength="6" /></td>
+			<td>Enter your password again</td>
         </tr>
     <tr><td colspan="2"><h3 class="content">Contact Details</h3></td></tr>
     <?php
@@ -164,7 +167,7 @@ EOT;
 	}
 	?>
     <tr>
-    	<td><label for="captcha">Please enter the characters in the image<br />
+    	<td><label for="captcha">
         	<img id="siimage" align="left" style="padding-right: 5px; border: 0" src="../captcha/securimage_show.php?sid=<?php echo md5(time()) ?>" /></label>
             <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0" width="19" height="19" id="SecurImage_as3" align="middle">
                     <param name="allowScriptAccess" value="sameDomain" />
@@ -182,6 +185,7 @@ EOT;
         <td>
         <input type="text" minlength="6" maxlength="6" class="required" remote="../captcha/ajaxVerify.php" name="captcha" id="captcha" title="Incorrect Code" />
         </td>
+		<td>Please enter the characters in the image to prove you are human.</td>
     </tr>
     <tr>
         <td><label for='privacy'>I agree to the <a href='<?php echo $config->getNode('paths','root');?>/legal/privacy.php' target='_blank'>Privacy Policy</a></label></td>
@@ -192,7 +196,7 @@ EOT;
         <td><input type="checkbox" name="contact" id="contact" class="ui-widget-content" /></td>
     </tr>
     <tr>
-        <td colspan="2"><input type="submit" value="Sign Up!" class="ui-widget-content" /></td>
+        <td colspan="2"><input type="submit" value="Sign Up!" class="ui-state-default" /></td>
     </tr>
 </table>
 </fieldset>
