@@ -113,7 +113,8 @@ echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->ge
 		echo "<div id='cat_item_container'>";
 		//Only one item - Redirect
 		if ($num == 1 && $page == 1) {
-			$item = new Item($items[0]);
+			$item = $dbConn->fetch($itemsResult);
+			$item = new Item($item['products.id']);
 			header("Location: ".$item->getURL());
 			echo $item->getDetails('CATEGORY');
 		}

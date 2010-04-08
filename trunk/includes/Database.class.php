@@ -1,6 +1,26 @@
 <?php
 
+/*
+* =============================================================
+*  Name        : Database.class.php
+*  Description : Provides a single interface for multiple
+				 database engines
+*  Version     : 1.1-conf
+*
+*  Copyright (c) 2008-2010 Lloyd Wallis. Licensed for use in
+*  Flumpnet systems only. This code cannot be copied, used, or
+*  otherwise reproduced in any way without the author's
+*  permission. lloyd@theflump.com
+* =============================================================
+*/
+
 function db_factory() {
+	/**
+    * Creates the necessary database subclass for the Flumpshop Instance
+    * @since 1.1
+    * @param Uses Flumpshop Superglobals to fetch necessary details.
+    * @return An instantiated Database Object
+    */
 	global $config, $_SETUP;
 	//MySQL
 	if ($config->getNode('database','type') == "mysql") {
@@ -24,6 +44,10 @@ function db_factory() {
 	}
 }
 
+/**
+* The parent class for all database connection types.
+*  Initialises logs and shared functions.
+*/
 class Database {
 	var $linkid = false;
 	var $engine;
@@ -35,6 +59,12 @@ class Database {
 	var $connected = true;
 	var $xmlLog = "No resource loaded.";
 	
+	/**
+    * Database constructor.
+    * @since 1.0
+    * @param No arguments.
+    * @return No return value.
+    */
 	function Database() {
 		global $config, $_PRINTDATA, $_DBSESLOGFILE;
 		if ($config->getNode('logs','enabled') && $config->getNode("temp","simplexml")) {
@@ -52,10 +82,22 @@ class Database {
 		$this->debug = $_PRINTDATA;
 	}
 	
+	/**
+    * Returns the last error reported by a Database subclass.
+    * @since 1.0
+    * @param No arguments.
+    * @return Returns a string description of the last error encountered by a Database subclass
+    */
 	function error() {
 		return $this->lastError;
 	}
 	
+	/**
+    * Builds an SQL-format timestamp.
+    * @since 1.0
+    * @param $time. Optional. The time which the timestamp will be created for. Defaults to now.
+    * @return An SQL-formatted timestamp.
+    */
 	function time($time = 0) {
 		if ($time == 0)	return date("Y-m-d H:i:s"); else {
 			if (!is_int($time)) $time = strtotime($time);
@@ -63,14 +105,33 @@ class Database {
 		}
 	}
 	
+	/**
+    * Can be used for statistical purposes.
+    * @since 1.0
+    * @param No arguments.
+    * @return The number of queries executed by the Database subclass
+    */
 	function getQueryCount() {
 		return $this->queryCount;
 	}
 	
+	/**
+    * Check if the database subclass connected succesfully.
+    * @since 1.0
+    * @param No arguments.
+    * @return Boolean, true if a database connection was established, false otherwise
+    */
 	function isConnected() {
 		return $this->connected;
 	}
 	
+	/**
+    * Internal use only. Records the specified string in the XML Log file, if enabled.
+    * @since 1.1-conf
+    * @param $str The message to be recorded
+	* @param $error True if the message is an error
+    * @return No return value.
+    */
 	function xmlLog($str,$error = false) {
 		global $config;
 		if ($config->getNode('logs','enabled') && $config->getNode("temp","simplexml")) {
@@ -83,6 +144,12 @@ class Database {
 		}
 	}
 	
+	/**
+    * Called by subclasses on destruct. Saves the XML log.
+    * @since 1.1-conf
+    * @param No arguments.
+    * @return No return value.
+    */
 	function deconstruct() {
 		global $config;
 		if ($config->getNode("temp","simplexml") && $config->getNode("logs","enabled")) {
@@ -91,9 +158,23 @@ class Database {
 	}
 }
 
-//MySQL Extension
+/**
+* MySQL Extension.
+* Extends the Database class for MySQLi database connections.
+*/
 class MySQL_Database extends Database {
-	function __construct($addr,$uname,$pass,$port,$db = NULL) {
+	
+	/**
+    * Constructor.
+    * @since 1.0
+    * @param $addr the IP Address of FQDN of the MySQL server.
+	* @param $uname the username for the MySQL server Login.
+	* @param $pass the password for the MySQL server Login.
+	* @param $port the port used to connect to the MySQL server. Optional (default 3306).
+	* @param $db the name of the database to select. Optional (default none).
+    * @return No return value
+    */
+	function __construct($addr,$uname,$pass,$port = 3306,$db = NULL) {
 		$this->linkid = mysqli_connect($addr,$uname,$pass,$db,$port);
 		$this->engine = "mysqli";
 		$this->Database(); //Parent Constructor
@@ -111,11 +192,24 @@ class MySQL_Database extends Database {
 		}
 	}
 	
+	/**
+    * Destructor. Disconnects from MySQL Server and calls parent Destructor.
+    * @since 1.0
+    * @param No arguments.
+    * @return No return value.
+    */
 	function __destruct() {
 		if ($this->linkid) mysqli_close($this->linkid);
 		$this->deconstruct(); //Parent Destructor
 	}
-			
+	
+	/**
+    * Parses and executes an SQL Query.
+    * @since 1.0
+    * @param $str the SQL Query.
+	* @param $debug whether to output detailed information and erros. Optional (default false).
+    * @return MySQLi_result set or true on success, false on failure.
+    */		
 	function query($str,$debug = NULL) {
 		if ($debug == NULL) $debug = $this->debug;
 		if (!$this->linkid) {
@@ -133,6 +227,13 @@ class MySQL_Database extends Database {
 		return $result;
 	}
 	
+	/**
+    * Execute a multi-line SQL Query on the server.
+    * @since 1.1
+    * @param $str the SQL Query.
+	* @param $debug whether to output detailed information and erros. Optional (default false).
+    * @return false if no connection, true otherwise.
+    */
 	function multi_query($str,$debug = NULL) {
 		if ($debug == NULL) $debug = $this->debug;
 		if (!$this->linkid) {
@@ -149,6 +250,12 @@ class MySQL_Database extends Database {
 		return true;
 	}
 	
+	/**
+    * Fetch a row from the specified result set.
+    * @since 1.0
+    * @param $resource a MySQLi result resource.
+    * @return An array containing a row from the result set, or false on failure.
+    */
 	function fetch($resource) {
 		if (!is_object($resource)) {
 			trigger_error("Database Error: Invalid Resource");
@@ -157,6 +264,12 @@ class MySQL_Database extends Database {
 		return mysqli_fetch_array($resource);
 	}
 	
+	/**
+    * Get the number of rows in a result set.
+    * @since 1.0
+    * @param $resource a MySQLi result resource.
+    * @return An integer specifying the number of rows in the result set (0 on failure)
+    */
 	function rows($resource) {
 		if (!is_object($resource)) {
 			trigger_error("Database Error: Invalid Resource");
@@ -165,6 +278,12 @@ class MySQL_Database extends Database {
 		return mysqli_num_rows($resource);
 	}
 	
+	/**
+    * Get the Primary Key of the last INSERT command.
+    * @since 1.0
+    * @param No arguments.
+    * @return The ID of the last INSERT command, or -1 on failure.
+    */
 	function insert_id() {
 		if (!$this->linkid) {
 			trigger_error("Database Error: Cannot Execute Query - Connection Failed!");
@@ -173,6 +292,12 @@ class MySQL_Database extends Database {
 		return mysqli_insert_id($this->linkid);
 	}
 	
+	/**
+    * The version of the MySQL Server.
+    * @since 1.1
+    * @param No arguments.
+    * @return Description of the MySQL Server environment.
+    */
 	function version() {
 		return $this->linkid->server_info;
 	}
