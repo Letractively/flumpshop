@@ -12,6 +12,7 @@ while ($module = readdir($dir)) {
 	}
 }
 ?><div id="dialog" class="ui-helper-hidden"></div>
+<br class="clear" />
 <div id='footer'><p id="footer_text"><?php echo $config->getNode('messages','footer');?></p>
 <p id="footer_links"><?php
   //Send Feedback
