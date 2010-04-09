@@ -24,7 +24,7 @@ if (isset($_GET['return']) and $_GET['return'] == "report") {
 </tr>
 <tr>
 	<td><label for="description">Description: </label></td>
-    <td><textarea rows="10" cols="45" name="description" id="description" class="ui-widget-content ui-state-default required"><?php echo $item->getDesc();?></textarea></td>
+    <td><textarea rows="10" cols="45" name="description" id="description" class="ui-widget-content ui-state-default required"><?php echo str_replace(array("<br>","<br />"),"",$item->getDesc());?></textarea></td>
 </tr>
 <tr>
 	<td><label for="price">Price &pound;</label></td>
