@@ -122,15 +122,15 @@ Please enter your username and password to continue...
         	<a href="endpoints/delivery/countries.php" onClick="loader('Loading Content...');" target="main">Supported Countries</a>
             <a href="endpoints/delivery/deliveryRates.php" onClick="loader('Loading Content...');" target="main">Delivery Rates</a>
         </div>
-		<h3>Reports<sup>labs</sup></h3>
+		<h3>Reports</h3>
 		<div>
-			<a href='endpoints/reports/itemReport.php' onclick='loader("Generating Report...");' target="main">Item Report<sup>labs</sup></a>
+			<a href='endpoints/reports/itemReport.php' onclick='loader("Generating Report...");' target="main">Item Report</a>
+			<a href='endpoints/reports/duplicates.php' onclick='loader("Generating Report...");' target="main">Content Suggestions</a>
 		</div>
         <h3>Advanced</h3>
         <div>
 			<a href="endpoints/advanced/varMan.php" onclick='loader("Loading Content...");' target="main">Configuration Manager</a>
             <a href="endpoints/process/cron.php" onclick='loader("Executing Cron Script...");' target="main">Cron Script</a>
-			<a href="endpoints/advanced/duplicates.php" onclick='loader("Checking for duplicates......");' target="main">Duplicate Content</a>
 			<a href="endpoints/advanced/execute.php" onclick='loader("Loading Content...");' target="main">Execute PHP</a>
 			<a href="endpoints/advanced/query.php" onclick='loader("Loading Content...");' target="main">Execute SQL</a>
 			<a href="endpoints/advanced/export.php" onclick='loader("Loading Content...");' target="main">Export</a>

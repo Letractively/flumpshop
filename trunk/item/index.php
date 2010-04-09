@@ -6,58 +6,11 @@ require_once dirname(__FILE__)."/../header.php";
 
     $category = new Category($item->getCategory());
     echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->getBreadcrumb()." -> ".$item->getName();
-	?><div id="notice"></div><?php
-	if (isset($_GET['reductionHappened'])) {?><div class="ui-state-highlight"><span class="ui-icon ui-icon-circle-check"></span>The price reduction has been scheduled.</div><?php }
-	if (isset($_GET['imageHappened'])) {?><div class="ui-state-highlight"><span class="ui-icon ui-icon-circle-check"></span>The image has been added.</div><?php
-	}
-        echo $item->getDetails("FULL", isset($_GET['modify']) && $_GET['modify'] == "true");
+	echo '<div id="notice"></div>';
+	echo $item->getDetails("FULL");
+	
 ?><script type="text/javascript">
-document.saving = '<div class="ui-state-highlight ui-corner-all"><span class="ui-icon ui-icon-refresh"></span>Saving Data...</div>';
-document.modify = <?php echo intval(isset($_GET['modify']) && $_GET['modify'] == "true"); ?>;
 document.id = <?php echo intval($_GET['id']); ?>;
-document.adminAuth = <?php if (!isset($_SESSION['adminAuth']) || !$_SESSION['adminAuth']) echo "false"; else echo "true";?>;
-document.updateURL = "<?php echo $config->getNode('paths','root')."/item/update.php?pid=".$_GET['id'];?>";<?php
-//Don't display JS that isn't necessary and could pose a security risk
-if (isset($_GET['modify'])) {
-?>if (document.modify) {
-	if (document.adminAuth == true) {
-	   $('#itemTitle').editable(document.updateURL,
-																	 {style: "display: inline;",
-																	 cssclass: "ui-widget",
-																	 submit: "Save",
-																	 cancel: "Cancel",
-																	 tooltip: "Click to edit Item Name",
-																	 width: '75%',
-																	 indicator: document.saving});
-	   $('#itemPrice').editable(document.updateURL,
-																	 {style: "display: inline;",
-																	 cssclass: "ui-widget",
-																	 submit: "Save",
-																	 cancel: "Cancel",
-																	 tooltip: "Click to edit Item Price",
-																	 indicator: document.saving});
-	   $('#itemDesc').editable(document.updateURL,
-																	{type: "textarea",
-																	cols: 70,
-																	cssclass: "ui-widget",
-																	submit: "Save",
-																	cancel: "Cancel",
-																	tooltip: "Click to edit Item Description",
-																	onblur: "ignore",
-																	indicator: document.saving});
-	   $('#itemStock').editable(document.updateURL,
-																	 {style: "display: inline;",
-																	 cssclass: "ui-widget",
-																	 submit: "Save",
-																	 cancel: "Cancel",
-																	 tooltip: "Click to edit Item Stock availibility",
-																	 indicator: document.saving});
-	   $('#notice').html("<div class='ui-state-highlight ui-corner-all'><span class='ui-icon ui-icon-pencil'></span>Edit mode enabled. Click a value to edit it.</div>");
-	} else {
-		$('#notice').html("<div class='ui-state-highlight ui-corner-all'><span class='ui-icon ui-icon-pencil'></span>Failed to authenticate session. Edit mode disabled.</div>");
-	}
-}
-
 function reduceItem() {
 	$("#dialog").html("<form action='<?php echo $config->getNode('paths','root');?>/item/createReduction.php' method='post' name='reducePriceForm' id='reducePriceForm'><table><tr><td><label for='reducedPrice'>Reduced Price:</label></td><td><input type='text' name='reducedPrice' id='reducedPrice' style='width: 110px;' value='"+$('#itemPrice').html()+"' /></td></tr><tr><td><label for='validDate'>Valid From:</label></td><td><input type='text' name='validDate' id='validDate' style='width: 110px;' /></td></tr><tr><td><label for='expiresDate'>Expires:</label></td><td><input type='text' name='expiresDate' id='expiresDate' style='width: 110px;' /></td></tr></table><input type='hidden' name='itemID' id='itemID' value='<?php echo $item->getID();?>' /></form>");
 	$("#validDate").datepicker({minDate: +0, dateFormat: "dd/mm/yy", showButtonPanel: true});
@@ -82,5 +35,4 @@ function openImageViewer(imageID) {
 	$("#dialog").dialog({height: "auto", width: "auto", resizable: true, position: "left", buttons: {"Close": function() {$(this).dialog("destroy");}}});
 
 }
-</script>
-<?php require_once dirname(__FILE__)."/../footer.php"; ?>
+</script><?php require_once dirname(__FILE__)."/../footer.php"; ?>
