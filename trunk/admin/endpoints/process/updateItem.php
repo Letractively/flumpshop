@@ -9,7 +9,6 @@ $description = nl2br(htmlentities($_POST['description'],ENT_QUOTES));
 $price = str_replace("'","\'",$_POST['price']);
 $cost = str_replace("'","\'",$_POST['cost']);
 $stock = str_replace("'","\'",$_POST['stock']);
-$category = str_replace("'","\'",$_POST['category']);
 $weight = str_replace("'","\'",$_POST['weight']);
 
 if ($name == "" or $description == "") {
@@ -20,16 +19,18 @@ if ($name == "" or $description == "") {
 			//Delete old category reference
 			$dbConn->query("DELETE FROM `item_category` WHERE itemid=$id");
 			//Product added, now add categories
-			$dbConn->query("INSERT INTO `item_category` (itemid,catid) VALUES ($id,$category)");
-			//TODO: Frontend support for multiple categories before this block can be finished
+			for ($i=0;isset($_POST['category_'.$i]);$i++) {
+				if ($_POST['category_'.$i] != "")
+				$dbConn->query("INSERT INTO `item_category` (itemid,catid) VALUES ($id,'".$_POST['category_'.$i]."')");
+			}
 			//Output success message
-			echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-circle-check'></span>Product Updated!</div>";
+			$status = "<div class='ui-state-highlight'><span class='ui-icon ui-icon-circle-check'></span>Product Updated!</div>";
 			//Upload Image
-			if (isset($_FILES["image$i"])) {
+			if (!empty($_FILES["image$i"])) {
 				$item = new Item($id);
 				$error = !$item->saveImage($_FILES["image$i"]['tmp_name'],$_FILES["image$i"]['type']);
 				if ($error) {
-					echo "<div class='ui-state-error'><span class='ui-icon ui-icon-info'></span>The image file you uploaded is not supported.</div>";
+					$status .= "<div class='ui-state-error'><span class='ui-icon ui-icon-info'></span>The image file you uploaded is not supported.</div>";
 				}
 			}
 			
@@ -61,7 +62,7 @@ if ($name == "" or $description == "") {
 			}
 		} else {
 			//Query Exec Failed
-			echo "<div class='ui-state-error'><span class='ui-icon ui-icon-alert'></span>Failed to update item.</div>";
+			$status = "<div class='ui-state-error'><span class='ui-icon ui-icon-alert'></span>Failed to update item.</div>";
 		}
 	}
 }
@@ -73,5 +74,5 @@ if (isset($_POST['return'])) {
 	exit;
 }
 
-include dirname(__FILE__)."/../edit/editItems.php";
+header("Location: ../edit/editItems.php?msg=".$status);
 ?>

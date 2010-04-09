@@ -9,7 +9,7 @@ $item = new Item(intval($_GET['id']));
 if (isset($_GET['return']) and $_GET['return'] == "report") {
 	echo "<input type='hidden' name='return' id='return' value='".$_SERVER['HTTP_REFERER']."' />";
 }
-?><table>
+?><a href="../process/disableItem.php?id=<?php echo $item->getID();?>">Hide Item</a><br /><table>
 <tr>
 	<td>Item Number: </td>
 	<td><?php echo $item->getID();?></td>
@@ -41,21 +41,28 @@ if (isset($_GET['return']) and $_GET['return'] == "report") {
 <tr>
 	<td><label for="weight">Weight (Kg): </label></td>
     <td><input type="text" maxlength="8" name="weight" id="weight" class="ui-widget-content ui-state-default required number" value="<?php echo $item->getWeight();?>" /></td>
-</tr>
-<tr>
-	<td><label for="category">Category: </label></td>
-   <td><select name="category" id="category" class="ui-widget-content ui-state-default required" onchange="updateFeatures();"><?php
-	$result = $dbConn->query("SELECT id FROM `category` ORDER BY `parent` ASC");
-	while ($row = $dbConn->fetch($result)) {
-		$selected = "";
-		if ($row['id'] == $item->getCategory(0)) {$selected=" selected='selected'";}
-		$category = new Category($row['id']);
-		echo "<option value='".$category->getID()."'$selected>".html_entity_decode(str_replace(">","&lt;",$category->getFullName()),ENT_QUOTES)."</option>\n";
-	}
+</tr><?php
+$i = 0;
+	foreach ($item->getCategories() as $catID) {
+	?><tr>
+		<td><label for="category_<?php echo $i;?>">Category <?php echo $i;?>: </label></td>
+		<td><select name="category_<?php echo $i;?>" id="category_<?php echo $i;?>" class="ui-widget-content ui-state-default" onchange="updateFeatures();"><option value="">[Remove Category]</option><?php
+		$result = $dbConn->query("SELECT id FROM `category` ORDER BY `parent` ASC");
+		while ($row = $dbConn->fetch($result)) {
+			$selected = "";
+			if ($row['id'] == $catID) {$selected=" selected='selected'";}
+			$category = new Category($row['id']);
+			echo "<option value='".$category->getID()."'$selected>".html_entity_decode(str_replace(">","&lt;",$category->getFullName()),ENT_QUOTES)."</option>\n";
+		}
 		?></select></td>
+	</tr><?php
+	$i++;
+	}
+?><tr>
+	<td colspan="2" id="category_feature_fields"><!--Placeholder element for features--></td>
 </tr>
 <tr>
-	<td colspan="2" id="category_feature_fields"><!--Placeholder element for features--></td>
+	<td colspan="2"><a href='javascript:' onclick='addCategory();'>Add another category...</a></td>
 </tr>
 <tr>
     <td><label for="image">Image: </label></td>
@@ -64,12 +71,21 @@ if (isset($_GET['return']) and $_GET['return'] == "report") {
 </table>
 <input type="submit" value="Save" name="submit" id="submit" style="font-size: 13px; padding: .2em .4em;" />
 </form>
-<script>
+<script type="text/javascript">
 $('form').validate();
+document.next_num=<?php echo $i;?>;
 function updateFeatures() {
+	str = "";
+	for (i=0;i<document.next_num;i++) str = str+$('#category_'+i).val()+",";
 	$('#category_feature_fields').html("<img src='../../../images/loading.gif' />Retrieving feature list...");
-	$('#category_feature_fields').load('featureFields.php?itemid=<?php echo $item->getID();?>&id='+$('#category').val());
+	$('#category_feature_fields').load('featureFields.php?itemid=<?php echo $item->getID();?>&id='+str);
 }
 updateFeatures();
+
+function addCategory() {
+	$('#category_'+(document.next_num-1)).parent().parent().after("<tr id='newField_"+document.next_num+"'><td><img src='../../../images/loading.gif' />Loading content...</td></tr>");
+	$('#newField_'+document.next_num).load("categoryField.php?id="+document.next_num);
+	document.next_num++;
+}
 </script>
 </body></html>

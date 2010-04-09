@@ -1,15 +1,17 @@
 <?php
 require_once "../../../preload.php";
 
-$id = intval($_GET['id']);
+$ids = explode(",",$_GET['id']);
 $item = new Item(intval($_GET['itemid']));
 
-if ($id == 0) {
-	die("<p>There are no feature attributes for this category.</p>");
+//Get category features from database
+//Build Query String
+$qryString = "";
+foreach ($ids as $id) {
+	if ($id != "") $qryString .= " OR category_id='$id'";
 }
 
-//Get category features from database
-$result = $dbConn->query("SELECT feature_id FROM category_feature WHERE category_id='$id'");
+$result = $dbConn->query("SELECT feature_id FROM category_feature WHERE 1=0".$qryString);
 
 if ($dbConn->rows($result) == 0) {
 	//No features
