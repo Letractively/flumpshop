@@ -72,7 +72,7 @@ class Item {
 				}
 				//Delivery Rate
 				if ($config->isNode("temp","country")) $country = $config->getNode("temp","country"); else $country = $config->getNode("site","country");
-				$result = $dbConn->query("SELECT price FROM `delivery` WHERE lowerbound>='$this->itemWeight' AND upperbound<='$this->itemWeight' AND `country`='$country' LIMIT 1");
+				$result = $dbConn->query("SELECT price FROM `delivery` WHERE lowerbound<='$this->itemWeight' AND upperbound>='$this->itemWeight' AND `country`='$country' LIMIT 1");
 				if ($dbConn->rows($result) == 0) {
 					$this->itemDeliveryCost = -1;
 				} else {
@@ -475,7 +475,7 @@ class Item {
 	}
 	
 	function getFriendlyDeliveryCost() {
-		if ($this->itemDeliveryCost == -1) return "Unavailable";
+		//if ($this->itemDeliveryCost == -1) return "Unavailable";
 		return number_format($this->itemDeliveryCost,2);
 	}
 	

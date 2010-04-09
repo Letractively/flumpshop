@@ -453,6 +453,7 @@ function SQLite_Database_addColumn($matches) {
 	$sql = preg_replace("/^CREATE TABLE ".$matches[2]." \(/i", "CREATE TABLE ".$matches[2]." (".$matches[4].", ",$oldTable['sql']);
 	$dbConn->query($sql);
 	$dbConn->query("INSERT INTO ".$matches[2]." ".$columnlist." SELECT * FROM upgrade_".$matches[2]);
+	$dbConn->query("DROP TABLE upgrade_".$matches[2]);
 	return "SELECT table FROM sqlite_master LIMIT 0,1"; //Supress "Empty Query" Errors
 }
 

@@ -29,6 +29,7 @@ class Customer {
 			$this->country = $result['country'];
 			$this->email= $result['email'];
 			$this->paypalid = $result['paypalid'];
+			$this->can_contact = $result['can_contact'];
 			
 			$country = $dbConn->fetch($dbConn->query("SELECT * FROM `country` WHERE iso='".$this->country."' LIMIT 1"));
 			$this->supportedCountry = $country['supported'];
