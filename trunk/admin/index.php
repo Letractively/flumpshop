@@ -125,7 +125,8 @@ Please enter your username and password to continue...
 		<h3>Reports</h3>
 		<div>
 			<a href='endpoints/reports/itemReport.php' onclick='loader("Generating Report...");' target="main">Item Report</a>
-			<a href='endpoints/reports/duplicates.php' onclick='loader("Generating Report...");' target="main">Content Suggestions</a>
+			<a href='endpoints/reports/customerReport.php' onclick='loader("Generating Report...");' target="main">Customer Report<sup>labs</sup></a>
+			<a href='endpoints/reports/duplicates.php' onclick='loader("Generating Report...");' target="main">Content Suggestions<sup>labs</sup></a>
 		</div>
         <h3>Advanced</h3>
         <div>
