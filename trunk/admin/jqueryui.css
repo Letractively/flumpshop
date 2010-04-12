@@ -58,6 +58,7 @@
 /* Interaction states
 ----------------------------------*/
 .ui-state-default, .ui-widget-content .ui-state-default { border: 1px solid #2a52ff; background: #1e2b5b url(images/ui-bg_gloss-wave_75_1e2b5b_500x100.png) 50% 50% repeat-x; font-weight: normal; color: #ffc000; }
+table input.ui-state-default, table input.ui-widget-content{width:250px}
 .ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited { color: #ffc000; text-decoration: none; }
 .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus { border: 1px solid #999999; background: #6786ac url(images/ui-bg_gloss-wave_75_6786ac_500x100.png) 50% 50% repeat-x; font-weight: normal; color: #212121; }
 .ui-state-hover a, .ui-state-hover a:hover, a:hover { color: #212121; text-decoration: none; }
@@ -336,12 +337,12 @@ button.ui-button-icons-only { width: 3.2em; }
 
 /*button text element */
 .ui-button .ui-button-text { display: block; line-height: 1;  }
-.ui-button-text-only .ui-button-text { padding: .4em 1em; }
-.ui-button-icon-only .ui-button-text, .ui-button-icons-only .ui-button-text { padding: .4em; text-indent: -9999999px; }
-.ui-button-text-icon .ui-button-text, .ui-button-text-icons .ui-button-text { padding: .2em .4em .2em .4em; }
-.ui-button-text-icons .ui-button-text { padding-right: .4em; }
+.ui-button-text-only .ui-button-text { padding: 2px; }
+.ui-button-icon-only .ui-button-text, .ui-button-icons-only .ui-button-text { padding: 2px; text-indent: -9999999px; }
+.ui-button-text-icon .ui-button-text, .ui-button-text-icons .ui-button-text { padding: 1px 2px; }
+.ui-button-text-icons .ui-button-text { padding-right: 2px; }
 /* no icon support for input elements, provide padding by default */
-input.ui-button { padding: .4em 1em; }
+input.ui-button { padding: 2px; }
 
 /*button icon element(s) */
 .ui-button-icon-only .ui-icon, .ui-button-text-icon .ui-icon, .ui-button-text-icons .ui-icon, .ui-button-icons-only .ui-icon { position: absolute; top: 50%; margin-top: -8px; }

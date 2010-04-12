@@ -123,7 +123,7 @@ if (PHP_VERSION < "4.4.9") {
 
 if (PHP_VERSION < "5.0.0") {
 	register_shutdown_function("endGame");
-	function endGame() {global $config,$basket; $config->__destruct();$basket->__destruct();}
+	function endGame() {global $config,$basket; if (isset($config)) $config->__destruct(); if (isset($basket)) $basket->__destruct();}
 }
 
 //Check CURL Installed
