@@ -76,10 +76,14 @@ Please enter your username and password to continue...
 <body>
     <center><img src="images/logo.jpg" />
     <div class="header">flump<span class='header2'>shop</span> <?php echo $config->getNode("site","version");?></div>
-    Powered by Flumpnet<br />
-    <!--<a href="javascript:void(0);">Expand All</a> | <a href="javascript:void(0);"> Collapse All</a><br />--><br />
+    Powered by Flumpnet<br /><br />
     <div id="navContainer">
     <div id="navAccordion">
+	<h3>Store Management</h3>
+		<div>
+			<a href='endpoints/switchboard/categories.php' onclick='loader("Loading Category Menu...");' target='main'>Manage Categories</a>
+			<a href='endpoints/switchboard/products.php' onclick='loader("Loading Products Menu...");' target='main'>Manage Products</a>
+		</div>
         <h3>Products</h3>
         <div>
             <a href='endpoints/create/newItem.php' onclick='loader("Loading Content...");' target="main">New Item</a>
@@ -220,6 +224,24 @@ Please enter your username and password to continue...
 					echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-circle-check'></span>There is nothing that needs to be bought to your attention right now. Well done on creating a robust and secure installation.</div>";
 				}
 				?><div id='dialog'></div>
+				<h2>Getting Started Checklist</h2>
+				<p>Just starting out on setting up your own website? Here's a little checklist to get you started.</p>
+				<ul>
+					<li><strong>Create your own login</strong> - The inituser account won't last forever, so head over to Advanced->User Manager to set up a permanent account for yourself and anyone else who you want to be able to administer your account.</li>
+					<li><strong>Add some categories</strong> - Create sections for items to be in. You can do this later, but it helps to keep things organised right from the start.</li>
+					<li><strong>Add some products</strong> - Start adding your products to the site. With the new Manage Products feature, doing this is an absolute breeze.</li>
+					<li><strong>Post some news</strong> - At the moment, there's only placeholder content for some sections of your site. Make sure that if they're turned on, that they are customised.
+						<ul>
+							<li>Home Page News (News->New News Post)</li>
+							<li>Home Page Technical Tips (News->New Technical Tips Post)</li>
+							<li>Home Page Content (Pages->Home Page)</li>
+							<li>About Page Content (Pages->About Page)</li>
+							<li>Contact Page Content (Pages->Contact Page)</li>
+						</ul>
+					</li>
+				</ul>
+				<p>Those are all the basics to get a site up and running. If you're selling online, make sure to take a look over in the deliveries section to to set delivery costs.</p>
+				<p>Remember, Flumpshop is a fully featured management system. Import existing customers and orders, and the site can greatly improve your business efficiency with a centralised location for all your information, but you must first take the time out to add all this information.</p>
 				</body>
 			  </html><?php
 		}
