@@ -11,5 +11,5 @@ if (md5($_POST['passkey']) == $config->getNode('site','password')) {
 	$dbConn->query("UPDATE `acp_login` SET last_tier2_login='".$dbConn->time()."' WHERE id=".$row['id']." LIMIT 1");
 }
 
-header("Location: ".$_SERVER['HTTP_REFERER']);
+header("Location: ".$_POST['return']);
 ?>
