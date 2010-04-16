@@ -94,7 +94,7 @@ echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->ge
 		$row = $dbConn->fetch($result);
 		$dataType = $row['data_type'];
 		//Seriously, WTF does this do. Meh, it works. NO TOUCHY.
-		$sql = "SELECT * FROM (
+		$sql = "SELECT products.id FROM (
 							   SELECT products.id, t1.value
 								FROM products LEFT JOIN (SELECT * FROM `item_feature_$dataType` WHERE feature_id = ".intval($sort).") AS t1
 								ON products.id = t1.item_id
@@ -120,7 +120,7 @@ echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->ge
 		}
 		//Print all items
 		while ($item = $dbConn->fetch($itemsResult)) {
-			$item = new Item($item['products.id']);
+			if (isset($item['products.id'])) $item = new Item($item['products.id']); else $item = new Item($item['id']);
 			echo $item->getDetails('CATEGORY');
 		}
 		echo "</div>"; //End item container
