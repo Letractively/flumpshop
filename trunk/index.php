@@ -98,7 +98,7 @@ require_once "header.php";
 		?><div id="tech_tips">
 			<h4><?php echo $config->getNode("messages","technicalHeader");?></h4>
 			<ul><?php
-			$result = $dbConn->query("SELECT id FROM `techHelp` ORDER BY timestamp DESC LIMIT 4");
+			$result = $dbConn->query("SELECT id FROM `techhelp` ORDER BY timestamp DESC LIMIT 4");
 			if ($dbConn->rows($result) == 0) {
 				//Placeholder
 				echo $config->getNode("messages", "noNewsPlaceholder");

@@ -111,47 +111,25 @@ class Item {
 		if ($this->change) {
 			global $dbConn;
 			debug_message("Commiting Changes to Item #".$this->getID());
-			$name = str_replace("'","''",$this->getName());
-			$price = str_replace("'","''",$this->getPrice());
-			$stock = str_replace("'","''",$this->getStock());
-			$desc = str_replace("'","''",$this->getDesc());
+			$this->import();
+			$dbConn->query("DELETE FROM `item_category` WHERE itemid = ".$this->getID());
+			//Update Categories
 			$categories = $this->getCategories();
-			$reducedPrice = $this->itemReducedPrice;
-			$reduceStart = $this->itemReductionStart;
-			$reduceEnd = $this->itemReductionEnd;
-			$dbConn->query("UPDATE `products` SET name='$name', price='$price', stock='$stock', description='$desc', reducedPrice='$reducedPrice', reducedValidFrom='$reduceStart', reducedExpiry='$reduceEnd' WHERE id=".$this->getID()." LIMIT 1");
-			$catstring = "";
 			foreach ($categories as $category) {
-				//Update each category reference
-				if ($dbConn->rows($dbConn->query("SELECT id FROM `item_category` WHERE itemid=".$this->getID()." AND catid=".$category." LIMIT 1")) == 0) {
-					//Category reference not yet created
-					$dbConn->query("INSERT INTO `item_category` (itemid,catid) VALUES (".$this->getID().",$category)");
-				}
-				//Append category string for old category clearing
-				$catstring .= " AND catid!=".$category;
+				$dbConn->query("INSERT INTO `item_category` (itemid,catid) VALUES ($this->itemID,$category)");
 			}
-			//Check there are no old category references
-			$dbConn->query("DELETE FROM `item_category` WHERE itemid=".$this->getID().$catstring);
 		}
 	}
 	
 	//Import
 	function import() {
 		global $dbConn;
-		//Upgrade
-		if (!isset($this->itemActive)) $this->itemActive = 1;
-		if (!is_array($this->itemCategory)) $this->itemCategory = array($this->itemCategory);
-		//Do
 		if ($dbConn->rows($dbConn->query("SELECT id FROM `products` WHERE id=".$this->getID()." LIMIT 1"))) {
-			$query = "UPDATE `products` SET name='$this->itemName', price='$this->itemPrice', stock='$this->itemPrice', description='$this->itemDesc', reducedPrice='$this->itemReducedPrice', reducedValidFrom='$this->itemReductionStart', reducedExpiry='$this->itemReductionEnd', ,weight='$this->itemWeight', active='$this->itemActive' WHERE id=".$this->getID()." LIMIT 1";
+			$query = "UPDATE `products` SET name='$this->itemName', price='$this->itemPrice', stock='$this->itemPrice', description='$this->itemDesc', reducedPrice='$this->itemReducedPrice', reducedValidFrom='$this->itemReductionStart', reducedExpiry='$this->itemReductionEnd', weight='$this->itemWeight', active='$this->itemActive', sku='$this->itemSKU', cost='$this->itemCost' WHERE id=".$this->getID()." LIMIT 1";
 		} else {
 			$query = "INSERT INTO `products` (id,name,price,stock,description,reducedPrice,reducedValidFrom,reducedExpiry,weight,active,sku,cost) VALUES ($this->itemID,'$this->itemName','$this->itemPrice','$this->itemStock','$this->itemDesc','$this->itemReducedPrice','$this->itemReductionStart','$this->itemReductionEnd','$this->itemWeight','$this->itemActive','$this->itemSKU',".$this->getCost().")";
-			//Update categories
-			$categories = $this->getCategories();
-			foreach ($categories as $category) {
-				$dbConn->query("INSERT INTO `item_category` (itemid,catid) VALUES ($this->itemID,$category)");
-			}
 		}
+		//Don't update categories here, as the import does item_categories seperately
 		return $dbConn->query($query);
 	}
 	
@@ -499,10 +477,10 @@ class Item {
 		$this->change = true;
 	}
 	
-	function setCategory($id,$index = 0) {
+	function setCategory($id,$index = -1) {
 		//ID: ID of the category
-		//Index: The index of the old category to update in the categories array
-		$this->itemCategory[$index] = $id;
+		//Index: The index of the old category to update in the categories array (-1 = new)
+		if ($index == -1) $this->itemCategory[] = $id; else $this->itemCategory[$index] = $id;
 		$this->change = true;
 	}
 }
