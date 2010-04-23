@@ -2,12 +2,12 @@
 require_once dirname(__FILE__)."/../../preload.php";
 
 if (isset($USR_REQUIREMENT)) {
-	if (!acpusr_validate($USR_REQUIREMENT)) {
+	if (!acpusr_validate($USR_REQUIREMENT) and (!isset($auth) or $auth == true)) {
 		header("HTTP/1.1 403 Forbidden");
 		die($config->getNode("messages","adminDenied"));
 	}
 } else {
-	if (!acpusr_validate()) {
+	if (!acpusr_validate() and (!isset($auth) or $auth == true)) {
 		header("HTTP/1.1 403 Forbidden");
 		die($config->getNode("messages","adminDenied"));
 	}

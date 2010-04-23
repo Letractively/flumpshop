@@ -5,7 +5,7 @@ require_once dirname(__FILE__)."/../header.php";
 $id = intval($_POST['id']);
 $sku = htmlentities($_POST['sku'],ENT_QUOTES);
 $name = htmlentities($_POST['name'],ENT_QUOTES);
-$description = nl2br(htmlentities($_POST['description'],ENT_QUOTES));
+$description = str_replace("'","\'",$_POST['description']);
 $price = str_replace("'","\'",$_POST['price']);
 $cost = str_replace("'","\'",$_POST['cost']);
 $stock = str_replace("'","\'",$_POST['stock']);

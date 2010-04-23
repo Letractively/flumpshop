@@ -25,67 +25,69 @@ class Item {
 	function Item($id) {
 		str_replace("'","''",$id);
 		global $dbConn, $config;
-		$this->itemQuery = $dbConn->query("SELECT * FROM `products` WHERE id='$id' LIMIT 1");
-		if ($dbConn->rows($this->itemQuery) == 0) {
-			trigger_error("Failed to locate item in Database (id: $id)");
-			$this->setDefaults();
-		} else {
-			$this->itemResult = $dbConn->fetch($this->itemQuery);
-			if ($this->itemResult['active'] == 0) {
+		if ($id == -1 ) $this->setDefaults(); else {
+			$this->itemQuery = $dbConn->query("SELECT * FROM `products` WHERE id='$id' LIMIT 1");
+			if ($dbConn->rows($this->itemQuery) == 0) {
+				trigger_error("Failed to locate item in Database (id: $id)");
 				$this->setDefaults();
-				$this->itemID = $this->itemResult['id'];
-				$this->itemName = str_replace("\\","",$this->itemResult['name']);
 			} else {
-				$this->itemID = $id;
-				$this->itemSKU = $this->itemResult['SKU'];
-				if ($this->itemSKU == "") $this->itemSKU = "N/A";
-				$this->itemName = str_replace("\\","",$this->itemResult['name']);
-				$this->itemPrice = $this->itemResult['price'];
-				$this->itemCost = $this->itemResult['cost'];
-				$this->itemStock = $this->itemResult['stock'];
-				$this->itemDesc = str_replace("\\","",$this->itemResult['description']);
-				//Categories
-				$result = $dbConn->query("SELECT catid FROM `item_category` WHERE itemid='".$id."'");
-				while ($row = $dbConn->fetch($result)) {
-					$this->itemCategory[] = $row['catid'];
-				}
-				//Features (Experimental)
-				$result = $dbConn->query("SELECT feature_id,value FROM `item_feature_number` WHERE item_id='".$id."'
-										 UNION SELECT feature_id,value FROM `item_feature_string` WHERE item_id='".$id."'
-										 UNION SELECT feature_id,value FROM `item_feature_date` WHERE item_id='".$id."'");
-				while ($row = $dbConn->fetch($result)) {
-					$this->itemFeatures[$row['feature_id']] = $row['value'];
-				}
-				//Price Reduction
-				$this->itemReducedPrice = $this->itemResult['reducedPrice'];
-				$this->itemReductionStart = $this->itemResult['reducedValidFrom'];
-				$this->itemReductionEnd = $this->itemResult['reducedExpiry'];
-				$this->itemWeight = $this->itemResult['weight'];
-				$this->itemActive = 1;
-				//URLs
-				if ($config->getNode('server','rewrite')) {
-					$this->itemURL = $config->getNode('paths','root')."/item/".$this->itemID."/".str_replace(" ","_",$this->itemName)."/";
-					$this->itemModifyURL = $config->getNode('paths','root')."/item/".$this->itemID."/".str_replace(" ","_",$this->itemName)."/true";
+				$this->itemResult = $dbConn->fetch($this->itemQuery);
+				if ($this->itemResult['active'] == 0) {
+					$this->setDefaults();
+					$this->itemID = $this->itemResult['id'];
+					$this->itemName = str_replace("\\","",$this->itemResult['name']);
 				} else {
-					$this->itemURL = $config->getNode('paths','root')."/item/?id=".$this->itemID;
-					$this->itemModifyURL = $config->getNode('paths','root')."/item/?id=".$this->itemID."&modify=true";
-				}
-				//Delivery Rate
-				if ($config->isNode("temp","country")) $country = $config->getNode("temp","country"); else $country = $config->getNode("site","country");
-				$result = $dbConn->query("SELECT price FROM `delivery` WHERE lowerbound<='$this->itemWeight' AND upperbound>='$this->itemWeight' AND `country`='$country' LIMIT 1");
-				if ($dbConn->rows($result) == 0) {
-					$this->itemDeliveryCost = -1;
-				} else {
-					$result = $dbConn->fetch($result);
-					$this->itemDeliveryCost = $result['price'];
-				}
-			}
-		}
+					$this->itemID = $id;
+					$this->itemSKU = $this->itemResult['SKU'];
+					if ($this->itemSKU == "") $this->itemSKU = "N/A";
+					$this->itemName = str_replace("\\","",$this->itemResult['name']);
+					$this->itemPrice = $this->itemResult['price'];
+					$this->itemCost = $this->itemResult['cost'];
+					$this->itemStock = $this->itemResult['stock'];
+					$this->itemDesc = str_replace("\\","",$this->itemResult['description']);
+					//Categories
+					$result = $dbConn->query("SELECT catid FROM `item_category` WHERE itemid='".$id."'");
+					while ($row = $dbConn->fetch($result)) {
+						$this->itemCategory[] = $row['catid'];
+					}
+					//Features (Experimental)
+					$result = $dbConn->query("SELECT feature_id,value FROM `item_feature_number` WHERE item_id='".$id."'
+											 UNION SELECT feature_id,value FROM `item_feature_string` WHERE item_id='".$id."'
+											 UNION SELECT feature_id,value FROM `item_feature_date` WHERE item_id='".$id."'");
+					while ($row = $dbConn->fetch($result)) {
+						$this->itemFeatures[$row['feature_id']] = $row['value'];
+					}
+					//Price Reduction
+					$this->itemReducedPrice = $this->itemResult['reducedPrice'];
+					$this->itemReductionStart = $this->itemResult['reducedValidFrom'];
+					$this->itemReductionEnd = $this->itemResult['reducedExpiry'];
+					$this->itemWeight = $this->itemResult['weight'];
+					$this->itemActive = 1;
+					//URLs
+					if ($config->getNode('server','rewrite')) {
+						$this->itemURL = $config->getNode('paths','root')."/item/".$this->itemID."/".str_replace(" ","_",$this->itemName)."/";
+						$this->itemModifyURL = $config->getNode('paths','root')."/item/".$this->itemID."/".str_replace(" ","_",$this->itemName)."/true";
+					} else {
+						$this->itemURL = $config->getNode('paths','root')."/item/?id=".$this->itemID;
+						$this->itemModifyURL = $config->getNode('paths','root')."/item/?id=".$this->itemID."&modify=true";
+					}
+					//Delivery Rate
+					if ($config->isNode("temp","country")) $country = $config->getNode("temp","country"); else $country = $config->getNode("site","country");
+					$result = $dbConn->query("SELECT price FROM `delivery` WHERE lowerbound<='$this->itemWeight' AND upperbound>='$this->itemWeight' AND `country`='$country' LIMIT 1");
+					if ($dbConn->rows($result) == 0) {
+						$this->itemDeliveryCost = -1;
+					} else {
+						$result = $dbConn->fetch($result);
+						$this->itemDeliveryCost = $result['price'];
+					}
+				} //End Item inactive Else
+			} //End Item not found Else
+		} //End $id = -1 Else
 	}
 	
 	function setDefaults() {
 		global $config;
-		if (!stristr($_SERVER['HTTP_REFERER'],"admin/doImport.php")) {//Stop reset on import
+		if (!preg_match("/admin.*import.php/i",$_SERVER['HTTP_REFERER'])) {//Stop reset on import
 			$this->itemID = -1;
 			$this->itemName = $config->getNode("messages", "itemDefaultName");
 			$this->itemPrice = 0;
