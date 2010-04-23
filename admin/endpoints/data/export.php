@@ -1,31 +1,48 @@
 <?php
+function dataFilter($data) {
+	$data = htmlspecialchars($data,ENT_QUOTES);
+	return $data;
+}
+
 $requires_tier2 = true;
-require_once "../../../preload.php";
+require_once dirname(__FILE__)."/../../../preload.php";
+
+if (!isset($storeExport)) {
+	header("Content-Type:text/xml");
+	header("Content-Disposition:attachment;filename=flumpshop_export.xml");
+} else {
+	$fp = fopen($storeExport,'w');
+}
+
+function append($str) {
+	if (isset($GLOBALS['storeExport'])) {
+		fputs($GLOBALS['fp'],$str);
+	} else {
+		echo $str;
+	}
+}
 
 function exportResultSet($result,$mainKey,$keyName) {
 	global $dbConn;
-	echo "\t<$mainKey>\n";
+	append("\t<$mainKey>\n");
 	while ($row = $dbConn->fetch($result)) {
-		echo "\t\t<$keyName>\n";
+		append("\t\t<$keyName>\n");
 		foreach ($row as $key => $value) {
 			if (!is_int($key)) {
-				$value = filter_var($value,FILTER_SANITIZE_SPECIAL_CHARS,FILTER_FLAG_STRIP_LOW);
-				echo "\t\t\t<$key>".$value."</$key>\n";
+				$value = dataFilter($value);
+				append("\t\t\t<$key>".$value."</$key>\n");
 			}
 		}
-		echo "\t\t</$keyName>\n";
+		append("\t\t</$keyName>\n");
 	}
-	echo "\t</$mainKey>\n";
+	append("\t</$mainKey>\n");
 }
 
-header("Content-Type:text/xml");
-header("Content-Disposition:attachment;filename=flumpshop_export.xml");
-
-echo '<?xml version="1.0"?>';
-echo "<fsexport version='1'>\n";
+append('<?xml version="1.0"?>');
+append("<fsexport version='1'>\n");
 
 //Export database tables
-echo "<database>";
+append("<database>");
 exportResultSet($dbConn->query("SELECT * FROM `acp_login` ORDER BY id"),"acpusers","acpuser");
 
 exportResultSet($dbConn->query("SELECT * FROM `basket` ORDER BY id"),"baskets","basket");
@@ -68,27 +85,29 @@ exportResultSet($dbConn->query("SELECT * FROM `products` ORDER BY id"),"products
 
 exportResultSet($dbConn->query("SELECT * FROM `reserve` ORDER BY id"),"reserves","reserve");
 
-exportResultSet($dbConn->query("SELECT * FROM `sessions` ORDER BY id"),"sessions","session");
+exportResultSet($dbConn->query("SELECT * FROM `sessions` ORDER BY session_id"),"sessions","session");
 
-exportResultSet($dbConn->query("SELECT * FROM `stats` ORDER BY id"),"stats","stat");
+exportResultSet($dbConn->query("SELECT * FROM `stats` ORDER BY `key`"),"stats","stat");
 
 exportResultSet($dbConn->query("SELECT * FROM `techhelp` ORDER BY id"),"techhelp","entry");
 
-echo "</database>\n";
+append("</database>\n");
 
 //Export Configuration
-echo "<config>\n";
+append("<config>\n");
 
 foreach ($config->getTrees() as $tree) {
-	echo "\t<$tree>\n";
+	append("\t<$tree>\n");
 	foreach ($config->getNodes($tree) as $node) {
 		$node = preg_replace("/^[0-9]*$/","num__$0",$node);
-		echo "\t\t<$node>".filter_var($config->getNode($tree,$node),FILTER_SANITIZE_SPECIAL_CHARS,FILTER_FLAG_STRIP_LOW)."</$node>\n";
+		append("\t\t<$node>".filter_var($config->getNode($tree,$node),FILTER_SANITIZE_SPECIAL_CHARS,FILTER_FLAG_STRIP_LOW)."</$node>\n");
 	}
-	echo "\t</$tree>\n";
+	append("\t</$tree>\n");
 }
 
-echo "</config>\n";
+append("</config>\n");
 
-echo "</fsexport>";
+append("</fsexport>");
+
+if (isset($fp)) fclose($fp);
 ?>

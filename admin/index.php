@@ -20,7 +20,7 @@ if (isset($_POST['uname'])) {
 		if ($row['pass'] != md5(sha1($_POST['pass']))) {
 			$fail = true;
 		} else {
-			$dbConn->query("UDPATE `acp_login` SET last_login='".$dbConn->time()."' WHERE id=".$row['id']." LIMIT 1");
+			$dbConn->query("UPDATE `acp_login` SET last_login='".$dbConn->time()."' WHERE id=".$row['id']." LIMIT 1");
 			$_SESSION['acpusr'] = base64_encode($row['uname']."~".sha1($row['pass']));
 			header("Location: ./");
 		}
@@ -195,10 +195,6 @@ Please enter your username and password to continue...
                 <h2>Admin CP</h2><?php
 				$notice = false;
 				//Check for possible security issues
-				if (is_writable($config->getNode('paths','path'))) {
-					echo "<div class='ui-state-error'><span class='ui-icon ui-icon-alert'></span><strong>Security Issue</strong> - I am able to write to the home directory of this site (".$config->getNode('paths','path')."). This should be disabled except when running the Upgrade or Setup Wizards.</div>";
-					$notice = true;
-				}
 				if (file_exists("setup")) {
 					echo "<div class='ui-state-error'><span class='ui-icon ui-icon-alert'></span><strong>Security Issue</strong> - After initial installation, it is recommended that your rename or delete the /admin/setup folder in order to increase security.</div>";
 					$notice = true;
@@ -221,7 +217,8 @@ Please enter your username and password to continue...
 				}
 				
 				if (!$notice) {
-					echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-circle-check'></span>There is nothing that needs to be bought to your attention right now. Well done on creating a robust and secure installation.</div>";
+					//Let's not do this any more :D
+					//echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-circle-check'></span>There is nothing that needs to be bought to your attention right now. Well done on creating a robust and secure installation.</div>";
 				}
 				?><div id='dialog'></div>
 				<h2>Getting Started Checklist</h2>

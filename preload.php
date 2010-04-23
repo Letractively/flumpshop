@@ -115,7 +115,7 @@ debug_message("file_get_contents Function Definition Loaded.");
 $stats = new Stats();
 
 //Check PHP Version
-if (PHP_VERSION < "4.4.9") {
+if (PHP_VERSION < "4.4.0") {
 	if (!$_SETUP) init_err("Unsupported PHP Version. (v".PHP_VERSION.")");
 } else {
 	debug_message("PHP Version Supported (v".PHP_VERSION.")",true);
@@ -272,11 +272,10 @@ function placeholder_callback($args) {
 //CRON RUNNER
 if (!$_SETUP) {
 	if ($config->getNode("server","lastCron") < time()-($config->getNode('server','cronFreq')*60) && !$ajaxProvider) {
-		//Run in iFrame so it doesn't prevent loading of rest of page
-		//Echoing here screws up CSS - Runs in footer.php
-		$cron = "<iframe style='display: none;' src='".$config->getNode("paths","root")."/admin/endpoints/process/cron.php'></iframe>";
+		//Actually ran in footer if necessary
+		$cron = true;
 	} else {
-		$cron = "";
+		$cron = false;
 	}
 }
 

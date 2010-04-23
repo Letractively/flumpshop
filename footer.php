@@ -1,7 +1,6 @@
 </div><!--End Content Container--><?php require_once dirname(__FILE__)."/preload.php";
 echo "<!--Page Generated in ".(microtime_float()-$time_start)." Seconds-->";
 ob_flush();
-echo $cron;
 
 /*PLUGINS*/
 //Each plugin that has /includes/footer.inc.php will have an option displayed here
@@ -65,5 +64,13 @@ var pageTracker = _gat._getTracker("<?php echo $config->getNode('server','analyt
 pageTracker._trackPageview();
 } catch(err) {}</script><?php
 }
+
+if ($cron) {
+	ob_flush();flush(); //Let page output whilst this runs
+	echo "<div style='display:none;'>";
+	require_once dirname(__FILE__)."/admin/endpoints/process/cron.php";
+	echo "</div>";
+}
+
 ?></body>
 </html>

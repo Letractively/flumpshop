@@ -38,7 +38,7 @@ while ($dir = array_pop($dirs)) {
 	$subdir = str_replace("setup_files","",$dir);
 	while ($file = readdir($handle)) {
 		if ($file != "." and $file != "..") {//. and ..
-			if (is_dir(dirname(__FILE__)."/$dir/$file")) {
+			if (is_dir(dirname(__FILE__)."/../$dir/$file")) {
 				if (!is_dir($config->getNode('paths','offlineDir')."/$subdir/$file")) {
 					if (!mkdir($config->getNode('paths','offlineDir')."/$subdir/$file")) {
 						file_put_contents(dirname(__FILE__)."/status.txt", "Error: Couldn't create directory ".$config->getNode('paths','offlineDir')."/$subdir/$file");
@@ -48,10 +48,10 @@ while ($dir = array_pop($dirs)) {
 				}
 				array_push($dirs,$dir."/$file");
 			} else {
-				if (!copy(dirname(__FILE__)."/$dir/$file",$config->getNode('paths','offlineDir')."/$subdir/$file")) {
-					file_put_contents(dirname(__FILE__)."/status.txt", "Error: Failed to copy ".dirname(__FILE__)."/$dir/$file"." to ".$config->getNode('paths','offlineDir')."/$subdir/$file");
+				if (!copy(dirname(__FILE__)."/../$dir/$file",$config->getNode('paths','offlineDir')."/$subdir/$file")) {
+					file_put_contents(dirname(__FILE__)."/status.txt", "Error: Failed to copy ".dirname(__FILE__)."/../$dir/$file"." to ".$config->getNode('paths','offlineDir')."/$subdir/$file");
 				} else {
-					file_put_contents(dirname(__FILE__)."/status.txt", "Copied ".dirname(__FILE__)."/$dir/$file"." to ".$config->getNode('paths','offlineDir')."/$subdir/$file");
+					file_put_contents(dirname(__FILE__)."/status.txt", "Copied ".dirname(__FILE__)."/../$dir/$file"." to ".$config->getNode('paths','offlineDir')."/$subdir/$file");
 				}
 			}
 		}

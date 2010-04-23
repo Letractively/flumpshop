@@ -1,8 +1,5 @@
 <?php
-echo "Hi.";
-die(); // I broked it
-$auth = false; //Disables need for admin login
-require_once dirname(__FILE__)."/../header.php";
+require_once dirname(__FILE__)."/../../../preload.php";
 $initTime = $dbConn->time();
 
 //Clear Item Holds
@@ -22,18 +19,15 @@ while ($row = $dbConn->fetch($result)) {
 }
 
 //Scheduled Backup
-if ($config->getNode("server","lastBackup") < $initTime-($config->getNode('server','backupFreq')*3600) and $config->getNode('server','backupFreq') >= 1) {
+if ($config->getNode("server","lastBackup") < $initTime-($config->getNode('server','backupFreq')*3600) and $config->getNode('server','backupFreq') > 0 or true) {
 	$config->setNode("server","lastBackup",time(),"Last Scheduled Backup");
-	$storeExport = $config->getNode("paths","offlineDir")."/backup/backup-".date("d-m-y_His").".fml";
+	$storeExport = $config->getNode("paths","offlineDir")."/backup/backup-".date("d-m-y_His").".xml";
 	echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-info'></span>Running backup - $storeExport</div>";
-	include dirname(__FILE__)."/doExport.php";
+	require_once dirname(__FILE__)."/../data/export.php";
 }
 
 //Store last run time
 $config->setNode("server","lastCron",time(),"Last Cron Run");
 
 echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-circle-check'></span>Scheduled Tasks Completed.</div>";
-
-$_GET['frame'] = "main";
-include dirname(__FILE__)."/../../index.php";
 ?>

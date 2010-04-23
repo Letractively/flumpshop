@@ -1,6 +1,6 @@
 <?php
 require_once "../preload.php";
-if (!acpusr_validate()) exit;
+if (!acpusr_validate()) {echo $config->getNode("messages","adminDenied"); exit;}
 
 if (md5($_POST['passkey']) == $config->getNode('site','password')) {
 	$user = explode("~",base64_decode($_SESSION['acpusr']));

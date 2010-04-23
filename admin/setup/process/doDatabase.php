@@ -1,12 +1,27 @@
 <?php
 require_once dirname(__FILE__)."/../header.inc.php";
 
-$_SESSION['config']->setNode("database","type",$_POST['type']);
-$_SESSION['config']->setNode("database","address",$_POST['address']);
-$_SESSION['config']->setNode("database","port",$_POST['port']);
-$_SESSION['config']->setNode("database","uname",$_POST['uname']);
-$_SESSION['config']->setNode("database","password",$_POST['password']);
-$_SESSION['config']->setNode("database","name",$_POST['name']);
+if (!isset($logger)) { //Not if upgrading
+	$_SESSION['config']->setNode("database","type",$_POST['type']);
+	$_SESSION['config']->setNode("database","address",$_POST['address']);
+	$_SESSION['config']->setNode("database","port",$_POST['port']);
+	$_SESSION['config']->setNode("database","uname",$_POST['uname']);
+	$_SESSION['config']->setNode("database","password",$_POST['password']);
+	$_SESSION['config']->setNode("database","name",$_POST['name']);
+	//Alias needed for factory
+	$config = $_SESSION['config'];
+	
+	file_put_contents(dirname(__FILE__)."/status.txt", "Testing Database Connection");
+	$dbConn = db_factory();
+	if (!$dbConn->connected) {
+		file_put_contents(dirname(__FILE__)."/status.txt", "Database Connection Failed!");
+		sleep(1);
+		unlink(dirname(__FILE__)."/status.txt");
+		require_once dirname(__FILE__)."/../footer.inc.php";
+		exit;
+	}
+	file_put_contents(dirname(__FILE__)."/status.txt", "Database Connection Succesful. Analysing Database");
+}
 
 /*Create Database*/
 //Database Upgrader
@@ -21,18 +36,7 @@ function DBUpgrade($current_version = 1) {
 		$current_version++;
 	}
 }
-//Alias needed for factory
-$config = $_SESSION['config'];
-file_put_contents(dirname(__FILE__)."/status.txt", "Testing Database Connection");
-$dbConn = db_factory();
-if (!$dbConn->connected) {
-	file_put_contents(dirname(__FILE__)."/status.txt", "Database Connection Failed!");
-	sleep(1);
-	unlink(dirname(__FILE__)."/status.txt");
-	require_once dirname(__FILE__)."/../footer.inc.php";
-	exit;
-}
-file_put_contents(dirname(__FILE__)."/status.txt", "Database Connection Succesful. Analysing Database");
+
 if ($result = $dbConn->query("SELECT `value` FROM `stats` WHERE `key` = 'dbVer' LIMIT 1")) {
 	file_put_contents(dirname(__FILE__)."/status.txt", "Running DBUpgrade");
 	$result = $dbConn->fetch($result);

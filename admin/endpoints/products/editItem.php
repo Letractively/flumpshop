@@ -3,8 +3,40 @@ $USR_REQUIREMENT = "can_edit_products";
 require_once dirname(__FILE__)."/../header.php";
 
 $item = new Item(intval($_GET['id']));
-?><img src='../../../item/imageProvider.php?id=<?php echo $item->getID();?>' style='float:right;width:100px' /><h1>Edit Item</h1>
-<form action="processEditForm.php" method="post" class="ui-widget-content" enctype="multipart/form-data" onsubmit="if ($(this).valid()) loader('Updating Product<br />Please be patient if you are adding an image','Saving Data');">
+?>
+<script type="text/javascript" src="../../tiny_mce/jquery.tinymce.js"></script>
+<script type="text/javascript">
+	$().ready(function() {
+		$('#description').tinymce({
+			// Location of TinyMCE script
+			script_url : '../../tiny_mce/tiny_mce.js',
+
+			// General options
+			theme : "advanced",
+			plugins : "pagebreak,style,layer,table,advlink,iespell,inlinepopups,preview,media,searchreplace,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,advlist",
+
+			// Theme options
+			theme_advanced_buttons1 : "bold,italic,underline,|,justifyleft,justifycenter,justifyright,justifyfull,formatselect,forecolor",
+			theme_advanced_buttons2 : "search,|,bullist,numlist,|,blockquote,|,link,unlink,code,|,preview,|",
+			theme_advanced_buttons3 : "hr,removeformat,|,sub,sup,|,charmap,iespell,media,cleanup",
+			theme_advanced_toolbar_location : "top",
+			theme_advanced_toolbar_align : "left",
+			theme_advanced_statusbar_location : "bottom",
+			theme_advanced_resizing : true,
+
+			// Example content CSS (should be your site CSS)
+			content_css : "../../../style/cssProvider.php?theme=<?php echo $config->getNode("site","theme");?>&sub=main",
+
+			// Drop lists for link/image/media/template dialogs
+			template_external_list_url : "lists/template_list.js",
+			external_link_list_url : "lists/link_list.js",
+			media_external_list_url : "lists/media_list.js"
+		});
+	});
+</script>
+
+<img src='../../../item/imageProvider.php?id=<?php echo $item->getID();?>' style='float:right;width:100px' /><h1>Edit Item</h1>
+<form action="../products/processEditForm.php" method="post" class="ui-widget-content" enctype="multipart/form-data" onsubmit="if ($(this).valid()) loader('Updating Product<br />Please be patient if you are adding an image','Saving Data');">
 <input type="hidden" name="id" id="id" value="<?php echo intval($_GET['id']);?>" /><?php
 if (isset($_GET['return']) and $_GET['return'] == "report") {
 	echo "<input type='hidden' name='return' id='return' value='".$_SERVER['HTTP_REFERER']."' />";
