@@ -100,7 +100,7 @@ foreach ($config->getTrees() as $tree) {
 	append("\t<$tree>\n");
 	foreach ($config->getNodes($tree) as $node) {
 		$node = preg_replace("/^[0-9]*$/","num__$0",$node);
-		append("\t\t<$node>".filter_var($config->getNode($tree,$node),FILTER_SANITIZE_SPECIAL_CHARS,FILTER_FLAG_STRIP_LOW)."</$node>\n");
+		append("\t\t<$node>".htmlspecialchars($config->getNode($tree,$node),ENT_QUOTES)."</$node>\n");
 	}
 	append("\t</$tree>\n");
 }

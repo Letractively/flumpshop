@@ -15,8 +15,9 @@ $dbConn->query("DELETE FROM `reserve` WHERE expire<='".$initTime."'");
 
 $result = $dbConn->query("SELECT expiryAction FROM `keys` WHERE expiry<='".$initTime."'");
 while ($row = $dbConn->fetch($result)) {
-	eval(base64_decode($row['expiryAction']));
+	$dbConn->query(($row['expiryAction']));
 }
+$result = $dbConn->query("DELETE FROM `keys` WHERE expiry<='".$initTime."'");
 
 //Scheduled Backup
 if ($config->getNode("server","lastBackup") < $initTime-($config->getNode('server','backupFreq')*3600) and $config->getNode('server','backupFreq') > 0 or true) {

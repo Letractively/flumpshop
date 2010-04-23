@@ -122,7 +122,7 @@ CREATE TABLE `sessions` (
   `session_id` varchar(32) NOT NULL,
   `basket` int(10) unsigned NOT NULL,
   `active` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `ip_addr` int(12) unsigned DEFAULT '0',
+  `ip_addr` int(12) DEFAULT '0',
   PRIMARY KEY (`session_id`),
   KEY `basket` (`basket`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

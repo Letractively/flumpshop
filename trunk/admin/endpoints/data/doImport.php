@@ -60,7 +60,6 @@ function getData($parser,$data) {
 }
 
 function commitCache() {
-	return;
 	global $dbConn,$config,$currentSection,$currentElement,$currentSubElement,$dataCache;
 	//Actually store the data
 	switch ($currentSection) {
@@ -72,6 +71,7 @@ function commitCache() {
 					$dbConn->query("DELETE FROM `acp_login` WHERE id='".$dataCache['ID']."' LIMIT 1");
 					//Set Default if necessary
 					if (!isset($dataCache['LAST_LOGIN']) or $dataCache['LAST_LOGIN'] == '') $dataCache['LAST_LOGIN'] = "0000-00-00 00:00:00";
+					if (!isset($dataCache['LAST_TIER2_LOGIN']) or $dataCache['LAST_TIER2_LOGIN'] == '') $dataCache['LAST_TIER2_LOGIN'] = "0000-00-00 00:00:00";
 					//Insert new one
 					if (!$dbConn->query("INSERT INTO `acp_login` (id,uname,pass,last_login,last_tier2_login,can_add_products,can_edit_products,can_delete_products,can_add_categories,can_edit_categories,can_delete_categories,can_edit_pages,can_edit_delivery_rates,can_post_news,can_add_customers,can_contact_customers,can_view_customers,can_view_orders,can_edit_orders,can_view_reports,pass_expires) VALUES ('".$dataCache['ID']."','".$dataCache['UNAME']."','".$dataCache['PASS']."','".$dataCache['LAST_LOGIN']."','".$dataCache['LAST_TIER2_LOGIN']."','".$dataCache['CAN_ADD_PRODUCTS']."','".$dataCache['CAN_EDIT_PRODUCTS']."','".$dataCache['CAN_DELETE_PRODUCTS']."','".$dataCache['CAN_ADD_CATEGORIES']."','".$dataCache['CAN_EDIT_CATEGORIES']."','".$dataCache['CAN_DELETE_CATEGORIES']."','".$dataCache['CAN_EDIT_PAGES']."','".$dataCache['CAN_EDIT_DELIVERY_RATES']."','".$dataCache['CAN_POST_NEWS']."','".$dataCache['CAN_ADD_CUSTOMERS']."','".$dataCache['CAN_CONTACT_CUSTOMERS']."','".$dataCache['CAN_VIEW_CUSTOMERS']."','".$dataCache['CAN_VIEW_ORDERS']."','".$dataCache['CAN_EDIT_ORDERS']."','".$dataCache['CAN_VIEW_REPORTS']."','".$dataCache['PASS_EXPIRES']."')")) {
 						 //Failed
@@ -265,6 +265,8 @@ function commitCache() {
 				case "ENTRY":
 					//Both news and techhelp here. $currentElement = table name
 					//Import News Entry
+					//Defaults
+					if (!isset($dataCache['TIMESTAMP']) or $dataCache['TIMESTAMP'] == '' or $dataCache['TIMESTAMP'] == "CURRENT_TIMESTAMP") $dataCache['TIMESTAMP'] = $dbConn->time();
 					//Delete old
 					$dbConn->query("DELETE FROM `".$currentElement."` WHERE id='".$dataCache['ID']."' LIMIT 1");
 					if ($dbConn->query("INSERT INTO `".$currentElement."` (id,title,body,timestamp) VALUES ('".$dataCache['ID']."','".$dataCache['TITLE']."','".$dataCache['BODY']."','".$dataCache['TIMESTAMP']."')")) {
@@ -334,6 +336,8 @@ function commitCache() {
 					break;
 				case "SESSION":
 					//Import Session
+					//Defaults
+					if (!isset($dataCache['ACTIVE']) or $dataCache['ACTIVE'] == '' or $dataCache['ACTIVE'] == "CURRENT_TIMESTAMP") $dataCache['ACTIVE'] = $dbConn->time();
 					//Delete old
 					$dbConn->query("DELETE FROM `sessions` WHERE session_id='".$dataCache['SESSION_ID']."' LIMIT 1");
 					if ($dbConn->query("INSERT INTO `sessions` (session_id,basket,active,ip_addr) VALUES ('".$dataCache['SESSION_ID']."','".$dataCache['BASKET']."','".$dataCache['ACTIVE']."','".$dataCache['IP_ADDR']."')")) {
@@ -348,7 +352,7 @@ function commitCache() {
 					//Import Stat
 					//Delete old
 					$dbConn->query("DELETE FROM `stats` WHERE id='".$dataCache['ID']."' LIMIT 1");
-					if ($dbConn->query("INSERT INTO `stats` (id,'key',value) VALUES ('".$dataCache['ID']."','".$dataCache['KEY']."','".$dataCache['VALUE']."')")) {
+					if ($dbConn->query("INSERT INTO `stats` (id,`key`,value) VALUES ('".$dataCache['ID']."','".$dataCache['KEY']."','".$dataCache['VALUE']."')")) {
 						//Success
 						debug_message("Imported Stat #".$dataCache['ID'].".");
 					} else {
