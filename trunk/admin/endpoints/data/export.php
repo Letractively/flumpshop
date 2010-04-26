@@ -1,6 +1,6 @@
 <?php
 function dataFilter($data) {
-	$data = htmlspecialchars($data,ENT_QUOTES);
+	$data = htmlspecialchars(utf8_encode($data));
 	return $data;
 }
 

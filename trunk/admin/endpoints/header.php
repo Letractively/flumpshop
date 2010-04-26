@@ -20,7 +20,7 @@ if (isset($logger)) $prefix = "../"; else $prefix = "../../";
 <link href="<?php echo $prefix;?>jqueryui.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo $prefix;?>../style/jquery-overrides.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $prefix;?>../js/jquery.js"></script>
-<script type="text/javascript" src="<?php echo $prefix;?>../js/jqueryui-1-8.js"></script>
+<script type="text/javascript" src="<?php echo $prefix;?>../js/jqueryui.js"></script>
 <script type="text/javascript" src="<?php echo $prefix;?>../js/jquery.validate.min.js"></script>
 <script type="text/javascript" src="<?php echo $prefix;?>../js/htmlbox.full.js"></script>
 <script type="text/javascript" src="<?php echo $prefix;?>../js/defaults.php"></script>
