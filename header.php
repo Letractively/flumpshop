@@ -9,17 +9,17 @@ if (!isset($_SUBPAGE)) $_SUBPAGE = true;
 <meta name='keywords' content='<?php echo $config->getNode('messages','keywords');?>' />
 <meta name='description' content='<?php echo $config->getNode('messages','tagline');?>' />
 <title><?php echo preg_replace("/<(.*?)>/","",$config->getNode('messages','name')); //preg strips HTML tags?> | <?php echo $page_title;?></title>
-<link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/style_carousel.css' type='text/css' />
-<script src='<?php echo $config->getNode('paths','root');?>/js/jquery.js' type='text/javascript'></script>
-<script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jqueryui.js"></script> 
-<script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jeditable.js"></script> 
-<script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jquery.validate.min.js"></script> 
-<script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/additional-methods.js"></script> 
-<script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jquery.validate.password.js"></script> 
-<script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jquery.form.js"></script>
-<script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/defaults.php"></script>
-<link rel="stylesheet" type="text/css" href="<?php echo $config->getNode('paths','root');?>/style/jquery.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo $config->getNode('paths','root');?>/style/jquery-overrides.css" /><?php
+<link rel="stylesheet" type="text/css" href="<?php echo $config->getNode('paths','root');?>/style/jquery.css" /><?php
+//THEME
+?><link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/cssprovider.php?theme=<?php echo $config->getNode("site", "theme");?>&amp;sub=main' type='text/css' /><?php
+if ($_SUBPAGE == true) {
+	?><link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/cssprovider.php?theme=<?php echo $config->getNode("site", "theme");?>&amp;sub=sub' type='text/css' /><?php
+}
+?><script src='<?php echo $config->getNode('paths','root');?>/js/jquery.js' type='text/javascript'></script>
+<script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jqueryui.js"></script>
+<script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/additional-methods.js"></script>
+<script type="text/javascript" src="<?php echo $config->getNode('paths','root');?>/js/defaults.php"></script><?php
 
 /*PLUGINS*/
 //Each plugin that has /includes/header.inc.php will have an option displayed here
@@ -28,11 +28,6 @@ while ($module = readdir($dir)) {
 	if (file_exists($config->getNode('paths','offlineDir')."/plugins/".$module."/includes/header.inc.php")) {
 		include $config->getNode('paths','offlineDir')."/plugins/".$module."/includes/header.inc.php";
 	}
-}
-//THEME
-?><link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/cssprovider.php?theme=<?php echo $config->getNode("site", "theme");?>&amp;sub=main' type='text/css' /><?php
-if (isset($_SUBPAGE) and $_SUBPAGE == true) {
-	?><link rel='stylesheet' href='<?php echo $config->getNode('paths','root');?>/style/cssprovider.php?theme=<?php echo $config->getNode("site", "theme");?>&amp;sub=sub' type='text/css' /><?php
 }
 
 //Browser-dependant CSS Overrides

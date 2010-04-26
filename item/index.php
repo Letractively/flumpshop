@@ -23,11 +23,6 @@ function reduceItem() {
 							}
 						});
 }
-
-<?php
-//End modify only JS
-}
-?>
 //Full size image dialog
 function openImageViewer(imageID) {
 	$("#dialog").html("<img src='<?php echo $config->getNode('paths','root');?>/item/imageProvider.php?id="+document.id+"&amp;image="+imageID+"&amp;size=full' style='max-width: 800px; max-height: 500px;' />")

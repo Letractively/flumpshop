@@ -51,7 +51,7 @@ Please enter the configuration password to continue...
 <link href="../jqueryui.css" rel="stylesheet" type="text/css" />
 <link href="../style-nav.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" language="javascript" src="../../js/jquery.js"></script>
-<script type="text/javascript" language="javascript" src="../../js/jqueryui-1-8.js"></script>
+<script type="text/javascript" language="javascript" src="../../js/jqueryui.js"></script>
 <script type="text/javascript" language="javascript" src="../../js/jquery.validate.min.js"></script>
 <script type="text/javascript" language="javascript" src="../../js/defaults.php"></script>
 </head>

@@ -43,7 +43,8 @@ if (!isset($_GET['random'])) {
 	$file = $dir."/thumb_0.png";
 }
 
-header('Content-type: image/gif');
-$im = imagecreatefrompng($file);
-echo imagegif($im);
+header("Content-Type: image/png");
+header("Cache-control: max-age=604800, public"); //1 Week
+header("Expires: ".date("D, d M Y H:i:s T",time()+(3600*24)));
+echo file_get_contents($file);
 ?>
