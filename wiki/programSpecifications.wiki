@@ -16,3 +16,13 @@ Extensibility Platform
 Ecommerce Platform
 Reporting Platform
 Localisation Platform
+
+Interfaces
+Functional Capabilities
+Performance Levels
+Data Structures/Elements
+Safety
+Reliability
+Security/Privacy
+Quality
+Constraints and Limitations
