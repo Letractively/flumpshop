@@ -3,6 +3,8 @@
 
 = Introduction =
 
+*Please note that the contents of this document are provisional and subject to change*
+
 Although every precaution is always made to ensure that the Flumpshop platform does not fail, the system is not perfect, and additionally, there are other issues that could cause a system failure. It is important that preventive steps are taken, and that in the event of a failure additional restore procedures for your needs are always in place.
 
 
