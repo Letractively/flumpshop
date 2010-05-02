@@ -1,0 +1,18 @@
+#summary The specifications of the Flumpshop platform
+#labels Phase-Requirements,Documentation
+
+= Introduction =
+
+This page is currently under construction. Below you will see an outline of the completed page.
+
+
+= Details =
+
+Website/CMS Platform
+Product Management Platform
+Customer Management Platform
+Customisation Platform
+Extensibility Platform
+Ecommerce Platform
+Reporting Platform
+Localisation Platform
