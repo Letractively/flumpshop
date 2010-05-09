@@ -3,7 +3,7 @@ require_once dirname(__FILE__)."/../../../preload.php";
 $initTime = $dbConn->time();
 
 //Clear Item Holds
-$result = $dbConn->query("SELECT * FROM `reserve` WHERE expire<='".$initTime."'");
+$result = $dbConn->query("SELECT item,quantity FROM `reserve` WHERE expire<='".$initTime."'");
 
 while ($row = $dbConn->fetch($result)) {
 	$quantity = $row['quantity'];
@@ -20,7 +20,7 @@ while ($row = $dbConn->fetch($result)) {
 $result = $dbConn->query("DELETE FROM `keys` WHERE expiry<='".$initTime."'");
 
 //Scheduled Backup
-if ($config->getNode("server","lastBackup") < $initTime-($config->getNode('server','backupFreq')*3600) and $config->getNode('server','backupFreq') > 0 or true) {
+if ($config->getNode("server","lastBackup") < $initTime-($config->getNode('server','backupFreq')*3600) and $config->getNode('server','backupFreq') > 0) {
 	$config->setNode("server","lastBackup",time(),"Last Scheduled Backup");
 	$storeExport = $config->getNode("paths","offlineDir")."/backup/backup-".date("d-m-y_His").".xml";
 	echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-info'></span>Running backup - $storeExport</div>";

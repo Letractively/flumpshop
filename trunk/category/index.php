@@ -16,7 +16,7 @@ echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->ge
 	
 	//Sort order
 	echo "<div id='sorter'>";
-	echo "<h4 id='sort-header' class='ui-widget-header'>Features<sup>labs</sup></h4>";
+	echo "<h4 id='sort-header' class='ui-widget-header'>".$config->getNode("messages","featuresName")."</h4>";
 	echo "<div id='sort-content' class='ui-widget-content'>";
 	
 	//Determine sort text

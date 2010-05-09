@@ -17,7 +17,7 @@ CREATE TABLE `bugs` (
 CREATE TABLE `category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(75) NOT NULL,
-  `description` varchar(255) NOT NULL,
+  `description` text NOT NULL,
   `parent` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `parent` (`parent`)

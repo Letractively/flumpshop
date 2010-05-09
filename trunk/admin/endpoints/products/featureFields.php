@@ -3,7 +3,7 @@ require_once "../../../preload.php";
 
 $id = intval($_GET['id']);
 if ($id == 0) {
-	die("<p>There are no feature attributes for this category.</p>");
+	die("<p>There are no feature attributes for the selected categories.</p>");
 }
 
 //Get category features from database

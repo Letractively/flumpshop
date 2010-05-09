@@ -1,4 +1,5 @@
 <?php
+define("PAGE_TYPE","about");
 require_once dirname(__FILE__)."/preload.php";
 $page_title = $config->getNode('messages','aboutPageHeader');
 require_once dirname(__FILE__)."/header.php";
