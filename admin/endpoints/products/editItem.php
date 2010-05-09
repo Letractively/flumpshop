@@ -85,7 +85,7 @@ if (isset($_GET['return']) and $_GET['return'] == "report") {
 $i = 0;
 	foreach ($item->getCategories() as $catID) {
 	?><tr>
-		<td><label for="category_<?php echo $i;?>">Category <?php echo $i;?>: </label></td>
+		<td><label for="category_<?php echo $i;?>">Choose a Category: </label></td>
 		<td><select name="category_<?php echo $i;?>" id="category_<?php echo $i;?>" class="ui-widget-content ui-state-default" onchange="updateFeatures();"><option value="">[Remove Category]</option><?php
 		$result = $dbConn->query("SELECT id FROM `category` ORDER BY `parent` ASC");
 		while ($row = $dbConn->fetch($result)) {
@@ -99,12 +99,13 @@ $i = 0;
 	$i++;
 	}
 ?><tr>
-	<td colspan="2" id="category_feature_fields"><!--Placeholder element for features--></td>
-	<td>Please note that changing any categories will cause the Features section to update, losing any changes you have made.</td>
+	<td>&nbsp;</td>
+	<td><button onclick='addCategory(this); return false;'>Add another category...</button></td>
+	<td>It is possible to add an infinite number of categories to a product.</td>
 </tr>
 <tr>
-	<td colspan="2"><button onclick='addCategory();'>Add another category...</button></td>
-	<td>It is possible to add an infinite number of categories to a product.</td>
+	<td colspan="2" id="category_feature_fields"><!--Placeholder element for features--></td>
+	<td>Please note that changing any categories will cause the Features section to update, losing any changes you have made.</td>
 </tr>
 <tr>
     <td><label for="image">Image: </label></td>
@@ -125,9 +126,9 @@ function updateFeatures() {
 }
 updateFeatures();
 
-function addCategory() {
-	$('#category_'+(document.next_num-1)).parent().parent().after("<tr id='newField_"+document.next_num+"'><td><img src='../../../images/loading.gif' />Loading content...</td></tr>");
-	$('#newField_'+document.next_num).load("categoryField.php?id="+document.next_num);
+function addCategory(caller) {
+	$(caller).parent().parent().before("<tr id='newField_"+document.next_num+"'><td><img src='../../../images/loading.gif' />Loading content...</td></tr>");
+	$('#newField_'+document.next_num).load("../products/categorySelect.php?id="+document.next_num);
 	document.next_num++;
 }
 </script>

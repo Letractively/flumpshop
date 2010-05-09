@@ -230,7 +230,7 @@ class Item {
 	
 	//Return Product Info
 	function getDetails($type,$int = 0) {
-		//Int Usage: Quantity for Basket View (Integer), Edit Mode for Full View (Boolean), $higlight for Search View (String/Array)
+		//Int Usage: Quantity for Basket View (Integer), $higlight for Search View (String/Array)
 		global $config, $stats, $dbConn;
 		$type = strtoupper($type); //Standardize for easy comparison
 		if ($type == "INDEX") {
@@ -246,7 +246,7 @@ class Item {
 		if ($type == "CATEGORY") {
 			$reply = "<table><tr><td>";
 			//Image
-			$reply .= "<a href='".$this->getURL()."' class='ui-widget-content'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' style='margin-right: 1em; margin-top: 1em; max-height: ".(150*$config->getNode("viewItem","imageScale"))."px; max-width: ".(150*$config->getNode("viewItem","imageScale"))."px;' alt='".$this->getName()."' /></a>";
+			$reply .= "<a href='".$this->getURL()."' class='ui-widget-content'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' style='margin-right: 1em; margin-top: 1em' alt='".$this->getName()."' /></a>";
 			$reply .= "</td>";//End Image TD
 			if (strtolower($config->getNode('viewItem','catTextPos')) == "bottom") $reply .= "</tr><tr>";
 			$reply .= "<td>";//Start Content TD
@@ -266,24 +266,6 @@ class Item {
 		}
 		if ($type == "FULL") {
 			$reply = "";
-			if ($int === true && (isset($_SESSION['adminAuth']) && $_SESSION['adminAuth'] == true)) {
-				//Image Upload
-				$reply .= "<form action='".$config->getNode('paths','root')."/item/upload.php' method='post' enctype='multipart/form-data'><label for='file'>Upload Image: </label><input type='file' name='image' id='image' class='ui-state-default' /><input type='submit' class='ui-state-default' value='Upload' /><input type='hidden' name='id' id='id' value='".$this->getID()."' /></form>";
-				
-				//Change Category
-				$reply .= "<form action='".$config->getNode('paths','root')."/item/update.php?pid=category' method='post' enctype='multipart/form-data' onsubmit='$(\"#notice\").html(loadMsg(\"Updating Category...\"));$(this).ajaxSubmit({target: \"#notice\"}); return false;'><select name='newCat' id='newCat' class='ui-widget-content'><option value='0'>Uncategorised</option>";
-				$result = $dbConn->query("SELECT id FROM `category` ORDER BY `parent` ASC");
-				while ($row = $dbConn->fetch($result)) {
-					$parentCategory = new Category($row['id']);
-					$selected = "";
-					if ($this->getCategory(0) == $row['id']) $selected = " selected='selected'";
-					$reply .= "<option value='".$parentCategory->getID()."'$selected>".$parentCategory->getFullName()."</option>";
-				}
-				$reply .= "</select><input type='submit' class='ui-state-default' value='Change Category' /><input type='hidden' name='id' id='id' value='".$this->getID()."' /></form>";
-				
-				//Disable
-				$reply .= '<a href="javascript:void(0);" onclick="$(\'#notice\').html(loadMsg(\'Hiding Product...\')).load(\''.$config->getNode('paths','root').'/admin/endpoints/process/disableItem.php?id='.$this->getID().'\');">Hide Product</a>';
-			}
 			
 			$reply .= "<div id='page_text'><h3 id='page_title'>".$this->getName()."</h3>";
 			//Images
@@ -334,7 +316,7 @@ class Item {
 			}
 			$reply .= $this->getDesc()."</p>";
 			//Features (Experimental)
-			$reply .= "<h4>".$config->getNode("messages","featuresName")."<sup>labs</sup></h4><ul>";
+			$reply .= "<h4>".$config->getNode("messages","featuresName")."</h4><ul>";
 			foreach ($this->itemFeatures as $featureId => $featureValue) {
 				$feature = new Feature($featureId);
 				$reply .= "<li>".$feature->getName().": ".$feature->parseValue($featureValue)."</li>";

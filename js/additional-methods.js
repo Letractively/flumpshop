@@ -1,3 +1,8 @@
+$.validator.addMethod("unique", function(value,element,params) {
+	//Flumpnet Custom Validation method - used for groups of selections to prevent the same item being selected twice
+	if ($('.'+params+'[value="'+value+'"]:not("#'+element.id+'")').length == 0) return true; else return false;
+}, "You've already chosen this value.");
+
 jQuery.validator.addMethod("maxWords", function(value, element, params) { 
     return this.optional(element) || value.match(/\b\w+\b/g).length < params; 
 }, jQuery.validator.format("Please enter {0} words or less.")); 

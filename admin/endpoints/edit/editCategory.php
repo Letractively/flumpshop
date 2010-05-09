@@ -44,7 +44,7 @@ if (!isset($_GET['id'])) {
     <label for="description">Description: </label><br /><textarea rows="4" cols="45" name="description" id="description" class="ui-widget-content ui-state-default"><?php echo $category->getDescription();?></textarea><br />
     <label for="parent">Parent: </label>
     <select name="parent" id="parent" class="ui-widget-content">
-        <option value="0">No Parent</option>
+        <option value="0">No Parent (Top-level Category)</option>
         <?php
         $result = $dbConn->query("SELECT id FROM `category` ORDER BY `parent` ASC");
         while ($row = $dbConn->fetch($result)) {
