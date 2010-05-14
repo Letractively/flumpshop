@@ -1,7 +1,76 @@
 <?php
 require_once dirname(__FILE__)."/preload.php";
+
 if (!isset($page_title)) $page_title = "Welcome";
 if (!isset($_SUBPAGE)) $_SUBPAGE = true;
+
+if (PAGE_TYPE == "index" and $config->getNode("site","templateMode") == "core") {
+	//GroundUP Templater (Experimental)
+	// Create content variables
+	//Meta Tags
+	$meta_tags = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+	$meta_tags .= "<meta name='keywords' content='".$config->getNode('messages','keywords')."' />";
+	$meta_tags .= "<meta name='description' content='".$config->getNode('messages','tagline')."' />";
+	//Title
+	$title = preg_replace("/<(.*?)>/","",$config->getNode('messages','name')); //preg strips HTML tags
+	$title .= " | ";
+	$title .= $page_title;
+	//CSS Includes
+	$css_links = "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/jquery.css'>";
+	$css_links .= "<link rel='stylesheet' href='".$config->getNode('paths','root')."/style/cssprovider.php?theme=".$config->getNode("site", "theme")."&amp;sub=main' type='text/css' />";
+	// Browser-dependant CSS Overrides
+	if (strstr($_SERVER['HTTP_USER_AGENT'],"Opera")) {
+		$css_links .= "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=".$config->getNode("site","theme")."&amp;sub=opera' />";
+	}
+	if (strstr($_SERVER['HTTP_USER_AGENT'],"MSIE 6.0")) {
+		$css_links .= "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=".$config->getNode("site","theme")."&amp;sub=ie6' />";
+	}
+	if (strstr($_SERVER['HTTP_USER_AGENT'],"MSIE 7.0")) {
+		$css_links .= "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=".$config->getNode("site","theme")."&amp;sub=ie7' />";
+	}
+	if (strstr($_SERVER['HTTP_USER_AGENT'],"MSIE 8.0")) {
+		$css_links .= "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=".$config->getNode("site","theme")."&amp;sub=ie8' />";
+	}
+	//JS Includes
+	$js_links = "<script src='".$config->getNode('paths','root')."/js/jquery.js' type='text/javascript'></script>";
+	$js_links .= "<script src='".$config->getNode('paths','root')."/js/jqueryui.js' type='text/javascript'></script>";
+	$js_links .= "<script src='".$config->getNode('paths','root')."/js/jquery.validate.min.js' type='text/javascript'></script>";
+	$js_links .= "<script src='".$config->getNode('paths','root')."/js/additional-methods.js' type='text/javascript'></script>";
+	$js_links .= "<script src='".$config->getNode('paths','root')."/js/defaults.php' type='text/javascript'></script>";
+	//Plugin Includes
+	$plugin_includes = create_function("","
+		global $config;
+		//Each plugin that has /includes/header.inc.php will have an include output here
+		$dir = opendir($config->getNode('paths','offlineDir').\"/plugins\");
+		while ($module = readdir($dir)) {
+			if (file_exists($config->getNode('paths','offlineDir').\"/plugins/\".$module.\"/includes/header.inc.php\")) {
+				include $config->getNode('paths','offlineDir').\"/plugins/\".$module.\"/includes/header.inc.php\";
+			}
+		}");
+	
+	//Tab Links
+	if (isset($_SUBPAGE) and $_SUBPAGE == false) $homeActive = "active"; else $homeActive = "";
+	if (stristr($_SERVER['REQUEST_URI'],"about.php")) $aboutActive = "active"; else $aboutActive = "";
+	if (stristr($_SERVER['REQUEST_URI'],"contact.php")) $contactActive = "active"; else $contactActive = "";
+	if (stristr($_SERVER['REQUEST_URI'],"basket.php")) $basketActive = "active"; else $basketActive = "";
+    $tab_links = "<li><a href='".$config->getNode('paths','root')."' class='".$homeActive."'>Home</a></li>";
+    $tab_links .= "<li><a href='".$config->getNode('paths','root')."/about.php' class='".$aboutActive."'>About</a></li>";
+	$tab_links .= "<li><a href='".$config->getNode('paths','root')."/contact.php' class='".$contactActive."'>Contact</a></li>";
+	// Login only shown if enabled
+	if ($config->getNode("site","loginTab")) {
+		if (!isset($_SESSION['login']['active']) or $_SESSION['login']['active'] != true) {
+			$tab_links .= '<li><a href="javascript:" onclick="loginForm();">Login</a></li>';
+		} else {
+			$tab_links .= '<li><a href="'.$config->getNode("paths","root").'/account">Account</a></li>';
+		}
+	}
+	
+	
+	//Include Template
+	require $config->getNode("paths","offlineDir")."/themes/core/flumpshop/index.header.tpl.php";
+	
+} else {
+	//Old Header
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -82,4 +151,6 @@ if (stristr($_SERVER['REQUEST_URI'],"basket.php")) $basketActive = "active"; els
     ?></ul><!-- End Tabs-->
     <div id="category_container"><?php
 		require "includes/index_nav.inc.php";
-        ?></div><!-- End Navigation--><div id="content_container">
+        ?></div><!-- End Navigation--><div id="content_container"><?php
+}
+?>
