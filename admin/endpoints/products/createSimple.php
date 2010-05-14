@@ -1,7 +1,36 @@
 <?php
 $USR_REQUIREMENT = "can_add_products";
 require_once dirname(__FILE__)."/../header.php";
-?><div class="ui-widget"><h1>Create a New Product</h1></div>
+?><script type="text/javascript" src="../../tiny_mce/jquery.tinymce.js"></script>
+<script type="text/javascript">
+	$().ready(function() {
+		$('#description').tinymce({
+			// Location of TinyMCE script
+			script_url : '../../tiny_mce/tiny_mce.js',
+
+			// General options
+			theme : "advanced",
+			plugins : "pagebreak,style,layer,table,advlink,iespell,inlinepopups,preview,media,searchreplace,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,advlist",
+
+			// Theme options
+			theme_advanced_buttons1 : "bold,italic,underline,|,justifyleft,justifycenter,justifyright,justifyfull,formatselect,forecolor",
+			theme_advanced_buttons2 : "search,|,bullist,numlist,|,blockquote,|,link,unlink,code,|,preview,|",
+			theme_advanced_buttons3 : "hr,removeformat,|,sub,sup,|,charmap,iespell,media,cleanup",
+			theme_advanced_toolbar_location : "top",
+			theme_advanced_toolbar_align : "left",
+			theme_advanced_statusbar_location : "bottom",
+			theme_advanced_resizing : true,
+
+			// Example content CSS (should be your site CSS)
+			content_css : "../../../style/cssProvider.php?theme=<?php echo $config->getNode("site","theme");?>&sub=main",
+
+			// Drop lists for link/image/media/template dialogs
+			template_external_list_url : "lists/template_list.js",
+			external_link_list_url : "lists/link_list.js",
+			media_external_list_url : "lists/media_list.js"
+		});
+	});
+</script><div class="ui-widget"><h1>Create a New Product</h1></div>
 <p>Hey, you've taken the first step toward creating a new product. I'll carefully guide you through the process of doing so.</p>
 <strong>Before You Start</strong>
 <p>To save some time later, it's best that you make sure you've made some categories to organise your products. If you haven't done so already, head over to the <a href="../switchboard/categories.php" onclick="loader('Please wait...','Loading Category Manager');">Category Management section</a> to add some now.</p>
@@ -61,7 +90,7 @@ require_once dirname(__FILE__)."/../header.php";
 <div class="ui-widget-header">9. Create the Product</div>
 <div class="ui-widget-content">
 	<p>Great, once you're sure the product's ready to go, click the Create button below to create the product. You can always change it later if you don't like it.</p>
-	<input type="submit" value="Create" name="submit" id="submit" style="font-size: 13px; padding: .2em .4em;" />
+	<input type="submit" value="Create" name="submit" id="submit" style="font-size: 13px; padding: .2em .4em;" onclick="$('#description').val(tinyMCE.get('description').getContent());return true" />
 </div>
 </form>
 <script>

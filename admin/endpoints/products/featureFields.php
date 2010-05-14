@@ -11,7 +11,7 @@ $result = $dbConn->query("SELECT feature_id FROM category_feature WHERE category
 
 if ($dbConn->rows($result) == 0) {
 	//No features
-	die("<p>There aren't any features for the categories you selected.</p>");
+	die("<div class='ui-state-highlight'><span class='ui-icon ui-icon-info'></span>There aren't any features for the categories you selected.</div>");
 }
 echo "<table>";
 //Return each feature

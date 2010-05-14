@@ -84,16 +84,8 @@ Please enter your username and password to continue...
 			<a href='endpoints/switchboard/categories.php' onclick='loader("Loading Category Menu...");' target='main'>Manage Categories</a>
 			<a href='endpoints/switchboard/products.php' onclick='loader("Loading Products Menu...");' target='main'>Manage Products</a>
 		</div>
-        <h3>Products</h3>
-        <div>
-            <a href='endpoints/create/newItem.php' onclick='loader("Loading Content...");' target="main">New Item</a>
-            <a href='endpoints/edit/editItems.php' onclick='loader("Loading Content...");' target="main">Edit Item</a>
-            <a href='endpoints/edit/editFeatured.php' onclick='loader("Loading Content...");' target="main">Featured Items</a>
-        </div>
         <h3>Categories</h3>
         <div>
-            <a href='endpoints/create/newCategory.php' onclick='loader("Loading Content...");' target="main">New Category</a>
-            <a href='endpoints/edit/editCategory.php' onclick='loader("Loading Content...");' target="main">Edit Category</a>
 			<a href='endpoints/edit/manageFeatures.php' onclick='loader("Loading Content...");' target="main">Features<sup>labs</sup></a>
         </div>
         <h3>News</h3>
@@ -128,7 +120,6 @@ Please enter your username and password to continue...
         </div>
 		<h3>Reports</h3>
 		<div>
-			<a href='endpoints/reports/itemReport.php' onclick='loader("Generating Report...");' target="main">Item Report</a>
 			<a href='endpoints/reports/customerReport.php' onclick='loader("Generating Report...");' target="main">Customer Report<sup>labs</sup></a>
 			<a href='endpoints/reports/duplicates.php' onclick='loader("Generating Report...");' target="main">Content Suggestions<sup>labs</sup></a>
 		</div>
@@ -167,7 +158,10 @@ Please enter your username and password to continue...
 							   });
 	function loader(str) {
 		$(parent.main.document.getElementById('dialog')).html(loadMsg(str));
-		parent.main.loadDialog();
+		if (typeof(parent.main.loadDialog) == "function") {
+			parent.main.loadDialog();
+		}
+		return false;
 	}
     </script>
 </body>
