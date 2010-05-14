@@ -2,6 +2,13 @@
 #labels Phase-Requirements,Phase-Design,Phase-Implementation
 
 = Introduction =
+Flumpshop is currently in the process of being altered to allow the use of a theme system similar to that of Drupal's phpTemplate engine. This provides much more flexibility to the current customisation system, allowing developers to completely structure the page outline to whatever suits their purpose.
+
+Themes, like plug-ins, will have complete access to the Configuration and Database objects, but will also have many predefined variables that contain useful resources for the system.
+
+*The content below is for the existing and functional theme system. They are kept here for archive purposes only*
+
+= Introduction =
 A feature that development has now started on in the TRY-THEME branch, it will allow complete customisation of the way the site is displayed, including:
 
   * Widgets
