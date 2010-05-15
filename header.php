@@ -4,7 +4,9 @@ require_once dirname(__FILE__)."/preload.php";
 if (!isset($page_title)) $page_title = "Welcome";
 if (!isset($_SUBPAGE)) $_SUBPAGE = true;
 
-if (PAGE_TYPE == "index" and $config->getNode("site","templateMode") == "core") {
+if ($config->getNode("site","templateMode") == "core" && (
+	file_exists($config->getNode("paths","offlineDir")."/themes/core/flumpshop/".PAGE_TYPE.".header.tpl.php") or //Current Page Template
+	file_exists($config->getNode("paths","offlineDir")."/themes/core/flumpshop/header.tpl.php"))) { //Master Template
 	//GroundUP Templater (Experimental)
 	// Create content variables
 	//Meta Tags
@@ -16,7 +18,7 @@ if (PAGE_TYPE == "index" and $config->getNode("site","templateMode") == "core") 
 	$title .= " | ";
 	$title .= $page_title;
 	//CSS Includes
-	$css_links = "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/jquery.css'>";
+	$css_links = "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/jquery.css' />";
 	$css_links .= "<link rel='stylesheet' href='".$config->getNode('paths','root')."/style/cssprovider.php?theme=".$config->getNode("site", "theme")."&amp;sub=main' type='text/css' />";
 	// Browser-dependant CSS Overrides
 	if (strstr($_SERVER['HTTP_USER_AGENT'],"Opera")) {
@@ -38,15 +40,15 @@ if (PAGE_TYPE == "index" and $config->getNode("site","templateMode") == "core") 
 	$js_links .= "<script src='".$config->getNode('paths','root')."/js/additional-methods.js' type='text/javascript'></script>";
 	$js_links .= "<script src='".$config->getNode('paths','root')."/js/defaults.php' type='text/javascript'></script>";
 	//Plugin Includes
-	$plugin_includes = create_function("","
-		global $config;
-		//Each plugin that has /includes/header.inc.php will have an include output here
-		$dir = opendir($config->getNode('paths','offlineDir').\"/plugins\");
-		while ($module = readdir($dir)) {
-			if (file_exists($config->getNode('paths','offlineDir').\"/plugins/\".$module.\"/includes/header.inc.php\")) {
-				include $config->getNode('paths','offlineDir').\"/plugins/\".$module.\"/includes/header.inc.php\";
-			}
-		}");
+	// Create a second OB
+	ob_start();
+	$dir = opendir($config->getNode('paths','offlineDir')."/plugins");
+	while ($module = readdir($dir)) {
+		if (file_exists($config->getNode('paths','offlineDir')."/plugins/".$module."/includes/header.inc.php")) {
+			include $config->getNode('paths','offlineDir')."/plugins/".$module."/includes/header.inc.php";
+		}
+	}
+	$plugin_includes = ob_get_clean(); //Get OB Content and exit OB
 	
 	//Tab Links
 	if (isset($_SUBPAGE) and $_SUBPAGE == false) $homeActive = "active"; else $homeActive = "";
@@ -65,9 +67,19 @@ if (PAGE_TYPE == "index" and $config->getNode("site","templateMode") == "core") 
 		}
 	}
 	
+	// Main Navigation
+	ob_start(); //Secondary OB
+	include(dirname(__FILE__)."/includes/index_nav.inc.php");
+	$navigation_links = ob_get_clean(); //Get OB content and exit OB
 	
 	//Include Template
-	require $config->getNode("paths","offlineDir")."/themes/core/flumpshop/index.header.tpl.php";
+	if (file_exists($config->getNode("paths","offlineDir")."/themes/core/flumpshop/".PAGE_TYPE.".header.tpl.php")) {
+		require $config->getNode("paths","offlineDir")."/themes/core/flumpshop/".PAGE_TYPE.".header.tpl.php";
+	} else {
+		require $config->getNode("paths","offlineDir")."/themes/core/flumpshop/header.tpl.php";
+	}
+	//Unset some (not all, user may include them later)
+	unset($meta_tags,$title,$css_links,$js_links,$plugin_includes);
 	
 } else {
 	//Old Header

@@ -26,12 +26,6 @@ function init_err($msg) {
 }
 require_once(dirname(__FILE__)."/includes/Config.class.php");
 require_once(dirname(__FILE__)."/includes/vars.inc.php");
-error_reporting(E_ALL);
-
-/*ONEOFF
-$config->setNode('viewItem', 'catCols', 2, 'Category View Columns');
-$config->setNode('viewItem', 'catTextPos', 'bottom', 'Category Text Position');
-$config->setNode('viewItem', 'catChars', 50, 'Category Text Length');*/
 
 if (isset($config)) {
 	if($config->getNode('logs','errors')) $errLog = fopen($config->getNode('paths','logDir')."/errors.log","a+");
@@ -226,6 +220,35 @@ if ($_SETUP == false) {
 
 //Locale
 if (isset($_SESSION['locale']) && !$_SETUP) $config->setNode("temp","country",$_SESSION['locale']);
+
+//Theme Includer
+function templateContent($id = -1) {
+	global $config, $dbConn, $navigation_links, $page_title;
+	if ($config->getNode("site","templateMode") == "core") {
+		$page_content = ob_get_clean(); //Place in template
+	
+		$file = templateFinder(PAGE_TYPE,$id);
+		require $file;
+	} else {
+		ob_end_flush();
+	}
+}
+
+function templateFinder($page_type,$id = -1) {
+	//Returns template file to include
+	global $config;
+	if (file_exists($config->getNode("paths","offlineDir")."/themes/core/".$config->getNode("site","theme")."/".$page_type.".".$id.".content.tpl.php")) {
+		return $config->getNode("paths","offlineDir")."/themes/core/".$config->getNode("site","theme")."/".$page_type.".".$id.".content.tpl.php";
+		
+	} elseif (file_exists($config->getNode("paths","offlineDir")."/themes/core/".$config->getNode("site","theme")."/".$page_type.".content.tpl.php")) {
+		return $config->getNode("paths","offlineDir")."/themes/core/".$config->getNode("site","theme")."/".$page_type.".content.tpl.php";
+	} elseif (file_exists($config->getNode("paths","offlineDir")."/themes/core/".$config->getNode("site","theme")."/content.tpl.php")) {
+		return $config->getNode("paths","offlineDir")."/themes/core/".$config->getNode("site","theme")."/content.tpl.php";
+	} else {
+		trigger_error("Could not locate template file",E_USER_ERROR);
+		return;
+	}
+}
 
 /*PLUGINS*/
 //Each plugin that has /includes/preload.inc.php will have an option displayed here

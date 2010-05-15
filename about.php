@@ -3,9 +3,14 @@ define("PAGE_TYPE","about");
 require_once dirname(__FILE__)."/preload.php";
 $page_title = $config->getNode('messages','aboutPageHeader');
 require_once dirname(__FILE__)."/header.php";
-echo "<div id='page_text'>";
-echo "<h3 id='page_title'>".$config->getNode('messages','aboutPageHeader')."</h3>";
+
+//Buffer for templating
+ob_start();
+
+echo "<h2 id='page_title'>".$config->getNode('messages','aboutPageHeader')."</h2>";
 echo "<p>".$config->getNode("messages","aboutPage")."</p>";
-echo "</div>"; //End Page Text
+
+templateContent();
+
 require_once dirname(__FILE__)."/footer.php";
 ?>

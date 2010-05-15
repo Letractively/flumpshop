@@ -1,5 +1,12 @@
-<?php $page_title = "Search"; require_once dirname(__FILE__)."/header.php";
-echo '<h3 id="page_title">Search</h3>';
+<?php
+require_once "preload.php";
+$page_title = $config->getNode("messages","searchHeader");
+require_once dirname(__FILE__)."/header.php";
+
+ob_start(); //Template Buffer
+
+echo '<h2 id="page_title">'.$config->getNode("messages","searchHeader").'</h2>';
+
 //Get search query
 if (isset($_GET['q'])) $query = htmlentities($_GET['q']); elseif (isset($_GET['searchfield'])) $query = $_GET['searchfield']; else $query = "";
 ?><form action="search.php" method="get">
@@ -13,7 +20,7 @@ if (isset($_GET['q'])) $query = htmlentities($_GET['q']); elseif (isset($_GET['s
 	$query = str_replace(array(".","%"),"",$query);
 	
 	//Filter out invalid queries
-	if ($query == "" || $query == "Search...") {
+	if ($query == "" || $query == "Search") {
 		die("Please enter a search query.");
 	}
 	
@@ -91,4 +98,7 @@ if (isset($_GET['q'])) $query = htmlentities($_GET['q']); elseif (isset($_GET['s
 		echo "No Results found.";
 	}
 	echo "</div>";
+	
+templateContent();
+	
 require_once dirname(__FILE__)."/footer.php";?>

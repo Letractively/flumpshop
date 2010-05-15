@@ -72,7 +72,8 @@ $_SESSION['config']->setNode("site", "homeTab", true, "Home Tab");
 $_SESSION['config']->setNode("site", "sendFeedback", true, "Send Feedback");
 $_SESSION['config']->setNode("site", "version", "0.9.6.358", "Version");
 $_SESSION['config']->setNode("site", "loginTab", true, "Login Tab");
-$_SESSION['config']->setNode("site", "theme", "rjccom", "Theme");
+$_SESSION['config']->setNode("site", "theme", "flumphop", "Theme");
+$_SESSION['config']->setNode("site", "templateMode", "core", "Template Mode");
 
 //Paths and Directories Tree
 $_SESSION['config']->addTree("paths", "Site Paths and Directories");
@@ -169,6 +170,11 @@ $_SESSION['config']->setNode("messages", "address", "[Please enter your business
 $_SESSION['config']->setNode("messages", "titlesIndexPrefix", "Welcome to ", "Home Page Title Prefix");
 $_SESSION['config']->setNode("messages", "contactPageHeader", "Contact Us", "Contact Us Page Header");
 $_SESSION['config']->setNode("messages", "aboutPageHeader", "About Us", "About Us Page Header");
+$_SESSION['config']->setNode("messages", "sendFeedbackHeader", "Send Feedback", "Send Feedback Page Header");
+$_SESSION['config']->setNode("messages", "privacyPolicyHeader", "Privacy Policy", "Privacy Policy Page Header");
+$_SESSION['config']->setNode("messages", "termsConditionsHeader", "Terms and Conditions", "Terms and Conditions Page Header");
+$_SESSION['config']->setNode("messages", "disclaimerHeader", "Disclaimer", "Disclaimer Page Header");
+$_SESSION['config']->setNode("messages", "searchHeader", "Search", "Search Page Header");
 
 //Content Placeholders
 $_SESSION['config']->setNode("messages", "featuredItemsPlaceholder", "You can tell the Flumpnet Robot to show two items in this section, by accessing the Admin CP, then clicking Products->Featured Items.", "Featured Items Placeholder");

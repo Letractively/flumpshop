@@ -1,7 +1,15 @@
 <?php
-$page_title = "Legalese | Disclaimer";
+require_once "../preload.php";
+define("PAGE_TYPE","disclaimer");
+$page_title = $config->getNode("messages","disclaimerHeader");
+
 require_once dirname(__FILE__)."/../header.php";
-echo "<h1 class='content'>Disclaimer</h1>";
+ob_start(); //Template Buffer
+
+echo "<h2 id='page_title'>".$config->getNode("messages","disclaimerHeader")."</h2>";
 echo placeholders($config->getNode("messages","disclaimer"));
+
+templateContent();
+
 require_once dirname(__FILE__)."/../footer.php";
 ?>

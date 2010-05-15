@@ -4,6 +4,8 @@ require_once dirname(__FILE__)."/../header.php";
 
 if (isset($_GET['filter'])) $criteria = " AND name LIKE '%".$_GET['filter']."%'"; else $criteria = "";
 
+$criteria .= " AND enabled = 1";
+
 $count = $dbConn->rows($dbConn->query("SELECT id FROM `category` WHERE id>0".$criteria));
 $perPage = $config->getNode("pagination","editItemsPerPage");
 if (isset($_GET['page'])) $page = $_GET['page']; else $page = 1;
