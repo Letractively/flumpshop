@@ -98,7 +98,7 @@ CREATE TABLE `products` (
   `name` varchar(100) NOT NULL DEFAULT 'UNNAMED_PRODUCT',
   `price` decimal(9,2) NOT NULL DEFAULT '0.00',
   `stock` int(11) NOT NULL DEFAULT '0',
-  `description` text NOT NULL,
+  `description` longtext NOT NULL,
   `category` int(11) NOT NULL,
   `reducedPrice` decimal(8,2) NOT NULL DEFAULT '0.00',
   `reducedValidFrom` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',

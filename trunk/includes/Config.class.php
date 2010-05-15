@@ -97,9 +97,11 @@ class Config {
 		if (isset($this->namespaces['cache']['nextCheck']) and $this->namespaces['cache']['nextCheck'] < $time) return;
 		
 		$this->change = true;
+		global $dbConn;
 		
 		foreach ($this->namespaces['cache']['expirations'] as $nodeName => $timeout) {
 			if ($timeout < $time) {
+				$dbConn->query("DELETE FROM `cache` WHERE id='".$this->getNode('cache',$nodeName)."' LIMIT 1");
 				unset($this->data['cache'][$nodeName],$this->namespaces['cache']['expirations'][$nodeName]);
 			}
 		}
@@ -113,13 +115,23 @@ class Config {
 		if (!$this->editable && $treeName != "temp") return false;
 		//If the Friendly name hasn't been defined yet, do it now
 		if (!isset($this->namespaces[$treeName]['varsNames'][$nodeName])) {$this->namespaces[$treeName]['varsNames'][$nodeName] = $friendName;}
-		//Set Value
-		$this->data[$treeName][$nodeName] = $nodeVal;
 		//Report change if not Temp
 		if ($treeName != "temp") $this->change = true;
 		//Magic: Store an expiration time if the tree is cache (default 1h)
+		//And actually store the data in the database, and set the value to the ID
 		if ($treeName == "cache") {
-			$this->namespaces['cache']['expirations'][$nodeName] = time()+$cacheTimeout;
+			global $dbConn;
+			$this->namespaces['cache']['expirations'][$nodeName] = time()+$cacheTimeout; //Timeout
+			
+			if (!$this->isNode('cache',$nodeName)) { //Doesn't Exist Yet
+				$dbConn->query("INSERT INTO `cache` (nodeName,cache) VALUES ('".$nodeName."','".str_replace("'","''",$nodeVal)."')");
+				$this->data['cache'][$nodeName] = $dbConn->insert_id();
+			} else { //Already Exists
+				$dbConn->query("UPDATE `cache` SET cache = '".str_replace("'","''",$nodeVal)."' WHERE id='".$this->getNode('cache',$nodeVal)."' LIMIT 1");
+			}
+		} else { //Not cache
+			//Set Value
+			$this->data[$treeName][$nodeName] = $nodeVal;
 		}
 		//Print the value (change true/false to 1/0)
 		if (is_bool($nodeVal)) $nodeVal = intval($nodeVal);
@@ -130,11 +142,20 @@ class Config {
 	
 	function getNode($treeName,$nodeName) {
 		//Returns the value of a node, or NULL if it doesn't exist
-		if ($this->isNode($treeName,$nodeName)) {
-			$value = $this->data[$treeName][$nodeName];
-			return $value;
+		if ($treeName == "cache") {
+			//Grab from DB
+			global $dbConn;
+			$result = $dbConn->query("SELECT cache FROM `cache` WHERE nodeName='$nodeName' LIMIT 1");
+			$row = $dbConn->fetch($result);
+			unset($result);
+			return $row['cache'];
 		} else {
-			return NULL;
+			if ($this->isNode($treeName,$nodeName)) {
+				$value = $this->data[$treeName][$nodeName];
+				return $value;
+			} else {
+				return NULL;
+			}
 		}
 	}
 	
