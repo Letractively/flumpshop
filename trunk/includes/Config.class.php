@@ -15,6 +15,7 @@ class Config {
 	function __destruct() {
 		global $_SETUP;
 		//Save the configuration changes if the setup wizard is not running and a non-temp var has been changed
+		$this->clearCache();
 		if ((!isset($_SETUP) or $_SETUP === false) and $this->change) {
 			//Delete temp tree
 			$this->removeTree("temp");
@@ -89,7 +90,25 @@ class Config {
 		return array_keys($this->namespaces);
 	}
 	
-	function setNode($treeName,$nodeName,$nodeVal,$friendName = "") {
+	function clearCache() {
+		//Updates cache data to remove expired information
+		$time = time();
+		//Only Check once an hour
+		if (isset($this->namespaces['cache']['nextCheck']) and $this->namespaces['cache']['nextCheck'] < $time) return;
+		
+		$this->change = true;
+		
+		foreach ($this->namespaces['cache']['expirations'] as $nodeName => $timeout) {
+			if ($timeout < $time) {
+				unset($this->data['cache'][$nodeName],$this->namespaces['cache']['expirations'][$nodeName]);
+			}
+		}
+		
+		//Schedule next check
+		$this->namespaces['cache']['nextCheck'] = $time+3600;
+	}
+	
+	function setNode($treeName,$nodeName,$nodeVal,$friendName = "",$cacheTimeout = 3600) {
 		//Only allow changing of temp vars of he file isn't editable
 		if (!$this->editable && $treeName != "temp") return false;
 		//If the Friendly name hasn't been defined yet, do it now
@@ -98,6 +117,10 @@ class Config {
 		$this->data[$treeName][$nodeName] = $nodeVal;
 		//Report change if not Temp
 		if ($treeName != "temp") $this->change = true;
+		//Magic: Store an expiration time if the tree is cache (default 1h)
+		if ($treeName == "cache") {
+			$this->namespaces['cache']['expirations'][$nodeName] = time()+$cacheTimeout;
+		}
 		//Print the value (change true/false to 1/0)
 		if (is_bool($nodeVal)) $nodeVal = intval($nodeVal);
 		$this->printDebug("Set $nodeName to $nodeVal");
