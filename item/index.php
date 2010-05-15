@@ -6,8 +6,8 @@ require_once dirname(__FILE__)."/../header.php";
 
 ob_start(); //Template Buffer
 
-if ($config->isNode('cache','item'.$_GET['id'])) {
-	echo $config->getNode('cache','item'.$_GET['id']);
+if ($config->isNode('cache','item'.$item->getID())) {
+	echo $config->getNode('cache','item'.$item->getID());
 } else {
 
     $category = new Category($item->getCategory());
