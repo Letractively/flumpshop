@@ -1,7 +1,15 @@
 <?php
-$page_title = "Legalese | Terms and Conditions";
+require_once "../preload.php";
+define("PAGE_TYPE","termsConditions");
+$page_title = $config->getNode("messages","termsConditionsHeader");
+
 require_once dirname(__FILE__)."/../header.php";
-echo "<h1 class='content'>Terms and Conditions</h1>";
+ob_start(); //Template Buffer
+
+echo "<h2 id='page_title'>".$config->getNode("messages","termsConditionsHeader")."</h2>";
 echo placeholders($config->getNode("messages","termsConditions"));
+
+templateContent();
+
 require_once dirname(__FILE__)."/../footer.php";
 ?>

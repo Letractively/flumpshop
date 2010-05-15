@@ -4,6 +4,8 @@ $page_title = $item->getName();
 define("PAGE_TYPE","item");
 require_once dirname(__FILE__)."/../header.php";
 
+ob_start(); //Template Buffer
+
     $category = new Category($item->getCategory());
     echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->getBreadcrumb()." -> ".$item->getName();
 	echo '<div id="notice"></div>';
@@ -30,4 +32,8 @@ function openImageViewer(imageID) {
 	$("#dialog").dialog({height: "auto", width: "auto", resizable: true, position: "left", buttons: {"Close": function() {$(this).dialog("destroy");}}});
 
 }
-</script><?php require_once dirname(__FILE__)."/../footer.php"; ?>
+</script><?php
+
+templateContent($_GET['id']);
+
+require_once dirname(__FILE__)."/../footer.php"; ?>

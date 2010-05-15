@@ -1,7 +1,15 @@
 <?php
-$page_title = "Legalese | Privacy Policy";
+require_once "../preload.php";
+define("PAGE_TYPE","privacyPolicy");
+$page_title = $config->getNode("messages","privacyPolicyHeader");
+
 require_once dirname(__FILE__)."/../header.php";
-echo "<h1 class='content'>Privacy Policy</h1>";
+ob_start(); //Template Buffer
+
+echo "<h2 id='page_title'>".$config->getNode("messages","privacyPolicyHeader")."</h2>";
 echo placeholders($config->getNode("messages","privacyPolicy"));
+
+templateContent();
+
 require_once dirname(__FILE__)."/../footer.php";
 ?>

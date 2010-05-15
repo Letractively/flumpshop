@@ -2,9 +2,13 @@
 require_once dirname(__FILE__)."/preload.php";
 $page_title = $config->getNode('messages','contactPageHeader');
 require_once dirname(__FILE__)."/header.php";
-echo "<div id='page_text'>";
+
+ob_start();
+
 echo "<h3 id='page_title'>".$config->getNode('messages','contactPageHeader')."</h3>";
 echo "<p>".$config->getNode("messages","contactPage")."</p>";
-echo "</div>"; //End Page Text
+
+templateContent();
+
 require_once dirname(__FILE__)."/footer.php";
 ?>

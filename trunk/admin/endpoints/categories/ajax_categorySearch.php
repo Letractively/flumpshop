@@ -2,7 +2,7 @@
 $USR_REQUIREMENT = "can_edit_categories";
 require_once "../../../preload.php";
 
-$result = $dbConn->query("SELECT name FROM `category` WHERE name LIKE '%".$_GET['term']."%' OR id='".intval($_GET['term'])."'");
+$result = $dbConn->query("SELECT name FROM `category` WHERE (name LIKE '%".$_GET['term']."%' OR id='".intval($_GET['term'])."') AND enabled=1");
 
 $array = array();
 

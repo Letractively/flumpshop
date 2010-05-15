@@ -1,6 +1,13 @@
-<?php require_once dirname(__FILE__)."/preload.php"; $page_title = "Send Feedback"; require_once dirname(__FILE__)."/header.php";?>
-  <h1 class="content"><?php echo $config->getNode("messages","sendFeedbackHeader");?></h1>
-  <?php if (isset($_GET['posted'])) echo "<div><span class='ui-icon ui-icon-circle-check'></span>Thank you. Your feedback has been sent.</div>";?>
+<?php
+require_once "preload.php";
+define("PAGE_TYPE","feedback");
+$page_title = $config->getNode("messages","sendFeedbackHeader");
+
+require_once dirname(__FILE__)."/header.php";
+ob_start();
+
+?><h1 class="content"><?php echo $config->getNode("messages","sendFeedbackHeader");?></h1>
+<?php if (isset($_GET['posted'])) echo "<div><span class='ui-icon ui-icon-circle-check'></span>Thank you. Your feedback has been sent.</div>";?>
     <form action="saveBug.php" method="post" name="reporter" id="reporter">
       <table>
         <tr><td><label for="header">Subject: </label></td><td><input type="text" name="bugHeader" id="bugHeader" class="required" minlength='2' /></td></tr>
@@ -10,6 +17,8 @@
       </table>
     </form>
     <script>$('#reporter').validate();</script><?php
+
+templateContent();
 
 require_once dirname(__FILE__)."/footer.php";
 ?>

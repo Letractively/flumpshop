@@ -1,6 +1,9 @@
 <?php
 define("PAGE_TYPE", "category");
 require_once dirname(__FILE__)."/../header.php";
+
+ob_start(); //Template Buffer
+
 if (isset($_GET['id'])) $cid = $_GET['id']; else $cid = 1; //Get Category ID
 if (isset($_GET['sort'])) $sort = strtolower(htmlentities($_GET['sort'],ENT_QUOTES)); else $sort = "name";
 //Get sort field (name, id, popularity)
@@ -133,5 +136,8 @@ echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->ge
 			echo $paginator->paginate($page,$perPage,$totalItems,"?id=".$category->getID());
 		}
 	}
+
+templateContent($cid);
+	
 require_once dirname(__FILE__)."/../footer.php";
 ?>
