@@ -55,7 +55,8 @@ function getData($parser,$data) {
 		case "DATABASE":
 			//It's a database item we're working with
 			//No need to check further, the data can just be cached until the commit query.
-			$dataCache[$currentNode] = str_replace("'","''",$data); //MySQL escape
+			//Concatenate as parser sometimes sends in blocks
+			$dataCache[$currentNode] .= str_replace("'","''",$data); //MySQL escape
 	}
 }
 
@@ -385,6 +386,11 @@ while ($data=fread($fp,4096))
 
 //Free the XML parser
 xml_parser_free($parser);
+
+//Reset the cache
+$dbConn->query("DELETE FROM cache");
+$config->removeTree("cache");
+
 $config->setNode("site","enabled",true);
 echo "<div class='ui-state-highlight'>The Flumpshop frontend is now operating normally.</div>";
 echo "<strong>Import complete. Please review any potential errors above before continuing.</strong>";
