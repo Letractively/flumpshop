@@ -3,7 +3,7 @@ $_SUBPAGE = false;
 define("PAGE_TYPE","index");
 require_once "header.php";
 
-if (file_exists($config->getNode("paths","offlineDir")."/themes/core/flumpshop/index.content.tpl.php")) {
+if (file_exists($config->getNode("paths","offlineDir")."/themes/core/".$config->getNode("site","theme")."/index.content.tpl.php")) {
 	//New Template Mechanism
 	// Store content data
 	// Title
@@ -105,9 +105,9 @@ if (file_exists($config->getNode("paths","offlineDir")."/themes/core/flumpshop/i
 	} //End Tech Tips
 	
 	//Actual include
-	require $config->getNode("paths","offlineDir")."/themes/core/flumpshop/index.content.tpl.php";
+	require $config->getNode("paths","offlineDir")."/themes/core/".$config->getNode("site","theme")."/index.content.tpl.php";
 	
-} elseif (file_exists($config->getNode("paths","offlineDir")."/themes/core/flumpshop/content.tpl.php")) {
+} elseif (file_exists($config->getNode("paths","offlineDir")."/themes/core/".$config->getNode("site","theme")."/content.tpl.php")) {
 	echo "Sorry, Flumpshop requires a specific tpl file for the home page at the current development stage.";
 } else {
     ?><div id="page_text">

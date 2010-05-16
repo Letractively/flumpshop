@@ -1,7 +1,7 @@
 <div id="dialog" class="ui-helper-hidden"></div><?php //Needed for UI Framework
 if ($config->getNode("site","templateMode") == "core" and 
-	(file_exists($config->getNode("paths","offlineDir")."/themes/core/flumpshop/".PAGE_TYPE.".footer.tpl.php") or
-	file_exists($config->getNode("paths","offlineDir")."/themes/core/flumpshop/footer.tpl.php"))) {
+	(file_exists($config->getNode("paths","offlineDir")."/themes/core/".$config->getNode("site","theme")."/".PAGE_TYPE.".footer.tpl.php") or
+	file_exists($config->getNode("paths","offlineDir")."/themes/core/".$config->getNode("site","theme")."/footer.tpl.php"))) {
 	//New Template Mechanism
 	// Footer Links
 	$footer_links = "";
@@ -33,10 +33,10 @@ if ($config->getNode("site","templateMode") == "core" and
 	}
 	$plugin_includes = ob_get_clean(); //Get OB Content and exit OB
 	
-	if (file_exists($config->getNode("paths","offlineDir")."/themes/core/flumpshop/".PAGE_TYPE.".footer.tpl.php")) {
-		require $config->getNode("paths","offlineDir")."/themes/core/flumpshop/".PAGE_TYPE.".footer.tpl.php";
+	if (file_exists($config->getNode("paths","offlineDir")."/themes/core/".$config->getNode("site","theme")."/".PAGE_TYPE.".footer.tpl.php")) {
+		require $config->getNode("paths","offlineDir")."/themes/core/".$config->getNode("site","theme")."/".PAGE_TYPE.".footer.tpl.php";
 	} else {
-		require $config->getNode("paths","offlineDir")."/themes/core/flumpshop/footer.tpl.php";
+		require $config->getNode("paths","offlineDir")."/themes/core/".$config->getNode("site","theme")."/footer.tpl.php";
 	}
 } else {
 	//Legacy Template

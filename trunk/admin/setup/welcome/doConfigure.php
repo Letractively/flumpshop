@@ -72,7 +72,7 @@ $_SESSION['config']->setNode("site", "homeTab", true, "Home Tab");
 $_SESSION['config']->setNode("site", "sendFeedback", true, "Send Feedback");
 $_SESSION['config']->setNode("site", "version", "0.9.6.358", "Version");
 $_SESSION['config']->setNode("site", "loginTab", true, "Login Tab");
-$_SESSION['config']->setNode("site", "theme", "flumphop", "Theme");
+$_SESSION['config']->setNode("site", "theme", "flumpshop", "Theme");
 $_SESSION['config']->setNode("site", "templateMode", "core", "Template Mode");
 
 //Paths and Directories Tree
@@ -125,6 +125,7 @@ $_SESSION['config']->setNode("messages", "defaultCategoryName", "Uncategorised",
 $_SESSION['config']->setNode("messages", "defaultCategoryDesc", "Details for this category are unavailable.", "Default Category Description");
 $_SESSION['config']->setNode("messages", "navAdvert", "Add custom text here in the Admin CP", "Navigation Bar Text");
 $_SESSION['config']->setNode("messages", "featuresName", "Features", "Item Features Name");
+$_SESSION['config']->setNode("messages", "subcatHeader", "Sections", "Subcategories Header");
 
 //Index Page
 $_SESSION['config']->setNode("messages", "featuredItemHeader", "Featured Item", "Featured Item Header");
