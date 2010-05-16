@@ -1,6 +1,8 @@
 <?php
 function dataFilter($data) {
 	$data = htmlspecialchars(utf8_encode($data));
+	//Stops line breaks confusing importer
+	$data = str_replace(array("\r","\n"),"",$data);
 	return $data;
 }
 
