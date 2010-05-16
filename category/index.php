@@ -39,7 +39,6 @@ echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->ge
 			$sortText .= " (Ascending)";
 		}
 	}
-	
 	echo "<strong>Listing items by: ".$sortText."</strong><br />";
 	
     ?><a href='javascript:' onclick='$("#sort-content-hidden").toggle("blind");'>Click to change...</a>

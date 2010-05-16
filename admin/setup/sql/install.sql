@@ -27,6 +27,7 @@ CREATE TABLE `country` (
   `iso` char(2) NOT NULL,
   `name` varchar(80) NOT NULL,
   `supported` tinyint(1) NOT NULL DEFAULT '0',
+  `currency` CHAR(3) DEFAULT 'EUR',
   PRIMARY KEY (`iso`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

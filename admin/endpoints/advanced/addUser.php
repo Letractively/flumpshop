@@ -2,7 +2,7 @@
 $requires_tier2 = true;
 require_once "../header.php";
 
-if (isset($_GET['error'])) echo "<p>".$_GET['error']."</p>";
+if (isset($_GET['error'])) echo "<p class='ui-state-highlight'>".$_GET['error']."</p>";
 ?><h1>User Manager</h1>
 <p>Fill out the form below to add a new ACP user account. Please note that an ACP login is different than a login for the site frontend.</p>
 <form action="../process/createUser.php" method="post" id="addUsrFrm">
