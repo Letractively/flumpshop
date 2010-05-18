@@ -3,6 +3,7 @@ define("PAGE_TYPE","basket");
 require_once dirname(__FILE__)."/preload.php";
 $page_title = $config->getNode('messages','basketPageHeader');
 require_once dirname(__FILE__)."/header.php";
+ob_start(); //Template Buffer
 ?><script type='text/javascript'>
 function removeItem(id) {
 	document.RemoveItemTempid = id;
@@ -78,5 +79,8 @@ echo $config->getNode('messages','noScript');
 	}
 }
 echo "</div>"; //End Page Content
+
+templateContent();
+
 require_once dirname(__FILE__)."/footer.php";
 ?>
