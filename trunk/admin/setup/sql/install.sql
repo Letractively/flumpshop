@@ -1,3 +1,28 @@
+CREATE TABLE  `acp_login` (
+`id` INT(11) NOT NULL AUTO_INCREMENT ,
+`uname` VARCHAR( 8 ) NOT NULL ,
+`pass` VARCHAR( 32 ) NOT NULL ,
+`last_login` TIMESTAMP NOT NULL ,
+`last_tier2_login` TIMESTAMP NOT NULL ,
+`can_add_products` BOOL NOT NULL DEFAULT  '0',
+`can_edit_products` BOOL NOT NULL DEFAULT  '0',
+`can_delete_products` BOOL NOT NULL DEFAULT  '0',
+`can_add_categories` BOOL NOT NULL DEFAULT  '0',
+`can_edit_categories` BOOL NOT NULL DEFAULT  '0',
+`can_delete_categories` BOOL NOT NULL DEFAULT  '0',
+`can_edit_pages` BOOL NOT NULL DEFAULT  '0',
+`can_edit_delivery_rates` BOOL NOT NULL DEFAULT  '0',
+`can_post_news` BOOL NOT NULL DEFAULT  '0',
+`can_add_customers` BOOL NOT NULL DEFAULT  '0',
+`can_contact_customers` BOOL NOT NULL DEFAULT  '0',
+`can_view_customers` BOOL NOT NULL DEFAULT  '0',
+`can_view_orders` BOOL NOT NULL DEFAULT  '0',
+`can_edit_orders` BOOL NOT NULL DEFAULT  '0',
+`can_view_reports` BOOL NOT NULL DEFAULT  '0',
+`pass_expires` TIMESTAMP NOT NULL,
+PRIMARY KEY (`id`)
+);
+
 CREATE TABLE `basket` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `obj` text,
@@ -14,14 +39,37 @@ CREATE TABLE `bugs` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 
+CREATE TABLE `cache` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nodeName` varchar(75) NOT NULL UNIQUE,
+  `cache` longtext NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
 CREATE TABLE `category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(75) NOT NULL,
   `description` text NOT NULL,
   `parent` int(11) NOT NULL DEFAULT '0',
+  `enabled` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `parent` (`parent`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+
+CREATE TABLE `category_feature` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `category_id` int(10) unsigned NOT NULL,
+  `feature_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `compare_features` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `feature_name` varchar(50) NOT NULL DEFAULT 'Unnamed Attribute',
+  `data_type` varchar(6) NOT NULL,
+  `default_value` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+);
 
 CREATE TABLE `country` (
   `iso` char(2) NOT NULL,
@@ -41,6 +89,8 @@ CREATE TABLE `customers` (
   `country` varchar(2) NOT NULL,
   `email` varchar(75) NOT NULL,
   `paypalid` varchar(128) NOT NULL,
+  `archive` BOOL NOT NULL DEFAULT '0',
+  `can_contact` BOOL NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 
@@ -53,6 +103,49 @@ CREATE TABLE `delivery` (
   PRIMARY KEY (`id`),
   KEY `country` (`country`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+
+CREATE TABLE `feature_units` (
+  `feature_id` int(10) unsigned NOT NULL,
+  `multiple` int(11) NOT NULL,
+  `unit` varchar(15) NOT NULL,
+  PRIMARY KEY (`feature_id`,`multiple`)
+);
+
+CREATE TABLE `item_category` (
+`id` INT(11) unsigned NOT NULL AUTO_INCREMENT,
+`itemid` INT(11) unsigned,
+`catid` INT(11) unsigned,
+PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `item_delivery` (
+`id` INT(11) unsigned NOT NULL AUTO_INCREMENT,
+`itemid` INT(11) unsigned,
+`countryid` INT(11) unsigned,
+`price` DECIMAL(9,2),
+PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `item_feature_date` (
+  `item_id` int(10) unsigned NOT NULL,
+  `feature_id` int(10) unsigned NOT NULL,
+  `value` date NOT NULL,
+  PRIMARY KEY (`item_id`,`feature_id`)
+);
+
+CREATE TABLE `item_feature_number` (
+  `item_id` int(10) unsigned NOT NULL,
+  `feature_id` int(10) unsigned NOT NULL,
+  `value` bigint(20) NOT NULL,
+  PRIMARY KEY (`item_id`,`feature_id`)
+);
+
+CREATE TABLE `item_feature_string` (
+  `item_id` int(10) unsigned NOT NULL,
+  `feature_id` int(10) unsigned NOT NULL,
+  `value` varchar(255) NOT NULL,
+  PRIMARY KEY (`item_id`,`feature_id`)
+);
 
 CREATE TABLE `keys` (
   `id` int(10) unsigned zerofill NOT NULL AUTO_INCREMENT,
@@ -100,12 +193,13 @@ CREATE TABLE `products` (
   `price` decimal(9,2) NOT NULL DEFAULT '0.00',
   `stock` int(11) NOT NULL DEFAULT '0',
   `description` longtext NOT NULL,
-  `category` int(11) NOT NULL,
-  `reducedPrice` decimal(8,2) NOT NULL DEFAULT '0.00',
+  `reducedPrice` decimal(9,2) NOT NULL DEFAULT '0.00',
   `reducedValidFrom` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `reducedExpiry` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `weight` decimal(8,2) NOT NULL,
+  `weight` decimal(9,2) NOT NULL,
   `active` TINYINT(1) DEFAULT 1,
+  `SKU` VARCHAR(25) DEFAULT NULL,
+  `cost` DECIMAL(9,2) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `category` (`category`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1;

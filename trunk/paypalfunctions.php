@@ -1,4 +1,5 @@
 <?php
+require_once dirname(__FILE__)."/preload.php";
 	/********************************************
 	PayPal API Module
 	 

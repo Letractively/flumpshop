@@ -176,11 +176,19 @@ $_SESSION['config']->setNode("messages", "privacyPolicyHeader", "Privacy Policy"
 $_SESSION['config']->setNode("messages", "termsConditionsHeader", "Terms and Conditions", "Terms and Conditions Page Header");
 $_SESSION['config']->setNode("messages", "disclaimerHeader", "Disclaimer", "Disclaimer Page Header");
 $_SESSION['config']->setNode("messages", "searchHeader", "Search", "Search Page Header");
+$_SESSION['config']->setNode("messages", "checkoutHeader", "Checkout", "Checkout Header");
 
 //Content Placeholders
 $_SESSION['config']->setNode("messages", "featuredItemsPlaceholder", "You can tell the Flumpnet Robot to show two items in this section, by accessing the Admin CP, then clicking Products->Featured Items.", "Featured Items Placeholder");
 $_SESSION['config']->setNode("messages", "popularItemsPlaceholder", "Sorry, our site has yet to gather sufficient information to show you here yet. Please come back later to see what everyone else is looking at!", "Popular Items Placeholder");
 $_SESSION['config']->setNode("messages", "noNewsPlaceholder", "No items of the specified type have ever been posted here.", "No News Placeholder");
+
+//Item Page
+$_SESSION['config']->setNode("messages","itemDelivery","Delivery: ","Item Delivery Prefix");
+$_SESSION['config']->setNode("messages","itemDeliveryUnavail","Cannot deliver to your area online","Item Delivery Unavailable");
+
+//Checkout Messagse
+$_SESSION['config']->setNode("messages", "paymentMethodHeader", "Choose a Payment Method", "Payment Method Title");
 
 //Full Page Content
 $_SESSION['config']->setNode("messages", "404", 
