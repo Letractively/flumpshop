@@ -87,7 +87,7 @@ class Item {
 	
 	function setDefaults() {
 		global $config;
-		if (!preg_match("/admin.*import.php/i",$_SERVER['HTTP_REFERER'])) {//Stop reset on import
+		if (!isset($_SERVER['HTTP_REFERER']) or !preg_match("/admin.*import.php/i",$_SERVER['HTTP_REFERER'])) {//Stop reset on import
 			$this->itemID = -1;
 			$this->itemName = $config->getNode("messages", "itemDefaultName");
 			$this->itemPrice = 0;
