@@ -18,12 +18,10 @@ if (isset($logger)) $prefix = "../"; else $prefix = "../../";
 <head>
 <link href="<?php echo $prefix;?>style-main.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo $prefix;?>jqueryui.css" rel="stylesheet" type="text/css" />
-<link href="<?php echo $prefix;?>../style/jquery-overrides.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $prefix;?>../js/jquery.js"></script>
 <script type="text/javascript" src="<?php echo $prefix;?>../js/jqueryui.js"></script>
 <script type="text/javascript" src="<?php echo $prefix;?>../js/jquery.validate.min.js"></script>
 <script type="text/javascript" src="<?php echo $prefix;?>../js/additional-methods.js"></script>
-<script type="text/javascript" src="<?php echo $prefix;?>../js/htmlbox.full.js"></script>
 <script type="text/javascript" src="<?php echo $prefix;?>../js/defaults.php"></script>
 <script type="text/javascript">$(document).ready(function() {$('input:submit, button').button();<?php if (!strstr($_SERVER['REQUEST_URI'],"varMan.php")) echo "$('form').each(function(i){\$(this).validate();});"; //Breaks Configuration Manager?>});</script>
 <script>

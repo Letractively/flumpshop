@@ -87,6 +87,18 @@ if (isset($_GET['error'])) echo "<p class='ui-state-highlight'>".$_GET['error'].
 		<td><label for="can_view_reports">View/Generate Reports</label></td>
 		<td><input type="checkbox" name="can_view_reports" id="can_view_reports" /></td>
 	</tr>
+	<tr>
+		<td><label for="can_add_features">Add New Features</label></td>
+		<td><input type="checkbox" name="can_add_features" id="can_add_features" /></td>
+	</tr>
+	<tr>
+		<td><label for="can_edit_features">Edit Existing Features</label></td>
+		<td><input type="checkbox" name="can_edit_features" id="can_edit_features" /></td>
+	</tr>
+	<tr>
+		<td><label for="can_delete_features">Remove Features</label></td>
+		<td><input type="checkbox" name="can_delete_features" id="can_delete_features" /></td>
+	</tr>
 </table>
 <br /><input type="submit" value="Create User" />
 </form>

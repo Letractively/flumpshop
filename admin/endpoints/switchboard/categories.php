@@ -40,6 +40,10 @@ if (isset($_GET['msg'])) echo $_GET['msg'];
 		//Item Report
 		if (acpusr_validate("can_view_reports")) {
 			?><li><a href="../categories/report.php" onclick="loader('I\'m generating the category report as I speak. This can take a few minutes, depending on the size of the category database. Please Wait...','Generating Report');">View Category Report</a></li><?php
+		}
+		//Features
+		if (acpusr_validate("can_add_features") or acpusr_validate("can_edit_features") or acpusr_validate("can_delete_features")) {
+			?><li><a href="../switchboard/features.php" onclick="loader('Please Wait...','Loading Feature Manager');">Manage Features</a></li><?php
 		}?>
 	</ul>
 </div>

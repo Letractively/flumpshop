@@ -51,8 +51,6 @@ require_once dirname(__FILE__)."/../header.php";
 <input type="submit" value="Save" name="submit" id="submit" style="font-size: 13px; padding: .2em .4em;" />
 </form>
 <script>
-$('form').validate();
-
 //Recursive Image support
 document.imageNo = 0;
 function updateImageField() {
