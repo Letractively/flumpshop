@@ -84,10 +84,6 @@ Please enter your username and password to continue...
 			<a href='endpoints/switchboard/categories.php' onclick='loader("Loading Category Menu...");' target='main'>Manage Categories</a>
 			<a href='endpoints/switchboard/products.php' onclick='loader("Loading Products Menu...");' target='main'>Manage Products</a>
 		</div>
-        <h3>Categories</h3>
-        <div>
-			<a href='endpoints/edit/manageFeatures.php' onclick='loader("Loading Content...");' target="main">Features<sup>labs</sup></a>
-        </div>
         <h3>News</h3>
         <div>
             <a href='endpoints/create/newNews.php' onclick='loader("Loading Content...");' target="main">New News Post</a>
@@ -183,8 +179,7 @@ Please enter your username and password to continue...
 		} elseif ($_GET['frame'] == "main") {
 			//Main Frame
 			?><html>
-				<head><link href="style-main.css" rel="stylesheet" type="text/css" /><link href="jqueryui.css" rel="stylesheet" type="text/css" /><script src="../js/jquery.js"></script><script src="../js/jqueryui.js"></script></head>
-                <script>function loadDialog() {$('#dialog').dialog();}</script>
+				<head><link href="style-main.css" rel="stylesheet" type="text/css" /><link href="jqueryui.css" rel="stylesheet" type="text/css" /><script src="../js/jquery.js"></script><script src="../js/jqueryui.js"></script><script>function loadDialog() {$('#dialog').dialog();}</script></head>
 				<body>
 				<h1>Flumpshop v<?php echo $config->getNode('site','version');?></h1>
                 <h2>Admin CP</h2><?php
