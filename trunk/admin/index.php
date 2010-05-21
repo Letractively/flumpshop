@@ -146,6 +146,8 @@ Please enter your username and password to continue...
 				}
 			}
         ?></div>
+		<h3>Credits</h3>
+		<div>Developed by Flumpnet. The system makes use of the TinyMCE Editor, jQuery and the jQueryUI Framework, and FPDF (+Sphider?)</div>
     </div>
     </div>
     </center>

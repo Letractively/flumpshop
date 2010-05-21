@@ -79,6 +79,10 @@ class Cart {
 		$this->items[$itemid] = $stock;
 	}
 	
+	function getQuantity($itemID) {
+		return $this->items[$itemID];
+	}
+	
 	function incTotal($int) {
 		$this->total+=$int;
 	}
