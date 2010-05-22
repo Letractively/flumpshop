@@ -67,7 +67,7 @@ class Customer {
 			}
 		}
 		if ($this->id == 0) {
-			$dbConn->query("INSERT INTO `customers` (name,address1,address2,address3,postcode,country,email,paypalid,can_contact) VALUES ('$this->name','$this->address1','$this->address2','$this->address3','$this->postcode','$this->country','$this->email','$this->paypalid','$this->can_contact')");
+			$dbConn->query("INSERT INTO `customers` (name,address1,address2,address3,postcode,country,email,paypalid,archive,can_contact) VALUES ('$this->name','$this->address1','$this->address2','$this->address3','$this->postcode','$this->country','$this->email','$this->paypalid',0,'$this->can_contact')");
 			$this->id = $dbConn->insert_id();
 		}
 		$country = $dbConn->fetch($dbConn->query("SELECT * FROM `country` WHERE iso='".$this->country."' LIMIT 1"));

@@ -35,15 +35,6 @@ function editQuantity(id,quantity,maxQuantity) {
 							}
 						});
 }
-
-function notImplemented() {
-	$("#dialog").html("This Feature has not been implemented yet.").dialog({dialogClass: 'ui-state-error',
-																		   title: "Not Implemented",
-																			buttons: {
-																				Cancel: function() {$(this).dialog('destroy');}
-																				}
-																			});
-}
 </script>
 <?php
 if ($config->getNode('temp','crawler') == true) {echo $config->getNode('messages','crawler');} else {?><noscript><?php
@@ -73,7 +64,7 @@ echo $config->getNode('messages','noScript');
 <h3 id="page_title"><?php echo $config->getNode('messages','basketPageHeader');?></h3><?php
 	if ($basket->getItems() != 0) {
 		echo $basket->listItems();
-		echo "<div class='ui-widget-content' onclick='$(this).addClass(\"ui-state-disabled\").html(\"Loading...\"); window.location.href =\"checkout.php\";'><a href='checkout.php'>".$config->getNode('messages','basketLinkToCheckout')."<span class='ui-icon ui-icon-circle-arrow-e ui-icon-right'></span></a></div>";
+		echo "<div class='ui-widget-content' onclick='$(this).addClass(\"ui-state-disabled\").html(\"".$config->getNode('messages','loading')."\"); window.location.href =\"checkout.php\";'><a href='checkout.php'>".$config->getNode('messages','basketLinkToCheckout')."<span class='ui-icon ui-icon-circle-arrow-e ui-icon-right'></span></a></div>";
 	} else {
 		echo "<div class='ui-corner-all ui-state-highlight'><span class='ui-icon ui-icon-info'></span>".$config->getNode("messages", "basketEmpty")."</div>";
 	}

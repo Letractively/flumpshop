@@ -5,11 +5,10 @@ define("PAGE_TYPE","item");
 require_once dirname(__FILE__)."/../header.php";
 
 ob_start(); //Template Buffer
-
-if ($config->isNode('cache','item'.$item->getID())) {
-	echo $config->getNode('cache','item'.$item->getID());
+print_r($config->data['cache']);
+if ($config->isNode('cache','item'.intval($item->getID()))) { //intval removes zerofill
+	echo $config->getNode('cache','item'.intval($item->getID()));
 } else {
-
     $category = new Category($item->getCategory());
     echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->getBreadcrumb()." -> ".$item->getName();
 	echo '<div id="notice"></div>';
@@ -26,7 +25,7 @@ if ($config->isNode('cache','item'.$item->getID())) {
 	</script><?php
 	
 	//Cache the data now
-	$config->setNode("cache","item".$item->getID(),ob_get_contents());
+	$config->setNode("cache","item".intval($item->getID()),ob_get_contents());
 }
 
 templateContent($_GET['id']);

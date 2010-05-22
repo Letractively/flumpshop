@@ -5,15 +5,15 @@ if (isset($vars[0]) && is_string($vars[0])) {
 	if (isset($_SESSION)) session_destroy();
 	session_id($vars[0]);
 }
-require_once(dirname(__FILE__)."/preload.php"); require_once dirname(__FILE__)."/header.php";?>
-  <?php if ($config->getNode('secure','enabled') && $_SERVER['HTTPS'] == "off") {
+define("PAGE_TYPE","plugins_forbidden");
+require_once dirname(__FILE__)."/header.php";
+if ($config->getNode('secure','enabled') && $_SERVER['HTTPS'] == "off") {
 	echo "Redirecting...";
 	die("<script type='text/javascript'>window.location = '".$config->getNode('paths','secureRoot')."/checkout.php?".session_id()."';</script>");
 }
-?>
-<h1 class="content">Checkout</h1>
-<p>Total: &pound;<?php echo $basket->getFriendlyTotal(); ?></p>
-ERR_FEATURE_NOT_IMPLEMENTED
+ob_start(); //Template Buffer
+?><h1 class="content">Checkout</h1>
+<p>Total: &pound;<?php echo $basket->getFriendlyTotal(true,true); ?></p>
 <div class='ui-widget'>
   <div class='ui-widget-header'>Redirecting</div><div class='ui-widget-content'>
 You are now being redirected to PayPal in order to pay for you order. You will be automatically returned to the site once the payment process is complete.
@@ -36,8 +36,11 @@ if ($stock !== true) {
 	$basket->lock(); //Stop basket from being edited whilst at checkout
 	//PayPal API call
 	require_once dirname(__FILE__)."/paypalfunctions.php";
-	CallShortcutExpressCheckout($basket->getTotal(),"GBP","Order",$config->getNode('paths','root')."/paypalFinish.php",$config->getNode('paths','root')."/paypalCancel.php");
-	RedirectToPayPal($_SESSION['TOKEN']);
+	CallShortcutExpressCheckout($basket->getFriendlyTotal(true,true),"GBP","Order",$config->getNode('paths','root')."/paypalFinish.php",$config->getNode('paths','root')."/paypalCancel.php");
+	$token = @$_SESSION['TOKEN'];
+	RedirectToPayPal($token);
 }
+
+templateContent();
 require_once dirname(__FILE__)."/footer.php";
 ?>

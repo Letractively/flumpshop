@@ -2,6 +2,7 @@
 class Cart {
 	var $items = array();
 	var $total = 0;
+	var $delivery = 0;
 	var $id;
 	var $holds = array();
 	var $lock = 0;
@@ -26,11 +27,14 @@ class Cart {
 	
 	function checkPrice() {
 		$newPrice = 0;
+		$newDelivery = 0;
 		foreach (array_keys($this->items) as $item) {
 			$obj = new Item($item);
+			$newDelivery += $this->items[$item]*$obj->getDeliveryCost();
 			$newPrice += $this->items[$item]*$obj->getPrice();
 		}
 		$this->total = $newPrice;
+		$this->delivery = $newDelivery;
 	}
 	
 	function clear() {
@@ -39,6 +43,7 @@ class Cart {
 			unset($this->items);
 			$this->items = array();
 			$this->total = 0;
+			$this->delivery = 0;
 		} else {
 			debug_message("Cannot Empty Basket - Basket Locked");
 		}
@@ -59,23 +64,28 @@ class Cart {
 	}
 	
 	function addItem($id,$stock=1) {
+		$id = intval($id); //Remove zerofill
 		if (!isset($this->items[$id])) $this->items[$id] = 0;
 		$this->items[$id]+=$stock;
 		$item = new Item($id);
 		$this->incTotal($item->getPrice());
+		$this->incDelivery($item->getDeliveryCost());
 	}
 	
 	function removeItem($id) {
+		$id = intval($id); //Remove zerofill
 		if (isset($this->items[$id])) {
 			$item = new Item($id);
 			$quantity = $this->items[$id];
 			$price = $item->getPrice()*$quantity;
 			unset($this->items[$id]);
 			$this->incTotal(-$price);
+			$this->incDelivery(-$item->getDeliveryCost());
 		}
 	}
 	
 	function changeQuantity($itemid,$stock) {
+		$itemid = intval($itemid); //Remove zerofill
 		$this->items[$itemid] = $stock;
 	}
 	
@@ -87,21 +97,28 @@ class Cart {
 		$this->total+=$int;
 	}
 	
+	function incDelivery($int) {
+		$this->delivery+=$int;
+	}
+	
 	function listItems($mode = "BASKET") {
 		global $config;
 		$mode = strtoupper($mode);
 		if ($mode == "BASKET") {
 			$reply = $this->getItems()." Item(s) in Basket.&nbsp;";
 			$reply .= "<input type='button' class='ui-state-default' style='cursor: pointer;' onclick='emptyBasket();' value='Empty' />";
+			$reply .= "<table style='width:100%' id='basketItemsTable'><tr class='ui-widget-header'><th>Item</th><th>Price</th><th>Quantity</th></tr>";
 			$items = array_keys($this->items);
 			foreach ($items as $id) {
 				$item = new Item($id);
 				$reply .= $item->getDetails("BASKET",$this->items[$id]);
 			}
+			$reply .= "</table>";
 			$reply .= "<hr />";
-			$reply .= "<table><tr><td>Subtotal: </td><td>&pound;".$this->getFriendlyTotal(false)."</td></tr>";
+			$reply .= "<table><tr><td>Subtotal: </td><td>&pound;".$this->getFriendlyTotal(false,false)."</td></tr>";
 			$reply .= "<tr><td>VAT @".$config->getNode('site','vat')."%: </td><td>&pound;".$this->getFriendlyVAT()."</td></tr>";
-			$reply .= "<tr class='ui-state-highlight'><td>Total: </td><td>&pound;".$this->getFriendlyTotal(true)."</td></tr></table>";
+			$reply .= "<tr><td>Shipping: </td><td>&pound;".$this->getFriendlyDelivery()."</td></tr>";
+			$reply .= "<tr class='ui-state-highlight'><td>Total: </td><td>&pound;".$this->getFriendlyTotal(true,true)."</td></tr></table>";
 		} elseif ($mode == "ORDER") {
 			$reply = "";
 			$items = array_keys($this->items);
@@ -139,16 +156,24 @@ class Cart {
 		return $this->total;
 	}
 	
-	function getFriendlyTotal($vat = false) {
+	function getFriendlyTotal($vat = false, $delivery = false) {
 		global $config;
 		if ($vat) $multiplier = ($config->getNode('site','vat')/100)+1; else $multiplier = 1;
-		return number_format($this->total*$multiplier,2);
+		if ($delivery) {
+			return number_format(($this->total*$multiplier)+$this->delivery,2);
+		} else {
+			return number_format($this->total*$multiplier,2);
+		}
 	}
 	
 	function getFriendlyVAT() {
 		global $config;
-		$multiplier = ($config->getNode('site','vat')/100)+1;
+		$multiplier = ($config->getNode('site','vat')/100);
 		return number_format($this->total*$multiplier,2);
+	}
+	
+	function getFriendlyDelivery() {
+		return number_format($this->delivery,2);
 	}
 	
 	function getItems() {
@@ -229,7 +254,7 @@ class Cart {
 					$dbConn->query("DELETE FROM `reserve` WHERE id=".$this->holds[$item]." LIMIT 1");
 				} else {
 					//Timed Out/No Hold
-					$dbConn->query("UPDATE `items` SET stock=stock-".$this->items[$item]." WHERE id=$item LIMIT 1");
+					$dbConn->query("UPDATE `products` SET stock=stock-".$this->items[$item]." WHERE id=$item LIMIT 1");
 				}
 				unset($this->holds[$item]);
 			}
