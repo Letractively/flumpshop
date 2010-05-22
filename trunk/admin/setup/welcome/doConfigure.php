@@ -126,6 +126,7 @@ $_SESSION['config']->setNode("messages", "defaultCategoryDesc", "Details for thi
 $_SESSION['config']->setNode("messages", "navAdvert", "Add custom text here in the Admin CP", "Navigation Bar Text");
 $_SESSION['config']->setNode("messages", "featuresName", "Features", "Item Features Name");
 $_SESSION['config']->setNode("messages", "subcatHeader", "Sections", "Subcategories Header");
+$_SESSION['config']->setNode("messages", "loading", "Loading...", "Loading Message");
 
 //Index Page
 $_SESSION['config']->setNode("messages", "featuredItemHeader", "Featured Item", "Featured Item Header");
@@ -177,6 +178,7 @@ $_SESSION['config']->setNode("messages", "termsConditionsHeader", "Terms and Con
 $_SESSION['config']->setNode("messages", "disclaimerHeader", "Disclaimer", "Disclaimer Page Header");
 $_SESSION['config']->setNode("messages", "searchHeader", "Search", "Search Page Header");
 $_SESSION['config']->setNode("messages", "checkoutHeader", "Checkout", "Checkout Header");
+$_SESSION['config']->setNode("messages", "basketHeader", "Basket", "Basket Header");
 
 //Content Placeholders
 $_SESSION['config']->setNode("messages", "featuredItemsPlaceholder", "You can tell the Flumpnet Robot to show two items in this section, by accessing the Admin CP, then clicking Products->Featured Items.", "Featured Items Placeholder");
@@ -187,7 +189,10 @@ $_SESSION['config']->setNode("messages", "noNewsPlaceholder", "No items of the s
 $_SESSION['config']->setNode("messages","itemDelivery","Delivery: ","Item Delivery Prefix");
 $_SESSION['config']->setNode("messages","itemDeliveryUnavail","Cannot deliver to your area online","Item Delivery Unavailable");
 
-//Checkout Messagse
+//Checkout Messages
+$_SESSION['config']->setNode("messages", "basketGoBackLink", "<-- Go Back", "Basket Go Back Link");
+$_SESSION['config']->setNode("messages", "basketLinkToCheckout", "Go to checkout", "Basket Checkout Link");
+$_SESSION['config']->setNode("messages", "basketEmpty", "Your basket is empty.", "Basket Empty");
 $_SESSION['config']->setNode("messages", "paymentMethodHeader", "Choose a Payment Method", "Payment Method Title");
 
 //Full Page Content
