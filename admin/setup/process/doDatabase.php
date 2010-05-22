@@ -48,6 +48,10 @@ if ($result = $dbConn->query("SELECT `value` FROM `stats` WHERE `key` = 'dbVer' 
 	DBUpgrade(1);
 }
 
+//Run reset.sql to delete data that may confuse new Config object
+file_put_contents(dirname(__FILE__)."/status.txt", "Running reset script");
+$dbConn->multi_query(file_get_contents(dirname(__FILE__)."/../sql/reset.sql"),true);
+
 file_put_contents(dirname(__FILE__)."/status.txt", "Finished!");
 sleep(1); //Give time for ajax to notice change
 unlink(dirname(__FILE__)."/status.txt");

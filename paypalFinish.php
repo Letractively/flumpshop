@@ -26,13 +26,13 @@ if ($dbConn->rows($dbConn->query("SELECT id FROM `orders` WHERE token='".$_GET['
 									AND address2='".str_replace("'","''",$result['SHIPTOCITY'])."' 
 									AND address3='".str_replace("'","''",$result['SHIPTOSTATE'])."' 
 									AND postcode='".str_replace("'","''",$result['SHIPTOZIP'])."' 
-									AND country='".str_replace("'","''",$result['SHIPTOCOUNTRYNAME'])."' 
+									AND country='".str_replace("'","''",$result['SHIPTOCOUNTRYCODE'])."' 
 									AND email='".str_replace("'","''",$result['EMAIL'])."' LIMIT 1");
 		if ($dbConn->rows($customers) == 0) {
 			debug_message("Generating new Customer Object...");
 			//Generate New Customer Record
 			$customer = new Customer();
-			$customer->populate($result['SHIPTONAME'],$result['SHIPTOSTREET'],$result['SHIPTOCITY'],$result['SHIPTOSTATE'],$result['SHIPTOZIP'],$result['SHIPTOCOUNTRYNAME'],$result['EMAIL'],$_GET['PayerID']);
+			$customer->populate($result['SHIPTONAME'],$result['SHIPTOSTREET'],$result['SHIPTOCITY'],$result['SHIPTOSTATE'],$result['SHIPTOZIP'],strtoupper($result['SHIPTOCOUNTRYCODE']),$result['EMAIL'],$_GET['PayerID']);
 		} else {
 			debug_message("Loading Existing Customer Object...");
 			$customer = $dbConn->fetch($customers);
@@ -50,7 +50,7 @@ if ($dbConn->rows($dbConn->query("SELECT id FROM `orders` WHERE token='".$_GET['
 		$basket = new Cart($bid);
 		?>
 		<h1>Payment Confirmed</h1>
-		<div class="ui-widget ui-widget-title ui-corner-top">Your Order</div>
+		<div class="ui-widget ui-widget-header ui-corner-top">Your Order</div>
 		<div class="ui-widget-content ui-corner-bottom">Your order has been accepted and has been assigned order id number <b><?php echo $order; ?></b>. Please print this page for your records, and make a note of this order number, and use it if you need to contact us regarding this order.</div>
 		<h2>Shipping To</h2>
 		<div class="ui-widget-content ui-corner-all" style="width: 48%; float: left;">

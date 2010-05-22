@@ -50,7 +50,7 @@ class Item {
 					while ($row = $dbConn->fetch($result)) {
 						$this->itemCategory[] = $row['catid'];
 					}
-					//Features (Experimental)
+					//Features
 					$result = $dbConn->query("SELECT feature_id,value FROM `item_feature_number` WHERE item_id='".$id."'
 											 UNION SELECT feature_id,value FROM `item_feature_string` WHERE item_id='".$id."'
 											 UNION SELECT feature_id,value FROM `item_feature_date` WHERE item_id='".$id."'");
@@ -329,13 +329,18 @@ class Item {
 			$reply .= "</div></div>";//Close Containers
 		}
 		if ($type == "BASKET") {
-			$reply = "<h4>".$this->getName()."</h4>";
-			$reply .= "<div class='ui-widget-content ui-corner-bottom'>&pound;".$this->itemPrice." (x$int)";
-			$reply .= "<div style='float: right;'>".$this->getStock()." Available</div>";
-			$reply .= "<div class='ui-state-default'>";
+			$reply = "<tr>";
+			$reply .= "<td><strong>".$this->getName()."</strong><br />";
+			$reply .= $this->getStock()." in stock<br />";
+			$reply .= "&pound;".$this->getDeliveryCost()." Shipping and Handling<br />";
+			//Remove Icon
 			$reply .= "<span class='ui-icon ui-icon-trash' onclick='removeItem(".$this->getID().");' title='Remove' style='cursor: pointer;'>&nbsp;</span>";
+			//Quantity Icon
 			$reply .= "<span class='ui-icon ui-icon-plus' onclick='editQuantity(".$this->getID().",".$int.",".$this->getStock().");' title='Quantity' style='cursor: pointer;'>&nbsp;</span>";
-			$reply .= "&nbsp;</div></div>";
+			$reply .= "</td>";
+			$reply .= "<td>&pound;".$this->itemPrice."</td>";
+			$reply .= "<td>$int</td>";
+			$reply .= "</tr>";
 		}
 		if ($type == "ORDER") {
 			$reply = "<a href='".$this->getURL()."'>".$this->getName()."</a> (x$int)";
@@ -345,7 +350,7 @@ class Item {
 	
 	//Getters/Setters
 	function getID() {
-		return $this->itemID;
+		return intval($this->itemID);
 	}
 	
 	function getSKU() {

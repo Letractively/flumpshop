@@ -14,6 +14,20 @@ require "../includes/Cart.class.php";
 require "../includes/Item.class.php";
 $dbConn = db_factory();
 
+//Load the Order Details
+$result = $dbConn->query("SELECT obj FROM basket WHERE id IN (SELECT basket FROM orders WHERE id='".intval($_GET['orderID'])."') LIMIT 1");
+
+$row = $dbConn->fetch($result);
+unset($result);
+
+$basket = unserialize(base64_decode($row['obj']));
+unset($row);
+
+$result = $dbConn->query("SELECT * FROM customers WHERE id IN (SELECT customer FROM orders WHERE id='".intval($_GET['orderID'])."') LIMIT 1");
+
+$billingAddress = $dbConn->fetch($result);
+
+
 $pdf = new FPDF("P","mm","A4"); //Portrait, mm measurement, A4 format
 
 $pdf->AddPage(); //Create the page
@@ -59,9 +73,21 @@ $pdf->Cell(1,10,"",0,2);
 
 $pdf->Cell(90,5,"Billing Address: ",1,0,"L",1);
 $pdf->Cell(90,5,"Shipping Address: ",1,1,"L",1);
-$pdf->MultiCell(90,4,"Not Implemented",1);
-$pdf->SetXY(100,$pdf->GetY()-28);
-$pdf->MultiCell(90,4,"Not Implemented",1);
+// Billing Address
+$pdf->MultiCell(90,4,$billingAddress['name']."\n".
+					$billingAddress['address1']."\n".
+					$billingAddress['address2']."\n".
+					$billingAddress['address3']."\n".
+					$billingAddress['postcode']."\n".
+					$billingAddress['country'],1);
+$pdf->SetXY(100,$pdf->GetY()-24);
+// Delivery Address (same as billing due to not implemented in core)
+$pdf->MultiCell(90,4,$billingAddress['name']."\n".
+					$billingAddress['address1']."\n".
+					$billingAddress['address2']."\n".
+					$billingAddress['address3']."\n".
+					$billingAddress['postcode']."\n".
+					$billingAddress['country'],1);
 //End Addresses
 
 //Start Order Info Table
@@ -94,15 +120,6 @@ $pdf->Cell(20,5,"Unit Price",1,0,"C",1);
 $pdf->Cell(20,5,"Amount",1,1,"C",1);
 
 // Content
-//  Load the Order Details
-$result = $dbConn->query("SELECT obj FROM basket WHERE id IN (SELECT basket FROM orders WHERE id='".intval($_GET['orderID'])."') LIMIT 1");
-
-$row = $dbConn->fetch($result);
-unset($result);
-
-$basket = unserialize(base64_decode($row['obj']));
-unset($row);
-
 $totalPrice = 0;
 $totalDelivery = 0;
 $currencySymbol = html_entity_decode("&pound;"); //Stops Browser outputting random characters

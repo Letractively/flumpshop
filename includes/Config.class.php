@@ -120,13 +120,19 @@ class Config {
 		//Magic: Store an expiration time if the tree is cache (default 1h)
 		//And actually store the data in the database, and set the value to the ID
 		if ($treeName == "cache") {
+			debug_message("Storing cache data");
 			global $dbConn;
+			
 			$this->namespaces['cache']['expirations'][$nodeName] = time()+$cacheTimeout; //Timeout
+			debug_message("Timeout set to ".$this->namespaces['cache']['expirations'][$nodeName]);
 			
 			if (!$this->isNode('cache',$nodeName)) { //Doesn't Exist Yet
+				debug_message("New cache Data");
 				$dbConn->query("INSERT INTO `cache` (nodeName,cache) VALUES ('".$nodeName."','".str_replace("'","''",$nodeVal)."')");
 				$this->data['cache'][$nodeName] = $dbConn->insert_id();
+				debug_message("New cache ID: ".$dbConn->insert_id());
 			} else { //Already Exists
+				debug_message("Existing cache Data");
 				$dbConn->query("UPDATE `cache` SET cache = '".str_replace("'","''",$nodeVal)."' WHERE id='".$this->getNode('cache',$nodeVal)."' LIMIT 1");
 			}
 		} else { //Not cache

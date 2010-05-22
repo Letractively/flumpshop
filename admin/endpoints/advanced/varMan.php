@@ -9,7 +9,7 @@ if (!$config->getEditable()) {
 ?><form action='../process/saveConf.php' method="POST" name='varForm' id='varForm' onsubmit="loader('Updating Configuration...','Please Wait');"><?php
 //Section input form
 foreach ($config->getTrees() as $tree) {
-	if ($tree != "orderstatus" && $tree != "temp") {
+	if ($tree != "orderstatus" && $tree != "temp" && $tree != "cache") {
 		echo "<h3 style='padding-left: 25px;'>".$config->getFriendName($tree)."</h3><div><table>";
 			foreach ($config->getNodes($tree) as $pathNode) {
 				$class = "";
@@ -26,7 +26,6 @@ foreach ($config->getTrees() as $tree) {
 											 htmlentities($value));
 						$class .= get_valid_class($tree,$pathNode);
 						echo "<tr class='ui-widget-content'><td width='250'><label for='$tree|$pathNode'>$name</label></td><td><textarea name='$tree|$pathNode' id='$tree|$pathNode' class='".$class."ui-state-default' style='width: 400px; height: 150px;'>$value</textarea></td></tr>";
-
 					} else {
 						$value = str_replace("'","&apos;",htmlentities($value));
 						$class .= get_valid_class($tree,$pathNode);
