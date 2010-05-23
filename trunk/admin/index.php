@@ -111,10 +111,14 @@ Please enter your username and password to continue...
 		<h3>Manage Site</h3>
 			<div>
 			<?php if (acpusr_validate('can_post_news') or acpusr_validate('can_edit_pages')) { //News Manager?>
-			<a href='endpoints/switchboard/news.php' onclick='loader("Loading News Menu...");' target='main'>Manage News</a>
+				<a href='endpoints/switchboard/news.php' onclick='loader("Loading News Menu...");' target='main'>Manage News</a>
 			<?php
 			}
+			if (acpusr_validate('can_edit_pages')) { //Page Manager
 			?>
+				<a href='endpoints/switchboard/pages.php' onclick='loader("Loading Pages Menu...");' target='main'>Manage Pages</a>
+			<?php
+			}?>
 			</div>
 		<?php
 		}
