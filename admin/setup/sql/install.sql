@@ -176,6 +176,7 @@ CREATE TABLE `news` (
   `title` varchar(250) NOT NULL DEFAULT 'Untitled',
   `body` text NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `poster` int(11) unsigned,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 
@@ -240,7 +241,7 @@ CREATE TABLE `techhelp` (
   `title` varchar(250) NOT NULL DEFAULT 'Untitled',
   `body` text NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `currency` char(3) NOT NULL DEFAULT 'GBP',
+  `poster` int(11) unsigned,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 

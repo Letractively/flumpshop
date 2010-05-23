@@ -268,9 +268,11 @@ function commitCache() {
 					//Import News Entry
 					//Defaults
 					if (!isset($dataCache['TIMESTAMP']) or $dataCache['TIMESTAMP'] == '' or $dataCache['TIMESTAMP'] == "CURRENT_TIMESTAMP") $dataCache['TIMESTAMP'] = $dbConn->time();
+					if (!isset($dataCache['POSTER']) or empty($dataCache['POSTER'])) $dataCache['POSTER'] = $acp_uid;
 					//Delete old
 					$dbConn->query("DELETE FROM `".$currentElement."` WHERE id='".$dataCache['ID']."' LIMIT 1");
-					if ($dbConn->query("INSERT INTO `".$currentElement."` (id,title,body,timestamp) VALUES ('".$dataCache['ID']."','".$dataCache['TITLE']."','".$dataCache['BODY']."','".$dataCache['TIMESTAMP']."')")) {
+					//Create New
+					if ($dbConn->query("INSERT INTO `".$currentElement."` (id,title,body,timestamp,poster) VALUES ('".$dataCache['ID']."','".$dataCache['TITLE']."','".$dataCache['BODY']."','".$dataCache['TIMESTAMP']."','".$dataCache['POSTER']."')")) {
 						//Success
 						debug_message("Imported Entry #".$currentElement."-".$dataCache['ID'].".");
 					} else {
