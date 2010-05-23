@@ -42,12 +42,6 @@ if ($dbConn->rows($dbConn->query("SELECT id FROM `orders` WHERE token='".$_GET['
 		if (!$order) echo "Fatal Error: Could not commit order. Contact Support with SESSIONID ".session_id();
 		debug_message(print_r($result,true));
 		
-		//Clear Basket (also stops duplicate ordering)
-		debug_message("Initializing new basket");
-		$dbConn->query("INSERT INTO `basket` (obj) VALUES (' ')");
-		$bid = $dbConn->insert_id();
-		$dbConn->query("UPDATE `sessions` SET basket=$bid WHERE session_id='".session_id()."' LIMIT 1");
-		$basket = new Cart($bid);
 		?>
 		<h1>Payment Confirmed</h1>
 		<div class="ui-widget ui-widget-header ui-corner-top">Your Order</div>
@@ -76,6 +70,50 @@ if ($dbConn->rows($dbConn->query("SELECT id FROM `orders` WHERE token='".$_GET['
 		<?php
 	}
 }
+
+if ($config->getNode('server','analyticsID') != "") { //Analytics ecommerce tracker
+	?>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', '<?php echo $config->getNode('server','analyticsID');?>']);
+  _gaq.push(['_trackPageview']);
+  _gaq.push(['_addTrans',
+    '<?php echo $order;?>',           // order ID - required
+    '<?php echo $config->getNode('messages','name');?>',  // affiliation or store name
+    '<?php echo $basket->getTotal(); ?>'
+  ]);
+
+   /* add item might be called for every item in the shopping cart
+   // where your ecommerce engine loops through each item in the cart and
+   // prints out _addItem for each
+  _gaq.push(['_addItem',
+    '1234',           // order ID - required
+    'DD44',           // SKU/code
+    'T-Shirt',        // product name
+    'Green Medium',   // category or variation
+    '11.99',          // unit price - required
+    '1'               // quantity - required
+  ]);
+  */
+  _gaq.push(['_trackTrans']); //submits transaction to the Analytics servers
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+  })();
+
+</script>
+	<?php
+}
+
+//Clear Basket (also stops duplicate ordering)
+debug_message("Initializing new basket");
+$dbConn->query("INSERT INTO `basket` (obj) VALUES (' ')");
+$bid = $dbConn->insert_id();
+$dbConn->query("UPDATE `sessions` SET basket=$bid WHERE session_id='".session_id()."' LIMIT 1");
+$basket = new Cart($bid);
 
 templateContent();
 
