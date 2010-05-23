@@ -94,15 +94,19 @@ class Config {
 		//Updates cache data to remove expired information
 		$time = time();
 		//Only Check once an hour
-		if (isset($this->namespaces['cache']['nextCheck']) and $this->namespaces['cache']['nextCheck'] < $time) return;
+		if (isset($this->namespaces['cache']['nextCheck']) and $this->namespaces['cache']['nextCheck'] > $time) return;
 		
 		$this->change = true;
+		debug_message("Clearing Cache...");
 		global $dbConn;
 		
-		foreach ($this->namespaces['cache']['expirations'] as $nodeName => $timeout) {
-			if ($timeout < $time) {
-				$dbConn->query("DELETE FROM `cache` WHERE id='".$this->getNode('cache',$nodeName)."' LIMIT 1");
-				unset($this->data['cache'][$nodeName],$this->namespaces['cache']['expirations'][$nodeName]);
+		if (isset($this->namespaces['cache']['expirations'])) { //Don't trigger error if nothing's been cached, ever
+			foreach ($this->namespaces['cache']['expirations'] as $nodeName => $timeout) {
+				if ($timeout < $time) {
+					debug_message("Removing $nodeName from cache...");
+					$dbConn->query("DELETE FROM `cache` WHERE id='".$this->data['cache'][$nodeName]."' LIMIT 1");
+					unset($this->data['cache'][$nodeName],$this->namespaces['cache']['expirations'][$nodeName]);
+				}
 			}
 		}
 		
@@ -110,7 +114,7 @@ class Config {
 		$this->namespaces['cache']['nextCheck'] = $time+3600;
 	}
 	
-	function setNode($treeName,$nodeName,$nodeVal,$friendName = "",$cacheTimeout = 3600) {
+	function setNode($treeName,$nodeName,$nodeVal,$friendName = "",$cacheTimeout = 3) {
 		//Only allow changing of temp vars of he file isn't editable
 		if (!$this->editable && $treeName != "temp") return false;
 		//If the Friendly name hasn't been defined yet, do it now
@@ -177,6 +181,7 @@ class Config {
 	
 	function getFriendName($treeName, $nodeName = NULL) {
 		//Returns the friendly (human-readable) name of the node or tree
+		debug_message("Getting Friendly Name for $treeName|$nodeName");
 		if ($nodeName != NULL) {
 			return $this->namespaces[$treeName]['varsNames'][$nodeName];
 		} else {
