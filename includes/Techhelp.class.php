@@ -4,6 +4,7 @@ class Techhelp {
 	var $title;
 	var $body;
 	var $timestamp;
+	var $poster;
 	
 	function Techhelp($id) {
 		global $dbConn;
@@ -13,6 +14,7 @@ class Techhelp {
 		$this->title = ucwords($result['title']);
 		$this->body = $result['body'];
 		$this->timestamp = $result['timestamp'];
+		$this->poster = $result['poster'];
 	}
 	
 	function getID() {
@@ -31,9 +33,9 @@ class Techhelp {
 	function import() {
 		global $dbConn;
 		if ($dbConn->rows($dbConn->query("SELECT * FROM `techhelp` WHERE id=".$this->id." LIMIT 1"))) {
-			$query = "UPDATE `techhelp` SET title='".str_replace("'","''",$this->title)."', body='".str_replace("'","''",$this->body)."', timestamp='".$this->timestamp."' WHERE id=".$this->id." LIMIT 1";
+			$query = "UPDATE `techhelp` SET title='".str_replace("'","''",$this->title)."', body='".str_replace("'","''",$this->body)."', timestamp='".$this->timestamp."', poster='".$this->poster."' WHERE id=".$this->id." LIMIT 1";
 		} else {
-			$query = "INSERT INTO `techhelp` (id,title,body,timestamp) VALUES ($this->id,'".str_replace("'","''",$this->title)."','".str_replace("'","''",$this->body)."','$this->timestamp')";
+			$query = "INSERT INTO `techhelp` (id,title,body,timestamp,poster) VALUES ($this->id,'".str_replace("'","''",$this->title)."','".str_replace("'","''",$this->body)."','$this->timestamp','$this->poster')";
 		}
 		return $dbConn->query($query);
 	}
