@@ -6,104 +6,52 @@ Flumpshop is currently in the process of being altered to allow the use of a the
 
 Themes, like plug-ins, will have complete access to the Configuration and Database objects, but will also have many predefined variables that contain useful resources for the system.
 
-*The content below is for the existing and functional theme system. They are kept here for archive purposes only*
+= Basic Format =
+The basic outline of the templating system is that, in addition to the current theme directory e.g. offlineDir/themes/flumpshop, which contains CSS and image files, there is the addition of another tpl folder, offlineDir/themes/core/flumpshop, which contains .tpl.php files, which are used to create the page layout.
 
-= Introduction =
-A feature that development has now started on in the TRY-THEME branch, it will allow complete customisation of the way the site is displayed, including:
+Flumpshop, as far as it is aware in terms of actual page content, does not notice the difference on most pages of the site, with the content being stored to a variables instead of being directly output, by using output buffers.
 
-  * Widgets
-  * Colours
-  * Fonts
-  * Vertical/Horizontal Scrolling
-  * Element widths/heights
-  * Show/hide navigation on sub pages
+Flumpshop, as a minimum, requires four tpl files in order to properly operate.
 
-= Basic Implementation =
-Basic styles can already be changed by creating a custom JQueryUI Theme at http://www.jqueryui.com/themeroller.
+== header.tpl.php ==
+This file is where the header information goes, that is, information that is largely the same on every page. It is here where the <head> tag, and preferably the top of the page and the navigation, will lie. There are multiple variables available for this file:
+  * $meta_tags
+  * $title - for the <title> tag
+  * $css_links - contains all <link> tags for CSS stylesheets
+  * $js_links - contains all <script> tags for Javascript includes
+  * $plugin_includes - contains the output of all plugins header.inc.php files
+  * $tab_links - contains the quick access buttons: Home, About, Contact, Cart and Login
+  * $navigation_links - contains the main navigation bar, containing first and second level categories in nested lists. This variable remains available for use in the content and footer tpl files.
 
-The system should be able to dynamically generate new styles (use [offlineDir]) within the [AdminCP Admin CP]
+Beyond the above mentioned variables, you have access to $dbConn and $config, and can structure the document however you wish.
 
-= Basic Markup =
-Below is the basic structure of the Home page of the Flumpshop, as it currently stands. Once a default theme has been created, it will be highly commented and will allow you to understand other tags that appear on other pages
+== footer.tpl.php ==
+The opposite the the header, this is where all information that is the same on every page gets placed. Again, to allow maximum freedom, all you are expected to have (although not required) to include are the following variables:
+  * $footer_links - Contains legal and feedback links
+  * $footer_scripts - Contains any <script> includes that must be in the footer
+  * $plugin_includes - contains the output of all plugin's footer.inc.php files
 
-{{{
-<div id="container">
-    <div id="header">
-        <h1 id="site_name">Site Name</h1>
-        <h2 id="site_tagline">Site Tagline</h2>
-    </div><!--End Header-->
-    <ul id="tabs">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Contact</a></li>
-        <li><a href="#">Login</a></li>
-        <li><a href="#">Cart</a></li>
-        <li><a href="#">Admin</a></li>
-    </ul><!-- End Tabs-->
-    <div id="search_container">
-        <form action='(dynamic)' method='get' id='search_form'>
-            <input type='text' name='q' id='q' value='Search...' onfocus='if(this.value=="Search..."){this.value="";}' onblur='if(this.value==""){this.value="Search...";}' />
-            <input type='submit' id='search_submit' />
-        </form>
-    </div>
-    <div id="category_container">
-        <ul id="categories">
-            <li>
-                <a class='category' href='#'>Category Name</a>
-                <ul class="subcategory_container">
-                    <li><a class="subcategory_link" href="#">Subcategory Name</a></li>
-                </ul>
-            </li>
-        </ul>
-    </div><!-- End Navigation-->
-<div id="content_container">
-    <div id="page_text">
-        <h3 id="page_title">Page Header</h3>
-        <p>Page Text Content</p>
-    </div><!-- End Page Text -->
-    <div id="featured_items">
-        <h4 id="featured_items_header">Featured Items</h4>
-        <div class="featured_item" id="featured_item_1">
-            <a href='#'><img src='item image' /></a>
-            <h5><a href='#'>Item Name</a></h5>
-            <p>Item Description</p>
-        </div>
-        <div class="featured_item" id="featured_item_2">
-            <a href='#'><img src='item image' /></a>
-            <h5><a href='#'>Item Name</a></h5>
-            <p>Item Description</p>
-	</div>
-    </div><!-- End Featured Items --><div class='clear'>&nbsp;</div>
-    <div id="popular_items">
-        <h4 id="popular_items_header">Popular Items</h4>
-        <div class="popular_item" id="popular_item_1">
-            <a href='#'><img src='item image' /></a>
-            <h5><a href='#'>Item Name</a></h5>
-            <p>Item Description</p>
-        </div>
-        <div class="popular_item" id="popular_item_2">
-            <a href='#'><img src='item image' /></a>
-            <h5><a href='#'>Item Name</a></h5>
-            <p>Item Description</p>
-	</div>
-    </div><!-- End Popular Items --><div class='clear'>&nbsp;</div>
-    <div id="latest_news">
-        <h4>Latest News</h4>
-        <p>Latest News</p>
-    </div><!-- End Latest News --><div class='clear'>&nbsp;</div>
-    <div id="tech_tips">
-        <h4>Technical Tips News</h4>
-        <ul>
-            <li>Tech Tips Post</li>
-        </il>
-    </div><!-- End Tech Tips -->
-</div><!--End Content Container-->
-    <div id="footer">
-    <p>Copyright &copy; 2009-2010 Flumpnet. All Rights Reserved.</p>
-    </div>
-</div><!--End Container-->
-}}}
-This basic structure is friendly to both SEO and design flexibility, as a different CSS setup could completely change the layout of the site.
+Again, you have access to $dbConn and $config.
+
+== content.tpl.php ==
+This basic template file will contain the actual body of the page. All that is needed in this file is the content of the $page_content variable, which contains the important parts of the page. In future, this may be expanded depending on PAGE_TYPE.
+
+== index.content.tpl.php ==
+The home page uses a different variable structure for the content to other pages, and has the following variables for you to gain a better degree of flexibility over your home page:
+  * $page_title
+  * $featured_item_1
+  * $featured_item_2
+  * $popular_item_1
+  * $popular_item_2
+  * $latest_news
+  * $quick_tips
+
+Of course, you have $dbConn and $config at your disposal as well.
+
+= Advanced Theming =
+From the above example, you may have noticed that the PAGE_TYPE of the home page is index, and that index.content.tpl.php is used for the content of the index page. The same holds true for all other page types, if such a file exists, for further customisation of the site.
+
+Even more so, product and categories can use the item.1.content.tpl.php to have a custom layout for item ID#1, letting you have a custom layout for specific products and categories.
 
 = Possible Advanced Features =
 Add drag/drop elements and widgets on the home page as well as removing/adding new ones
