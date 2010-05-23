@@ -122,22 +122,23 @@ Please enter your username and password to continue...
 			</div>
 		<?php
 		}
+		
+		if (
+			acpusr_validate('can_create_orders') or
+			acpusr_validate('can_view_orders') or
+			acpusr_validate('can_edit_users')
+		) {
+			?>
+			<h3>Manage Sales</h3>
+			<div>
+				<a href='endpoints/switchboard/orders.php' onclick='loader("Loading Orders Menu...");' target="main">Manage Orders</a>
+				<a href='endpoints/orders/listOrders.php?filter=active' onclick='loader("Loading Content...");' target="main">Active</a>
+				<a href='endpoints/orders/listOrders.php?filter=closed' onclick='loader("Loading Content...");' target="main">Closed</a>
+				<a href='endpoints/orders/queryOrder.php' onclick='loader("Loading Content...");' target="main">Query</a>
+			</div>
+			<?php
+		}
 		?>
-        <h3>Pages</h3>
-        <div>
-            <a href='endpoints/edit/editPageContent.php?pageid=homePage' onclick='loader("Loading Content...");' target="main">Home Page</a>
-            <a href='endpoints/edit/editPageContent.php?pageid=aboutPage' onclick='loader("Loading Content...");' target="main">About Page</a>
-            <a href='endpoints/edit/editPageContent.php?pageid=contactPage' onclick='loader("Loading Content...");' target="main">Contact Page</a>
-            <a href='endpoints/edit/editPageContent.php?pageid=privacyPolicy' onclick='loader("Loading Content...");' target="main">Privacy Policy</a>
-            <a href='endpoints/edit/editPageContent.php?pageid=disclaimer' onclick='loader("Loading Content...");' target="main">Disclaimer</a>
-            <a href='endpoints/edit/editPageContent.php?pageid=termsConditions' onclick='loader("Loading Content...");' target="main">Terms and Conditions</a>
-        </div>
-        <h3>Orders</h3>
-        <div>
-            <a href='endpoints/orders/listOrders.php?filter=active' onclick='loader("Loading Content...");' target="main">Active</a>
-            <a href='endpoints/orders/listOrders.php?filter=closed' onclick='loader("Loading Content...");' target="main">Closed</a>
-            <a href='endpoints/orders/queryOrder.php' onclick='loader("Loading Content...");' target="main">Query</a>
-        </div>
 		<h3>Clients</h3>
 		<div>
 			<a href="endpoints/clients/listCustomers.php" onclick='loader("Loading Content...");' target="main">Customer Manager</a>
