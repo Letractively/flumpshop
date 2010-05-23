@@ -47,7 +47,7 @@ function debug_message($msg,$check = false) {
 	global $_PRINTDATA, $debugLog, $ajaxProvider;
 	if ($_PRINTDATA && !$ajaxProvider) {
 		if ($check) $class = "ui-icon-circle-check"; else $class="ui-icon-script";
-		echo "<div class='ui-state-highlight'><span class='ui-icon $class'></span>$msg</div>";
+		echo "\n<div class='ui-state-highlight'><span class='ui-icon $class'></span>$msg</div>\n";
 		if (is_resource($debugLog)) fwrite($debugLog,$msg."\r\n");
 	}
 }
@@ -115,10 +115,9 @@ if (PHP_VERSION < "4.4.0") {
 	debug_message("PHP Version Supported (v".PHP_VERSION.")",true);
 }
 
-if (PHP_VERSION < "5.0.0") {
-	register_shutdown_function("endGame");
-	function endGame() {global $config,$basket; if (isset($config)) $config->__destruct(); if (isset($basket)) $basket->__destruct();}
-}
+//Ensure they are shut down before dbConn is terminated
+register_shutdown_function("endGame");
+function endGame() {global $config,$basket; if (isset($config)) $config->__destruct(); if (isset($basket)) $basket->__destruct();}
 
 //Check CURL Installed
 if (extension_loaded("curl")) {
@@ -302,22 +301,29 @@ if (!$_SETUP) {
 	}
 }
 
+
+$cached_acpPerms = array();
 //Validate ACP Login
 function acpusr_validate($requirement = NULL) {
 	global $dbConn;
+	if (isset($cached_acpPerms[$requirement])) return $cached_acpPerms[$requirement];
 	if (!isset($_SESSION['acpusr'])) return false;
 	$auth = base64_decode($_SESSION['acpusr']);
 	$auth = explode("~",$auth);
 	$GLOBALS['acp_uname'] = $auth[0];
 	if ($requirement == NULL) {
-		$result = $dbConn->query("SELECT pass FROM `acp_login` WHERE uname='".$auth[0]."' LIMIT 1");
+		$result = $dbConn->query("SELECT id,pass FROM `acp_login` WHERE uname='".$auth[0]."' LIMIT 1");
 	} else {
-		$result = $dbConn->query("SELECT pass FROM `acp_login` WHERE uname='".$auth[0]."' AND $requirement=1 LIMIT 1");
+		$result = $dbConn->query("SELECT id,pass FROM `acp_login` WHERE uname='".$auth[0]."' AND $requirement=1 LIMIT 1");
 	}
 	if ($dbConn->rows($result) == 0) return false;
 	$row = $dbConn->fetch($result);
-	return sha1($row['pass']) == $auth[1];
+	$GLOBALS['acp_uid'] = $row['id'];
+	$valid = sha1($row['pass']) == $auth[1];
+	if ($valid && $requirement != NULL) $cached_acpPerms[$requirement] = true; else $cached_acpPerms[$requirement] = false;
+	return $valid;
 }
+
 
 //Tier 2 authentication
 if (isset($requires_tier2) && $requires_tier2 == true) {
