@@ -9,6 +9,7 @@ if (!$config->getEditable()) {
 ?><form action='../process/saveConf.php' method="POST" name='varForm' id='varForm' onsubmit="loader('Updating Configuration...','Please Wait');"><?php
 //Section input form
 foreach ($config->getTrees() as $tree) {
+	debug_message("Preparing to scan $tree");
 	if ($tree != "orderstatus" && $tree != "temp" && $tree != "cache") {
 		echo "<h3 style='padding-left: 25px;'>".$config->getFriendName($tree)."</h3><div><table>";
 			foreach ($config->getNodes($tree) as $pathNode) {
@@ -34,12 +35,17 @@ foreach ($config->getTrees() as $tree) {
 				}
 			}
 			echo '</table></div>';
+	} else {
+		debug_message("Tree blacklisted. Skipped.");
 	}
 }
 ?><input type="submit" onclick="$('#varForm').submit();" value="Save"<?php echo $disabled;?> />
 </form><script type="text/javascript">
 //Doesn't work for IE
+<?php if (!$config->getNode('server','debug')) { //Screws with accordian?>
 if (navigator.appName != "Microsoft Internet Explorer") {
 	$('#varForm').accordion({autoHeight: false, collapsible: true});
 }
+<?php
+}?>
 </script></body></html>

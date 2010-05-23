@@ -79,16 +79,46 @@ Please enter your username and password to continue...
     Powered by Flumpnet<br /><br />
     <div id="navContainer">
     <div id="navAccordion">
-	<h3>Store Management</h3>
+	<?php
+	if (
+		acpusr_validate('can_add_categories') or
+		acpusr_validate('can_edit_categories') or
+		acpusr_validate('can_delete_categories') or
+		acpusr_validate('can_add_products') or
+		acpusr_validate('can_edit_products') or
+		acpusr_validate('can_delete_products')
+	) {
+	?>
+	<h3>Manage Catalogue</h3>
 		<div>
-			<a href='endpoints/switchboard/categories.php' onclick='loader("Loading Category Menu...");' target='main'>Manage Categories</a>
+			<?php if (acpusr_validate('can_add_categories') or acpusr_validate('can_edit_categories') or acpusr_validate('can_delete_categories')) { //Category Manager?>
+				<a href='endpoints/switchboard/categories.php' onclick='loader("Loading Category Menu...");' target='main'>Manage Categories</a>
+				<?php
+			}
+			if (acpusr_validate('can_add_products') or acpusr_validate('can_edit_products') or acpusr_validate('can_delete_products')) { //Product Manager?>	
 			<a href='endpoints/switchboard/products.php' onclick='loader("Loading Products Menu...");' target='main'>Manage Products</a>
+			<?php
+			}
+			?>
 		</div>
-        <h3>News</h3>
-        <div>
-            <a href='endpoints/create/newNews.php' onclick='loader("Loading Content...");' target="main">New News Post</a>
-            <a href='endpoints/create/newTechHelp.php' onclick='loader("Loading Content...");' target="main">New Technical Tips Post</a>
-        </div>
+		<?php
+		}
+		if (
+		acpusr_validate('can_post_news') or
+		acpusr_validate('can_edit_pages')
+		) {
+		?>
+		<h3>Manage Site</h3>
+			<div>
+			<?php if (acpusr_validate('can_post_news') or acpusr_validate('can_edit_pages')) { //News Manager?>
+			<a href='endpoints/switchboard/news.php' onclick='loader("Loading News Menu...");' target='main'>Manage News</a>
+			<?php
+			}
+			?>
+			</div>
+		<?php
+		}
+		?>
         <h3>Pages</h3>
         <div>
             <a href='endpoints/edit/editPageContent.php?pageid=homePage' onclick='loader("Loading Content...");' target="main">Home Page</a>
