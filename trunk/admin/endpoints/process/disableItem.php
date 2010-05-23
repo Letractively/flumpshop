@@ -1,9 +1,0 @@
-<?php
-$USR_REQUIREMENT = "can_delete_products";
-
-require_once dirname(__FILE__)."/../../../preload.php";
-
-$id = intval($_GET['id']);
-
-$dbConn->query("UPDATE `products` SET active=0 WHERE id='$id' LIMIT 1");
-?><div class="ui-state-highlight"><span class="ui-icon ui-icon-circle-check"></span>Product Disabled. It will no longer appear in any public category lists.</div>
