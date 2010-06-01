@@ -64,7 +64,8 @@ echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->ge
 	</div><?php //End sort-content-hidden
 	$result = $dbConn->query("SELECT id FROM `category` WHERE parent='".$category->getID()."' ORDER BY `name` ASC");
 	if ($dbConn->rows($result) != 0) {
-		?><h4><?php echo $config->getNode("messages","subcatHeader");?></h4><ul class='list_subcat'><?php
+		//Subcategories
+		?><br /><br /><h4><?php echo $config->getNode("messages","subcatHeader");?></h4><ul class='list_subcat'><?php
 		while ($row = $dbConn->fetch($result)) {
 			$subCat = new Category($row['id'],"noparent"); //Noparent addition reduces unnecessary queries
 			echo "<li><a href='".$subCat->getURL()."'>".$subCat->getName()."</a></li>";

@@ -5,7 +5,6 @@ define("PAGE_TYPE","item");
 require_once dirname(__FILE__)."/../header.php";
 
 ob_start(); //Template Buffer
-print_r($config->data['cache']);
 if ($config->isNode('cache','item'.intval($item->getID()))) { //intval removes zerofill
 	echo $config->getNode('cache','item'.intval($item->getID()));
 } else {

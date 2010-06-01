@@ -328,21 +328,16 @@ function acpusr_validate($requirement = NULL) {
 //Tier 2 authentication
 if (isset($requires_tier2) && $requires_tier2 == true) {
 	if (!isset($_SESSION['adminAuth']) or $_SESSION['adminAuth'] == 0) {
-		print_r($_SESSION);
-		trigger_error("Reason: Session data unset");
 		acpusr_tier2();
 	} else {
 		//Check login ID timer (15min disco)
 		$result = $dbConn->query("SELECT last_tier2_login FROM `acp_login` WHERE id=".intval($_SESSION['adminAuth'])." LIMIT 1");
 		if ($dbConn->rows($result) == 0) {
-			print_r($_SESSION);
-			trigger_error("Reason: Session data invalid");
 			acpusr_tier2();
 		} else {
 			$row = $dbConn->fetch($result);
 			if (strtotime($row['last_tier2_login'])+900 < time()) {
 				//Session expired
-				trigger_error("Reason: Session expired");
 				acpusr_tier2();
 			} else {
 				//Yes, valid, extend timeout
