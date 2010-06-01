@@ -315,13 +315,7 @@ class Item {
 				$reply .= '<p id="itemDesc">';
 			}
 			$reply .= $this->getDesc()."</p>";
-			//Features (Experimental)
-			$reply .= "<h4>".$config->getNode("messages","featuresName")."</h4><ul>";
-			foreach ($this->itemFeatures as $featureId => $featureValue) {
-				$feature = new Feature($featureId);
-				$reply .= "<li>".$feature->getName().": ".$feature->parseValue($featureValue)."</li>";
-			}
-			$reply .= "</ul>";
+			$reply .= $this->getDetails("FEATURES");
 			//Tracker
 			//TODO: Unique only - Store Visited Array in session obj?
 			$stats->incStat("item".$this->getID()."Hits");
@@ -344,6 +338,15 @@ class Item {
 		}
 		if ($type == "ORDER") {
 			$reply = "<a href='".$this->getURL()."'>".$this->getName()."</a> (x$int)";
+		}
+		if ($type == "FEATURES") {
+			//Features (Experimental)
+			$reply = "<h4>".$config->getNode("messages","featuresName")."</h4><ul>";
+			foreach ($this->itemFeatures as $featureId => $featureValue) {
+				$feature = new Feature($featureId);
+				$reply .= "<li>".$feature->getName().": ".$feature->parseValue($featureValue)."</li>";
+			}
+			$reply .= "</ul>";
 		}
 		return $reply;
 	}

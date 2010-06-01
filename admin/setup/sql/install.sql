@@ -206,8 +206,7 @@ CREATE TABLE `products` (
   `active` TINYINT(1) DEFAULT 1,
   `SKU` VARCHAR(25) DEFAULT NULL,
   `cost` DECIMAL(9,2) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `category` (`category`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 
 CREATE TABLE `reserve` (

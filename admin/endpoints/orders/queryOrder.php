@@ -25,7 +25,7 @@ if (isset($_GET['orderid'])) {
 			die("<div class='ui-state-error'><span class='ui-icon ui-icon-alert'></span>I couldn't find the basket for the selected order!</div>");
 		}
 		$orderBasket = $dbConn->fetch($orderBasket);
-		$orderBasket = unserialize($orderBasket['obj']);
+		$orderBasket = unserialize(base64_decode($orderBasket['obj']));
 		echo $orderBasket->listItems("ORDER");
 		?>
 	</div>

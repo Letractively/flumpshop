@@ -116,7 +116,6 @@ $i = 0;
 <input type="submit" value="Save" name="submit" id="submit" style="font-size: 13px; padding: .2em .4em;" />
 </form>
 <script type="text/javascript">
-$('form').validate();
 document.next_num=<?php echo $i;?>;
 function updateFeatures() {
 	str = "";
