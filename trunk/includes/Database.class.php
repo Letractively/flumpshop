@@ -7,11 +7,23 @@
 				 database engines
 *  Version     : 1.1-conf
 *
-*  Copyright (c) 2008-2010 Lloyd Wallis. Licensed for use in
-*  Flumpnet systems only. This code cannot be copied, used, or
-*  otherwise reproduced in any way without the author's
-*  permission. lloyd@theflump.com
-* =============================================================
+*  Copyright (c) 2008-2010 Lloyd Wallis, lloyd@theflump.com
+*  
+*  This file is part of Flumpshop.
+*
+*  Flumpshop is free software: you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation, either version 3 of the License, or
+*  (at your option) any later version.
+*
+*  Flumpshop is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with Flumpshop.  If not, see <http://www.gnu.org/licenses/>.
+* ====================================================================
 */
 
 function db_factory() {
