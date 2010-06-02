@@ -306,6 +306,22 @@ $_SESSION['config']->setNode("messages", "contactPage",
 EOT
 ,"Contact Page");
 
+//Verification Failure
+$_SESSION['config']->setNode("messages", "accountVerifyFail",
+<<<EOT
+<h1 class="content">Verification Failed</h1>
+<p>This may be because you have already activated account, or you took too long to verify your email address and your account was deleted, and you will have to register again.</p>
+EOT
+,"Account Verification Failure");
+
+//Verification Success
+$_SESSION['config']->setNode("messages", "accountVerifySuccess",
+<<<EOT
+<h1 class="content">Verification Successful</h1>
+<p>Your email address has now been verified, and your account activated. You can now log in to our website using the button above.</p>
+EOT
+,"Account Verification Failure");
+
 //Log Files
 $_SESSION['config']->addTree("logs", "Server Log Files");
 

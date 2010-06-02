@@ -1,6 +1,8 @@
 <?php
 $page_title = "Signup";
 require_once dirname(__FILE__)."/../header.php";
+
+ob_start();
 ?>
 <h1 class="content">Sign Up</h1>
 <form action='createaccount.php' method="post" name="signupform" id="signupform" class="validateForm">
@@ -204,5 +206,8 @@ EOT;
 <script type="text/javascript">$('#signupform').validate({rules: {<?php echo $validatorRules;?>}});
 </script>
 <?php
+
+templateContent();
+
 require_once dirname(__FILE__)."/../footer.php";
 ?>
