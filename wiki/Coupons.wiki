@@ -1,0 +1,13 @@
+#summary The Coupon Code system
+#labels Phase-Design
+
+As part of the complete Basket structural revamp, coupons will finally be integrated. This provides basic notes.
+
+The system currently contains a table for this purpose, but is only used for account email confirmation. This is done by the action field being executed as an SQL query. I plan to drop this column alongside expiryAction, and create two new tables - keys_action and keys_expiry, which will contain the necessary data.
+
+keys_action
+|| keyID || Action ||
+|| 1 || Activate_Acc[1] ||
+|| 2 || Basket_Total[-10%] ||
+|| 3 || Basket_Delivery[0] ||
+|| 4 || Item10_Price_GBP[0.99] ||
