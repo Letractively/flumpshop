@@ -42,7 +42,7 @@ class Customer {
 	//Destructor
 	function __destruct() {
 		global $dbConn, $config;
-		if (!is_object($dbConn)) {init_err("dbConn is not an object!");die();}
+		if (!is_object($dbConn)) {trigger_error("Could not commit customer: dbConn is not an object!");return;}
 		debug_message("Commiting Changes to Customer");
 		$dbConn->query("UPDATE `customers` SET name='$this->name',address1='$this->address1',address2='$this->address2',address3='$this->address3',postcode='$this->postcode',country='$this->country',email='$this->email',paypalid='$this->paypalid' WHERE id=$this->id");
 	}

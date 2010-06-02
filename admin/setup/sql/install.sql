@@ -167,16 +167,16 @@ CREATE TABLE `keys` (
   PRIMARY KEY (`id`)
 );
 
-CREATE_TABLE `keys_action` (
-	`keyID` int(10) unsigned NOT NULL,
+CREATE TABLE `keys_action` (
+	`key_id` int(10) unsigned NOT NULL,
 	`action` VARCHAR(100),
-	PRIMARY KEY (`keyID`,`action`)
+	PRIMARY KEY (`key_id`,`action`)
 );
 
-CREATE_TABLE `keys_expiry` (
-	`keyID` int(10) unsigned NOT NULL,
+CREATE TABLE `keys_expiry` (
+	`key_id` int(10) unsigned NOT NULL,
 	`action` VARCHAR(100),
-	PRIMARY KEY (`keyID`,`action`)
+	PRIMARY KEY (`key_id`,`action`)
 );
 
 CREATE TABLE `login` (

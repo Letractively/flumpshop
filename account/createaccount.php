@@ -1,6 +1,9 @@
 <?php
 $page_title = "Sign Up";
+define("PAGE_TYPE", "createAccount");
 require_once dirname(__FILE__)."/../header.php";
+
+ob_start();
 
 extract($_POST);
 if (isset($contact)) $contact = 1; else $contact = 0;
@@ -72,7 +75,12 @@ if ($error) {
 			//Validation Email
 			$hrs = $config->getNode("account","validationTimeout");
 			$code = md5(time().session_id().rand(0,10000));
-			$dbConn->query("INSERT INTO `keys` (action,`key`,expiry,expiryaction,uid) VALUES (0,'$code','".$dbConn->time(time()+(3600*$hrs))."','DELETE FROM `users` WHERE id=".$user->getID()." LIMIT 1; DELETE FROM `customers` WHERE id=".$customer->getID()." LIMIT 1;',".$user->getID().")");
+			
+			$dbConn->query("INSERT INTO `keys` (`key`,expiry) VALUES ('$code','".$dbConn->time(time()+(3600*$hrs))."')");
+			$key_id = $dbConn->insert_id();
+			$dbConn->query("INSERT INTO `keys_action` (key_id,action) VALUES ($key_id,'ActivateAccount_".$user->getID()."')");
+			$dbConn->query("INSERT INTO `keys_expiry` (key_id,action) VALUES ($key_id,'DeleteAccount_".$user->getID()."')");
+			
 			$mailer->send($name,$email,"Registration Confirmation",<<<EOT
 <html><head><title>Registration Confirmation</title></head><body>
 Hello, and thanks for registering for an account on the $name website.<br /><br />
@@ -110,6 +118,8 @@ EOT;
 EOT;
 	}
 }
+
+templateContent();
 
 require_once dirname(__FILE__)."/../footer.php";
 ?>
