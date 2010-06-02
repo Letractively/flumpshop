@@ -30,10 +30,18 @@ PRIMARY KEY (`id`)
 
 CREATE TABLE `basket` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `obj` text,
   `lock` tinyint(1) NOT NULL DEFAULT '0',
+  `total` decimal(10,2) NOT NULL DEFAULT '0',
+  `delivery` decimal(10,2) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+);
+
+CREATE TABLE `basket_items` (
+	`item_id` int(11) unsigned NOT NULL,
+	`basket_id` int(11) unsigned NOT NULL,
+	`quantity` int(11) unsigned NOT NULL,
+	PRIMARY KEY (`item_id`, `basket_id`)
+);
 
 CREATE TABLE `bugs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -42,7 +50,7 @@ CREATE TABLE `bugs` (
   `resolved` tinyint(1) NOT NULL DEFAULT '0',
   `assignedTo` varchar(5) NOT NULL DEFAULT 'None',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+);
 
 CREATE TABLE `cache` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -59,7 +67,7 @@ CREATE TABLE `category` (
   `enabled` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `parent` (`parent`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+);
 
 CREATE TABLE `category_feature` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -82,7 +90,7 @@ CREATE TABLE `country` (
   `supported` tinyint(1) NOT NULL DEFAULT '0',
   `currency` CHAR(3) DEFAULT 'EUR',
   PRIMARY KEY (`iso`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+);
 
 CREATE TABLE `customers` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -97,7 +105,7 @@ CREATE TABLE `customers` (
   `archive` BOOL NOT NULL DEFAULT '0',
   `can_contact` BOOL NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+);
 
 CREATE TABLE `delivery` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -107,7 +115,7 @@ CREATE TABLE `delivery` (
   `price` decimal(6,2) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `country` (`country`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+);
 
 CREATE TABLE `feature_units` (
   `feature_id` int(10) unsigned NOT NULL,
@@ -153,14 +161,23 @@ CREATE TABLE `item_feature_string` (
 );
 
 CREATE TABLE `keys` (
-  `id` int(10) unsigned zerofill NOT NULL AUTO_INCREMENT,
-  `action` text NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `key` varchar(32) NOT NULL,
   `expiry` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `expiryAction` text NOT NULL,
-  `uid` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+);
+
+CREATE_TABLE `keys_action` (
+	`keyID` int(10) unsigned NOT NULL,
+	`action` VARCHAR(100),
+	PRIMARY KEY (`keyID`,`action`)
+);
+
+CREATE_TABLE `keys_expiry` (
+	`keyID` int(10) unsigned NOT NULL,
+	`action` VARCHAR(100),
+	PRIMARY KEY (`keyID`,`action`)
+);
 
 CREATE TABLE `login` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -171,7 +188,7 @@ CREATE TABLE `login` (
   `can_contact` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `customer` (`customer`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+);
 
 CREATE TABLE `news` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -180,7 +197,7 @@ CREATE TABLE `news` (
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `poster` int(11) unsigned,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+);
 
 CREATE TABLE `orders` (
   `id` int(10) unsigned zerofill NOT NULL AUTO_INCREMENT,
@@ -191,7 +208,7 @@ CREATE TABLE `orders` (
   PRIMARY KEY (`id`),
   KEY `basket` (`basket`),
   KEY `customer` (`customer`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+);
 
 CREATE TABLE `products` (
   `id` int(10) unsigned zerofill NOT NULL AUTO_INCREMENT,
@@ -207,16 +224,16 @@ CREATE TABLE `products` (
   `SKU` VARCHAR(25) DEFAULT NULL,
   `cost` DECIMAL(9,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+);
 
 CREATE TABLE `reserve` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `item` int(10) unsigned NOT NULL,
-  `quantity` int(10) unsigned NOT NULL,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `basketID` int(11) unsigned NOT NULL DEFAULT 0,
+  `item` int(11) unsigned NOT NULL,
+  `quantity` int(11) unsigned NOT NULL,
   `expire` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `item` (`item`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`id`)
+);
 
 CREATE TABLE `sessions` (
   `session_id` varchar(32) NOT NULL,
@@ -225,7 +242,7 @@ CREATE TABLE `sessions` (
   `ip_addr` int(12) DEFAULT '0',
   PRIMARY KEY (`session_id`),
   KEY `basket` (`basket`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+);
 
 CREATE TABLE `stats` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -233,7 +250,7 @@ CREATE TABLE `stats` (
   `value` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `key` (`key`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+);
 
 INSERT INTO `stats` (`key`,`value`) VALUES ('dbVer',1);
 
@@ -244,7 +261,7 @@ CREATE TABLE `techhelp` (
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `poster` int(11) unsigned,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+);
 
 INSERT INTO `country` (`iso`, `name`, `supported`, `currency`) VALUES('AD', 'Andorra', 0, 'EUR');
 INSERT INTO `country` (`iso`, `name`, `supported`, `currency`) VALUES('AE', 'United Arab Emirates', 0, 'AED');

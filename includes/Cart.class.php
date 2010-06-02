@@ -1,4 +1,31 @@
 <?php
+
+/*
+* ====================================================================
+*  Name        : Cart.class.php
+*  Description : Provides global logic and storage for session
+*				 basket data
+*  Version     : 1.0
+*
+*  Copyright (c) 2009-2010 Lloyd Wallis, lloyd@theflump.com
+*  
+*  This file is part of Flumpshop.
+*
+*  Flumpshop is free software: you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation, either version 3 of the License, or
+*  (at your option) any later version.
+*
+*  Flumpshop is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with Flumpshop.  If not, see <http://www.gnu.org/licenses/>.
+* ====================================================================
+*/
+
 class Cart {
 	var $items = array();
 	var $total = 0;
@@ -7,22 +34,58 @@ class Cart {
 	var $holds = array();
 	var $lock = 0;
 	
-	//Constructor
-	function Cart($id) {
+	/**
+    * Cart constructor.
+    * @since 1.0
+    * @param $id. Optional. The ID of the Cart to load. If unset, creates a new Cart, and assigns itself to the active session.
+    * @return No return value.
+    */
+	function Cart($id = -1) {
 		global $dbConn;
-		debug_message("Initializing Basket");
-		$this->id = intval($id);
-		$query = $dbConn->query("SELECT * FROM `basket` WHERE id=".$this->id." LIMIT 1");
-		if (!$query) debug_message("Error loading basket status.");
-		$res = $dbConn->fetch($query);
-		$this->lock = $res['lock'];
-		if ($res['lock'] == 1) debug_message("Basket locked for editing.");
+		if ($id == -1) {
+			//Initialise an new basket for this session
+			debug_message("Initializing Basket");
+			$this->id = intval($id);
+			$query = $dbConn->query("SELECT * FROM `basket` WHERE id=".$this->id." LIMIT 1");
+			if (!$query) debug_message("Error loading basket status.");
+			$res = $dbConn->fetch($query);
+			$this->lock = $res['lock'];
+			if ($res['lock'] == 1) debug_message("Basket locked for editing.");
+		} elseif ($id == 0) {
+			//Search Crawler - Doesn't store
+			return;
+		} else {
+			//Load an existing basket for this session
+			debug_message("Loading Basket");
+			$this->id = intval($id);
+			//Load Basket Parameters
+			$query = $dbConn->query("SELECT total,delivery,lock FROM basket WHERE id=".$this->id." LIMIT 1");
+			
+			if ($dbConn->rows($query) == 0) {
+				//The basket doesn't exist - Exit
+				init_err("Fatal Error: Basket ID ".$id." does not exist.",E_USER_ERROR);
+				return;
+			} else {
+				//Set Basket Properties
+				$result = $dbConn->fetch($query);
+				$this->price = $result['price'];
+				$this->delivery = $result['delivery'];
+				$this->lock = $result['lock'];
+				unset($query,$result);
+			}
+			//Load list of items
+			$query = $dbConn("SELECT item_id,quantity FROM basket_items WHERE basket_id=".$this->id);
+			while ($result = $dbConn->fetch($query)) {
+				//Create each item
+				$this->items[$result['item_id']] = $result['quantity'];
+			}
+			unset($result,$query);
+		}
 	}
 	
 	function restore() {
-		debug_message("Restoring Basket");
-		$this->Cart($this->id);
-		$this->checkPrice();
+		//Depreciated. No longer used with new normalized Database system
+		return $this->checkPrice();
 	}
 	
 	function checkPrice() {

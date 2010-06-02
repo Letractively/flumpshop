@@ -100,7 +100,7 @@ class Config {
 		debug_message("Clearing Cache...");
 		global $dbConn;
 		
-		if (isset($this->namespaces['cache']['expirations'])) { //Don't trigger error if nothing's been cached, ever
+		if (is_object($dbConn) && isset($this->namespaces['cache']['expirations'])) { //Don't trigger error if nothing's been cached, ever, or the Database doesn't happen
 			foreach ($this->namespaces['cache']['expirations'] as $nodeName => $timeout) {
 				if ($timeout < $time) {
 					debug_message("Removing $nodeName from cache...");

@@ -19,7 +19,8 @@ if (!isset($ajaxProvider)) $ajaxProvider = false;
 function init_err($msg) {
 	global $config, $_SETUP, $INIT_DEBUG;
 	if (!$_SETUP && !$INIT_DEBUG) {
-		if (is_object($config)) header("Location: ".$config->getNode('paths','root')."/errors/500.php?err=".base64_encode($msg));
+		trigger_error($msg);
+		if (is_object($config)) header("Location: ".$config->getNode('paths','root')."/errors/500.php?err=".base64_encode($msg)."&config=true");
 		else header("Location: ./errors/500.php?err=".base64_encode($msg));
 	}
 	die($msg);
@@ -181,10 +182,8 @@ if ($_SETUP == false) {
 			debug_message("Basket Disabled for Crawlers");
 		} else {
 			$config->setNode('temp','crawler',false);
-			$dbConn->query("INSERT INTO `basket` (obj) VALUES ('')");
-			$basketid = $dbConn->insert_id();
-			$basket = new Cart($basketid);
-			debug_message("Created basket #$basketid",true);
+			$basket = new Cart(-1);
+			debug_message("Created basket #".$basket->getID(),true);
 		}
 		if (!isset($_SERVER['REMOTE_ADDR'])) $ip = "127.0.0.1"; else $ip = $_SERVER['REMOTE_ADDR'];
 		$dbConn->query("INSERT INTO `sessions` (session_id,basket,ip_addr) VALUES ('".session_id()."',$basketid,INET_ATON('".$ip."'))");
@@ -205,8 +204,7 @@ if ($_SETUP == false) {
 				if ($config->getNode('site','shopMode') == false) {
 					$basket = new Cart(-1);
 				} else {
-					trigger_error("Fatal Error: Basket Corrupted. Aborting.");
-					die();
+					init_err("Fatal Error: The active session's basket object has been corrupted or cannot be loaded.");
 				}
 			}
 			$basket->restore();

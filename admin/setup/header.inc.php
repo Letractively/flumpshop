@@ -71,5 +71,5 @@ if (isset($_SESSION['config']) && is_string($_SESSION['config'])) {
 	$_SESSION['config'] = unserialize($_SESSION['config']);
 }
 ?><html>
-<head><link href="../../style-main.css" rel="stylesheet" type="text/css" /><link href="../../jqueryui.css" rel="stylesheet" type="text/css" /><script type="text/javascript" language="javascript" src="../../../js/jquery.js"></script><script type="text/javascript" language="javascript" src="../../../js/jquery.form.js"></script><script type="text/javascript" language="javascript" src="../../../js/jqueryui-1-8.js"></script></head>
+<head><link href="../../style-main.css" rel="stylesheet" type="text/css" /><link href="../../jqueryui.css" rel="stylesheet" type="text/css" /><script type="text/javascript" language="javascript" src="../../../js/jquery.js"></script><script type="text/javascript" language="javascript" src="../../../js/jquery.form.js"></script><script type="text/javascript" language="javascript" src="../../../js/jqueryui.js"></script></head>
 <body>
