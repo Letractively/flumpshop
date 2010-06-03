@@ -231,8 +231,9 @@ class MySQL_Database extends Database {
 		$this->xmlLog($str);
 		$result = mysqli_query($this->linkid,$str);
 		if (!$result) {
-			$this->lastError = mysqli_error($this->linkid);
-			trigger_error("Database Error: ".mysqli_error($this->linkid));
+			$caller = debug_backtrace(false);
+			$this->lastError = mysqli_error($this->linkid)." (Called by ".$caller[0]['file'].":".$caller[0]['line'].")";
+			trigger_error("Database Error: ".mysqli_error($this->linkid)." (Called by ".$caller[0]['file'].":".$caller[0]['line'].")");
 			$this->xmlLog($this->lastError,true);
 		}
 		$this->queryCount++;
@@ -349,7 +350,8 @@ class SQLite_Database extends Database {
 		$link = $this->linkid;
 		$result = sqlite_query($link,$str,SQLITE_ASSOC);
 		if (!$result) {
-			$this->lastError = sqlite_error_string(sqlite_last_error($link));
+			$caller = debug_backtrace(false);
+			$this->lastError = sqlite_error_string(sqlite_last_error($link))." (Called by ".$caller[0]['file'].":".$caller[0]['line'].")";
 			trigger_error("Database Error: ".$this->lastError);
 			$this->xmlLog($this->lastError,true);
 		}
@@ -369,7 +371,8 @@ class SQLite_Database extends Database {
 		foreach ($arr as $query) {
 			$query = sqlite_query($this->linkid,$query);
 			if (!$query) {
-				$this->lastError = sqlite_error_string(sqlite_last_error($this->linkid));
+				$caller = debug_backtrace(false);
+				$this->lastError = sqlite_error_string(sqlite_last_error($this->linkid))." (Called by ".$caller[0]['file'].":".$caller[0]['line'].")";
 				trigger_error("Database Error: ".$this->lastError);
 				$this->xmlLog($this->lastError,true);
 				$return = false;
