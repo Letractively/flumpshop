@@ -322,6 +322,18 @@ $_SESSION['config']->setNode("messages", "accountVerifySuccess",
 EOT
 ,"Account Verification Failure");
 
+//Emails
+$_SESSION['config']->setNode("messages", "confirmAccountEmail",
+<<<EOT
+<html><head><title>Registration Confirmation</title></head><body>
+Hello, and thanks for registering for an account on the [[name]] website.<br /><br />
+In order to complete the signup process, I need you to confirm that you own this email address. To do so, simply click the link below, or copy and paste it into your web browser.<br />
+__regLink__<br />
+If you do not confirm your email address within $hrs hours, you will have to sign up again. If you did not sign up, please disregard this email.
+</body></html>
+EOT
+, "Email Address Confirmation Email");
+
 //Log Files
 $_SESSION['config']->addTree("logs", "Server Log Files");
 

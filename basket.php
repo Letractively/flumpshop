@@ -1,7 +1,7 @@
 <?php
 define("PAGE_TYPE","basket");
 require_once dirname(__FILE__)."/preload.php";
-$page_title = $config->getNode('messages','basketPageHeader');
+$page_title = $config->getNode('messages','basketHeader');
 require_once dirname(__FILE__)."/header.php";
 ob_start(); //Template Buffer
 ?><script type='text/javascript'>
@@ -61,7 +61,7 @@ echo $config->getNode('messages','noScript');
 	debug_message(print_r($basket,true));
 ?><a href="javascript:history.go(-1);"><?php echo $config->getNode("messages","basketGoBackLink");?></a>
 <div id="page_text">
-<h3 id="page_title"><?php echo $config->getNode('messages','basketPageHeader');?></h3><?php
+<h3 id="page_title"><?php echo $config->getNode('messages','basketHeader');?></h3><?php
 	if ($basket->getItems() != 0) {
 		echo $basket->listItems();
 		echo "<div class='ui-widget-content' onclick='$(this).addClass(\"ui-state-disabled\").html(\"".$config->getNode('messages','loading')."\"); window.location.href =\"checkout.php\";'><a href='checkout.php'>".$config->getNode('messages','basketLinkToCheckout')."<span class='ui-icon ui-icon-circle-arrow-e ui-icon-right'></span></a></div>";

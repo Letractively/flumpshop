@@ -81,15 +81,10 @@ if ($error) {
 			$dbConn->query("INSERT INTO `keys_action` (key_id,action) VALUES ($key_id,'ActivateAccount_".$user->getID()."')");
 			$dbConn->query("INSERT INTO `keys_expiry` (key_id,action) VALUES ($key_id,'DeleteAccount_".$user->getID()."')");
 			
-			$mailer->send($name,$email,"Registration Confirmation",<<<EOT
-<html><head><title>Registration Confirmation</title></head><body>
-Hello, and thanks for registering for an account on the $name website.<br /><br />
-In order to complete the signup process, I need you to confirm that you own this email address. To do so, simply click the link below, or copy and paste it into your web browser.<br />
-<a href='$root/account/verify.php?key=$code'>$root/account/verify.php?key=$code</a><br />
-If you do not confirm your email address within $hrs hours, you will have to sign up again.
-</body></html>
-EOT
-);
+			$mailer->send($user->getUname(),$email,"Registration Confirmation",
+			str_replace("__regLink__","<a href='$root/account/verify.php?key=$code'>$root/account/verify.php?key=$code</a>",
+			placeholders($config->getNode("messages","confirmAccountEmail"))));
+			
 			echo <<<EOT
 <h1 class="content">Sign Up</h1>
 <p>Thank you for registering. Please check your emails to finish the registration process.</p>

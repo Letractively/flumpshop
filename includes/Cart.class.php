@@ -31,8 +31,8 @@ class Cart {
 	var $total = 0;
 	var $delivery = 0;
 	var $id;
-	var $holds = array();
 	var $lock = 0;
+	var $change = false;
 	
 	/**
     * Cart constructor.
@@ -45,12 +45,9 @@ class Cart {
 		if ($id == -1) {
 			//Initialise an new basket for this session
 			debug_message("Initializing Basket");
-			$this->id = intval($id);
-			$query = $dbConn->query("SELECT * FROM `basket` WHERE id=".$this->id." LIMIT 1");
-			if (!$query) debug_message("Error loading basket status.");
-			$res = $dbConn->fetch($query);
-			$this->lock = $res['lock'];
-			if ($res['lock'] == 1) debug_message("Basket locked for editing.");
+			$query = $dbConn->query("INSERT INTO `basket` (locked,total,delivery) VALUES (0,0,0)");
+			if (!$query) init_err("The system was unable to generate session data correctly. Please try again later. The most likely cause for this issue is the basket database table not existing. dbConn: ".$dbConn->error());
+			$this->id = $dbConn->insert_id();
 		} elseif ($id == 0) {
 			//Search Crawler - Doesn't store
 			return;
@@ -59,22 +56,22 @@ class Cart {
 			debug_message("Loading Basket");
 			$this->id = intval($id);
 			//Load Basket Parameters
-			$query = $dbConn->query("SELECT total,delivery,lock FROM basket WHERE id=".$this->id." LIMIT 1");
+			$query = $dbConn->query("SELECT total,delivery,locked FROM basket WHERE id=".$this->id." LIMIT 1");
 			
 			if ($dbConn->rows($query) == 0) {
 				//The basket doesn't exist - Exit
-				init_err("Fatal Error: Basket ID ".$id." does not exist.",E_USER_ERROR);
+				init_err("Fatal Error: Basket ID ".$id." does not exist. This is most likely the result of someone deleting this data prematurely, or a cron misconfiguration. dbConn: ".$dbConn->error());
 				return;
 			} else {
 				//Set Basket Properties
 				$result = $dbConn->fetch($query);
-				$this->price = $result['price'];
+				$this->price = $result['total'];
 				$this->delivery = $result['delivery'];
-				$this->lock = $result['lock'];
+				$this->lock = $result['locked'];
 				unset($query,$result);
 			}
 			//Load list of items
-			$query = $dbConn("SELECT item_id,quantity FROM basket_items WHERE basket_id=".$this->id);
+			$query = $dbConn->query("SELECT item_id,quantity FROM basket_items WHERE basket_id=".$this->id);
 			while ($result = $dbConn->fetch($query)) {
 				//Create each item
 				$this->items[$result['item_id']] = $result['quantity'];
@@ -102,11 +99,14 @@ class Cart {
 	
 	function clear() {
 		if (!$this->lock) {
+			global $dbConn;
 			debug_message("Emptying Basket");
+			$dbConn->query("DELETE FROM `basket_items` WHERE basket_id=".$this->id);
 			unset($this->items);
 			$this->items = array();
 			$this->total = 0;
 			$this->delivery = 0;
+			$this->change = true;
 		} else {
 			debug_message("Cannot Empty Basket - Basket Locked");
 		}
@@ -116,40 +116,46 @@ class Cart {
 		global $dbConn;
 		debug_message("Locking Basket");
 		$this->lock = 1;
-		$dbConn->query("UPDATE `basket` SET `lock`='1' WHERE id=".$this->id." LIMIT 1");
+		$dbConn->query("UPDATE `basket` SET `locked`='1' WHERE id=".$this->id." LIMIT 1");
 	}
 	
 	function unlock() {
 		global $dbConn;
 		debug_message("Unlocking Basket");
 		$this->lock = 0;
-		$dbConn->query("UPDATE `basket` SET `lock`='0' WHERE id=".$this->id." LIMIT 1");
+		$dbConn->query("UPDATE `basket` SET `locked`='0' WHERE id=".$this->id." LIMIT 1");
 	}
 	
 	function addItem($id,$stock=1) {
+		global $dbConn;
 		$id = intval($id); //Remove zerofill
-		if (!isset($this->items[$id])) $this->items[$id] = 0;
-		$this->items[$id]+=$stock;
-		$item = new Item($id);
-		$this->incTotal($item->getPrice());
-		$this->incDelivery($item->getDeliveryCost());
+		if (!isset($this->items[$id])) {
+			$this->items[$id] = $stock;
+			$dbConn->query("INSERT INTO `basket_items` (item_id,basket_id,quantity) VALUES (".$id.",".$this->id.",".$stock.")");
+		} else {
+			$this->items[$id]+=$stock;
+			$dbConn->query("UPDATE `basket_items` SET quantity = ".$this->items[$id]." WHERE item_id=$id AND basket_id=".$this->id." LIMIT 1");
+		}
+		$this->change = true;
 	}
 	
 	function removeItem($id) {
+		global $dbConn;
 		$id = intval($id); //Remove zerofill
 		if (isset($this->items[$id])) {
-			$item = new Item($id);
-			$quantity = $this->items[$id];
-			$price = $item->getPrice()*$quantity;
+			$dbConn->query("DELETE FROM `basket_items` WHERE item_id=$id AND basket_id=".$this->id." LIMIT 1");
 			unset($this->items[$id]);
-			$this->incTotal(-$price);
-			$this->incDelivery(-$item->getDeliveryCost());
+			$this->change = true;
 		}
 	}
 	
 	function changeQuantity($itemid,$stock) {
+		global $dbConn;
+		$stock = intval($stock); //Validation. No SQL Injection for You!
 		$itemid = intval($itemid); //Remove zerofill
 		$this->items[$itemid] = $stock;
+		$dbConn->query("UPDATE `basket_items` SET quantity=$stock WHERE item_id=$itemid AND basket_id=".$this->id." LIMIT 1");
+		$this->change = true;
 	}
 	
 	function getQuantity($itemID) {
@@ -197,21 +203,14 @@ class Cart {
 		global $dbConn;
 		if ($this->lock == 1) {
 			debug_message("Cannot Commit Basket - Editing Locked by Database");
-		} else {
+		} elseif ($this->change) {
 			debug_message("Commiting Changes to Basket");
-			$query = "UPDATE `basket` SET obj='".base64_encode(serialize($this))."' WHERE id='".$this->id."' LIMIT 1";
-			$dbConn->query($query);
+			$this->checkPrice();
+			$query = "UPDATE `basket` SET total='".$this->price."', delivery='".$this->delivery."' WHERE id='".$this->id."' LIMIT 1";
+			if (!$dbConn->query($query)) {
+				trigger_error("Could not save basket. dbConn: ".$dbConn->error());
+			}
 		}
-	}
-	
-	function import() {
-		global $dbConn;
-		if ($dbConn->rows($dbConn->query("SELECT id FROM `basket` WHERE id='".$this->id."' LIMIT 1"))) {
-			$query = "UPDATE `basket` SET obj='".base64_encode(serialize($this))."' WHERE id='".$this->id."' LIMIT 1";
-		} else {
-			$query = "INSERT INTO `basket` (id,obj,`lock`) VALUES (".$this->id.",'".base64_encode(serialize($this))."',".$this->lock.")";
-		}
-		return $dbConn->query($query);
 	}
 	
 	//Getters
@@ -273,15 +272,16 @@ class Cart {
 		if ($id == -1) {
 			$items = array_keys($this->items);
 			foreach ($items as $item) {
-				$dbConn->query("INSERT INTO `reserve` (item,quantity,expire) VALUES ($item,".$this->items[$item].",'$expire')");
+				$dbConn->query("INSERT INTO `reserve` (item,quantity,expire,basketID) VALUES
+								($item,".$this->items[$item].",'$expire',".$this->id.")");
 				$dbConn->query("UPDATE `products` SET stock=stock-".$this->items[$item]." WHERE id=$item LIMIT 1");
-				$this->holds[$item] = $dbConn->insert_id();
 			}
 		} else {
 			$expire = $dbConn->time($expire);
-			$dbConn->query("INSERT INTO `reserve` (item,quantity,expire) VALUES ($id,".$this->items[$id].",'$expire')");
+			$dbConn->query("INSERT INTO `reserve` (item,quantity,expire,basketID) VALUES 
+							($id,".$this->items[$id].",'$expire','".$this->id."')");
+			
 			$dbConn->query("UPDATE `products` SET stock=stock-".$this->items[$item]." WHERE id=$id LIMIT 1");
-			$this->holds[$id] = $dbConn->insert_id();
 		}
 		return true;
 	}
@@ -292,14 +292,13 @@ class Cart {
 		if ($id == -1) {
 			$items = array_keys($this->items);
 			foreach ($items as $item) {
-				$dbConn->query("DELETE FROM `reserve` WHERE id=$item LIMIT 1");
+				$dbConn->query("DELETE FROM `reserve` WHERE item=$item AND basketID=".$this->id." LIMIT 1");
 				$dbConn->query("UPDATE `products` SET stock=stock+".$this->items[$item]." WHERE id=$item LIMIT 1");
 				$this->holds[$item] = $dbConn->insert_id();
 			}
 		} else {
-			$dbConn->query("DELETE `reserve` WHERE id=".$this->holds[$id]." LIMIT 1");
+			$dbConn->query("DELETE `reserve` WHERE item=".$this->holds[$id]." AND basketID=".$this->id." LIMIT 1");
 			$dbConn->query("UPDATE `products` SET stock=stock+".$this->items[$item]." WHERE id=$id LIMIT 1");
-			unset($this->holds[$id]);
 		}
 		return true;
 	}
@@ -312,9 +311,9 @@ class Cart {
 			$items = array_keys($this->items);
 			foreach ($items as $item) {
 				//Has it already timed out?
-				if ($dbConn->rows($dbConn->query("SELECT * FROM `reserve` WHERE id='".$this->holds[$item]."' LIMIT 1")) == 1) {
+				if ($dbConn->rows($dbConn->query("SELECT * FROM `reserve` WHERE item='".$this->holds[$item]."' AND basketID=".$this->ID." LIMIT 1")) == 1) {
 					//Not timed out
-					$dbConn->query("DELETE FROM `reserve` WHERE id=".$this->holds[$item]." LIMIT 1");
+					$dbConn->query("DELETE FROM `reserve` WHERE item=".$this->holds[$item]." AND basketID=".$this->id." LIMIT 1");
 				} else {
 					//Timed Out/No Hold
 					$dbConn->query("UPDATE `products` SET stock=stock-".$this->items[$item]." WHERE id=$item LIMIT 1");
@@ -322,8 +321,7 @@ class Cart {
 				unset($this->holds[$item]);
 			}
 		} else {
-			$dbConn->query("DELETE `reserve` WHERE id=".$this->holds[$id]." LIMIT 1");
-			unset($this->holds[$id]);
+			$dbConn->query("DELETE `reserve` WHERE item=".$id." AND basketID=".$this->id." LIMIT 1");
 		}
 		return true;
 	}
@@ -332,7 +330,7 @@ class Cart {
 	//Quite Possibly the most important function in the entire site
 	//DON'T BREAK IT
 	function commitOrder($customer,$token) {
-		global $dbConn, $_PRINTDATA;
+		global $dbConn;
 		if ($dbConn->rows($dbConn->query("SELECT * FROM `orders` WHERE basket=".$this->id." LIMIT 1")) == 1) return true;
 		if (!$dbConn->query("INSERT INTO `orders` (basket,status,token,customer) VALUES (".$this->id.",0,'$token',".$customer->getID().")")) {
 			return false;
