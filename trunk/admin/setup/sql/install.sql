@@ -30,7 +30,7 @@ PRIMARY KEY (`id`)
 
 CREATE TABLE `basket` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `lock` tinyint(1) NOT NULL DEFAULT '0',
+  `locked` BOOL NOT NULL DEFAULT '0',
   `total` decimal(10,2) NOT NULL DEFAULT '0',
   `delivery` decimal(10,2) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)

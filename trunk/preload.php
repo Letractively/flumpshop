@@ -165,6 +165,8 @@ if (extension_loaded("fileinfo")) {
 	}
 }
 
+
+/*Actual User Initialisation*/
 if ($_SETUP == false) {
 	//Connect to Database
 	$dbConn = db_factory();
@@ -193,7 +195,7 @@ if ($_SETUP == false) {
 			debug_message("Created basket #".$basket->getID(),true);
 		}
 		if (!isset($_SERVER['REMOTE_ADDR'])) $ip = "127.0.0.1"; else $ip = $_SERVER['REMOTE_ADDR'];
-		$dbConn->query("INSERT INTO `sessions` (session_id,basket,ip_addr) VALUES ('".session_id()."',$basketid,INET_ATON('".$ip."'))");
+		$dbConn->query("INSERT INTO `sessions` (session_id,basket,ip_addr) VALUES ('".session_id()."','".$basket->getID()."',INET_ATON('".$ip."'))");
 		debug_message("Remote IP: $ip");
 	} else {
 		if (array_search($_SERVER['HTTP_USER_AGENT'],explode($config->getNode('server','crawlerAgents'),"|"))) {
@@ -203,17 +205,7 @@ if ($_SETUP == false) {
 		} else {
 			$dbConn->query("UPDATE `sessions` SET active='".$dbConn->time()."' WHERE session_id='".session_id()."'");
 			$session = $dbConn->fetch($session);
-			$basket = $dbConn->query("SELECT * FROM `basket` WHERE id='".$session['basket']."' LIMIT 1");
-			$basket = $dbConn->fetch($basket);
-			$basket = unserialize(base64_decode($basket['obj']));
-			if (!is_object($basket)) {
-				//Just load empty basket if shop disabled - Not used for major reasons
-				if ($config->getNode('site','shopMode') == false) {
-					$basket = new Cart(-1);
-				} else {
-					init_err("Fatal Error: The active session's basket object has been corrupted or cannot be loaded.");
-				}
-			}
+			$basket = new Cart($session['basket']);
 			$basket->restore();
 			$config->setNode('temp','crawler',false);
 		}
