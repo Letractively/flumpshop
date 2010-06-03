@@ -29,10 +29,13 @@ input:focus {
 			</fieldset>
 			<fieldset>
 				<legend>Other Details</legend>
-				<table>
+				<table id="otherDetailsTable">
 					<tr>
 						<td><input type="checkbox" name="vatExempt" id="vatExempt" onclick="updatePrices()" /></td>
-						<td><label for="vatExempt">This customer does not need to pay VAT</label></td>
+						<td colspan="3"><label for="vatExempt">This customer does not need to pay VAT</label></td>
+					</tr>
+					<tr>
+						<td colspan="4"><a href="javascript:" onclick="addCouponCode();">Add a voucher to this order...</a>
 					</tr>
 				</table>
 			</fieldset>
@@ -110,8 +113,15 @@ input:focus {
 </table>
 </form>
 <script type="text/javascript">
+/*Declare Variables*/
 window.nextOrderItemID = 1;
+window.prices = new Array();
+window.orderItemStock = new Array();
+window.itemDeliveryCosts = new Array();
+window.nextCouponCodeID = 1;
+window.couponActions = new Array();
 
+/*Validation Rules*/
 var validObject = {
 	errorContainer:'#errors',
 	errorLabelContainer:'#errorContent',
@@ -137,6 +147,7 @@ $(document).ready(function() {
 	
 	$('#orderItemsContainer').append("<table id='itemsSummaryTable' style='width:100%;text-align:right'></table>");
 	$('#itemsSummaryTable').append("<tr><th>Subtotal</th><td style='width:80px' id='subTotal'>£0.00</td><td rowspan='500' style='width:85px'></td></tr>");
+	$('#itemsSummaryTable').append("<tr><th>Discounts</th><td id='discounts'>£0.00</td></tr>");
 	$('#itemsSummaryTable').append("<tr><th>VAT @ <?php echo $config->getNode('site','vat');?>%</th><td id='vat'>£0.00</td></tr>");
 	$('#itemsSummaryTable').append("<tr><th>Shipping & Handling</th><td id='shipping'>£0.00</td></tr>");
 	$('#itemsSummaryTable').append("<tr><th>Total</th><td id='total'>£0.00</td></tr>");
@@ -187,10 +198,6 @@ function newOrderRow() {
 	
 	window.nextOrderItemID++;
 }
-
-window.prices = new Array();
-window.orderItemStock = new Array();
-window.itemDeliveryCosts = new Array();
 
 function idKeyPress(id) {	
 	idNumber = parseInt(id.replace("item","").replace("ID",""));
@@ -281,6 +288,51 @@ function updatePrices() {
 	}
 	$('#subTotal').html('&pound;'+(total.toFixed(2)));
 	
+	var shipping = 0;
+	for (n=1;n<window.nextOrderItemID;n++) {
+		//Calculate Total Delivery
+		if ($('#item'+n+'ID').val() != "") {
+			shipping += parseFloat(window.itemDeliveryCosts[n]*$('#item'+n+'Qty').val());
+		}
+	}
+	$('#shipping').html('&pound;'+(shipping.toFixed(2)));
+	
+	//Calculate Vouchers
+	var totalAdjustment = 0;
+	for (n=1;n<window.nextCouponCodeID;n++) {
+		var action = window.couponActions[n];
+		//Affects Basket Final Total
+		if (action.match(/BasketTotal_/) !== null) {
+			action = action.replace("BasketTotal_","");
+			if (action.match(/[0-9\-]%/) !== null) {
+				adjustment = parseFloat(action.replace("%",""))/100;
+				adjustment = total*adjustment;
+				$('#coupon'+n+'PriceAdjust').val(('£'+adjustment.toFixed(2)).replace("£-","-£"));
+				totalAdjustment += adjustment;
+			}
+		}
+		//Affects the price of a single item
+		else if (action.match(/Item[0-9]*Price_/) !== null) {
+			var item_id = action.replace(/Item/,"").replace(/Price_.*/,"");
+			var newPrice = parseFloat(action.replace(/Item[0-9]*Price_/,""));
+			//Find the item ID if its set, and adjust price based on quantity if so
+			for (i=1;i<window.nextOrderItemID;i++) {
+				if ($('#item'+i+'ID').val() == item_id) {
+					//Found the item
+					var oldPrice = parseFloat($('#item'+i+'Price').val().replace('£',''));
+					var adjustment = (newPrice*$('#item'+i+'Qty').val())-oldPrice;
+					
+					$('#coupon'+n+'PriceAdjust').val(('£'+adjustment.toFixed(2)).replace("£-","-£"));
+					totalAdjustment += adjustment;
+					//Don't need to do anything with VAT - it's calculated afterwards anyway
+				}
+			}
+		}
+	}
+	//Finalize Coupons
+	$('#discounts').html(('&pound;'+totalAdjustment.toFixed(2)).replace("&pound;-","-&pound;"));
+	total+=totalAdjustment;
+	
 	//Calculate VAT
 	if ($('#vatExempt:checked').val() == null) {
 		var vatRate = <?php echo $config->getNode('site','vat')/100;?>;
@@ -291,18 +343,50 @@ function updatePrices() {
 	
 	total = total*(1+vatRate);
 	
-	var shipping = 0;
-	for (n=1;n<window.nextOrderItemID;n++) {
-		//Calculate Total Delivery
-		if ($('#item'+n+'ID').val() != "") {
-			shipping += parseFloat(window.itemDeliveryCosts[n]*$('#item'+n+'Qty').val());
-		}
-	}
-	$('#shipping').html('&pound;'+(shipping.toFixed(2)));
-	
+	//Add shipping afterwards so VAT doesn't affect it
 	total += shipping;
 	
 	$('#total').html('&pound;'+total.toFixed(2));
+}
+
+function addCouponCode() {
+	newID = window.nextCouponCodeID;
+	
+	newRow = "<tr>";
+	newRow = newRow+"<td><strong>"+newID+"</strong></td>";
+	newRow = newRow+"<td><input type='text' name='coupon"+newID+"Key' id='coupon"+newID+"Key' class='ui-state-default couponKey' onkeyup='couponKeyPress(this.id);' style='width:100px' unique='couponKey' maxlength='32' /></td>";
+	
+	newRow = newRow+"<td><input type='text' disabled='disabled' class='couponDetails' id='coupon"+newID+"Action' style='width:300px;color:#000' /></td>";
+	
+	newRow = newRow+"<td><input type='text' disabled='disabled' id='coupon"+newID+"PriceAdjust' style='width:80px;' /></td>";
+	
+	newRow = newRow+"</tr>";
+	
+	$('#otherDetailsTable').append(newRow);
+	
+	window.nextCouponCodeID++;
+}
+
+function couponKeyPress(id) {
+	idNumber = parseInt(id.replace("coupon","").replace("Key",""));
+	
+	if ($('#'+id).val() == "") return;
+	
+	//Find name
+	$('#coupon'+idNumber+'Action, #coupon'+idNumber+'PriceAdjust').val('     Checking...').css('background','url("../../../images/loading.gif") no-repeat');
+	$.ajax({
+		url:'../orders/ajax/couponAction.php?id='+$('#'+id).val(),
+		dataType:'json',
+		success:function(data) {
+			$('#coupon'+idNumber+'Action').val(data[0]).css('background','none');
+			
+			//Calculate the effect the coupon has on the total
+			window.couponActions[idNumber] = data[1];
+			$('#coupon'+idNumber+'PriceAdjust').css('background','none');
+			updatePrices();
+		},
+		cache:true
+		});
 }
 
 $('#dialog').css('display','block');

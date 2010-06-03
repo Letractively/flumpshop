@@ -95,8 +95,8 @@ require_once(dirname(__FILE__)."/includes/Mail.class.php");
 debug_message("Mail Class Definition Loaded.");
 require_once(dirname(__FILE__)."/includes/Paginator.class.php");
 debug_message("Paginator Class Definition Loaded.");
-require_once(dirname(__FILE__)."/includes/Keycodes.class.php");
-debug_message("Keycodes Class Definition Loaded.");
+require_once(dirname(__FILE__)."/includes/Keycode.class.php");
+debug_message("Keycode Class Definition Loaded.");
 require_once(dirname(__FILE__)."/includes/Feature.class.php");
 debug_message("Feature Class Definition Loaded.");
 //Load Function Replacements (PHP 4)
