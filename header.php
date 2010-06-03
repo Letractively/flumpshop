@@ -62,6 +62,9 @@ if ($config->getNode("site","templateMode") == "core" && (
     $tab_links = "<li><a href='".$config->getNode('paths','root')."' class='".$homeActive."'>Home</a></li>";
     $tab_links .= "<li><a href='".$config->getNode('paths','root')."/about.php' class='".$aboutActive."'>About</a></li>";
 	$tab_links .= "<li><a href='".$config->getNode('paths','root')."/contact.php' class='".$contactActive."'>Contact</a></li>";
+	if ($config->getNode('site','shopMode')) {
+		$tab_links .= "<li><a href='".$config->getNode('paths','root')."/basket.php' class='".$basketActive."'>".$config->getNode('messages','basketHeader')."</a></li>";
+	}
 	// Login only shown if enabled
 	if ($config->getNode("site","loginTab")) {
 		if (!isset($_SESSION['login']['active']) or $_SESSION['login']['active'] != true) {
