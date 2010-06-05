@@ -126,15 +126,23 @@ class Cart {
 		$dbConn->query("UPDATE `basket` SET `locked`='0' WHERE id=".$this->id." LIMIT 1");
 	}
 	
-	function addItem($id,$stock=1) {
+	function addItem($id,$stock=1,$price = -1) {
 		global $dbConn;
 		$id = intval($id); //Remove zerofill
 		if (!isset($this->items[$id])) {
+			//None added yet, create new product entry
 			$this->items[$id] = $stock;
-			$dbConn->query("INSERT INTO `basket_items` (item_id,basket_id,quantity) VALUES (".$id.",".$this->id.",".$stock.")");
+			$dbConn->query("INSERT INTO `basket_items`
+							(item_id,basket_id,quantity,sold_at) VALUES
+							(".$id.",".$this->id.",".$stock.",
+							".$stock."*(SELECT price FROM `products` WHERE id=".$id."))");
 		} else {
+			//Increment current total
 			$this->items[$id]+=$stock;
-			$dbConn->query("UPDATE `basket_items` SET quantity = ".$this->items[$id]." WHERE item_id=$id AND basket_id=".$this->id." LIMIT 1");
+			$dbConn->query("UPDATE `basket_items`
+							SET quantity = ".$this->items[$id].",
+							sold_at = ".$this->items[$id]."*(SELECT price FROM `products` WHERE id=".$id.")
+							WHERE item_id=$id AND basket_id=".$this->id." LIMIT 1");
 		}
 		$this->change = true;
 	}
@@ -154,7 +162,10 @@ class Cart {
 		$stock = intval($stock); //Validation. No SQL Injection for You!
 		$itemid = intval($itemid); //Remove zerofill
 		$this->items[$itemid] = $stock;
-		$dbConn->query("UPDATE `basket_items` SET quantity=$stock WHERE item_id=$itemid AND basket_id=".$this->id." LIMIT 1");
+		$dbConn->query("UPDATE `basket_items`
+						SET quantity=$stock,
+						sold_at = ".$this->items[$itemid]."*(SELECT price FROM `products` WHERE id=".$itemid.")
+						WHERE item_id=$itemid AND basket_id=".$this->id." LIMIT 1");
 		$this->change = true;
 	}
 	
