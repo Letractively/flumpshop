@@ -85,19 +85,19 @@ input:focus {
 					<td><input type="text" class="ui-state-active required" name="customerShippingName" id="customerShippingName" /></td>
 				</tr>
 				<tr>
-					<td><label for="customerShippingAddress1">Billing Address 1: </label></td>
+					<td><label for="customerShippingAddress1">Shipping Address 1: </label></td>
 					<td><input type="text" class="ui-state-active required" name="customerShippingAddress1" id="customerShippingAddress1" /></td>
 				</tr>
 				<tr>
-					<td><label for="customerShippingAddress2">Billing Address 2: </label></td>
+					<td><label for="customerShippingAddress2">Shipping Address 2: </label></td>
 					<td><input type="text" class="ui-state-active" name="customerShippingAddress2" id="customerShippingAddress2" /></td>
 				</tr>
 				<tr>
-					<td><label for="customerShippingAddress3">Billing Address 3: </label></td>
+					<td><label for="customerShippingAddress3">Shipping Address 3: </label></td>
 					<td><input type="text" class="ui-state-active" name="customerShippingAddress3" id="customerShippingAddress3" /></td>
 				</tr>
 				<tr>
-					<td><label for="customerShippingPostcode">Billing Address Postcode: </label></td>
+					<td><label for="customerShippingPostcode">Shipping Address Postcode: </label></td>
 					<td><input type="text" class="ui-state-active required" name="customerShippingPostcode" id="customerShippingPostcode" /></td>
 				</tr>
 			</table>
@@ -131,6 +131,9 @@ var validObject = {
 		customerBillingName: "Please enter the Customer Name in the billing address section.",
 		customerBillingAddress1: "Please fill in Billing Address 1.",
 		customerBillingPostcode: "Please fill in the Billing Address Postcode.",
+		customerShippingName: "Please enter the Customer Name in the shipping address section.",
+		customerShippingAddress1: "Please fill in Shipping Address 1.",
+		customerShippingPostcode: "Please fill in the Shipping Address Postcode.",
 		item1ID:{
 			required:"Please enter at least one item in the order details section."
 		},
@@ -147,8 +150,8 @@ $(document).ready(function() {
 	
 	$('#orderItemsContainer').append("<table id='itemsSummaryTable' style='width:100%;text-align:right'></table>");
 	$('#itemsSummaryTable').append("<tr><th>Subtotal</th><td style='width:80px' id='subTotal'>£0.00</td><td rowspan='500' style='width:85px'></td></tr>");
-	$('#itemsSummaryTable').append("<tr><th>Discounts</th><td id='discounts'>£0.00</td></tr>");
-	$('#itemsSummaryTable').append("<tr><th>VAT @ <?php echo $config->getNode('site','vat');?>%</th><td id='vat'>£0.00</td></tr>");
+	$('#itemsSummaryTable').append("<tr id='discountRow' style='display:none'><th>Discounts</th><td id='discounts'>£0.00</td></tr>");
+	$('#itemsSummaryTable').append("<tr id='vatRow'><th>VAT @ <?php echo $config->getNode('site','vat');?>%</th><td id='vat'>£0.00</td></tr>");
 	$('#itemsSummaryTable').append("<tr><th>Shipping & Handling</th><td id='shipping'>£0.00</td></tr>");
 	$('#itemsSummaryTable').append("<tr><th>Total</th><td id='total'>£0.00</td></tr>");
 	
@@ -180,7 +183,7 @@ $(document).ready(function() {
 function newOrderRow() {
 	newID = window.nextOrderItemID;
 	
-	newRow = "<tr>";
+	newRow = "<tr id='orderRow"+newID+"'>";
 	newRow = newRow+"<td><strong>"+newID+"</strong></td>";
 	newRow = newRow+"<td><input type='text' name='item"+newID+"ID' id='item"+newID+"ID' class='ui-state-default number itemIDField' onkeyup='idKeyPress(this.id);' style='width:100px' unique='itemIDField' maxlength='11' /></td>";
 	
@@ -195,6 +198,7 @@ function newOrderRow() {
 	newRow = newRow+"</tr>";
 	
 	$('#orderItemsTable').append(newRow);
+	$('#orderRow'+newID).effect('highlight',{},3000);
 	
 	window.nextOrderItemID++;
 }
@@ -331,13 +335,20 @@ function updatePrices() {
 	}
 	//Finalize Coupons
 	$('#discounts').html(('&pound;'+totalAdjustment.toFixed(2)).replace("&pound;-","-&pound;"));
+	if (totalAdjustment == 0 && $('#discountRow:visible').length != 0) {
+		$('#discountRow').hide('highlight');
+	} else if (totalAdjustment != 0 && $('#discountRow:visible').length == 0) {
+		$('#discountRow').show('highlight');
+	}
 	total+=totalAdjustment;
 	
 	//Calculate VAT
 	if ($('#vatExempt:checked').val() == null) {
 		var vatRate = <?php echo $config->getNode('site','vat')/100;?>;
+		if ($('#vatRow:visible').length == 0) $('#vatRow').show('highlight');
 	} else {
 		var vatRate = 0;
+		if ($('#vatRow:visible').length == 1) $('#vatRow').hide('highlight');
 	}
 	$('#vat').html('&pound;'+(total*vatRate).toFixed(2));
 	
@@ -352,7 +363,7 @@ function updatePrices() {
 function addCouponCode() {
 	newID = window.nextCouponCodeID;
 	
-	newRow = "<tr>";
+	newRow = "<tr id='couponRow"+newID+"'>";
 	newRow = newRow+"<td><strong>"+newID+"</strong></td>";
 	newRow = newRow+"<td><input type='text' name='coupon"+newID+"Key' id='coupon"+newID+"Key' class='ui-state-default couponKey' onkeyup='couponKeyPress(this.id);' style='width:100px' unique='couponKey' maxlength='32' /></td>";
 	
@@ -363,6 +374,7 @@ function addCouponCode() {
 	newRow = newRow+"</tr>";
 	
 	$('#otherDetailsTable').append(newRow);
+	$('#couponRow'+newID).effect('highlight',{},3000);
 	
 	window.nextCouponCodeID++;
 }

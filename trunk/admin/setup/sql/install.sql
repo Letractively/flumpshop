@@ -40,6 +40,7 @@ CREATE TABLE `basket_items` (
 	`item_id` int(11) unsigned NOT NULL,
 	`basket_id` int(11) unsigned NOT NULL,
 	`quantity` int(11) unsigned NOT NULL,
+	`sold_at` decimal(10,2) unsigned NOT NULL DEFAULT '0',
 	PRIMARY KEY (`item_id`, `basket_id`)
 );
 
