@@ -1,4 +1,31 @@
 <?php
+
+/**
+*  Provides global logic and storage for sitewite data
+*
+*  This file is part of Flumpshop.
+*
+*  Flumpshop is free software: you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation, either version 3 of the License, or
+*  (at your option) any later version.
+*
+*  Flumpshop is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with Flumpshop.  If not, see <http://www.gnu.org/licenses/>.
+*
+*
+*  @Name        : Config.class.php
+*  @Version     : 1.0
+*  @author		: Lloyd Wallis <lloyd@theflump.com>
+*  @copyright	: Copyright (c) 2009-2010, Lloyd Wallis
+*/
+
+
 class Config {
 	var $name = "Default";
 	var $data = array();
@@ -7,6 +34,13 @@ class Config {
 	var $editable = true;
 	var $change = false;
 	
+	/**
+    * Config constructor.
+    * @since 1.0
+    * @param string $name Optional. A name to assign to the configuration object. Currently not used. Default "Default".
+	* @param bool $debug Optional. Whether to output debugging data when executiong functions. Default false.
+    * @return void No return value.
+    */
 	function Config($name = "Default",$debug = false) {
 		$this->name = $name;
 		$this->debug = $debug;
