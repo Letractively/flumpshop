@@ -1,5 +1,5 @@
 <?php
-$noPreValidate = true;
+$noPreValidate = true; //Disables the .validate() method being called in the header.
 $USR_REQUIREMENT = 'can_create_orders';
 require_once "../header.php";
 ?>
@@ -193,7 +193,7 @@ function newOrderRow() {
 	
 	newRow = newRow+"<td><input type='text' disabled='disabled' id='item"+newID+"Price' style='width:80px;' /></td>";
 	
-	newRow = newRow+"<td><a href='javascript:' onclick='findItem("+newID+");'>Search...</a></td>";
+	newRow = newRow+"<td><a href='javascript:' onclick='findItem("+newID+");'>More...</a></td>";
 	
 	newRow = newRow+"</tr>";
 	
@@ -203,7 +203,7 @@ function newOrderRow() {
 	window.nextOrderItemID++;
 }
 
-function idKeyPress(id) {	
+function idKeyPress(id,dialog) {	
 	idNumber = parseInt(id.replace("item","").replace("ID",""));
 	
 	if (idNumber+1 == window.nextOrderItemID) {
@@ -215,14 +215,30 @@ function idKeyPress(id) {
 	//Find name
 	$('#item'+idNumber+'Name, #item'+idNumber+'Price').val('     Checking...').css('background','url("../../../images/loading.gif") no-repeat');
 	$.ajax({
-		url:'../orders/ajax/itemName.php?id='+$('#'+id).val(),
+		url:'../orders/ajax/itemName.php?id='+$('#'+id).val()+'&dialog='+dialog,
 		dataType:'json',
 		success:function(data) {
 			$('#item'+idNumber+'Name').val(data[0]).css('background','none');
-			$('#item'+idNumber+'Price').val("£"+(data[1]*$('#item'+idNumber+'Qty').val()).toFixed(2)).css('background','none');
-			window.prices[idNumber] = data[1];
-			window.orderItemStock[idNumber] = data[2];
-			window.itemDeliveryCosts[idNumber] = data[3];
+			
+			if (dialog) {
+				//Use prices from the dialog, not the Ajax Request
+				$('#item'+idNumber+'Price').val("£"+parseFloat($('#morePrice').val()).toFixed(2))
+					.css('background','none');
+				$('#item'+idNumber+'Qty').val($('#morePriceUnits').val());
+				
+				window.prices[idNumber] = $('#morePrice').val()/$('#morePriceUnits').val();
+				window.orderItemStock[idNumber] = data[1];
+				window.itemDeliveryCosts[idNumber] = $('#moreDelivery').val()/$('#moreDeliveryUnits').val();
+				//This function was called by the dialog box
+				//The dialog is only hidden at the moment so data could be grabbed
+				$('#dialog').dialog('destroy');
+			} else {
+				//Directly entered - use full Ajax data
+				$('#item'+idNumber+'Price').val("£"+(data[1]*$('#item'+idNumber+'Qty').val()).toFixed(2)).css('background','none');
+				window.prices[idNumber] = data[1];
+				window.orderItemStock[idNumber] = data[2];
+				window.itemDeliveryCosts[idNumber] = data[3];
+			}
 			updatePrices();
 		},
 		cache:true
@@ -251,11 +267,17 @@ function loadCustomer() {
 	loader('Not Implemented.');
 }
 
+//Find Item Dialog
 function findItem(id) {
 	window.tempFindItemId = id;
-	$('#dialog').html("<img src='../../../images/loading.gif' />Loading Content...").attr('title','Find an Item');
+	$('#dialog').html("<img src='../../../images/loading.gif' />Loading Content...").attr('title','Advanced Item Select');
 	$('#dialog').dialog({width:600,height:400});
-	$('#dialog').load('../orders/ajax/findItem.php?id='+id, function(var1,var2,var3) {
+	$('#dialog').load('../orders/ajax/findItem.php?id='+id, function(var1,var2,var3) { //Loaded Function
+		//Load Item if already entered
+		if ($('#item'+window.tempFindItemId+'ID').val() != "") {
+			$('#findItemName').val($('#item'+window.tempFindItemId+'Name').val());
+			itemSummary($('#item'+window.tempFindItemId+'ID').val());
+		}
 		//Initialise the new form
 		$('#dialog form').validate();
 		$('#findItemName').autocomplete({
@@ -266,7 +288,7 @@ function findItem(id) {
 				return false;
 			}
 		})
-		.data("autocomplete")._renderItem = function(ul, item) {
+		.data("autocomplete")._renderItem = function(ul, item) { //This is one of those WTF Lines
 			return $( "<li></li>")
 				.data("item.autocomplete", item)
 				.append("<a>"+item[1]+"</a>")
