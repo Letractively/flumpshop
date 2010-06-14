@@ -179,6 +179,7 @@ $_SESSION['config']->setNode("messages", "disclaimerHeader", "Disclaimer", "Disc
 $_SESSION['config']->setNode("messages", "searchHeader", "Search", "Search Page Header");
 $_SESSION['config']->setNode("messages", "checkoutHeader", "Checkout", "Checkout Header");
 $_SESSION['config']->setNode("messages", "basketHeader", "Basket", "Basket Header");
+$_SESSION['config']->setNode("messages", "maintenanceHeader", "Unavailable", "Maintenance Header");
 
 //Content Placeholders
 $_SESSION['config']->setNode("messages", "featuredItemsPlaceholder", "You can tell the Flumpnet Robot to show two items in this section, by accessing the Admin CP, then clicking Products->Featured Items.", "Featured Items Placeholder");
