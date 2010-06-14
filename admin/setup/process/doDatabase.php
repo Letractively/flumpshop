@@ -54,6 +54,6 @@ $dbConn->multi_query(file_get_contents(dirname(__FILE__)."/../sql/reset.sql"),tr
 
 file_put_contents(dirname(__FILE__)."/status.txt", "Finished!");
 sleep(1); //Give time for ajax to notice change
-unlink(dirname(__FILE__)."/status.txt");
+//unlink(dirname(__FILE__)."/status.txt");
 require_once dirname(__FILE__)."/../footer.inc.php";
 ?>
