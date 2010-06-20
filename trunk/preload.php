@@ -99,6 +99,8 @@ require_once(dirname(__FILE__)."/includes/Keycode.class.php");
 debug_message("Keycode Class Definition Loaded.");
 require_once(dirname(__FILE__)."/includes/Feature.class.php");
 debug_message("Feature Class Definition Loaded.");
+require_once(dirname(__FILE__)."/includes/FormHelper.class.php");
+debug_message("FormHelper Class Definition Loaded.");
 //Load Function Replacements (PHP 4)
 require_once(dirname(__FILE__)."/includes/json_encode.inc.php");
 debug_message("json_encode Function Definition Loaded.");
