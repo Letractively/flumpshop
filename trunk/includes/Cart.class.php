@@ -32,6 +32,8 @@ class Cart {
 	var $id;
 	var $lock = 0;
 	var $change = false;
+	var $vatEnabled = true;
+	var $keys = array();
 	
 	/**
     * Cart constructor.
@@ -82,6 +84,31 @@ class Cart {
 	function restore() {
 		//Depreciated. No longer used with new normalized Database system
 		return $this->checkPrice();
+	}
+	
+	/**
+    * Defines whether to apply VAT to this cart
+    * @since 1.0
+    * @param bool $bool Optional. Default true. Whether to apply VAT to this cart.
+	* @return void No return value.
+    */
+	function applyVAT($bool = true) {
+		if ($bool != $this->vatEnabled) {
+			$this->change = true;
+			$this->vatEnabled = $bool;
+		}
+		return true;
+	}
+	
+	/**
+    * Add a key to the cart (or ignore if it is already applied)
+    * @since 1.0
+    * @param int $keyID Required. The ID of the key to add to the cart.
+	* @return void No return value.
+    */
+	function addKey($keyID) {
+		$this->change = true;
+		$this->keys[$keyID] = true;
 	}
 	
 	/**
@@ -291,7 +318,7 @@ class Cart {
 		} elseif ($this->change) {
 			debug_message("Commiting Changes to Basket");
 			$this->checkPrice();
-			$query = "UPDATE `basket` SET total='".$this->price."', delivery='".$this->delivery."' WHERE id='".$this->id."' LIMIT 1";
+			$query = "UPDATE `basket` SET total='".$this->price."', delivery='".$this->delivery."', vat='".$this->vatEnabled."' WHERE id='".$this->id."' LIMIT 1";
 			if (!$dbConn->query($query)) {
 				trigger_error("Could not save basket. dbConn: ".$dbConn->error());
 			}
@@ -333,8 +360,12 @@ class Cart {
     */
 	function getFriendlyVAT() {
 		global $config;
-		$multiplier = ($config->getNode('site','vat')/100);
-		return number_format($this->total*$multiplier,2);
+		if ($this->vatEnabled) {
+			$multiplier = ($config->getNode('site','vat')/100);
+			return number_format($this->total*$multiplier,2);
+		} else {
+			return $this->getFriendlyTotal(false,false);
+		}
 	}
 	
 	/**
@@ -466,10 +497,10 @@ class Cart {
 	//Officially Place Order in Database
 	//Quite Possibly the most important function in the entire site
 	//DON'T BREAK IT
-	function commitOrder($customer,$token) {
+	function commitOrder($billing,$shipping = 0,$token) {
 		global $dbConn;
 		if ($dbConn->rows($dbConn->query("SELECT * FROM `orders` WHERE basket=".$this->id." LIMIT 1")) == 1) return true;
-		if (!$dbConn->query("INSERT INTO `orders` (basket,status,token,customer) VALUES (".$this->id.",0,'$token',".$customer->getID().")")) {
+		if (!$dbConn->query("INSERT INTO `orders` (basket,status,token,billing,shipping) VALUES (".$this->id.",0,'$token',".$billing->getID().",".$shipping->getID().")")) {
 			return false;
 		}
 		else return $dbConn->insert_id();
