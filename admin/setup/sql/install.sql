@@ -33,6 +33,7 @@ CREATE TABLE `basket` (
   `locked` BOOL NOT NULL DEFAULT '0',
   `total` decimal(10,2) NOT NULL DEFAULT '0',
   `delivery` decimal(10,2) NOT NULL DEFAULT '0',
+  `vat` BOOL NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
 );
 
@@ -42,6 +43,12 @@ CREATE TABLE `basket_items` (
 	`quantity` int(11) unsigned NOT NULL,
 	`sold_at` decimal(10,2) unsigned NOT NULL DEFAULT '0',
 	PRIMARY KEY (`item_id`, `basket_id`)
+);
+
+CREATE TABLE `basket_keys` (
+  `basket_id` int(10) unsigned NOT NULL,
+  `key_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`basket_id`,`key_id`)
 );
 
 CREATE TABLE `bugs` (
@@ -204,11 +211,11 @@ CREATE TABLE `orders` (
   `id` int(10) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `basket` int(10) unsigned NOT NULL,
   `status` int(11) NOT NULL,
-  `token` varchar(250) NOT NULL,
-  `customer` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `basket` (`basket`),
-  KEY `customer` (`customer`)
+  `token` varchar(250),
+  `billing` int(10) unsigned NOT NULL,
+  `shipping` int(11) unsigned NOT NULL,
+  `assignedTo` int(10) unsigned,
+  PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `products` (
