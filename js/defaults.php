@@ -17,6 +17,9 @@ ob_start();
     }
     else if (request.status == 500) {
     	$('#dialog').html("<?php echo str_replace(array("\"","'","\n","/"), array("\\\"","&quot;","","&frasl;"),$config->getNode('messages','ajax500')); ?>");
+	}
+	else if (request.status == 403) {
+		$('#dialog').html("<?php echo str_replace(array("\"","'","\n","/"), array("\\\"","&quot;","","&frasl;"),$config->getNode('messages','ajax403')); ?>");
     } else {
     $('#dialog').html("<?php echo str_replace(array("\"","'","\n","/"), array("\\\"","&quot;","","&frasl;"),$config->getNode('messages','ajaxError')); ?>");
     }
