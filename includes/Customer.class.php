@@ -31,9 +31,15 @@ class Customer {
 			$this->paypalid = $result['paypalid'];
 			$this->can_contact = $result['can_contact'];
 			
-			$country = $dbConn->fetch($dbConn->query("SELECT * FROM `country` WHERE iso='".$this->country."' LIMIT 1"));
-			$this->supportedCountry = $country['supported'];
-			$this->countryName = $country['name'];
+			$country = $dbConn->query("SELECT * FROM `country` WHERE iso='".$this->country."' LIMIT 1");
+			if ($dbConn->rows($country) == 1) {
+				$country = $dbConn->fetch($country);
+				$this->supportedCountry = $country['supported'];
+				$this->countryName = $country['name'];
+			} else {
+				$this->supportedCountry = 0;
+				$this->countryName = "Unknown Country";
+			}
 		} else {
 			$this->id = 0;
 		}
@@ -79,7 +85,10 @@ class Customer {
 	function getID() {
 		return $this->id;
 	}
-	function getName() {
+	function getName($spanContainer = false) {
+		if ($spanContainer) {
+			return '<span class="fs-customer-name">'.$this->name."</span>";
+		}
 		return $this->name;
 	}
 	function getAddress1() {
@@ -94,7 +103,10 @@ class Customer {
 	function getPostcode() {
 		return $this->postcode;
 	}
-	function getCountry() {
+	function getCountry($spanContainer = false) {
+		if ($spanContainer) {
+			return '<span class="fs-customer-countrycode">'.$this->country.'</span>';
+		}
 		return $this->country;
 	}
 	function getCountryName() {
@@ -107,12 +119,30 @@ class Customer {
 		return $this->paypalid;
 	}
 	
-	function getAddress() {
-		return $this->getAddress1()."<br />".$this->getAddress2()."<br />".$this->getAddress3()."<br />".$this->getPostcode()."<br />".$this->getCountryName();
+	function getAddress($spanContainer = false) {
+		if ($spanContainer) {
+			$return = '<span class="fs-customer-address">';
+			$return .= '<span class="fs-customer-address1">'.$this->getAddress1().'</span><br />';
+			$return .= '<span class="fs-customer-address2">'.$this->getAddress2().'</span><br />';
+			$return .= '<span class="fs-customer-address3">'.$this->getAddress3().'</span><br />';
+			$return .= '<span class="fs-customer-postcode">'.$this->getPostcode().'</span><br />';
+			$return .= '<span class="fs-customer-country">'.$this->getCountryName().'</span>';
+			$return .= '</span>';
+			return $return;
+		}
+		return $this->getAddress1().'<br />'.$this->getAddress2().'<br />'.$this->getAddress3().'<br />'.$this->getPostcode().'<br />'.$this->getCountryName();
 	}
 	
 	function deliverySupported() {
 		return $this->supportedCountry;
+	}
+	
+	function printDeliverySupported() {
+		if ($this->deliverySupported()) {
+			return '<div class="ui-state-highlight"><span class="ui-icon ui-icon-circle-check"></span>Automatic Delivery Cost is available for this country.</div>';
+		} else {
+			return '<div class="ui-state-error"><span class="ui-icon ui-icon-alert"></span>Automatic Delivery Cost is not supported to this country.</div>';
+		}
 	}
 }
 ?>
