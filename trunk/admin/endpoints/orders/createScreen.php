@@ -19,7 +19,7 @@ input:focus {
 
 </ul>
 </div>
-<form action="javascript:" id="orderFormMain">
+<form action="javascript:" id="orderFormMain" method="POST">
 <table style="width:100%">
 	<tr>
 		<td>
@@ -51,7 +51,7 @@ input:focus {
 			<table>
 				<tr>
 					<td><label for="billingID">Customer Number: </label></td>
-					<td><input type='text' class='ui-state-disabled' disabled="disabled" value="New" name="billingID" id="billingID" /></td>
+					<td><input type='text' class='ui-state-disabled' readonly="readonly" value="New" name="billingID" id="billingID" /></td>
 				</tr>
 				<tr>
 					<td><label for="customerBillingName">Customer Name: </label></td>
@@ -90,7 +90,7 @@ input:focus {
 				</tr>
 				<tr class="ui-helper-hidden">
 					<td><label for="shippingID">Customer Number: </label></td>
-					<td><input type='text' class='ui-state-disabled ui-helper-hidden' disabled="disabled" value="New" name="shippingID" id="shippingID" /></td>
+					<td><input type='text' class='ui-state-disabled ui-helper-hidden' readonly="readonly" value="New" name="shippingID" id="shippingID" /></td>
 				</tr>
 				<tr class="ui-helper-hidden">
 					<td><label for="customerShippingName">Customer Name: </label></td>
@@ -157,6 +157,7 @@ var validObject = {
 		item1ID:{
 			required:"Please enter at least one item in the order details section."
 		},
+		orderStatus: "Please set the order status."
 	},
 	rules:{
 		item1ID:"required",
@@ -171,7 +172,8 @@ var validObject = {
 		},
 		customerShippingCountry: {
 			required: "#noShipping:not(#noShipping:checked)"
-		}
+		},
+		orderStatus:"required"
 	}
 };
 
@@ -522,6 +524,13 @@ function toggleShippingFields() {
 	} else {
 		//Different to shipping
 		$('#shippingID, #customerShippingName, #customerShippingAddress1, #customerShippingAddress2, #customerShippingAddress3, #customerShippingPostcode, #customerShippingCountry').parent().parent().hide('highlight');
+	}
+}
+
+
+function buildProforma() {
+	if ($('#orderFormMain').valid()) {
+		$('#orderFormMain').attr('action','proforma.php').attr('target','_blank');
 	}
 }
 
