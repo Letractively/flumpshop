@@ -6,8 +6,17 @@ $.validator.addMethod("unique", function(value,element,params) {
 
 $.validator.addMethod("checkOrderQuantity", function(value,element,params) {
 	//Flumpnet Custom Validation method - Checks that an order doesn't include more items then are available
+	if (value < 0) return false;
 	return !(value > window.orderItemStock[params]);
 }, $.validator.format("There is not enough stock for the selected quantity on row {0}."));
+
+$.validator.addMethod("positiveInt", function(value,element) {
+	return this.optional(element) || /^[0-9]*$/.test(value);
+}, "Please enter a positive, whole number.");
+
+$.validator.addMethod("positive", function(value,element) {
+	return this.optional(element) || value > 0;
+}, "Please enter a positive number.");
 
 jQuery.validator.addMethod("maxWords", function(value, element, params) { 
     return this.optional(element) || value.match(/\b\w+\b/g).length < params; 
