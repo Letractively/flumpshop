@@ -137,6 +137,7 @@ $_SESSION['config']->setNode("messages", "technicalHeader", "Technical Tips", "T
 //Error Messages
 $_SESSION['config']->setNode("messages", "ajax500", "An 500 Internal Server error occured when trying to load a remote endpoint.", "AJAX 500 Error");
 $_SESSION['config']->setNode("messages", "ajax404", "A remote endpoint was not found.", "AJAX 404 Error");
+$_SESSION['config']->setNode("messages", "ajax403", "The Flumpshop Web Service is not available. Please contact the system administrator.", "AJAX 403 Error");
 $_SESSION['config']->setNode("messages", "ajaxError", "An unknown error was encountered loading a remote endpoint.", "AJAX Error");
 $_SESSION['config']->setNode("messages", "adminDenied", "You do not have permission to perform that action.", "Admin Access Denied");
 $_SESSION['config']->setNode("messages", "maintenance", "<div class='ui-state-error'><span class='ui-icon ui-icon-alert'></span>We've shut down the site temporarily for scheduled maintenance. It should be back online in a few moments.</div>", "Site Disabled");
