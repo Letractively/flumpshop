@@ -345,13 +345,14 @@ $_SESSION['config']->setNode("logs", "errors", "errors.log", "Error Logfile");
 //Order Statuses
 $_SESSION['config']->addTree("orderstatus", "Order Statuses");
 
-$_SESSION['config']->setNode("orderstatus", "0", array("name" => "New", "active" => true), "Status ID #0");
-$_SESSION['config']->setNode("orderstatus", "1", array("name" => "Waiting for Stock", "active" => true), "Status ID #1");
-$_SESSION['config']->setNode("orderstatus", "2", array("name" => "Payment Rejected", "active" => false), "Status ID #2");
-$_SESSION['config']->setNode("orderstatus", "3", array("name" => "Dispatched", "active" => false), "Status ID #3");
-$_SESSION['config']->setNode("orderstatus", "4", array("name" => "Returning", "active" => true), "Status ID #4");
-$_SESSION['config']->setNode("orderstatus", "5", array("name" => "Returned", "active" => false), "Status ID #5");
-$_SESSION['config']->setNode("orderstatus", "6", array("name" => "Acknowledged", "active" => true), "Status ID #6");
+$_SESSION['config']->setNode('orderstatus', '0', array('name' => 'Proforma Invoice', 'actuve' => false), 'Status ID #0');
+$_SESSION['config']->setNode("orderstatus", '1', array('name' => 'New', "active" => true), "Status ID #1");
+$_SESSION['config']->setNode("orderstatus", "2", array("name" => "Waiting for Stock", "active" => true), "Status ID #2");
+$_SESSION['config']->setNode("orderstatus", "3", array("name" => "Payment Rejected", "active" => false), "Status ID #3");
+$_SESSION['config']->setNode("orderstatus", "4", array("name" => "Dispatched", "active" => false), "Status ID #4");
+$_SESSION['config']->setNode("orderstatus", "5", array("name" => "Returning", "active" => true), "Status ID #5");
+$_SESSION['config']->setNode("orderstatus", "6", array("name" => "Returned", "active" => false), "Status ID #6");
+$_SESSION['config']->setNode("orderstatus", "7", array("name" => "Acknowledged", "active" => true), "Status ID #7");
 
 //PayPal
 $_SESSION['config']->addTree("paypal","PayPal Settings");
