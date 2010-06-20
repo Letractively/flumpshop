@@ -28,10 +28,18 @@ ob_start();
 });
 
 function loadMsg(str) {
-  return "<center><img src='<?php echo $config->getNode('paths','root')."/images/loading.gif"; ?>' /><br />"+str+"</center>";
+  return "<center><img src='<?php echo $config->getNode('paths','root')."/images/loading.gif"; ?>' alt='<?php echo $config->getNode('messages','loading');?>' /><br />"+str+"</center>";
 }
 
 $.validator.setDefaults({errorClass: "ui-state-error"});<?php
 
-$config->setNode('cache','jsDefaultsScript',ob_get_flush());
+$output = ob_get_clean();
+
+//Compress
+$output = str_replace(array("\t","\n"),'',$output);
+$output = str_replace('  ',' ',$output);
+
+echo $output;
+
+$config->setNode('cache','jsDefaultsScript',$output);
 ?>
