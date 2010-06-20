@@ -51,5 +51,31 @@ class FormHelper {
 		}
 	}
 	
+	function orderStatusSelector($id) {
+		global $config;
+		if ($config->isNode('cache','orderStatusSelector')) {
+			return str_replace('[[name]]',$id,$config->getNode('cache','orderStatusSelector')); //Use cache if available
+		} else {
+			ob_start();
+			?>
+			<select name="<?php echo $id;?>" id="<?php echo $id;?>" class="ui-widget-content">
+			<option disabled="disabled">Select...</option>
+			<?php
+			$orderStats = array_keys($config->getNodes('orderstatus'));
+			foreach ($orderStats as $status) {
+				if (!is_int($status)) continue;
+				$array = $config->getNode('orderstatus',$status);
+				echo "<option value='".$status."'>".$array['name']."</option>";
+			}
+			?>
+			</select>
+			<?php
+			$return = ob_get_clean();
+			$cache = str_replace($id,'[[name]]',$return);
+			$config->setNode('cache','orderStatusSelector',$cache);
+			return $return;
+		}
+	}
+	
 }
 ?>

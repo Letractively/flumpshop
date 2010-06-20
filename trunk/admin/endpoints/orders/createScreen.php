@@ -3,6 +3,8 @@ $noPreValidate = true; //Disables the .validate() method being called in the hea
 $USR_REQUIREMENT = 'can_create_orders';
 require_once "../header.php";
 
+$formHelper = new FormHelper();
+
 ?><style>
 input:focus {
 	color: #FFF;
@@ -37,6 +39,10 @@ input:focus {
 					<tr>
 						<td colspan="4"><a href="javascript:" onclick="addCouponCode();">Add a voucher to this order...</a>
 					</tr>
+					<tr>
+						<td><label for="orderStatus">Order Status</label></td>
+						<td colspan="3"><?php echo $formHelper->orderStatusSelector("orderStatus");?></td>
+					</tr>
 				</table>
 			</fieldset>
 		</td>
@@ -70,7 +76,6 @@ input:focus {
 				<tr>
 					<td><label for="customerBillingCountry">Billing Address Country: </label></td>
 					<td><?php
-					$formHelper = new FormHelper();
 					echo $formHelper->countrySelector("customerBillingCountry",false);
 					?></td>
 				</tr>
