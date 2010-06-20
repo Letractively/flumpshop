@@ -31,13 +31,34 @@ function loadMsg(str) {
   return "<center><img src='<?php echo $config->getNode('paths','root')."/images/loading.gif"; ?>' alt='<?php echo $config->getNode('messages','loading');?>' /><br />"+str+"</center>";
 }
 
-$.validator.setDefaults({errorClass: "ui-state-error"});<?php
+$.validator.setDefaults({errorClass: "ui-state-error"});
+
+$.validator.addMethod("unique", function(value,element,params) {
+	//Flumpnet Custom Validation method - used for groups of selections to prevent the same item being selected twice
+	if (value == "") return true; //Empty Entry
+	if ($('.'+params+'[value="'+value+'"]:not("#'+element.id+'")').length == 0) return true; else return false;
+}, "You've already chosen this value.");
+
+$.validator.addMethod("checkOrderQuantity", function(value,element,params) {
+	//Flumpnet Custom Validation method - Checks that an order doesn't include more items then are available
+	if (value < 0) return false;
+	return !(value > window.orderItemStock[params]);
+}, $.validator.format("There is not enough stock for the selected quantity on row {0}."));
+
+$.validator.addMethod("positiveInt", function(value,element) {
+	return this.optional(element) || /^[0-9]*$/.test(value);
+}, "Please enter a positive, whole number.");
+
+$.validator.addMethod("positive", function(value,element) {
+	return this.optional(element) || value > 0;
+}, "Please enter a positive number.");<?php
 
 $output = ob_get_clean();
 
 //Compress
-$output = str_replace(array("\t","\n"),'',$output);
-$output = str_replace('  ',' ',$output);
+$output = preg_replace('/\/\/.*?\\n/','',$output); //Comments
+$output = str_replace(array("\t","\n"),'',$output); //Whitespace
+$output = str_replace('  ',' ',$output); //Double SPaces
 
 echo $output;
 
