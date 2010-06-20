@@ -1,6 +1,6 @@
 <?php
-$USR_REQUIREMENT = "can_create_orders";
 require_once "../../../../preload.php";
+if (!acpusr_validate('can_create_orders')) die($config->getNode('messages','adminDenied'));
 
 $term = str_replace("'","''",$_GET['term']);
 

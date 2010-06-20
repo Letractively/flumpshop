@@ -2,8 +2,8 @@
 $noPreValidate = true; //Disables the .validate() method being called in the header.
 $USR_REQUIREMENT = 'can_create_orders';
 require_once "../header.php";
-?>
-<style>
+
+?><style>
 input:focus {
 	color: #FFF;
 	font-weight:bolder
@@ -41,11 +41,11 @@ input:focus {
 			</fieldset>
 		</td>
 		<td><fieldset>
-			<legend>Billing Details [<a href='javascript:' onclick='loadBilling();'>Load Data...</a>]</legend>
+			<legend>Billing Details [<a href='javascript:' onclick='addressFinder("Billing");'>Load Data...</a>]</legend>
 			<table>
 				<tr>
-					<td><label for="customerID">Customer Number: </label></td>
-					<td><input type='text' class='ui-state-disabled' disabled="disabled" value="New" name="customerID" id="customerID" /></td>
+					<td><label for="billingID">Customer Number: </label></td>
+					<td><input type='text' class='ui-state-disabled' disabled="disabled" value="New" name="billingID" id="billingID" /></td>
 				</tr>
 				<tr>
 					<td><label for="customerBillingName">Customer Name: </label></td>
@@ -67,38 +67,51 @@ input:focus {
 					<td><label for="customerBillingPostcode">Billing Address Postcode: </label></td>
 					<td><input type="text" class="ui-state-active required" name="customerBillingPostcode" id="customerBillingPostcode" /></td>
 				</tr>
+				<tr>
+					<td><label for="customerBillingCountry">Billing Address Country: </label></td>
+					<td><?php
+					$formHelper = new FormHelper();
+					echo $formHelper->countrySelector("customerBillingCountry",false);
+					?></td>
+				</tr>
 			</table>
 			</fieldset>
 			<fieldset>
-			<legend>Shipping Details [<a href='javascript:' onclick='loadShipping();'>Load Data...</a>]</legend>
+			<legend>Shipping Details [<a href='javascript:' onclick='addressFinder("Shipping");'>Load Data...</a>]</legend>
 			<table>
 				<tr>
 					<td><label for="noShipping">Same as Billing: </label></td>
-					<td><input type="checkbox" name="noShipping" id="noShipping" style="width:auto" class="ui-state-default" onchange="toggleShippingFields();" /></td>
+					<td><input type="checkbox" name="noShipping" id="noShipping" style="width:auto" class="ui-state-default" onchange="toggleShippingFields();" checked="checked" /></td>
 				</tr>
-				<tr>
+				<tr class="ui-helper-hidden">
 					<td><label for="shippingID">Customer Number: </label></td>
-					<td><input type='text' class='ui-state-disabled' disabled="disabled" value="New" name="shippingID" id="shippingID" /></td>
+					<td><input type='text' class='ui-state-disabled ui-helper-hidden' disabled="disabled" value="New" name="shippingID" id="shippingID" /></td>
 				</tr>
-				<tr>
+				<tr class="ui-helper-hidden">
 					<td><label for="customerShippingName">Customer Name: </label></td>
-					<td><input type="text" class="ui-state-active required" name="customerShippingName" id="customerShippingName" /></td>
+					<td><input type="text" class="ui-state-active" name="customerShippingName" id="customerShippingName" /></td>
 				</tr>
-				<tr>
+				<tr class="ui-helper-hidden">
 					<td><label for="customerShippingAddress1">Shipping Address 1: </label></td>
-					<td><input type="text" class="ui-state-active required" name="customerShippingAddress1" id="customerShippingAddress1" /></td>
+					<td><input type="text" class="ui-state-active" name="customerShippingAddress1" id="customerShippingAddress1" /></td>
 				</tr>
-				<tr>
+				<tr class="ui-helper-hidden">
 					<td><label for="customerShippingAddress2">Shipping Address 2: </label></td>
 					<td><input type="text" class="ui-state-active" name="customerShippingAddress2" id="customerShippingAddress2" /></td>
 				</tr>
-				<tr>
+				<tr class="ui-helper-hidden">
 					<td><label for="customerShippingAddress3">Shipping Address 3: </label></td>
 					<td><input type="text" class="ui-state-active" name="customerShippingAddress3" id="customerShippingAddress3" /></td>
 				</tr>
-				<tr>
+				<tr class="ui-helper-hidden">
 					<td><label for="customerShippingPostcode">Shipping Address Postcode: </label></td>
-					<td><input type="text" class="ui-state-active required" name="customerShippingPostcode" id="customerShippingPostcode" /></td>
+					<td><input type="text" class="ui-state-active" name="customerShippingPostcode" id="customerShippingPostcode" /></td>
+				</tr>
+				<tr class="ui-helper-hidden">
+					<td><label for="customerShippingCountry">Shipping Address Country: </label></td>
+					<td><?php
+					echo $formHelper->countrySelector("customerShippingCountry",false);
+					?></td>
 				</tr>
 			</table>
 			</fieldset>
@@ -131,15 +144,29 @@ var validObject = {
 		customerBillingName: "Please enter the Customer Name in the billing address section.",
 		customerBillingAddress1: "Please fill in Billing Address 1.",
 		customerBillingPostcode: "Please fill in the Billing Address Postcode.",
+		customerBillingCountry: "Please fill in the Billing Address Country.",
 		customerShippingName: "Please enter the Customer Name in the shipping address section.",
 		customerShippingAddress1: "Please fill in Shipping Address 1.",
 		customerShippingPostcode: "Please fill in the Shipping Address Postcode.",
+		customerShippingCountry: "Please fill in the Shipping Address Country.",
 		item1ID:{
 			required:"Please enter at least one item in the order details section."
 		},
 	},
 	rules:{
-		item1ID:"required"
+		item1ID:"required",
+		customerShippingName: {
+			required: "#noShipping:not(#noShipping:checked)"
+		},
+		customerShippingAddress1: {
+			required: "#noShipping:not(#noShipping:checked)"
+		},
+		customerShippingPostcode: {
+			required: "#noShipping:not(#noShipping:checked)"
+		},
+		customerShippingCountry: {
+			required: "#noShipping:not(#noShipping:checked)"
+		}
 	}
 };
 
@@ -182,14 +209,15 @@ $(document).ready(function() {
 //Adds a row to the order items
 function newOrderRow() {
 	newID = window.nextOrderItemID;
-	
 	newRow = "<tr id='orderRow"+newID+"'>";
-	newRow = newRow+"<td><strong>"+newID+"</strong></td>";
-	newRow = newRow+"<td><input type='text' name='item"+newID+"ID' id='item"+newID+"ID' class='ui-state-default number itemIDField' onkeyup='idKeyPress(this.id);' style='width:100px' unique='itemIDField' maxlength='11' /></td>";
+	newRow = newRow+"<td>";
+	if (newID != 1) {newRow = newRow+"<a href='javascript:' onclick='hideRow("+newID+");' title='Delete Row'><span class='ui-icon ui-icon-close'></span></a>";}
+	newRow = newRow+"<strong>"+newID+"</strong></td>";
+	newRow = newRow+"<td><input type='text' name='item"+newID+"ID' id='item"+newID+"ID' class='ui-state-default positiveInt itemIDField' onkeyup='idKeyPress(this.id);' style='width:100px' unique='itemIDField' maxlength='11' /></td>";
 	
 	newRow = newRow+"<td><input type='text' disabled='disabled' class='orderItemName' id='item"+newID+"Name' style='width:300px;color:#000' /></td>";
 	
-	newRow = newRow+"<td><input type='text' name='item"+newID+"Qty' id='item"+newID+"Qty' class='ui-state-default number' onkeyup='quantityKeyPress(this.id);' onkeypress='document.lastQty = this.value;' style='width:65px' value='1' checkOrderQuantity='"+newID+"' required='$(\"item"+newID+"ID\").html() == \"\"' /></td>";
+	newRow = newRow+"<td><input type='text' name='item"+newID+"Qty' id='item"+newID+"Qty' class='ui-state-default positiveInt' onkeyup='quantityKeyPress(this.id);' onkeypress='document.lastQty = this.value;' style='width:65px' value='1' checkOrderQuantity='"+newID+"' required='$(\"item"+newID+"ID\").html() == \"\"' /></td>";
 	
 	newRow = newRow+"<td><input type='text' disabled='disabled' id='item"+newID+"Price' style='width:80px;' /></td>";
 	
@@ -203,7 +231,8 @@ function newOrderRow() {
 	window.nextOrderItemID++;
 }
 
-function idKeyPress(id,dialog) {	
+function idKeyPress(id,dialog) {
+	if (!dialog) dialog = false;
 	idNumber = parseInt(id.replace("item","").replace("ID",""));
 	
 	if (idNumber+1 == window.nextOrderItemID) {
@@ -274,12 +303,13 @@ function findItem(id) {
 	$('#dialog').dialog({width:600,height:400});
 	$('#dialog').load('../orders/ajax/findItem.php?id='+id, function(var1,var2,var3) { //Loaded Function
 		//Load Item if already entered
-		if ($('#item'+window.tempFindItemId+'ID').val() != "") {
+		if ($('#item'+window.tempFindItemId+'ID').val() != "" &&
+			$('#item'+window.tempFindItemId+'Name').val() != "Invalid Item. [Doesn't Exist]" &&
+			$('#item'+window.tempFindItemId+'Name').val() != "Invalid Item. [No longer available]") {
 			$('#findItemName').val($('#item'+window.tempFindItemId+'Name').val());
 			itemSummary($('#item'+window.tempFindItemId+'ID').val());
 		}
 		//Initialise the new form
-		$('#dialog form').validate();
 		$('#findItemName').autocomplete({
 			source:'../orders/ajax/itemSuggest.php',
 			select: function(event, ui) {
@@ -299,7 +329,7 @@ function findItem(id) {
 
 function itemSummary(id) {
 	$('#findItemDetails').html("<img src='../../../images/loading.gif' />Loading Content...")
-		.load("../orders/ajax/itemSummary.php?id="+id);
+		.load("../orders/ajax/itemSummary.php?id="+id, function() {$('#dialogItemData').validate()});
 }
 
 function updatePrices() {
@@ -317,7 +347,7 @@ function updatePrices() {
 	var shipping = 0;
 	for (n=1;n<window.nextOrderItemID;n++) {
 		//Calculate Total Delivery
-		if ($('#item'+n+'ID').val() != "") {
+		if ($('#item'+n+'ID').val() != "" && window.itemDeliveryCosts[n]) {
 			shipping += parseFloat(window.itemDeliveryCosts[n]*$('#item'+n+'Qty').val());
 		}
 	}
@@ -386,7 +416,7 @@ function addCouponCode() {
 	newID = window.nextCouponCodeID;
 	
 	newRow = "<tr id='couponRow"+newID+"'>";
-	newRow = newRow+"<td><strong>"+newID+"</strong></td>";
+	newRow = newRow+"<td><a href='javascript:' onclick='hideCoupon("+newID+");' title='Delete Row'><span class='ui-icon ui-icon-close'></span></a><strong>"+newID+"</strong></td>";
 	newRow = newRow+"<td><input type='text' name='coupon"+newID+"Key' id='coupon"+newID+"Key' class='ui-state-default couponKey' onkeyup='couponKeyPress(this.id);' style='width:100px' unique='couponKey' maxlength='32' /></td>";
 	
 	newRow = newRow+"<td><input type='text' disabled='disabled' class='couponDetails' id='coupon"+newID+"Action' style='width:300px;color:#000' /></td>";
@@ -421,6 +451,73 @@ function couponKeyPress(id) {
 		},
 		cache:true
 		});
+}
+
+function addressFinder(prefix) {
+	$('#dialog').html("<img src='../../../images/loading.gif' />Loading Content...").attr('title',prefix+' Address Finder');
+	$('#dialog').dialog({width:600,height:400});
+	$('#dialog').load('../orders/ajax/findAddress.php?pre='+prefix, function(var1,var2,var3) { //Loaded Function
+		//Load Address if already entered
+		if ($('#'+prefix.toLowerCase()+'ID').val() != "New") {
+			$('#findAddressTerm').val($('#'+prefix.toLowerCase()+'ID').val());
+			addressSummary($('#'+prefix.toLowerCase()+'ID').val());
+		}
+		//Initialise the new form
+		$('#dialog form').validate();
+		$('#findAddressTerm').autocomplete({
+			source:'../orders/ajax/addressSuggest.php',
+			select: function(event, ui) {
+				$('#findAddressTerm').val(ui.item[0]);
+				addressSummary(ui.item[0],prefix);
+				return false;
+			}
+		})
+		.data("autocomplete")._renderItem = function(ul, item) { //This is one of those WTF Lines
+			return $( "<li></li>")
+				.data("item.autocomplete", item)
+				.append("<a>"+item[1]+" "+item[3]+" "+item[4]+" "+item[6]+"</a>")
+				.appendTo(ul);
+		}
+	});
+}
+
+function hideRow(id) {
+	$('#item'+id+'Price').val("0.00");
+	$('#item'+id+'Qty').val("0.00");
+	$('#orderRow'+id).hide('highlight');
+	updatePrices();
+}
+
+function hideCoupon(id) {
+	$('#couponRow'+id).hide('highlight');
+	$('#coupon'+id+'Key').val("");
+	window.couponActions[id] = "__DELETED__";
+	updatePrices();
+}
+
+function addressSummary(id,prefix) {
+	$('#findAddressDetails').html("<img src='../../../images/loading.gif' />Loading Content...")
+		.load("../orders/ajax/addressSummary.php?id="+id+"&pre="+prefix, function() {$('#dialogAddressData').validate()});
+}
+
+function applyAddress(prefix) {
+	$('#'+prefix.toLowerCase()+'ID').val($('#findAddressTerm').val());
+	$('#customer'+prefix+'Name').val($('#dialog .fs-customer-name').html());
+	$('#customer'+prefix+'Address1').val($('#dialog .fs-customer-address1').html());
+	$('#customer'+prefix+'Address2').val($('#dialog .fs-customer-address2').html());
+	$('#customer'+prefix+'Address3').val($('#dialog .fs-customer-address3').html());
+	$('#customer'+prefix+'Postcode').val($('#dialog .fs-customer-postcode').html());
+	$('#customer'+prefix+'Country').val($('#dialog .fs-customer-countrycode').html());
+}
+
+function toggleShippingFields() {
+	if ($('#noShipping:checked').length == 0) {
+		//Same as shipping
+		$('#shippingID, #customerShippingName, #customerShippingAddress1, #customerShippingAddress2, #customerShippingAddress3, #customerShippingPostcode, #customerShippingCountry').parent().parent().show('highlight');
+	} else {
+		//Different to shipping
+		$('#shippingID, #customerShippingName, #customerShippingAddress1, #customerShippingAddress2, #customerShippingAddress3, #customerShippingPostcode, #customerShippingCountry').parent().parent().hide('highlight');
+	}
 }
 
 $('#dialog').css('display','block');

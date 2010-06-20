@@ -30,18 +30,19 @@ require_once "../../../../preload.php";
 if (!acpusr_validate('can_create_orders')) die($config->getNode('messages','adminDenied'));
 
 $item = new Item(intval($_GET['id']));
-?><button onclick="$('#dialog').dialog('close');$('#item'+window.tempFindItemId+'ID').val('<?php echo $item->getID()?>');idKeyPress('item'+window.tempFindItemId+'ID',true);$" class='ui-state-default'>Save and Close</button><br /><br /><?php
+?><form id="dialogItemData">
+<button onclick="if ($('#dialogItemData').valid()) {$('#dialog').dialog('close');$('#item'+window.tempFindItemId+'ID').val('<?php echo $item->getID()?>');idKeyPress('item'+window.tempFindItemId+'ID',true);}" class='ui-state-default'>Save and Close</button><br /><br /><?php
 
 echo "<strong>".$item->getName()."</strong>";
 echo "<p>".$item->getDesc()."</p>";
 echo "<p>Stock: ".$item->getStock()."</p>";
 //Price Field
-echo "<p>Price: &pound;<input type='text' name='morePrice' id='morePrice' value='".$item->getFriendlyPrice()."' class='ui-state-default' style='width:75px' />";
+echo "<p>Price: &pound;<input type='text' name='morePrice' id='morePrice' value='".$item->getFriendlyPrice()."' class='ui-state-default positive number required' style='width:75px' />";
 //Price Units Field
-echo " for <input type='text' name='morePriceUnits' id='morePriceUnits' value='1' class='ui-state-default' style='width:50px' /> unit(s)</p>";
+echo " for <input type='text' name='morePriceUnits' id='morePriceUnits' value='1' class='ui-state-default positiveInt required' style='width:50px' /> unit(s)</p>";
 //Delivery Field
-echo "<p>Delivery: &pound;<input type='text' name='moreDelivery' id='moreDelivery' value='".$item->getFriendlyDeliveryCost()."' class='ui-state-default' style='width:75px' />";
+echo "<p>Delivery: &pound;<input type='text' name='moreDelivery' id='moreDelivery' value='".$item->getFriendlyDeliveryCost()."' class='ui-state-default required positive number' style='width:75px' />";
 //Delivery Units Field
-echo " for <input type='text' name='moreDeliveryUnits' id='moreDeliveryUnits' value='1' class='ui-state-default' style='width:50px' /> unit(s)</p>";
+echo " for <input type='text' name='moreDeliveryUnits' id='moreDeliveryUnits' value='1' class='ui-state-default positiveInt required' style='width:50px' /> unit(s)</p>";
 echo $item->getDetails("FEATURES");
-?>
+?></form>

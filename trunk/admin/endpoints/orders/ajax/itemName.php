@@ -11,7 +11,7 @@ if ($item->itemActive == 0) {
 	echo json_encode(array("Invalid Item. [No longer available]",0,0));
 } elseif ($item->getID() == -1) { //-1 means the item doesn't exist
 	echo json_encode(array("Invalid Item. [Doesn't Exist]",0,0));
-} elseif ($_GET['dialog'] == false) {
+} elseif ($_GET['dialog'] == "false") {
 	echo json_encode(array(
 							html_entity_decode($item->getName()),
 							$item->getFriendlyPrice(),
