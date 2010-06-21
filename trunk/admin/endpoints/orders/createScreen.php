@@ -71,7 +71,7 @@ input:focus {
 				</tr>
 				<tr>
 					<td><label for="customerBillingPostcode">Billing Address Postcode: </label></td>
-					<td><input type="text" class="ui-state-active required" name="customerBillingPostcode" id="customerBillingPostcode" /></td>
+					<td><input type="text" class="ui-state-active required postcode" name="customerBillingPostcode" id="customerBillingPostcode" /></td>
 				</tr>
 				<tr>
 					<td><label for="customerBillingCountry">Billing Address Country: </label></td>
@@ -110,7 +110,7 @@ input:focus {
 				</tr>
 				<tr class="ui-helper-hidden">
 					<td><label for="customerShippingPostcode">Shipping Address Postcode: </label></td>
-					<td><input type="text" class="ui-state-active" name="customerShippingPostcode" id="customerShippingPostcode" /></td>
+					<td><input type="text" class="ui-state-active postcode" name="customerShippingPostcode" id="customerShippingPostcode" /></td>
 				</tr>
 				<tr class="ui-helper-hidden">
 					<td><label for="customerShippingCountry">Shipping Address Country: </label></td>
@@ -148,11 +148,17 @@ var validObject = {
 	messages:{
 		customerBillingName: "Please enter the Customer Name in the billing address section.",
 		customerBillingAddress1: "Please fill in Billing Address 1.",
-		customerBillingPostcode: "Please fill in the Billing Address Postcode.",
+		customerBillingPostcode: {
+			required: "Please fill in the Billing Address Postcode.",
+			postcode: "Please enter a valid Billing Address Postcode."
+		},
 		customerBillingCountry: "Please fill in the Billing Address Country.",
 		customerShippingName: "Please enter the Customer Name in the shipping address section.",
 		customerShippingAddress1: "Please fill in Shipping Address 1.",
-		customerShippingPostcode: "Please fill in the Shipping Address Postcode.",
+		customerShippingPostcode: {
+			required: "Please fill in the Shipping Address Postcode.",
+			postcode: "Please enter a valid Shipping Address Postcode."
+		},
 		customerShippingCountry: "Please fill in the Shipping Address Country.",
 		item1ID:{
 			required:"Please enter at least one item in the order details section."
@@ -168,10 +174,14 @@ var validObject = {
 			required: "#noShipping:not(#noShipping:checked)"
 		},
 		customerShippingPostcode: {
-			required: "#noShipping:not(#noShipping:checked)"
+			required: "#noShipping:not(#noShipping:checked)",
+			postcode:true
 		},
 		customerShippingCountry: {
 			required: "#noShipping:not(#noShipping:checked)"
+		},
+		customerBillingPostcode: {
+			postcode:true
 		},
 		orderStatus:"required"
 	}
@@ -394,6 +404,8 @@ function updatePrices() {
 				}
 			}
 		}
+		//No action to current basket
+		$('#coupon'+n+'PriceAdjust').val('£0.00');
 	}
 	//Finalize Coupons
 	$('#discounts').html(('&pound;'+totalAdjustment.toFixed(2)).replace("&pound;-","-&pound;"));

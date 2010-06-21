@@ -39,6 +39,12 @@ $.validator.addMethod("unique", function(value,element,params) {
 	if ($('.'+params+'[value="'+value+'"]:not("#'+element.id+'")').length == 0) return true; else return false;
 }, "You've already chosen this value.");
 
+$.validator.addMethod("postcode", function(value,element) {
+  return this.optional(element) || /\b([A-PR-UWYZ][A-HK-Y0-9][A-HJKSTUW0-9]?[ABEHMNPRVWXY0-9]?)
+*[0-9][ABD-HJLN-UW-Z]{2}\b/i.test(value) || /^([0-9]{5}-[0-9]{4})|([0-9]{5})$/.test(value);
+  }, "Please specify a valid postcode (all letters should be
+uppercase)");
+
 $.validator.addMethod("checkOrderQuantity", function(value,element,params) {
 	//Flumpnet Custom Validation method - Checks that an order doesn't include more items then are available
 	if (value < 0) return false;

@@ -48,6 +48,7 @@ $basket = new Cart($order->basket);
 
 $billingAddress = new Customer($order->billing);
 $shippingAddress = new Customer($order->shipping);
+syslog(1,print_r($billingAddress,true));
 
 $pdf = new FPDF("P","mm","A4"); //Portrait, mm measurement, A4 format
 

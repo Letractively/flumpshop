@@ -141,9 +141,12 @@ class Order {
 		$billingID = $billing->getID();
 		
 		$shippingID = $shipping->getID();
+		$billing->__destruct();
+		$shipping->__destruct();
 		unset($billing,$shipping); //Unset after due to potential alias
 		
-		$dbConn->query('INSERT INTO orders (basket,status,billing,shipping) VALUES ('.$basketID.','.$orderStatus.','.$billingID.','.$shippingID.')');
+		$dbConn->query('INSERT INTO orders (basket,status,billing,shipping) VALUES ('.$basketID.',"'.$orderStatus.'",'.$billingID.','.$shippingID.')');
+		syslog(1,$dbConn->lastError);
 		
 		return new Order($dbConn->insert_id());
 	}
