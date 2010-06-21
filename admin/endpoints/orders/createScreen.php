@@ -216,10 +216,14 @@ $(document).ready(function() {
 //Adds a row to the order items
 function newOrderRow() {
 	newID = window.nextOrderItemID;
-	newRow = "<tr id='orderRow"+newID+"'>";
+	
+	if (newID != 1) {
+		newDisplayID = parseInt($('#orderItemsTable tr:visible:last td strong').html())+1;
+	} else {newDisplayID = 1}
+	newRow = "<tr id='orderRow"+(newID)+"'>";
 	newRow = newRow+"<td>";
 	if (newID != 1) {newRow = newRow+"<a href='javascript:' onclick='hideRow("+newID+");' title='Delete Row'><span class='ui-icon ui-icon-close'></span></a>";}
-	newRow = newRow+"<strong>"+newID+"</strong></td>";
+	newRow = newRow+"<strong>"+newDisplayID+"</strong></td>";
 	newRow = newRow+"<td><input type='text' name='item"+newID+"ID' id='item"+newID+"ID' class='ui-state-default positiveInt itemIDField' onkeyup='idKeyPress(this.id);' style='width:100px' unique='itemIDField' maxlength='11' /></td>";
 	
 	newRow = newRow+"<td><input type='text' disabled='disabled' class='orderItemName' id='item"+newID+"Name' style='width:300px;color:#000' /></td>";
@@ -241,8 +245,7 @@ function newOrderRow() {
 function idKeyPress(id,dialog) {
 	if (!dialog) dialog = false;
 	idNumber = parseInt(id.replace("item","").replace("ID",""));
-	
-	if (idNumber+1 == window.nextOrderItemID) {
+	if (idNumber+1 == window.nextOrderItemID || $('#orderItemsTable tr:visible:last').attr('id') == 'orderRow'+idNumber) {
 		newOrderRow();
 	}
 	
@@ -284,7 +287,7 @@ function idKeyPress(id,dialog) {
 function quantityKeyPress(id) {
 	idNumber = parseInt(id.replace("item","").replace("Qty",""));
 	
-	if (idNumber+1 == window.nextOrderItemID) {
+	if (idNumber+1 == window.nextOrderItemID || $('#orderItemsTable tr:visible:last').attr('id') == 'orderRow'+idNumber) {
 		newOrderRow();
 	}
 	
