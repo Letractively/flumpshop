@@ -83,6 +83,7 @@ function commitCache() {
 					 }
 					break;
 				case "BASKET":
+				break;
 					//Easy, since this is an actual object
 					$cart = unserialize(base64_decode($dataCache['OBJ']));
 					if ($cart->import()) debug_message("Imported Cart #".$dataCache['ID']."."); else {
