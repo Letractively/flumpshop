@@ -9,7 +9,7 @@ if ($config->isNode('cache','navBar')) {
 	ob_start(); //For Cache
 	echo "<ul id='categories'>";
 	
-	$categories = $dbConn->query("SELECT id FROM `category` WHERE parent='0' AND enabled='1'");
+	$categories = $dbConn->query("SELECT id FROM `category` WHERE parent='0' AND enabled='1' ORDER BY weight,name ASC");
 	while ($category = $dbConn->fetch($categories)) {
 		$result = $dbConn->query("SELECT id FROM `category` WHERE parent='".$category['id']."' AND enabled='1' ORDER BY `name` ASC");
 		$cat = new Category($category['id'],'noparent'); //Don't need fullname/breadcrumb

@@ -14,7 +14,7 @@ if ($item->itemActive == 0) {
 } elseif ($_GET['dialog'] == "false") {
 	echo json_encode(array(
 							html_entity_decode($item->getName()),
-							$item->getFriendlyPrice(),
+							$item->getPrice(),
 							$item->getStock(),
 							$item->getDeliveryCost()
 							));

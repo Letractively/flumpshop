@@ -37,6 +37,10 @@ if (isset($_GET['msg'])) echo $_GET['msg'];
 		if (acpusr_validate("can_delete_categories")) {
 			?><li><a href="../categories/mothballed.php" onclick="loader('Please wait...','Loading Database');">View Archived Categories</a></li><?php
 		}
+		//Category Order
+		if (acpusr_validate('can_edit_pages')) {
+			?><li><a href="../categories/weights.php?sub=0" onclick="loader('Please wait...','Loading Data');">Set Category Order</a></li><?php
+		}
 		//Item Report
 		if (acpusr_validate("can_view_reports")) {
 			?><li><a href="../categories/report.php" onclick="loader('I\'m generating the category report as I speak. This can take a few minutes, depending on the size of the category database. Please Wait...','Generating Report');">View Category Report</a></li><?php

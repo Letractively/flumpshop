@@ -20,6 +20,7 @@ class Category {
 	var $description = "Details for this category are unavailable.";
 	var $breadcrumb = "<a href='javascript:void(0);'>Uncategorised</a>";
 	var $enabled = true;
+	var $weight = 0;
 	
 	function Category($id,$params = "") {
 		/**
@@ -54,6 +55,7 @@ class Category {
 			$this->name = $result['name'];
 			$this->description = $result['description'];
 			$this->parent = $result['parent'];
+			$this->weight = $result['weight'];
 			if (isset($result['enabled'])) $this->enabled = $result['enabled'];
 		}
 	}
@@ -93,6 +95,16 @@ class Category {
 		* @return The Category Name (string)
 		*/
 		return htmlentities($this->name);
+	}
+	
+	function getWeight() {
+		/**
+		* Returns the weight of the category
+		* @since 1.0
+		* @param No arguments.
+		* @return integer The weight of the category
+		*/
+		return $this->weight;
 	}
 	
 	function getFullName() {
