@@ -132,9 +132,7 @@ Please enter your username and password to continue...
 			<h3>Manage Sales</h3>
 			<div>
 				<a href='endpoints/switchboard/orders.php' onclick='loader("Loading Orders Menu...");' target="main">Manage Orders</a>
-				<a href='endpoints/orders/listOrders.php?filter=active' onclick='loader("Loading Content...");' target="main">Active</a>
-				<a href='endpoints/orders/listOrders.php?filter=closed' onclick='loader("Loading Content...");' target="main">Closed</a>
-				<a href='endpoints/orders/queryOrder.php' onclick='loader("Loading Content...");' target="main">Query</a>
+				<a href='endpoints/switchboard/offers.php' onclick='loader("Loading Offers Menu...");' target="main">Manage Offers</a>
 			</div>
 			<?php
 		}
@@ -270,15 +268,22 @@ Please enter your username and password to continue...
 			  </html><?php
 		}
 	} else {
-		?><html><head><title>Flumpshop | Admin CP</title></head>
-			<frameset cols="252px,*" framespacing="0" border="0" frameborder="0" frameborder="no" border="0">
-			<frame name="leftFrame" id="leftFrame" src="?frame=leftFrame" scrolling="yes" frameborder="0" marginwidth="0" marginheight="0" border="no" />
-			<frameset rows="60px,*" framespacing="0" border="0" frameborder="0" frameborder="no" border="0">
-				<frame src="?frame=header" name="header" id="header" scrolling="no" noresize="noresize" frameborder="0" marginwidth="10" marginheight="0" border="no" />
-				<frame src="?frame=main" name="main" id="main" scrolling="yes" frameborder="0" marginwidth="10" marginheight="10" border="no" />
-			</frameset>
-		  </frameset>
-		  </html><?php
+		//Frames not sent yet
+		if (!isset($_GET['loaded'])) {
+			//Load resources, particularly for TinyMCE
+			include 'loader.php';
+		} else {
+			//Ready to send frames
+			?><html><head><title>Flumpshop | Admin CP</title></head>
+				<frameset cols="252px,*" framespacing="0" border="0" frameborder="0" frameborder="no" border="0">
+				<frame name="leftFrame" id="leftFrame" src="?frame=leftFrame" scrolling="yes" frameborder="0" marginwidth="0" marginheight="0" border="no" />
+				<frameset rows="60px,*" framespacing="0" border="0" frameborder="0" frameborder="no" border="0">
+					<frame src="?frame=header" name="header" id="header" scrolling="no" noresize="noresize" frameborder="0" marginwidth="10" marginheight="0" border="no" />
+					<frame src="?frame=main" name="main" id="main" scrolling="yes" frameborder="0" marginwidth="10" marginheight="10" border="no" />
+				</frameset>
+			  </frameset>
+			  </html><?php
+		}
 	}
 }
 ?>
