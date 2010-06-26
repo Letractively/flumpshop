@@ -1,7 +1,7 @@
 <?php
 
 /**
-*  Provides global logic and storage for sitewite data
+*  Provides global logic and storage for sitewide data
 *
 *  This file is part of Flumpshop.
 *
@@ -19,10 +19,11 @@
 *  along with Flumpshop.  If not, see <http://www.gnu.org/licenses/>.
 *
 *
-*  @Name        : Config.class.php
-*  @Version     : 1.0
-*  @author		: Lloyd Wallis <lloyd@theflump.com>
-*  @copyright	: Copyright (c) 2009-2010, Lloyd Wallis
+*  @Name Config.class.php
+*  @Version 1.0
+*  @author Lloyd Wallis <lloyd@theflump.com>
+*  @copyright Copyright (c) 2009-2010, Lloyd Wallis
+*  @package	Flumpshop
 */
 
 

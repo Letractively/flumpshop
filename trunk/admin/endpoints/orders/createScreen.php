@@ -267,17 +267,13 @@ function idKeyPress(id,dialog) {
 		url:'../orders/ajax/itemName.php?id='+$('#'+id).val()+'&dialog='+dialog.toString(),
 		dataType:'json',
 		success:function(data) {
-			return true;
-			alert("1");
 			$('#item'+idNumber+'Name').val(data[0]).css('background','none');
 			
 			if (dialog) {
-				alert("2");
 				//Use prices from the dialog, not the Ajax Request
 				$('#item'+idNumber+'Price').val("£"+parseFloat($('#morePrice').val()).toFixed(2))
 					.css('background','none');
 				$('#item'+idNumber+'Qty').val($('#morePriceUnits').val());
-				alert("3");
 				window.prices[idNumber] = $('#morePrice').val()/$('#morePriceUnits').val();
 				window.orderItemStock[idNumber] = data[1];
 				window.itemDeliveryCosts[idNumber] = $('#moreDelivery').val()/$('#moreDeliveryUnits').val();
