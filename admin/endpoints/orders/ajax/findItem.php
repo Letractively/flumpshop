@@ -9,3 +9,4 @@ If you're trying to find a non-specific item, or you don't know the product numb
 <input type="text" class="ui-state-default" name="findItemName" id="findItemName" style="width:100%" />
 </form>
 <div id="findItemDetails" class="ui-state-highlight">When you choose an item, details will appear here.</div>
+<a href="javascript:" onclick="$('#dialog').dialog('destroy');">Cancel</a>

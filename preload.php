@@ -208,7 +208,6 @@ if ($_SETUP == false) {
 			$dbConn->query("UPDATE `sessions` SET active='".$dbConn->time()."' WHERE session_id='".session_id()."'");
 			$session = $dbConn->fetch($session);
 			$basket = new Cart($session['basket']);
-			$basket->restore();
 			$config->setNode('temp','crawler',false);
 		}
 	}

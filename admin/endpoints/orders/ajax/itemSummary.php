@@ -30,8 +30,8 @@ require_once "../../../../preload.php";
 if (!acpusr_validate('can_create_orders')) die($config->getNode('messages','adminDenied'));
 
 $item = new Item(intval($_GET['id']));
-?><form id="dialogItemData">
-<button onclick="if ($('#dialogItemData').valid()) {$('#dialog').dialog('close');$('#item'+window.tempFindItemId+'ID').val('<?php echo $item->getID()?>');idKeyPress('item'+window.tempFindItemId+'ID',true);}" class='ui-state-default'>Save and Close</button><br /><br /><?php
+?><form id="dialogItemData" action="javascript:" onsubmit="return false;">
+<button onclick="if ($('#dialogItemData').valid()) {$('#item'+window.tempFindItemId+'ID').val('<?php echo $item->getID()?>');idKeyPress('item'+window.tempFindItemId+'ID',true);$(this).html('Saving...');}" class='ui-state-default'>Save and Close</button><br /><br /><?php
 
 echo "<strong>".$item->getName()."</strong>";
 echo "<p>".$item->getDesc()."</p>";
