@@ -1,4 +1,7 @@
 <?php
+/*
+This form currently does not validate postcodes, as the validation method does not seem to work correctly.
+*/
 $noPreValidate = true; //Disables the .validate() method being called in the header.
 $USR_REQUIREMENT = 'can_create_orders';
 require_once "../header.php";
@@ -71,7 +74,7 @@ input:focus {
 				</tr>
 				<tr>
 					<td><label for="customerBillingPostcode">Billing Address Postcode: </label></td>
-					<td><input type="text" class="ui-state-active required postcode" name="customerBillingPostcode" id="customerBillingPostcode" /></td>
+					<td><input type="text" class="ui-state-active required" name="customerBillingPostcode" id="customerBillingPostcode" /></td>
 				</tr>
 				<tr>
 					<td><label for="customerBillingCountry">Billing Address Country: </label></td>
@@ -110,7 +113,7 @@ input:focus {
 				</tr>
 				<tr class="ui-helper-hidden">
 					<td><label for="customerShippingPostcode">Shipping Address Postcode: </label></td>
-					<td><input type="text" class="ui-state-active postcode" name="customerShippingPostcode" id="customerShippingPostcode" /></td>
+					<td><input type="text" class="ui-state-active" name="customerShippingPostcode" id="customerShippingPostcode" /></td>
 				</tr>
 				<tr class="ui-helper-hidden">
 					<td><label for="customerShippingCountry">Shipping Address Country: </label></td>
@@ -247,7 +250,7 @@ function newOrderRow() {
 	newRow = newRow+"</tr>";
 	
 	$('#orderItemsTable').append(newRow);
-	$('#orderRow'+newID).effect('highlight',{},3000);
+	$('#orderRow'+newID).effect('highlight',{},1000);
 	
 	window.nextOrderItemID++;
 }
@@ -264,28 +267,29 @@ function idKeyPress(id,dialog) {
 	//Find name
 	$('#item'+idNumber+'Name, #item'+idNumber+'Price').val('     Checking...').css('background','url("../../../images/loading.gif") no-repeat');
 	$.ajax({
-		url:'../orders/ajax/itemName.php?id='+$('#'+id).val()+'&dialog='+dialog.toString(),
+		url:'../orders/ajax/itemName.php?id='+$('#'+id).val()+'&dialog='+dialog.toString()+'&rowID='+idNumber,
 		dataType:'json',
 		success:function(data) {
-			$('#item'+idNumber+'Name').val(data[0]).css('background','none');
 			
 			if (dialog) {
+				$('#item'+data[2]+'Name').val(data[0]).css('background','none');
 				//Use prices from the dialog, not the Ajax Request
-				$('#item'+idNumber+'Price').val("£"+parseFloat($('#morePrice').val()).toFixed(2))
+				$('#item'+data[2]+'Price').val("£"+parseFloat($('#morePrice').val()).toFixed(2))
 					.css('background','none');
-				$('#item'+idNumber+'Qty').val($('#morePriceUnits').val());
-				window.prices[idNumber] = $('#morePrice').val()/$('#morePriceUnits').val();
-				window.orderItemStock[idNumber] = data[1];
-				window.itemDeliveryCosts[idNumber] = $('#moreDelivery').val()/$('#moreDeliveryUnits').val();
+				$('#item'+data[2]+'Qty').val($('#morePriceUnits').val());
+				window.prices[data[2]] = $('#morePrice').val()/$('#morePriceUnits').val();
+				window.orderItemStock[data[2]] = data[1];
+				window.itemDeliveryCosts[data[2]] = $('#moreDelivery').val()/$('#moreDeliveryUnits').val();
 				//This function was called by the dialog box
 				//The dialog is only hidden at the moment so data could be grabbed
 				$('#dialog').dialog('destroy');
 			} else {
+				$('#item'+data[4]+'Name').val(data[0]).css('background','none');
 				//Directly entered - use full Ajax data
-				$('#item'+idNumber+'Price').val("£"+(data[1]*$('#item'+idNumber+'Qty').val()).toFixed(2)).css('background','none');
-				window.prices[idNumber] = data[1];
-				window.orderItemStock[idNumber] = data[2];
-				window.itemDeliveryCosts[idNumber] = data[3];
+				$('#item'+data[4]+'Price').val("£"+(data[1]*$('#item'+data[4]+'Qty').val()).toFixed(2)).css('background','none');
+				window.prices[data[4]] = data[1];
+				window.orderItemStock[data[4]] = data[2];
+				window.itemDeliveryCosts[data[4]] = data[3];
 			}
 			updatePrices();
 		},
@@ -447,7 +451,7 @@ function addCouponCode() {
 	newRow = newRow+"</tr>";
 	
 	$('#otherDetailsTable').append(newRow);
-	$('#couponRow'+newID).effect('highlight',{},3000);
+	$('#couponRow'+newID).effect('highlight',{},1000);
 	
 	window.nextCouponCodeID++;
 }
@@ -510,7 +514,7 @@ function hideRow(id) {
 }
 
 function hideCoupon(id) {
-	$('#couponRow'+id).hide('highlight');
+	$('#couponRow'+id).hide('highlight',{},1000);
 	$('#coupon'+id+'Key').val("");
 	window.couponActions[id] = "__DELETED__";
 	updatePrices();
@@ -549,4 +553,16 @@ function buildProforma() {
 }
 
 $('#dialog').css('display','block');
+
+//Test Function - Creates a large number of order items
+function testlib_largeOrder() {
+	for (i=1;i<=300;i++) {
+		setTimeout("$('#item"+i+"ID').val("+i+");idKeyPress('item"+i+"ID');",100*i);
+	}
+}
+function testlib_largeQuantity() {
+	for (i=1;i<window.nextOrderItemID;i++) {
+		setTimeout("$('#item"+i+"Qty').val(200);quantityKeyPress('item"+i+"Qty');",5*i);
+	}
+}
 </script></body></html>

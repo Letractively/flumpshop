@@ -40,8 +40,7 @@ $.validator.addMethod("unique", function(value,element,params) {
 }, "You've already chosen this value.");
 
 $.validator.addMethod("postcode", function(value,element) {
-  return this.optional(element) || /\b([A-PR-UWYZ][A-HK-Y0-9][A-HJKSTUW0-9]?[ABEHMNPRVWXY0-9]?)
-*[0-9][ABD-HJLN-UW-Z]{2}\b/i.test(value) || /^([0-9]{5}-[0-9]{4})|([0-9]{5})$/.test(value);
+  return this.optional(element) || (/^([A-PR-UWYZ][A-HK-Y0-9][A-HJKSTUW0-9]?[ABEHMNPRVWXY0-9]?) ?[0-9][ABD-HJLN-UW-Z]{2}$/.test(value) || /^([0-9]{5}-[0-9]{4})|([0-9]{5})$/.test(value));
   }, "Please specify a valid postcode (all letters should be
 uppercase)");
 
@@ -52,7 +51,7 @@ $.validator.addMethod("checkOrderQuantity", function(value,element,params) {
 }, $.validator.format("There is not enough stock for the selected quantity on row {0}."));
 
 $.validator.addMethod("positiveInt", function(value,element) {
-	return this.optional(element) || /^[0-9]*$/.test(value);
+	return this.optional(element) || /^[0-9]*(\.00)?$/.test(value);
 }, "Please enter a positive, whole number.");
 
 $.validator.addMethod("positive", function(value,element) {

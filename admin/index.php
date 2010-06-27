@@ -269,7 +269,7 @@ Please enter your username and password to continue...
 		}
 	} else {
 		//Frames not sent yet
-		if (!isset($_GET['loaded'])) {
+		if (!isset($_SESSION['acpLoaded'])) {
 			//Load resources, particularly for TinyMCE
 			include 'loader.php';
 		} else {
