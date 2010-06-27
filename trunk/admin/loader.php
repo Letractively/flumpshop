@@ -66,7 +66,7 @@ function checkMCE() {
 	if (window.tinyMCE) {
 		//TinyMCE is now loaded. Continue.
 		$('#progressBar').progressbar('value',100);
-		window.location="./?loaded";
+		window.location="./";
 		
 	} else {
 		//TinyMCE isn't loaded yet. Try again in 100ms
@@ -78,4 +78,6 @@ function checkMCE() {
 	}
 }
 </script>
-</body></html>
+</body></html><?php
+if (!isset($_SESSION)) session_start(); $_SESSION['acpLoaded'] = true;
+?>
