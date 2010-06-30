@@ -1,13 +1,8 @@
 <?php
-/*
-* ====================================================================
-*  Name        : Keycode.class.php
-*  Description : Provides global logic for Keycodes used for various
-				 functionality
-*  Version     : 1.0
+
+/**
+*  Provides global logic and storage for keycodes
 *
-*  Copyright (c) 2010 Lloyd Wallis, lloyd@theflump.com
-*  
 *  This file is part of Flumpshop.
 *
 *  Flumpshop is free software: you can redistribute it and/or modify
@@ -22,7 +17,13 @@
 *
 *  You should have received a copy of the GNU General Public License
 *  along with Flumpshop.  If not, see <http://www.gnu.org/licenses/>.
-* ====================================================================
+*
+*
+*  @Name Keycode.class.php
+*  @Version 1.0
+*  @author Lloyd Wallis <lloyd@theflump.com>
+*  @copyright Copyright (c) 2009-2010, Lloyd Wallis
+*  @package Flumpshop
 */
 
 class Keycode {
@@ -38,7 +39,7 @@ class Keycode {
     * @param $id. Optional. The ID of the Keycode to load. If unset, creates and empty object. Default -1.
 	* @param $key. Optional. If specified, the object will attempt to load using the keycode instead of the ID.
 	* Use $id = -1 to specify search by key
-    * @return No return value.
+    * @return void No return value.
     */
 	function Keycode($id = -1, $key = NULL) {
 		$id = intval($id);
@@ -89,6 +90,26 @@ class Keycode {
 		}
 		
 	} //End Constructor
+	
+	/**
+    * Generates a new, empty keycode object with an ID
+    * @since 1.0
+	* @param string $keycode The keycode that users will use to invoke the code. Must be unique.
+    * @return bool|Keycode A new, blank keycode object on success, or false of the keycode already exists
+    */
+	function create($keycode) {
+		global $dbConn;
+		//Parse the keycode
+		$keycode = str_replace('"','""',$keycode);
+		
+		//Check for duplicates
+		$exists = $dbConn->rows($dbConn->query('SELECT id FROM `keys` WHERE `key`="'.$keycode.'" LIMIT 1'));
+		if ($exists !== 0) return false;
+		
+		//Doesn't exist, continue
+		$dbConn->query('INSERT INTO `keys` (`key`) VALUES ("'.$keycode.'")');
+		return new KeyCode($dbConn->insert_id());
+	}
 	
 	
 	/**

@@ -58,7 +58,7 @@ class FormHelper {
 		} else {
 			ob_start();
 			?>
-			<select name="<?php echo $id;?>" id="<?php echo $id;?>" class="ui-widget-content required">
+			<select name="<?php echo $id;?>" id="<?php echo $id;?>" class="ui-widget required">
 			<option disabled="disabled"></option>
 			<?php
 			$orderStats = array_keys($config->getNodes('orderstatus'));

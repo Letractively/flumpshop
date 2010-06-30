@@ -218,32 +218,22 @@ Please enter your username and password to continue...
 				<body>
 				<h1>Flumpshop v<?php echo $config->getNode('site','version');?></h1>
                 <h2>Admin CP</h2><?php
-				$notice = false;
 				//Check for possible security issues
 				if (file_exists("setup")) {
 					echo "<div class='ui-state-error'><span class='ui-icon ui-icon-alert'></span><strong>Security Issue</strong> - After initial installation, it is recommended that your rename or delete the /admin/setup folder in order to increase security.</div>";
-					$notice = true;
 				}
 				
 				//Check for Updates
 				if (!$latestVer = file_get_contents("http://flumpshop.googlecode.com/svn/updater/version.txt")) {
 					echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-extlink'></span><strong>Connection Failure</strong> - An error occured checking for updates.</div>";
-					$notice = true;
 				} elseif ($config->getNode('site','version') != $latestVer) {
 					echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-notice'></span><strong>Update Available</strong> - An update is available for installation. To install, click the Upgrade Wizard button above.</div>";
-					$notice = true;
 				}
 				
 				//Check for unread feedback
 				$result = $dbConn->query("SELECT * FROM `bugs` WHERE resolved = 0");
 				if ($dbConn->rows($result) != 0) {
 					echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-notice'></span><strong>New Feedback</strong> - Unread Feedback is available in Advanced->Feedback</div>";
-					$notice = true;
-				}
-				
-				if (!$notice) {
-					//Let's not do this any more :D
-					//echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-circle-check'></span>There is nothing that needs to be bought to your attention right now. Well done on creating a robust and secure installation.</div>";
 				}
 				?><div id='dialog'></div>
 				<h2>Getting Started Checklist</h2>
