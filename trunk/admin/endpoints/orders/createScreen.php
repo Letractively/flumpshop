@@ -288,7 +288,7 @@ function idKeyPress(id,dialog) {
 				//Directly entered - use full Ajax data
 				$('#item'+data[4]+'Price').val("£"+(data[1]*$('#item'+data[4]+'Qty').val()).toFixed(2)).css('background','none');
 				window.prices[data[4]] = data[1];
-				window.orderItemStock[data[4]] = data[2];
+				window.orderItemStock[data[4]] = parseInt(data[2]);
 				window.itemDeliveryCosts[data[4]] = data[3];
 			}
 			updatePrices();
@@ -362,7 +362,11 @@ function updatePrices() {
 	for (n=1;n<window.nextOrderItemID;n++) {
 		//Calculate Total Price
 		if ($('#item'+n+'Price').val() != "") {
-			total += parseFloat($('#item'+n+'Price').val().replace('£',''));
+			//Set the price to 0 if it is £NaN
+			if ($('#item'+n+'Price').val() == '£NaN') $('#item'+n+'Price').val('£0.00');
+			//Skip if the price is still being loaded
+			if (!$('#item'+n+'Price').val().match(/ *Checking/))
+				total += parseFloat($('#item'+n+'Price').val().replace('£',''));
 		}
 	}
 	$('#subTotal').html('&pound;'+(total.toFixed(2)));
@@ -557,12 +561,14 @@ $('#dialog').css('display','block');
 //Test Function - Creates a large number of order items
 function testlib_largeOrder() {
 	for (i=1;i<=300;i++) {
-		setTimeout("$('#item"+i+"ID').val("+i+");idKeyPress('item"+i+"ID');",100*i);
+		setTimeout("$('#item"+i+"ID').val("+i+");idKeyPress('item"+i+"ID');",5*i);
 	}
+	return "Executing Command...";
 }
 function testlib_largeQuantity() {
 	for (i=1;i<window.nextOrderItemID;i++) {
 		setTimeout("$('#item"+i+"Qty').val(200);quantityKeyPress('item"+i+"Qty');",5*i);
 	}
+	return "Executing Command...";
 }
 </script></body></html>
