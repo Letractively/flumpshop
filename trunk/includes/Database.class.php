@@ -350,7 +350,7 @@ class SQLite_Database extends Database {
 		$link = $this->linkid;
 		$result = sqlite_query($link,$str,SQLITE_ASSOC);
 		if (!$result) {
-			$caller = debug_backtrace(false);
+			$caller = debug_backtrace();
 			$this->lastError = sqlite_error_string(sqlite_last_error($link))." (Called by ".$caller[0]['file'].":".$caller[0]['line'].")";
 			trigger_error("Database Error: ".$this->lastError);
 			$this->xmlLog($this->lastError,true);

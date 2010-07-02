@@ -31,7 +31,7 @@ if (isset($_GET['msg'])) echo $_GET['msg'];
 		if (acpusr_validate('can_view_orders')) {
 			?>
 			<li><a href="../orders/queryOrder.php" onclick="loader('Please wait...','Loading Contant...');">Find order by ID</a></li>
-			<li></li>
+			<li>Find order by customer?</li>
 			<?php
 		}
 		?>
