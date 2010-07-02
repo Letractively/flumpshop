@@ -33,7 +33,7 @@ if (isset($_GET['orderid'])) {
 } else {
 	?><div class="ui-widget-header">Query Order</div>
     <form action="./queryOrder.php" method="get" onsubmit="if ($(this).valid()) {loader(loadMsg('Running Query...')); return true;} return false;" class="ui-widget-content">
-    	<p>Enter the ID number of a query below to display it.</p>
+    	<p>Enter the ID number of a order below to display it.</p>
     	<label for="orderid">Order ID #</label><input type="text" name="orderid" id="orderid" class="ui-state-default required number" />
         <input type="submit" class="ui-state-default" style="font-size: 12px; padding: .2em .4em;" />
     </form>

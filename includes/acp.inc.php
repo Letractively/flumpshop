@@ -74,7 +74,7 @@ if (isset($requires_tier2) && $requires_tier2 == true) {
 //Tier 2 login form
 function acpusr_tier2() {
 	global $config;
-	if ($_SERVER['HTTPS'] == "off") {
+	if (isset($_SERVER['HTTPS']) and $_SERVER['HTTPS'] == "off") {
 		$submitPrefix = $config->getNode('site','root');
 	} else {
 		$submitPrefix = $config->getNode('site','secureRoot');
