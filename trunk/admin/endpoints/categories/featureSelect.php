@@ -1,6 +1,8 @@
 <?php
 header("Cache-control: max-age:3600, must-revalidate, public");
 require_once "../../../preload.php";
+loadClass('Feature');
+
 if (!acpusr_validate()) {
 	header("HTTP/1.1 403 Forbidden");
 	die($config->getNode("messages","adminDenied"));

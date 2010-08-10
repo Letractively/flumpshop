@@ -1,8 +1,8 @@
 <?php
-define("PAGE_TYPE", "category");
-require_once dirname(__FILE__)."/../header.php";
-
-ob_start(); //Template Buffer
+define('PAGE_TYPE', 'category');
+require_once dirname(__FILE__).'/../preload.php';
+loadClass('Feature');
+loadClass('Paginator');
 
 if (isset($_GET['id'])) $cid = $_GET['id']; else $cid = 1; //Get Category ID
 if (isset($_GET['sort'])) $sort = strtolower(htmlentities($_GET['sort'],ENT_QUOTES)); else $sort = "name";
@@ -13,6 +13,10 @@ if (isset($_GET['order'])) $order = strtoupper(htmlentities($_GET['order'],ENT_Q
 //Get sort order (ascending/descending)
 $category = new Category($cid);
 $page_title = $category->getName();
+require_once dirname(__FILE__)."/../header.php";
+
+ob_start(); //Template Buffer
+
 echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->getBreadcrumb();
 ?><div id="page_text"><h3 id="page_title"><?php echo $category->getName();?></h3>
     <p><?php echo $category->getDescription();?></p><?php

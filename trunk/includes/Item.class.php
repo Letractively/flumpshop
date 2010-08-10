@@ -24,6 +24,10 @@ class Item {
 	//Constructor
 	function Item($id) {
 		str_replace("'","''",$id);
+		//By always removing zerofill, I can ensure that the there aren't multiple URLs to one page
+		while (strpos($id,'0') === 0) {
+			$id = substr($id,1);
+		}
 		global $dbConn, $config;
 		if ($id == -1 ) $this->setDefaults(); else {
 			$this->itemQuery = $dbConn->query("SELECT * FROM `products` WHERE id='$id' LIMIT 1");
@@ -341,6 +345,7 @@ class Item {
 		}
 		if ($type == "FEATURES") {
 			//Features (Experimental)
+			loadClass('Feature');
 			$reply = "<h4>".$config->getNode("messages","featuresName")."</h4><ul>";
 			foreach ($this->itemFeatures as $featureId => $featureValue) {
 				$feature = new Feature($featureId);

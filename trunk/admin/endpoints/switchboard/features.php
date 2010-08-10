@@ -1,5 +1,7 @@
 <?php
 require_once "../header.php";
+loadClass('Feature');
+
 ?><h1>Manage Features</h1>
 <p>This is the place to start when it comes to creating advanced product databases. Here, you can create <em>Features</em>, special information that applies to all products in a category, which provides a better way of organising them, and allows visitors to your website to find and understand information more easily.</p>
 <?php if (acpusr_validate("can_add_features")) echo '<a href="../features/createForm.php" style="color:#000;">Add Feature</a>';

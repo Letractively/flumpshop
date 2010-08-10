@@ -28,6 +28,7 @@
 
 class Cart {
 	var $items = array();
+	var $itemsLoaded = false;
 	var $total = 0;
 	var $delivery = 0;
 	var $id;
@@ -44,25 +45,21 @@ class Cart {
     */
 	function Cart($id = -1) {
 		global $dbConn;
-		if ($id == -1) {
+		if ($id === -1) {
 			//Initialise an new basket for this session
-			debug_message("Initializing Basket");
-			$query = $dbConn->query("INSERT INTO `basket` (locked,total,delivery) VALUES (0,0,0)");
-			if (!$query) init_err("The system was unable to generate session data correctly. Please try again later. The most likely cause for this issue is the basket database table not existing. dbConn: ".$dbConn->error());
+			$query = $dbConn->query('INSERT INTO `basket` (locked,total,delivery) VALUES (0,0,0)');
 			$this->id = $dbConn->insert_id();
-		} elseif ($id == 0) {
+		} elseif ($id === 0) {
 			//Search Crawler - Doesn't store
 			return;
 		} else {
 			//Load an existing basket for this session
-			debug_message("Loading Basket");
 			$this->id = intval($id);
 			//Load Basket Parameters
-			$query = $dbConn->query("SELECT total,delivery,locked FROM basket WHERE id=".$this->id." LIMIT 1");
+			$query = $dbConn->query('SELECT total,delivery,locked FROM basket WHERE id='.$this->id.' LIMIT 1');
 			
-			if ($dbConn->rows($query) == 0) {
+			if ($dbConn->rows($query) === 0) {
 				//The basket doesn't exist - Exit
-				init_err("Fatal Error: Basket ID ".$id." does not exist. This is most likely the result of someone deleting this data prematurely, or a cron misconfiguration. dbConn: ".$dbConn->error());
 				return;
 			} else {
 				//Set Basket Properties
@@ -72,13 +69,6 @@ class Cart {
 				$this->lock = $result['locked'];
 				unset($query,$result);
 			}
-			//Load list of items
-			$query = $dbConn->query("SELECT item_id,quantity FROM basket_items WHERE basket_id=".$this->id);
-			while ($result = $dbConn->fetch($query)) {
-				//Create each item
-				$this->items[$result['item_id']] = $result['quantity'];
-			}
-			unset($result,$query);
 		}
 	}
 	
@@ -114,6 +104,7 @@ class Cart {
 	* @return void No return value.
     */
 	function checkPrice() {
+		$this->loadItems();
 		$newPrice = 0;
 		$newDelivery = 0;
 		foreach (array_keys($this->items) as $item) {
@@ -125,6 +116,18 @@ class Cart {
 		$this->delivery = $newDelivery;
 	}
 	
+	function loadItems() {
+		if ($this->itemsLoaded) return;
+		global $dbConn;
+		//Load list of items
+		$query = $dbConn->query('SELECT item_id,quantity FROM basket_items WHERE basket_id='.$this->id);
+		while ($result = $dbConn->fetch($query)) {
+			//Create each item
+			$this->items[$result['item_id']] = $result['quantity'];
+		}
+		unset($result,$query);
+	}
+	
 	/**
     * Completely empties the Cart of all items
     * @since 1.0
@@ -134,15 +137,13 @@ class Cart {
 	function clear() {
 		if (!$this->lock) {
 			global $dbConn;
-			debug_message("Emptying Basket");
-			$dbConn->query("DELETE FROM `basket_items` WHERE basket_id=".$this->id);
+			debug_message('Emptying Basket');
+			$dbConn->query('DELETE FROM `basket_items` WHERE basket_id='.$this->id);
 			unset($this->items);
 			$this->items = array();
 			$this->total = 0;
 			$this->delivery = 0;
 			$this->change = true;
-		} else {
-			debug_message("Cannot Empty Basket - Basket Locked");
 		}
 	}
 	
@@ -155,9 +156,8 @@ class Cart {
     */
 	function lock() {
 		global $dbConn;
-		debug_message("Locking Basket");
 		$this->lock = 1;
-		$dbConn->query("UPDATE `basket` SET `locked`='1' WHERE id=".$this->id." LIMIT 1");
+		$dbConn->query('UPDATE `basket` SET `locked`=1 WHERE id='.$this->id.' LIMIT 1');
 	}
 	
 	/**
@@ -168,9 +168,8 @@ class Cart {
     */
 	function unlock() {
 		global $dbConn;
-		debug_message("Unlocking Basket");
 		$this->lock = 0;
-		$dbConn->query("UPDATE `basket` SET `locked`='0' WHERE id=".$this->id." LIMIT 1");
+		$dbConn->query('UPDATE `basket` SET `locked`=0 WHERE id='.$this->id.' LIMIT 1');
 	}
 	
 	/**
@@ -184,14 +183,15 @@ class Cart {
     */
 	function addItem($id,$stock=1,$price = -1) {
 		global $dbConn;
+		$this->loadItems();
 		$id = intval($id); //Remove zerofill
 		if (!isset($this->items[$id])) {
 			//None added yet, create new product entry
 			$this->items[$id] = $stock;
-			$dbConn->query("INSERT INTO `basket_items`
+			$dbConn->query('INSERT INTO `basket_items`
 							(item_id,basket_id,quantity,sold_at) VALUES
-							(".$id.",".$this->id.",".$stock.",
-							".$stock."*(SELECT price FROM `products` WHERE id=".$id."))");
+							('.$id.','.$this->id.','.$stock.',
+							'.$stock.'*(SELECT price FROM `products` WHERE id='.$id.'))');
 		} else {
 			//Increment current total
 			$this->changeQuantity($id,$this->items[$id]+$stock);
@@ -208,9 +208,10 @@ class Cart {
     */
 	function removeItem($id) {
 		global $dbConn;
+		$this->loadItems();
 		$id = intval($id); //Remove zerofill
 		if (isset($this->items[$id])) {
-			$dbConn->query("DELETE FROM `basket_items` WHERE item_id=$id AND basket_id=".$this->id." LIMIT 1");
+			$dbConn->query('DELETE FROM `basket_items` WHERE item_id='.$id.' AND basket_id='.$this->id.' LIMIT 1');
 			unset($this->items[$id]);
 			$this->change = true;
 		}
@@ -225,13 +226,14 @@ class Cart {
     */
 	function changeQuantity($itemid,$stock) {
 		global $dbConn;
+		$this->loadItems();
 		$stock = intval($stock); //Validation. No SQL Injection for You!
 		$itemid = intval($itemid); //Remove zerofill
 		$this->items[$itemid] = $stock;
-		$dbConn->query("UPDATE `basket_items`
-						SET quantity=$stock,
-						sold_at = ".$this->items[$itemid]."*(SELECT price FROM `products` WHERE id=".$itemid.")
-						WHERE item_id=$itemid AND basket_id=".$this->id." LIMIT 1");
+		$dbConn->query('UPDATE `basket_items`
+						SET quantity='.$stock.',
+						sold_at = '.$this->items[$itemid].'*(SELECT price FROM `products` WHERE id='.$itemid.')
+						WHERE item_id='.$itemid.' AND basket_id='.$this->id.' LIMIT 1');
 		$this->change = true;
 	}
 	
@@ -242,6 +244,7 @@ class Cart {
     * @return int|bool An integer representing the quantity of the item, or false if the item has not been added
     */
 	function getQuantity($itemID) {
+		$this->loadItems();
 		return $this->items[$itemID];
 	}
 	
@@ -272,11 +275,12 @@ class Cart {
     * @return string A HTML list of items.
     */
 	function listItems($mode = "BASKET") {
+		$this->loadItems();
 		global $config;
 		$mode = strtoupper($mode);
-		if ($mode == "BASKET") {
-			$reply = $this->getItems()." Item(s) in Basket.&nbsp;";
-			$reply .= "<input type='button' class='ui-state-default' style='cursor: pointer;' onclick='emptyBasket();' value='Empty' />";
+		if ($mode === 'BASKET') {
+			$reply = $this->getItems().' Item(s) in Basket.&nbsp;';
+			$reply .= '<input type="button" class="ui-state-default" style="cursor: pointer;" onclick="emptyBasket();" value="Empty" />';
 			$reply .= "<table style='width:100%' id='basketItemsTable'><tr class='ui-widget-header'><th>Item</th><th>Price</th><th>Quantity</th></tr>";
 			$items = array_keys($this->items);
 			foreach ($items as $id) {
@@ -289,7 +293,7 @@ class Cart {
 			$reply .= "<tr><td>VAT @".$config->getNode('site','vat')."%: </td><td>&pound;".$this->getFriendlyVAT()."</td></tr>";
 			$reply .= "<tr><td>Shipping: </td><td>&pound;".$this->getFriendlyDelivery()."</td></tr>";
 			$reply .= "<tr class='ui-state-highlight'><td>Total: </td><td>&pound;".$this->getFriendlyTotal(true,true)."</td></tr></table>";
-		} elseif ($mode == "ORDER") {
+		} elseif ($mode === "ORDER") {
 			$reply = "";
 			$items = array_keys($this->items);
 			foreach ($items as $id) {

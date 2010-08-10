@@ -1,6 +1,8 @@
 <?php
 define("PAGE_TYPE","techhelp");
 require_once dirname(__FILE__)."/preload.php";
+loadClass('Techhelp');
+
 if (isset($_GET['id'])) {
 	$post = new Techhelp($_GET['id']);
 	$page_title = $post->getTitle();

@@ -23,6 +23,7 @@ if ($config->getNode('homePage','latestNews') and $config->getNode('homePage','t
 }
 if (isset($_GET['msg'])) echo $_GET['msg'];
 ?>
+<p>New Feature: It is now potentially possible to use technologomy to gain a greater degree of control over the home page. Choose Modify Home Page Layout for more.</p>
 <div class='ui-widget-header'>I want to...</div>
 <div class='ui-widget-content'>
 	<ul><?php
@@ -46,6 +47,7 @@ if (isset($_GET['msg'])) echo $_GET['msg'];
 		<li><a href="../pages/edit.php?pageid=privacyPolicy" onclick="loader('Please wait...','Loading Content...');">Edit the Privacy Policy</a></li>
 		<li><a href="../pages/edit.php?pageid=disclaimer" onclick="loader('Please wait...','Loading Content...');">Edit the Disclaimer</a></li>
 		<li><a href="../pages/edit.php?pageid=termsConditions" onclick="loader('Please wait...','Loading Content...');">Edit the Terms and Conditions</a></li>
+		<li><a href="../pages/home.php" onclick="loader('Please Wait...','This may take a few moments. This feature us currently experimental');">Edit the Home Page layout</a></li>
 		<?php
 	}
 	?>

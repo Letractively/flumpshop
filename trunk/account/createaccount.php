@@ -2,6 +2,7 @@
 $page_title = "Sign Up";
 define("PAGE_TYPE", "createAccount");
 require_once dirname(__FILE__)."/../header.php";
+loadClass('Mail');
 
 ob_start();
 

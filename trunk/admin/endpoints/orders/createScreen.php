@@ -6,6 +6,8 @@ $noPreValidate = true; //Disables the .validate() method being called in the hea
 $USR_REQUIREMENT = 'can_create_orders';
 require_once "../header.php";
 
+
+loadClass('FormHelper');
 $formHelper = new FormHelper();
 
 ?><style>

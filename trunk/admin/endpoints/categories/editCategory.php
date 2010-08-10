@@ -2,6 +2,8 @@
 $USR_REQUIREMENT = "can_edit_categories";
 require_once dirname(__FILE__)."/../header.php";
 
+loadClass('Feature');
+
 $category = new Category(intval($_GET['id']));
 ?>
 <script type="text/javascript" src="../../tiny_mce/jquery.tinymce.js"></script>

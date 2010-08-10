@@ -2,6 +2,8 @@
 $USR_REQUIREMENT = "can_add_products";
 
 require_once dirname(__FILE__)."/../header.php";
+loadClass('Feature');
+
 $name = htmlentities($_POST['name'],ENT_QUOTES);
 $description = nl2br(htmlentities($_POST['description'],ENT_QUOTES));
 $price = str_replace("'","\'",$_POST['price']);
