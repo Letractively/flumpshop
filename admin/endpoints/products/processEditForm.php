@@ -2,6 +2,8 @@
 $USR_REQUIREMENT = "can_edit_products";
 
 require_once dirname(__FILE__)."/../header.php";
+loadClass('Feature');
+
 $id = intval($_POST['id']);
 $sku = htmlentities($_POST['sku'],ENT_QUOTES);
 $name = htmlentities($_POST['name'],ENT_QUOTES);

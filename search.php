@@ -1,6 +1,8 @@
 <?php
 define("PAGE_TYPE","search");
 require_once "preload.php";
+loadClass('Paginator');
+
 $page_title = $config->getNode("messages","searchHeader");
 require_once dirname(__FILE__)."/header.php";
 

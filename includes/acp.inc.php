@@ -1,5 +1,4 @@
 <?php
-
 /**
 *  Used to validate a user's access to the Administrative CP.
 *

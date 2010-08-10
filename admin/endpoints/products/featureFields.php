@@ -1,5 +1,6 @@
 <?php
 require_once "../../../preload.php";
+loadClass('Feature');
 
 $id = intval($_GET['id']);
 if ($id == 0) {

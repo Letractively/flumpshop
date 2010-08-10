@@ -1,6 +1,7 @@
 <?php
 $USR_REQUIREMENT = "can_edit_products";
 require_once dirname(__FILE__)."/../header.php";
+loadClass('Paginator');
 
 if (isset($_GET['filter'])) $criteria = " AND name LIKE '%".$_GET['filter']."%'"; else $criteria = "";
 

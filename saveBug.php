@@ -1,5 +1,6 @@
 <?php
 require_once dirname(__FILE__)."/preload.php";
+loadClass('Mail');
 
 if (!isset($_POST['bugHeader']) or !isset($_POST['body'])) die();
 

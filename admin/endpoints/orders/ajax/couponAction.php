@@ -1,5 +1,7 @@
 <?php
 require_once "../../../../preload.php";
+loadClass('Keycode');
+
 acpusr_validate() or die($config->getNode('messages','adminDenied'));
 
 header("Cache-control: max-age=3600, must-revalidate, public");
