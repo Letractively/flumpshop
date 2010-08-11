@@ -1,6 +1,6 @@
 <?php
 $_SUBPAGE = false;
-define("PAGE_TYPE","index");
+define('PAGE_TYPE','index');
 require_once 'header.php';
 loadClass('Techhelp');
 

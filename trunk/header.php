@@ -1,6 +1,6 @@
 <?php
 require_once dirname(__FILE__).'/preload.php';
-echo '<!--Page Generated in '.(microtime_float()-$time_start).' Seconds-->';
+echo '<!--Preload Executed in '.(microtime_float()-$time_start).' Seconds-->';
 if (!isset($page_title)) $page_title = "Welcome";
 if (!isset($_SUBPAGE)) $_SUBPAGE = true;
 

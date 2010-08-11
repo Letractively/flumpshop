@@ -32,10 +32,9 @@ function getLinksFromPage($url) {
 		foreach ($blacklist as $black) {
 			if (strpos($match[2],$black) !== false) {
 				$out = true;
-				continue;
 			}
 		}
-		if ($out) continue;
+		if ($out === true) continue;
 		//Calculate what the return URL would be
 		if (strpos($match[2],$config->getNode('paths','root')) !== false) {
 			//URL was already absolute
