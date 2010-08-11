@@ -27,12 +27,12 @@ function init_err($msg) {
 }
 require_once(dirname(__FILE__).'/includes/Config.class.php');
 require_once(dirname(__FILE__).'/includes/vars.inc.php');
-
+echo '<!--Core Objs Executed in '.(microtime_float()-$time_start).' Seconds-->';
 if (isset($config)) {
 	if($config->getNode('logs','errors')) $errLog = fopen($config->getNode('paths','logDir').'/errors.log','a+');
 	if($config->getNode('server','debug')) $debugLog = fopen($config->getNode('paths','logDir').'/debug.log','a+');
 }
-
+echo '<!--LogsLoaded in '.(microtime_float()-$time_start).' Seconds-->';
 function sys_error($level,$msg,$file,$line) {
 	global $errLog, $_PRINTDATA, $ajaxProvider;
 	if (!stristr($msg,'Unable to load dynamic library')) {
@@ -50,15 +50,14 @@ function debug_message($msg,$check = false) {
 
 if (!isset($_SESSION)) {
 	session_start();
-	debug_message('Session Initialized');
 }
-
+echo '<!--SessionStart Executed in '.(microtime_float()-$time_start).' Seconds-->';
 //Maintenance Page
 if ($_SETUP == false && $config->getNode('site','enabled') != true && !strstr($_SERVER['REQUEST_URI'],'/admin/') && !strstr($_SERVER['REQUEST_URI'],'/acp2/') && !isset($maintPage)) {
 	header('Location: '.$config->getNode('paths','root').'/errors/maintenance.php');
 	die();
 }
-
+echo '<!--MaintCheck Executed in '.(microtime_float()-$time_start).' Seconds-->';
 //Load Classes
 require_once(dirname(__FILE__).'/includes/Item.class.php');
 require_once(dirname(__FILE__).'/includes/Cart.class.php');
@@ -73,7 +72,7 @@ require_once(dirname(__FILE__).'/includes/json_encode.inc.php');
 require_once(dirname(__FILE__).'/includes/file_put_contents.inc.php');
 require_once(dirname(__FILE__).'/includes/file_get_contents.inc.php');
 $stats = new Stats();
-
+echo '<!--ResLoad Executed in '.(microtime_float()-$time_start).' Seconds-->';
 function loadClass($class_name) {
 	require_once dirname(__FILE__).'/includes/'.$class_name.'.class.php';
 }
@@ -99,11 +98,10 @@ if ($_SETUP === false) {
 	//Connect to Database
 	$dbConn = db_factory();
 	
-	$session = $dbConn->query('SELECT basket FROM `sessions` WHERE session_id="'.session_id().'" LIMIT 1');
+	$session = $dbConn->query('SELECT basket FROM `sessions` WHERE session_id="'.session_id.'" LIMIT 1');
 	if ($session === false && $_PRINTDATA) {
 		trigger_error($dbConn->error());
 	}
-	
 	if ($dbConn->rows($session) === 0) {
 		//Build Session
 		//Web Crawler Exception
@@ -118,12 +116,11 @@ if ($_SETUP === false) {
 		if (!isset($_SERVER['REMOTE_ADDR'])) $ip = '127.0.0.1'; else $ip = $_SERVER['REMOTE_ADDR'];
 		$dbConn->query('INSERT INTO `sessions` (session_id,basket,ip_addr) VALUES ("'.session_id().'","'.$basket->getID().'",INET_ATON("'.$ip.'"))');
 	} else {
-		if (array_search($_SERVER['HTTP_USER_AGENT'],explode($config->getNode('server','crawlerAgents'),"|"))) {
+		if (array_search($_SERVER['HTTP_USER_AGENT'],explode($config->getNode('server','crawlerAgents'),'|'))) {
 			$basket = new Cart(0);
 			$basket->lock();
 			$config->setNode('temp','crawler',true);
 		} else {
-			$dbConn->query('UPDATE `sessions` SET active=NOW() WHERE session_id="'.session_id().'"');
 			$session = $dbConn->fetch($session);
 			$basket = new Cart($session['basket']);
 			$config->setNode('temp','crawler',false);
