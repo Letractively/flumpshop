@@ -6,6 +6,11 @@ $requires_tier2 = true;
 //Record if any failed to generate keywords
 $failer = false;
 require_once dirname(__FILE__).'/../header.php';
+//Clear if set
+if (isset($_GET['CLEAR'])) {
+	$dbConn->query('UPDATE category SET keywords=NULL');
+	$dbConn->query('UPDATE products SET keywords=NULL');
+}
 //Load the autokeyword generator
 loadclass('autokeyword');
 echo '<h1>Automatic Keyword Generation Results</h1>';
@@ -83,4 +88,5 @@ if ($dbConn->rows($result) == 0) {
 if ($failer) {
 	echo '<br /><br /><a name="failerhelp"></a><div class="ui-state-highlight"><span class="ui-icon ui-icon-info"></span>One or more objects could not have keywords generated as the description is not detailed enough. Please improve the description for these, as it will both allow the system to generate keywords, and improve the quality of the content on your site.<br /><br />It is a good rule of thumb that if I can\'t generate keywords, then the description is not detailed enough.</div>';
 }
-?></body></html>
+
+?><a href="updateKeywords.php?CLEAR">Clear All Keywords and Regenerate</a></body></html>
