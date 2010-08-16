@@ -1,14 +1,22 @@
 <?php
 require_once dirname(__FILE__).'/preload.php';
-echo '<!--Preload Executed in '.(microtime_float()-$time_start).' Seconds-->';
+
 if (!isset($page_title)) $page_title = "Welcome";
 if (!isset($_SUBPAGE)) $_SUBPAGE = true;
 
 // Create content variables
 //Meta Tags
 $meta_tags = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
-$meta_tags .= "<meta name='keywords' content='".$config->getNode('messages','keywords')."' />";
-$meta_tags .= "<meta name='description' content='".$config->getNode('messages','tagline')."' />";
+if (!isset($_KEYWORDS)) {
+	$meta_tags .= "<meta name='keywords' content='".$config->getNode('messages','keywords')."' />";
+} else {
+	$meta_tags .= "<meta name='keywords' content='".$_KEYWORDS."' />";
+}
+if (!isset($_DESCRIPTION)) {
+	$meta_tags .= "<meta name='description' content='".$config->getNode('messages','tagline')."' />";
+} else {
+	$meta_tags .= "<meta name='description' content='".$_DESCRIPTION."' />";
+}
 //Title
 $title = $page_title;
 $title .= " | ";
@@ -86,5 +94,4 @@ if (file_exists($config->getNode("paths","offlineDir")."/themes/core/".$config->
 }
 //Unset some (not all, user may include them later)
 unset($meta_tags,$title,$css_links,$js_links,$plugin_includes);
-echo '<!--HEAD Generated in '.(microtime_float()-$time_start).' Seconds-->';
 ?>

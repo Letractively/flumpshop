@@ -74,6 +74,7 @@ CREATE TABLE `category` (
   `parent` int(11) NOT NULL DEFAULT '0',
   `enabled` tinyint(1) NOT NULL DEFAULT '1',
   `weight` tinyint(2) NOT NULL DEFAULT '0',
+  `keywords` TEXT NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `parent` (`parent`)
 );
@@ -232,6 +233,7 @@ CREATE TABLE `products` (
   `active` TINYINT(1) DEFAULT 1,
   `SKU` VARCHAR(25) DEFAULT NULL,
   `cost` DECIMAL(9,2) DEFAULT NULL,
+  `keywords` TEXT NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 

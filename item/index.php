@@ -2,6 +2,10 @@
 $item = new Item($_GET['id']);
 $page_title = $item->getName();
 define("PAGE_TYPE","item");
+//Meta
+$_KEYWORDS = $item->getKeywords();
+$_DESCRIPTION = preg_split('/(\.)|(\\n)|<\/p>/',$item->getDesc(),2);
+$_DESCRIPTION = str_replace('\'','',strip_tags($_DESCRIPTION[0]));
 require_once dirname(__FILE__)."/../header.php";
 
 ob_start(); //Template Buffer
