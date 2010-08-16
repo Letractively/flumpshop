@@ -41,7 +41,6 @@ if ($config->getNode("site","templateMode") == "core" and
 } else {
 	//Legacy Template
 	?></div><!--End Content Container--><?php require_once dirname(__FILE__)."/preload.php";
-	echo "<!--Page Generated in ".(microtime_float()-$time_start)." Seconds-->";
 	
 	/*PLUGINS*/
 	//Each plugin that has /includes/footer.inc.php will have an option displayed here

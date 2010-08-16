@@ -20,6 +20,7 @@ class Item {
 	var $itemActive = 1;
 	var $change = false;
 	var $itemFeatures = array();
+	var $keywords;
 	
 	//Constructor
 	function Item($id) {
@@ -49,6 +50,7 @@ class Item {
 					$this->itemCost = $this->itemResult['cost'];
 					$this->itemStock = $this->itemResult['stock'];
 					$this->itemDesc = str_replace("\\","",$this->itemResult['description']);
+					$this->keywords = $this->itemResult['keywords'];
 					//Categories
 					$result = $dbConn->query("SELECT catid FROM `item_category` WHERE itemid='".$id."'");
 					while ($row = $dbConn->fetch($result)) {
@@ -131,9 +133,9 @@ class Item {
 	function import() {
 		global $dbConn;
 		if ($dbConn->rows($dbConn->query("SELECT id FROM `products` WHERE id=".$this->getID()." LIMIT 1"))) {
-			$query = "UPDATE `products` SET name='$this->itemName', price='$this->itemPrice', stock='$this->itemPrice', description='$this->itemDesc', reducedPrice='$this->itemReducedPrice', reducedValidFrom='$this->itemReductionStart', reducedExpiry='$this->itemReductionEnd', weight='$this->itemWeight', active='$this->itemActive', sku='$this->itemSKU', cost='$this->itemCost' WHERE id=".$this->getID()." LIMIT 1";
+			$query = "UPDATE `products` SET name='$this->itemName', price='$this->itemPrice', stock='$this->itemPrice', description='$this->itemDesc', reducedPrice='$this->itemReducedPrice', reducedValidFrom='$this->itemReductionStart', reducedExpiry='$this->itemReductionEnd', weight='$this->itemWeight', active='$this->itemActive', sku='$this->itemSKU', cost='$this->itemCost', keywords='$this->keywords' WHERE id=".$this->getID()." LIMIT 1";
 		} else {
-			$query = "INSERT INTO `products` (id,name,price,stock,description,reducedPrice,reducedValidFrom,reducedExpiry,weight,active,sku,cost) VALUES ($this->itemID,'$this->itemName','$this->itemPrice','$this->itemStock','$this->itemDesc','$this->itemReducedPrice','$this->itemReductionStart','$this->itemReductionEnd','$this->itemWeight','$this->itemActive','$this->itemSKU',".$this->getCost().")";
+			$query = "INSERT INTO `products` (id,name,price,stock,description,reducedPrice,reducedValidFrom,reducedExpiry,weight,active,sku,cost,keywords) VALUES ($this->itemID,'$this->itemName','$this->itemPrice','$this->itemStock','$this->itemDesc','$this->itemReducedPrice','$this->itemReductionStart','$this->itemReductionEnd','$this->itemWeight','$this->itemActive','$this->itemSKU',".$this->getCost().",'$this->keywords')";
 		}
 		//Don't update categories here, as the import does item_categories seperately
 		return $dbConn->query($query);
@@ -479,6 +481,15 @@ class Item {
 		//Index: The index of the old category to update in the categories array (-1 = new)
 		if ($index == -1) $this->itemCategory[] = $id; else $this->itemCategory[$index] = $id;
 		$this->change = true;
+	}
+	
+	function setKeywords($keywords) {
+		$this->keywords = str_replace("'","''",$keywords);
+		$this->change = true;
+	}
+	
+	function getKeywords() {
+		return $this->keywords;
 	}
 }
 ?>

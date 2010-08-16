@@ -12,7 +12,11 @@ if (isset($_GET['sortType'])) $sortType = strtoupper(htmlentities($_GET['sortTyp
 if (isset($_GET['order'])) $order = strtoupper(htmlentities($_GET['order'],ENT_QUOTES)); else $order = "ASC";
 //Get sort order (ascending/descending)
 $category = new Category($cid);
+//Meta
 $page_title = $category->getName();
+$_KEYWORDS = $category->getKeywords();
+$_DESCRIPTION = preg_split('/(\.)|(\\n)|<\/p>/',$category->getDescription(),2);
+$_DESCRIPTION = str_replace('\'','',strip_tags($_DESCRIPTION[0]));
 require_once dirname(__FILE__)."/../header.php";
 
 ob_start(); //Template Buffer

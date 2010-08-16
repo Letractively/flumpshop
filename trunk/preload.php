@@ -1,16 +1,8 @@
 <?php
 //Some headers sent later & gzip compression
 ob_start('ob_gzhandler');
-//Timer
-function microtime_float()
-{
-    list($usec, $sec) = explode(' ', microtime());
-    return ((float)$usec + (float)$sec);
-}
-
 header('Content-Type: text/html;charset=UTF-8');
 
-$time_start = microtime_float();
 ini_set('date.timezone','Europe/London');
 
 if (isset($_SERVER['REQUEST_URI']) && stristr($_SERVER['REQUEST_URI'],'admin/setup')) $_SETUP = true; else $_SETUP = false;
@@ -27,12 +19,11 @@ function init_err($msg) {
 }
 require_once(dirname(__FILE__).'/includes/Config.class.php');
 require_once(dirname(__FILE__).'/includes/vars.inc.php');
-echo '<!--Core Objs Executed in '.(microtime_float()-$time_start).' Seconds-->';
+
 if (isset($config)) {
 	if($config->getNode('logs','errors')) $errLog = fopen($config->getNode('paths','logDir').'/errors.log','a+');
 	if($config->getNode('server','debug')) $debugLog = fopen($config->getNode('paths','logDir').'/debug.log','a+');
 }
-echo '<!--LogsLoaded in '.(microtime_float()-$time_start).' Seconds-->';
 function sys_error($level,$msg,$file,$line) {
 	global $errLog, $_PRINTDATA, $ajaxProvider;
 	if (!stristr($msg,'Unable to load dynamic library')) {
@@ -51,13 +42,13 @@ function debug_message($msg,$check = false) {
 if (!isset($_SESSION)) {
 	session_start();
 }
-echo '<!--SessionStart Executed in '.(microtime_float()-$time_start).' Seconds-->';
+
 //Maintenance Page
 if ($_SETUP == false && $config->getNode('site','enabled') != true && !strstr($_SERVER['REQUEST_URI'],'/admin/') && !strstr($_SERVER['REQUEST_URI'],'/acp2/') && !isset($maintPage)) {
 	header('Location: '.$config->getNode('paths','root').'/errors/maintenance.php');
 	die();
 }
-echo '<!--MaintCheck Executed in '.(microtime_float()-$time_start).' Seconds-->';
+
 //Load Classes
 require_once(dirname(__FILE__).'/includes/Item.class.php');
 require_once(dirname(__FILE__).'/includes/Cart.class.php');
@@ -72,7 +63,7 @@ require_once(dirname(__FILE__).'/includes/json_encode.inc.php');
 require_once(dirname(__FILE__).'/includes/file_put_contents.inc.php');
 require_once(dirname(__FILE__).'/includes/file_get_contents.inc.php');
 $stats = new Stats();
-echo '<!--ResLoad Executed in '.(microtime_float()-$time_start).' Seconds-->';
+
 function loadClass($class_name) {
 	require_once dirname(__FILE__).'/includes/'.$class_name.'.class.php';
 }
@@ -98,7 +89,7 @@ if ($_SETUP === false) {
 	//Connect to Database
 	$dbConn = db_factory();
 	
-	$session = $dbConn->query('SELECT basket FROM `sessions` WHERE session_id="'.session_id.'" LIMIT 1');
+	$session = $dbConn->query('SELECT basket FROM `sessions` WHERE session_id="'.session_id().'" LIMIT 1');
 	if ($session === false && $_PRINTDATA) {
 		trigger_error($dbConn->error());
 	}

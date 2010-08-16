@@ -20,10 +20,16 @@
 *
 *
 *  @Name Category.class.php
-*  @Version 1.0
+*  @Version 1.1
 *  @author Lloyd Wallis <lloyd@theflump.com>
 *  @copyright Copyright (c) 2009-2010, Lloyd Wallis
 *  @package Flumpshop
+*
+*  Version 1.1
+*  - Added the getProducts() function to return a list of products in the category
+*  - Added the setKeywords() function to set the category keywords
+*  - Added the getKeywords() function to get the category keywords
+*
 */
 
 class Category {
@@ -59,6 +65,11 @@ class Category {
 	* @var int The weight of the category, defining where it appears in the main navigation bar.
 	*/
 	var $weight = 0;
+	/**
+	* @var string The category's keywords, used in meta tahs
+	* @since 1.1
+	*/
+	var $keywords;
 	
 	/**
 	* Instantiates a Category object for the given ID
@@ -94,6 +105,7 @@ class Category {
 			$this->description = $result['description'];
 			$this->parent = $result['parent'];
 			$this->weight = $result['weight'];
+			$this->keywords = $result['keywords'];
 			if (isset($result['enabled'])) $this->enabled = $result['enabled'];
 		}
 	}
@@ -240,6 +252,43 @@ class Category {
 		} else {
 			return $features;
 		}
+	}
+	
+	/**
+	* Returns a list of products in the category
+	* @since 1.1
+	* @return array An array of Product IDs
+	*/
+	function getProducts() {
+		global $dbConn;
+		$result = $dbConn->query('SELECT itemid FROM item_category where catid='.$this->getID());
+		
+		$array = array();
+		while ($row = $dbConn->fetch($result)) {
+			$array[] = $row['itemid'];
+		}
+		return $array;
+	}
+	
+	/**
+	* Returns the category keywords
+	* @since 1.1
+	* @return string The category keywords
+	*/
+	function getKeywords() {
+		return $this->keywords;
+	}
+	
+	/**
+	* Sets the category keywords
+	* @since 1.1
+	* @param string $keywords The category keywords
+	*/
+	function setKeywords($keywords) {
+		global $dbConn;
+		$this->keywords = $keywords;
+		$keywords = str_replace('"','""',$keywords);
+		$dbConn->query('UPDATE category SET keywords="'.$keywords.'" WHERE id='.$this->getID().' LIMIT 1');
 	}
 }
 ?>
