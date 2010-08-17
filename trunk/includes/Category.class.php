@@ -196,7 +196,7 @@ class Category {
 	function getURL() {
 		global $config;
 		if ($config->getNode('server','rewrite')) {
-			return $config->getNode('paths','root')."/category/".$this->id."/".str_replace(array(" -> "," "),array("/","_"),$this->fullName)."/";
+			return $config->getNode('paths','root')."/category/".$this->id."/".htmlentities(str_replace(array(" -> "," "),array("/","_"),$this->fullName))."/";
 		} else {
 			return $config->getNode('paths','root')."/category/?id=".$this->id;
 		}
