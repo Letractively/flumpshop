@@ -7,10 +7,12 @@ $ignore = array('sort','page=1');
 //Blacklist pages
 $blacklist = array('basket.php');
 
-$urls = array($config->getNode('paths','root'));
+if (isset($argv[1])) $base = $argv[1]; else $base = $config->getNode('paths','root');
+
+$urls = array($base);
 $links = array();
 function getLinksFromPage($url) {
-	global $links,$config,$ignore,$urls,$blacklist;
+	global $links,$base,$ignore,$urls,$blacklist;
 	//Fetch the page using the CURL Library
 	fwrite(STDOUT, 'Read: '.$url."\n");
 	$ch = curl_init();
@@ -23,7 +25,7 @@ function getLinksFromPage($url) {
 	//Return part [2] only
 	foreach ($matches as $match) {
 		$match[2] = html_entity_decode($match[2]);
-		//Filter Ignore GET Terms
+		//Filter Ignored GET Terms
 		foreach($ignore as $ig) {
 			$match[2] = preg_replace('/(\?|&)'.$ig.'(.*)?(&|$)/i','',$match[2]);
 		}
@@ -36,23 +38,29 @@ function getLinksFromPage($url) {
 		}
 		if ($out === true) continue;
 		//Calculate what the return URL would be
-		if (strpos($match[2],$config->getNode('paths','root')) !== false) {
+		if (strpos($match[2],$base) !== false) {
 			//URL was already absolute
 			$returnURL = $match[2];
 		} else {
-			//URL is relative. Ouch.
-			$dir = $url;
-			//Strip to last /
-			$pieces = explode('/',$dir);
-			$dir = '';
-			$pieceCount = sizeof($pieces)-1;
-			for ($i=0;$i<$pieceCount;$i++) {
-				$dir .= $pieces[$i].'/';
+			if (strpos($match[2],'/') === 0) {
+				//Relative to site root
+				//TODO: Not assume base is root
+				$returnURL = $base.$match[2];
+			} else {
+				//Relative to current file
+				$dir = $url;
+				//Strip to last /
+				$pieces = explode('/',$dir);
+				$dir = '';
+				$pieceCount = sizeof($pieces)-1;
+				for ($i=0;$i<$pieceCount;$i++) {
+					$dir .= $pieces[$i].'/';
+				}
+				//Append match to dir and return
+				$returnURL = $dir.$match[2];
 			}
-			//Append match to dir and return
-			$returnURL = $dir.$match[2];
 		}
-		$match[2] = str_replace($config->getNode('paths','root').'/','',$match[2]);
+		$match[2] = str_replace($base.'/','',$match[2]);
 		if (in_array($returnURL,$links) === false &&
 			in_array($returnURL,$urls) === false &&
 			strpos($match[2],'#') === false &&
@@ -60,6 +68,7 @@ function getLinksFromPage($url) {
 			strpos($match[2],'mailto:') === false &&
 			strpos($match[2],'ftp://') === false &&
 			strpos($match[2],'http://') === false) {
+				//fwrite(STDOUT,'Found URL: '.$returnURL.' From '.$match[2]."\n");
 				$return[] = $returnURL;
 		}
 	}
