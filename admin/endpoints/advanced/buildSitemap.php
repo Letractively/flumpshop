@@ -93,7 +93,7 @@ $xml = '<?xml version="1.0" encoding="UTF-8"?>
 //Loop inside all links and add them to the sitemap using a default priority as 0.9 and a default changefreq as daily.
 foreach ($links as $val)
 {
-
+$val = htmlentities($val);
 $xml .= "<url>
 <loc>$val</loc>
 <changefreq>monthly</changefreq>
