@@ -73,7 +73,7 @@ echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->ge
 	$result = $dbConn->query("SELECT id FROM `category` WHERE parent='".$category->getID()."' ORDER BY `name` ASC");
 	if ($dbConn->rows($result) != 0) {
 		//Subcategories
-		?><br /><br /><h4><?php echo $config->getNode("messages","subcatHeader");?></h4><ul class='list_subcat'><?php
+		?><br /><br /><h4 class='ui-widget-header'><?php echo $config->getNode("messages","subcatHeader");?></h4><ul class='list_subcat'><?php
 		while ($row = $dbConn->fetch($result)) {
 			$subCat = new Category($row['id'],"noparent"); //Noparent addition reduces unnecessary queries
 			echo "<li><a href='".$subCat->getURL()."'>".$subCat->getName()."</a></li>";
@@ -82,6 +82,7 @@ echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->ge
 	}
 	
 	echo "</div><!-- End Page Text -->";
+	echo '<h4 class="ui-widget-header">'.$config->getNode('messages','catItemsHeader').'</h4>';
 	
 	//Get Page number/items per page
 	$perPage = $config->getNode("pagination","categoryPerPage");

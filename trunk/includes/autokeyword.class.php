@@ -2,7 +2,7 @@
 
 /******************************************************************
 Projectname:   Automatic Keyword Generator
-Version:       0.2
+Version:       1.0
 Author:        Ver Pangonilo <smp_AT_itsp.info>
 Last modified: 21 July 2006
 Copyright (C): 2006 Ver Pangonilo, All Rights Reserved
