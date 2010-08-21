@@ -1,5 +1,8 @@
 <?php
 require_once dirname(__FILE__).'/preload.php';
+//Cache
+header('Cache-control: max-age=86400');
+header('Expires: '.date('D, d M Y H:i:s T',time()+(86400)));
 
 if (!isset($page_title)) $page_title = "Welcome";
 if (!isset($_SUBPAGE)) $_SUBPAGE = true;

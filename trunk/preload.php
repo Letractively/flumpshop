@@ -28,7 +28,7 @@ function sys_error($level,$msg,$file,$line) {
 	global $errLog, $_PRINTDATA, $ajaxProvider;
 	if (!stristr($msg,'Unable to load dynamic library')) {
 		if ($_PRINTDATA && !$ajaxProvider) echo '<div class="ui-state-error ui-corner-all"><span class="ui-icon ui-icon-script"></span>'.$msg.' ('.$file.':'.$line.')</div>';
-		if (isset($errLog)) fwrite($errLog,'('.date('d/m/y H:i:s').') '.$msg.' ['.$file.':'.$line.']\r\n');
+		if (isset($errLog)) fwrite($errLog,'('.date('d/m/y H:i:s').') '.$msg.' ['.$file.':'.$line."]\r\n");
 		return true;
 	}
 }
@@ -105,7 +105,7 @@ if ($_SETUP === false) {
 			$basket = new Cart(-1);
 		}
 		if (!isset($_SERVER['REMOTE_ADDR'])) $ip = '127.0.0.1'; else $ip = $_SERVER['REMOTE_ADDR'];
-		$dbConn->query('INSERT INTO `sessions` (session_id,basket,ip_addr) VALUES ("'.session_id().'","'.$basket->getID().'",INET_ATON("'.$ip.'"))');
+		$dbConn->query('INSERT INTO `sessions` (session_id,basket,ip_addr) VALUES ("'.session_id().'","'.$basket->getID().'",'.ip2long($_SERVER['REMOTE_ADDR']).')');
 	} else {
 		if (array_search($_SERVER['HTTP_USER_AGENT'],explode($config->getNode('server','crawlerAgents'),'|'))) {
 			$basket = new Cart(0);

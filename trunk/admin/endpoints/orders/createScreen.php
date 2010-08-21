@@ -186,7 +186,7 @@ var validObject = {
 			required: "#noShipping:not(#noShipping:checked)"
 		},
 		customerBillingPostcode: {
-			postcode:true
+			//postcode:true
 		},
 		orderStatus:"required"
 	}
