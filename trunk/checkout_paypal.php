@@ -1,4 +1,5 @@
 <?php
+$NOCACHE = true;
 //Transfer Session to HTTPS
 $vars = array_keys($_GET);
 if (isset($vars[0]) && is_string($vars[0])) {

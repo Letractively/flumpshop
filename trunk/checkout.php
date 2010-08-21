@@ -1,4 +1,5 @@
 <?php
+$NOCACHE = true;
 define("PAGE_TYPE","checkout");
 //Transfer Session to HTTPS
 $vars = array_keys($_GET);
