@@ -1,4 +1,5 @@
 <?php 
+$NOCACHE = true;
 define("PAGE_TYPE","paymentConfirm");
 $page_title = "Payment Complete";
 require_once "./paypalfunctions.php";

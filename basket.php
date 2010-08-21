@@ -1,4 +1,5 @@
 <?php
+$NOCACHE = true;
 define("PAGE_TYPE","basket");
 require_once dirname(__FILE__)."/preload.php";
 $page_title = $config->getNode('messages','basketHeader');
