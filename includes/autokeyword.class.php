@@ -2,9 +2,9 @@
 
 /******************************************************************
 Projectname:   Automatic Keyword Generator
-Version:       1.0
+Version:       1.1
 Author:        Ver Pangonilo <smp_AT_itsp.info>
-Last modified: 21 July 2006
+Last modified: 19 August 2010
 Copyright (C): 2006 Ver Pangonilo, All Rights Reserved
 
 * GNU General Public License (Version 2, June 1991)
@@ -57,13 +57,16 @@ Also added '&nbsp;', '&trade;', '&reg;'.
 Removed two and three word functions, due to their common discovery of useless phrases
 and the small chance of them being used by the system
 Also, some minor speed optimisations were made
+
+1.1 19/08/2010
+Changed constants to functions for PHP4 Compatibility
 ******************************************************************/
 
 class autokeyword {
 	//minimum word length for inclusion into the single word
 	//metakeys
-	const wordLengthMin = 5;
-	const wordOccuredMin = 3;
+	function wordLengthMin() {return 5;}
+	function wordOccuredMin() {return 3;}
 
 	function get_keywords($content)
 	{
@@ -111,7 +114,7 @@ class autokeyword {
 			//delete single or two letter words and
 			//Add it to the list if the word is not
 			//contained in the common words list.
-			if(mb_strlen(trim($val)) >= autokeyword::wordLengthMin  && !in_array(trim($val), $common)  && !preg_match('/[0-9]/',trim($val))) {
+			if(mb_strlen(trim($val)) >= autokeyword::wordLengthMin()  && !in_array(trim($val), $common)  && !preg_match('/[0-9]/',trim($val))) {
 				$k[] = trim($val);
 			}
 		}
@@ -120,7 +123,7 @@ class autokeyword {
 		//sort the words from
 		//highest count to the
 		//lowest.
-		$occur_filtered = autokeyword::occure_filter($k, autokeyword::wordOccuredMin);
+		$occur_filtered = autokeyword::occure_filter($k, autokeyword::wordOccuredMin());
 		arsort($occur_filtered);
 
 		$imploded = autokeyword::implode(", ", $occur_filtered);

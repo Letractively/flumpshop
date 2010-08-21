@@ -10,7 +10,7 @@ $basedir = $config->getNode("paths","offlineDir")."/images/";
 $image_sha1 = array();
 
 $dp = opendir($basedir);
-echo "<table class='ui-widget'>";
+/*echo "<table class='ui-widget'>";
 echo "<tr><td colspan=2><h2>Unnecessary Images</h2></td></tr>";
 echo "<tr class='ui-widget-header'><th>Image</th><th>Reason</th></tr>";
 while ($dir = readdir($dp)) {
@@ -38,16 +38,16 @@ while ($dir = readdir($dp)) {
 		}
 	}
 }
-echo "</table>";
+echo "</table>";*/
 
-//Detect short descriptions (<150 characters)
-$min = 150;
+//Detect short descriptions (<500 characters)
+$min = 500;
 $result = $dbConn->query("SELECT id FROM `products` WHERE LENGTH(description) < $min");
 
 echo "<h2>Short Descriptions</h2><table>";
 echo "<tr class='ui-widget-header'><th>Item</th><th>Description</th></tr>";
 while ($row = $dbConn->fetch($result)) {
 	$item = new Item($row['id']);
-	echo "<tr class='ui-widget-content'><td><a href='../edit/editItem.php?id=".$item->getID()."&amp;return=report'>".$item->getName()."</a></td><td>".$item->getDesc()."</td></tr>";
+	echo "<tr class='ui-widget-content'><td><a href='../products/editItem.php?id=".$item->getID()."&amp;return=report'>".$item->getName()."</a></td><td>".$item->getDesc()."</td></tr>";
 }
 ?>
