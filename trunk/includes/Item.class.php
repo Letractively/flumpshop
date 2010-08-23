@@ -241,7 +241,7 @@ class Item {
 		$type = strtoupper($type); //Standardize for easy comparison
 		if ($type == "INDEX") {
 			//Image
-			$reply = "<a href='".$this->getURL()."'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' alt='".$this->getName()."' /></a>";
+			$reply = "<a href='".$this->getURL()."'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' alt='".$this->getName()." ".$this->getKeywords()."' /></a>";
 			//Title
 			$reply .= "<h5><a href='".$this->getURL()."'>".$this->getName()."</a></h5>";
 			//Price (TODO)
@@ -252,7 +252,7 @@ class Item {
 		if ($type == "CATEGORY") {
 			$reply = "<table><tr><td>";
 			//Image
-			$reply .= "<a href='".$this->getURL()."' class='ui-widget-content'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' style='margin-right: 1em; margin-top: 1em' alt='".$this->getName()."' /></a>";
+			$reply .= "<a href='".$this->getURL()."' class='ui-widget-content'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' style='margin-right: 1em; margin-top: 1em' alt='".$this->getName()." ".$this->getKeywords()."' /></a>";
 			$reply .= "</td>";//End Image TD
 			if (strtolower($config->getNode('viewItem','catTextPos')) == "bottom") $reply .= "</tr><tr>";
 			$reply .= "<td>";//Start Content TD
@@ -266,7 +266,7 @@ class Item {
 		}
 		if ($type == "SEARCH") {
 			$reply = "<h3 style='margin-bottom: 0;'><a href='".$this->getURL()."' class='ui-widget-content'>".$this->getName($int)."</a></h3>";
-			$reply .= "<span style='width: 100px; height: 100px;'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' style='float: left; margin-right: 1em; margin-top: 1em;' alt='".$this->getName()."' /></span>";
+			$reply .= "<span style='width: 100px; height: 100px;'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' style='float: left; margin-right: 1em; margin-top: 1em;' alt='".$this->getName()." ".$this->getKeywords()."' /></span>";
 			if (strlen($this->getDesc()) > 250) $reply .= "<p style='overflow: hidden; height: 150px;'>".substr($this->getDesc($int),0,250)."...</p>";
 			else $reply .= "<p style='overflow: hidden; height: 150px;'>".$this->getDesc()."</p>";
 		}
@@ -276,12 +276,12 @@ class Item {
 			$reply .= "<div id='page_text'><h3 id='page_title'>".$this->getName()."</h3>";
 			//Images
 			$scale = 150*$config->getNode("viewItem","imageScale");
-			$reply .= "<div id='item_image_container'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&amp;image=0&amp;size=thumb' onclick='openImageViewer(0);' style='cursor: pointer' alt='Image (Click to view full size)' />";
+			$reply .= "<div id='item_image_container'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&amp;image=0&amp;size=thumb' onclick='openImageViewer(0);' style='cursor: pointer' alt='".$this->getName()." ".$this->getKeywords()."' />";
 			
 			$num = 0;
 			while (file_exists($config->getNode('paths','offlineDir')."/images/item_".$this->getID()."/minithumb_$num.png")) {
 				if (is_int(($num)/3)) $reply .= "<br />";
-				$reply .= "<span style='width: 45px; height: 45px;'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&amp;image=$num&amp;size=minithumb' onclick='openImageViewer($num);' style='border: 1px solid #000; cursor: pointer;' alt='Image (Click to view full size)' /></span>";
+				$reply .= "<span style='width: 45px; height: 45px;'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&amp;image=$num&amp;size=minithumb' onclick='openImageViewer($num);' style='border: 1px solid #000; cursor: pointer;' alt='".$this->getName()." ".$this->getKeywords()."' /></span>";
 				$num++;
 			}
 			

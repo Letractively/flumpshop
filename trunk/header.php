@@ -4,6 +4,7 @@ if (!isset($NOCACHE)) {
 	//Cache
 	header('Cache-control: max-age=86400');
 	header('Expires: '.date('D, d M Y H:i:s T',time()+(86400)));
+	header('Pragma: ');
 }
 
 if (!isset($page_title)) $page_title = "Welcome";
