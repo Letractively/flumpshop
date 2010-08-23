@@ -145,6 +145,7 @@ $totalPrice = 0;
 $totalDelivery = 0;
 $currencySymbol = html_entity_decode("&pound;"); //Stops Browser outputting random characters
 
+$basket->loadItems();
 foreach (array_keys($basket->items) as $item) {
 	$item = new Item($item);
 	
