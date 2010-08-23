@@ -318,7 +318,7 @@ class Cart {
 		} elseif ($this->change) {
 			debug_message("Commiting Changes to Basket");
 			$this->checkPrice();
-			$query = "UPDATE `basket` SET total='".$this->price."', delivery='".$this->delivery."', vat='".$this->vatEnabled."' WHERE id='".$this->id."' LIMIT 1";
+			$query = "UPDATE `basket` SET total='".$this->total."', delivery='".$this->delivery."', vat='".$this->vatEnabled."' WHERE id='".$this->id."' LIMIT 1";
 			if (!$dbConn->query($query)) {
 				trigger_error("Could not save basket. dbConn: ".$dbConn->error());
 			}

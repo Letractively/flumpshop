@@ -245,7 +245,7 @@ function newOrderRow() {
 	
 	newRow = newRow+"<td><input type='text' name='item"+newID+"Qty' id='item"+newID+"Qty' class='ui-state-default positiveInt' onkeyup='quantityKeyPress(this.id);' onkeypress='document.lastQty = this.value;' style='width:65px' value='1' checkOrderQuantity='"+newID+"' required='$(\"item"+newID+"ID\").html() == \"\"' /></td>";
 	
-	newRow = newRow+"<td><input type='text' disabled='disabled' id='item"+newID+"Price' style='width:80px;' /></td>";
+	newRow = newRow+"<td><input type='text' readonly='readonly' id='item"+newID+"Price' name='item"+newID+"Price' style='width:80px;' /></td>";
 	
 	newRow = newRow+"<td><a href='javascript:' onclick='findItem("+newID+");'>More...</a></td>";
 	

@@ -68,9 +68,11 @@ class Order {
 			
 			//Skip this row if the item's quantity is 0
 			if ($_POST['item'.$i.'Qty'] == 0) continue;
+			//Skip Final ID
+			if ($_POST['item'.$i.'ID'] == '') continue;
 			
 			//Pull the price from the post form in case the user has set a custom price
-			$basket->addItem($_POST['item'.$i.'ID'], $_POST['item'.$i.'Qty'], $_POST['item'.$i.'Price']);
+			$basket->addItem($_POST['item'.$i.'ID'], $_POST['item'.$i.'Qty'], floatval(str_replace('&pound;','',$_POST['item'.$i.'Price'])));
 		}
 		
 		//Iterate through coupons and create a reference to each one
