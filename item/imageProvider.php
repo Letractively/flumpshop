@@ -1,5 +1,4 @@
 <?php
-//die();
 //gzip compression
 ob_start("ob_gzhandler");
 require_once dirname(__FILE__)."/../includes/vars.inc.php";
@@ -31,6 +30,7 @@ if (!isset($_GET['random'])) {
 		}
 	}
 } else {
+	//Choose random images (and use thumbs)
 	$dirs = array();
 	$dir = opendir($config->getNode('paths','offlineDir')."/images");
 	while ($subdir = readdir($dir)) {
@@ -45,6 +45,7 @@ if (!isset($_GET['random'])) {
 
 header("Content-Type: image/png");
 header("Cache-control: max-age=604800, public"); //1 Week
-header("Expires: ".date("D, d M Y H:i:s T",time()+(3600*24)));
+header("Expires: ".date("D, d M Y H:i:s T",604800));
+header('Pragma: ');
 echo file_get_contents($file);
 ?>
