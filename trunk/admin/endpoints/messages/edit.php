@@ -2,14 +2,14 @@
 $USR_REQUIREMENT = "can_edit_pages";
 require_once dirname(__FILE__)."/../header.php";
 
-$content = $_GET['pageid'];
+$content = $_GET['msgid'];
 
 if (isset($_POST['content'])) {
 	$config->setNode('messages',$content,trim(str_replace(array("\\","\n"),
 													 array("","<br />"),
 													 $_POST['content'])));
-	$msg = "<div class='ui-state-highlight'><span class='ui-icon ui-icon-circle-check'></span>Page Saved</div>";
-	header("Location: ../switchboard/pages.php?msg=".$msg);
+	$msg = "<div class='ui-state-highlight'><span class='ui-icon ui-icon-circle-check'></span>Message Saved</div>";
+	header("Location: ../switchboard/messages.php?msg=".$msg);
 }?>
 <script type="text/javascript" src="../../tiny_mce/jquery.tinymce.js"></script>
 <script type="text/javascript">
@@ -42,8 +42,8 @@ if (isset($_POST['content'])) {
 	});
 </script>
 <h1>Edit <?php echo $config->getFriendName('messages',$content);?></h1>
-<p>Enter the page content below. Advanced users: you can insert predefined messages by using [[field name]] in the message, e.g. [[address]] will include the address field.</p>
-<form action='edit.php?pageid=<?php echo $content;?>' method='POST' onsubmit='if ($(this).valid()) {loader(loadMsg("Saving Content...")); return true;} else return false;'>
+<p>Enter the message content below.</p>
+<form action='edit.php?msgid=<?php echo $content;?>' method='POST' onsubmit='if ($(this).valid()) {loader(loadMsg("Saving Content...")); return true;} else return false;'>
     <textarea name="content" id="content" class="ui-state-default required" style="width: 99%; height: 250px;">
     <?php echo htmlentities($config->getNode('messages',$content)); ?>
     </textarea>
