@@ -117,6 +117,7 @@ Please enter your username and password to continue...
 			if (acpusr_validate('can_edit_pages')) { //Page Manager
 			?>
 				<a href='endpoints/switchboard/pages.php' onclick='loader("Loading Pages Menu...");' target='main'>Manage Pages</a>
+				<a href='endpoints/switchboard/messages.php' onclick='loader("Loading Messages Menu...");' target='main'>Manage Messages</a>
 			<?php
 			}?>
 			</div>
