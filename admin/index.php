@@ -22,7 +22,11 @@ if (isset($_POST['uname'])) {
 		} else {
 			$dbConn->query("UPDATE `acp_login` SET last_login='".$dbConn->time()."' WHERE id=".$row['id']." LIMIT 1");
 			$_SESSION['acpusr'] = base64_encode($row['uname']."~".sha1($row['pass']));
-			header("Location: ./");
+			if (strtotime($row['pass_expires']) <= time()) {
+				header('Location: change_password.php');
+			} else {
+				header("Location: ./");
+			}
 		}
 	}
 }
