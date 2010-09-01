@@ -200,7 +200,12 @@ $pdf->Cell(40,4,"Total",1,0,"R");
 $pdf->Cell(20,4,$currencySymbol.number_format($total,2),1,1,"R");
 
 //Footer
-$pdf->SetY($pdf->GetY()+50);
+//Depending on position, append this as footer or on new page
+if ($pdf->getY() > 230) {
+	$pdf->AddPage();
+} else {
+	$pdf->SetY(-50);
+}
 $pdf->Cell(180,5,"Make All Checks Payable To:",0,1,"C");
 $pdf->SetFont("","");
 $pdf->Cell(180,5,$config->getNode("messages","name"),0,1,"C");

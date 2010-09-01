@@ -1,6 +1,6 @@
 <?php
 /*
-This form currently does not validate postcodes, as the validation method does not seem to work correctly.
+@todo This form currently does not validate postcodes, as the validation method does not seem to work correctly.
 */
 $noPreValidate = true; //Disables the .validate() method being called in the header.
 $USR_REQUIREMENT = 'can_create_orders';
@@ -180,7 +180,7 @@ var validObject = {
 		},
 		customerShippingPostcode: {
 			required: "#noShipping:not(#noShipping:checked)",
-			postcode:true
+			//postcode:true
 		},
 		customerShippingCountry: {
 			required: "#noShipping:not(#noShipping:checked)"
