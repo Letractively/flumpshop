@@ -44,7 +44,7 @@ if (!isset($_SESSION)) {
 }
 
 //Maintenance Page
-if ($_SETUP == false && $config->getNode('site','enabled') != true && !strstr($_SERVER['REQUEST_URI'],'/admin/') && !strstr($_SERVER['REQUEST_URI'],'/acp2/') && !isset($maintPage)) {
+if ($_SETUP == false && $config->getNode('site','enabled') != true && !strstr($_SERVER['REQUEST_URI'],'/admin/') && !isset($maintPage)) {
 	header('Location: '.$config->getNode('paths','root').'/errors/maintenance.php');
 	die();
 }

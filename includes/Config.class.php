@@ -149,14 +149,14 @@ class Config {
 		$this->namespaces['cache']['nextCheck'] = $time+3600;
 	}
 	
-	function setNode($treeName,$nodeName,$nodeVal,$friendName = "",$cacheTimeout = 3) {
-		//Only allow changing of temp vars of he file isn't editable
+	function setNode($treeName,$nodeName,$nodeVal,$friendName = "",$cacheTimeout = 86400) {
+		//Only allow changing of temp vars if the file isn't editable
 		if (!$this->editable && $treeName != "temp") return false;
 		//If the Friendly name hasn't been defined yet, do it now
 		if (!isset($this->namespaces[$treeName]['varsNames'][$nodeName])) {$this->namespaces[$treeName]['varsNames'][$nodeName] = $friendName;}
 		//Report change if not Temp
 		if ($treeName != "temp") $this->change = true;
-		//Magic: Store an expiration time if the tree is cache (default 1h)
+		//Magic: Store an expiration time if the tree is cache (default 24hrs)
 		//And actually store the data in the database, and set the value to the ID
 		if ($treeName == "cache") {
 			debug_message("Storing cache data");
@@ -206,7 +206,12 @@ class Config {
 	
 	function isNode($treeName,$nodeName) {
 		//Checks if the node exists
-		return isset($this->data[$treeName][$nodeName]);
+		if ($treeName == 'cache') {
+			global $dbConn;
+			return $dbConn->rows($dbConn->query('SELECT nodeName FROM cache WHERE nodeName="'.$nodeName.'" LIMIT 1')) === 1;
+		} else {
+			return isset($this->data[$treeName][$nodeName]);
+		}
 	}
 	
 	function isTree($treeName) {

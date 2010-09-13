@@ -65,6 +65,9 @@ for ($i = 0; $i < 1; $i++) {
 	}
 }
 
+//Clear the item's cache
+//$config->
+
 if (isset($_POST['return'])) {
 	header("Location: ".$_POST['return']);
 	exit;

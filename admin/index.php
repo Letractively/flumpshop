@@ -15,11 +15,14 @@ if (isset($_POST['uname'])) {
 	$result = $dbConn->query("SELECT * FROM `acp_login` WHERE uname='".htmlentities($_POST['uname'],ENT_QUOTES)."' LIMIT 1");
 	if ($dbConn->rows($result) == 0) {
 		$fail = true;
+		syslog(LOG_NOTICE,"InvalidUname");
 	} else {
 		$row = $dbConn->fetch($result);
 		if ($row['pass'] != md5(sha1($_POST['pass']))) {
 			$fail = true;
+			syslog(LOG_NOTICE,"InvalidPass");
 		} else {
+			syslog(LOG_NOTICE,"Success");
 			$dbConn->query("UPDATE `acp_login` SET last_login='".$dbConn->time()."' WHERE id=".$row['id']." LIMIT 1");
 			$_SESSION['acpusr'] = base64_encode($row['uname']."~".sha1($row['pass']));
 			if (strtotime($row['pass_expires']) <= time()) {

@@ -34,5 +34,6 @@ $customer = new Customer(intval($_GET['id']));
 echo $customer->getName(true).'<br />';
 echo $customer->getAddress(true).'<br />';
 echo $customer->getCountry(true).'<br />';
+echo $customer->getEmail(true).'<br />';
 echo $customer->printDeliverySupported();
 ?><button onclick="applyAddress('<?php echo $_GET['pre'];?>');" class="ui-state-default">Use This Address</button>

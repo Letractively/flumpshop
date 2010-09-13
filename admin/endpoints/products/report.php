@@ -129,7 +129,7 @@ while ($row = $dbConn->fetch($result)) {
 	$item = new Item($row['id']);
 	//Build onClick string
 	if ($editAuth) {
-		$onclick = " onclick=\"window.location.href = '../edit/editItem.php?id=".$row['id']."&return=report';\"";
+		$onclick = " onclick=\"window.location.href = '../products/editItem.php?id=".$row['id']."&return=report';\"";
 	} else {
 		$onclick = "";
 	}

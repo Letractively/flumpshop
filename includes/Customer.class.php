@@ -112,7 +112,10 @@ class Customer {
 	function getCountryName() {
 		return $this->countryName;
 	}
-	function getEmail() {
+	function getEmail($spanContainer = false) {
+		if ($spanContainer) {
+			return '<span class="fs-customer-email">'.$this->email.'</span>';
+		}
 		return $this->email;
 	}
 	function getPaypalID() {

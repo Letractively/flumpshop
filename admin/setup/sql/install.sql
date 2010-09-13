@@ -235,7 +235,7 @@ CREATE TABLE `products` (
   `cost` DECIMAL(9,2) DEFAULT NULL,
   `keywords` TEXT NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-);
+) ENGINE=MyISAM;
 
 CREATE TABLE `reserve` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -512,3 +512,8 @@ INSERT INTO `country` (`iso`, `name`, `supported`, `currency`) VALUES('YT', 'May
 INSERT INTO `country` (`iso`, `name`, `supported`, `currency`) VALUES('ZA', 'South Africa', 0, 'EUR');
 INSERT INTO `country` (`iso`, `name`, `supported`, `currency`) VALUES('ZM', 'Zambia', 0, 'EUR');
 INSERT INTO `country` (`iso`, `name`, `supported`, `currency`) VALUES('ZW', 'Zimbabwe', 0, 'EUR');
+
+ALTER TABLE  `products` ADD FULLTEXT (
+`name` ,
+`description`
+);

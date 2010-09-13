@@ -11,8 +11,9 @@ if (isset($argv[1])) $base = $argv[1]; else $base = $config->getNode('paths','ro
 
 $urls = array($base);
 $links = array();
+$hashes = array();
 function getLinksFromPage($url) {
-	global $links,$base,$ignore,$urls,$blacklist;
+	global $links,$base,$ignore,$urls,$blacklist,$hashes;
 	//Fetch the page using the CURL Library
 	fwrite(STDOUT, 'Read: '.$url."\n");
 	$ch = curl_init();
@@ -20,6 +21,13 @@ function getLinksFromPage($url) {
 	curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
 	$store = curl_exec ($ch);
 	curl_close ($ch);
+	//Check the page is unique
+	$hash = sha1($store);
+	if (array_search($hash,$hashes) !== false) {
+		fwrite(STDOUT, 'Page is a duplicate.'."\n");
+		return false;
+	}
+	$hashes[] = $hash;
 	//Strip all links from the page
 	preg_match_all('/<a ([^>]*)href=[\"\'](.*)[\"\']/U',$store, $matches, PREG_SET_ORDER);
 	//Return part [2] only
@@ -67,6 +75,9 @@ function getLinksFromPage($url) {
 			strpos($match[2],'javascript:') === false &&
 			strpos($match[2],'mailto:') === false &&
 			strpos($match[2],'ftp://') === false &&
+			strpos($match[2],'https://') === false &&
+			strpos($match[2],'./') === false &&
+			strpos($match[2],'../') === false &&
 			strpos($match[2],'http://') === false) {
 				//fwrite(STDOUT,'Found URL: '.$returnURL.' From '.$match[2]."\n");
 				$return[] = $returnURL;
@@ -78,8 +89,9 @@ function getLinksFromPage($url) {
 
 do {
 	$next = array_shift($urls);
-	$links[] = $next;
 	$new = getLinksFromPage($next);
+	if ($new === false) continue; //Skip duplicate pages
+	$links[] = $next;
 	if (!empty($new)) $urls = array_unique(array_merge($urls,$new));
 	fwrite(STDOUT,'Remaining in queue: '.sizeof($urls)."\n");
 } while (sizeof($urls) !== 0);

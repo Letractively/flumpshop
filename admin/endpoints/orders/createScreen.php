@@ -42,6 +42,10 @@ input:focus {
 						<td colspan="3"><label for="vatExempt">This customer does not need to pay VAT</label></td>
 					</tr>
 					<tr>
+						<td><input type="checkbox" name="mailingList" id="mailingList" checked="checked" /></td>
+						<td colspan="3"><label for="mailingList">Add this customer's email address to the mailing list</label></td>
+					</tr>
+					<tr>
 						<td colspan="4"><a href="javascript:" onclick="addCouponCode();">Add a voucher to this order...</a>
 					</tr>
 					<tr>
@@ -83,6 +87,10 @@ input:focus {
 					<td><?php
 					echo $formHelper->countrySelector("customerBillingCountry",false);
 					?></td>
+				</tr>
+				<tr>
+					<td><label for="customerBillingEmail">Email Address (Optional): </label></td>
+					<td><input type="text" class="ui-state-active email" name="customerBillingEmail" id="customerBillingEmail" /></td>
 				</tr>
 			</table>
 			</fieldset>
@@ -539,6 +547,9 @@ function applyAddress(prefix) {
 	$('#customer'+prefix+'Address3').val($('#dialog .fs-customer-address3').html());
 	$('#customer'+prefix+'Postcode').val($('#dialog .fs-customer-postcode').html());
 	$('#customer'+prefix+'Country').val($('#dialog .fs-customer-countrycode').html());
+	if (prefix === 'Billing') {
+		$('#customerBillingEmail').val($('#dialog .fs-customer-email').html());
+	}
 }
 
 function toggleShippingFields() {
@@ -553,9 +564,31 @@ function toggleShippingFields() {
 
 
 function buildProforma() {
+	$('#dialog').html('The order is being checked and processed. Please wait...').attr('title','Generating Proforma Invoice');
+	$('#dialog').dialog();
 	if ($('#orderFormMain').valid()) {
+		if ($('#billingID').val() === "New") {
+			//Save the billing details
+			commitBilling();
+		}
+		if ($('#shippingID').val() === "New" && $('#noShipping').attr('checked') === "checked") {
+			//Save the shipping details
+			commitShipping();
+		}
 		$('#orderFormMain').attr('action','proforma.php').attr('target','_blank');
 	}
+	$('#dialog').dialog('destroy');
+}
+
+//commitBilling sends an Ajax request to store the customer data in the database and update the form accordingly
+function commitBilling() {
+	$.ajax({
+		url:'ajax/commitBilling.php',
+		data:'name='+$('#customerBillingName').val()+'&address1='+$('#customerBillingAddress1').val()+'&address2='+$('#customerBillingAddress2').val()+'&address3='+$('#customerBillingAddress3').val()+'&postcode='+$('#customerBillingPostcode').val()+'&country='+$('#customerBillingCountry').val()+'&email='+$('#customerBillingEmail').val()+'&contact='+$('#mailingList').val(),
+		type:'post',
+		success: function(data) {$('#billingID').val(data)}
+		
+	});
 }
 
 $('#dialog').css('display','block');
