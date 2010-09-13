@@ -26,9 +26,9 @@ if ($dbConn->rows($result) == 0) {
 	echo '<tr><th>Product Name</th><th>Generated Keywords</th></tr>';
 	while ($item = $dbConn->fetch($result)) {
 		$item = new Item($item['id']);
-		$item->setKeywords(autokeyword::get_keywords($item->getName().' '.$item->getDesc()));
+		$item->setKeywords($config->getNode('messages','keywords').' '.autokeyword::get_keywords($item->getName().' '.$item->getDesc()));
 		echo '<tr><td>'.$item->getName().'</td>';
-		if ($item->getKeywords() !== '') {
+		if ($item->getKeywords() !== $config->getNode('messages','keywords')) {
 			echo '<td>'.$item->getKeywords().'</td>';
 		} else {
 			//Insufficient description, store failure and output notice
@@ -71,9 +71,9 @@ if ($dbConn->rows($result) == 0) {
 			$contentString .= ' '.$child->getKeywords();
 		}
 		unset($child);
-		$category->setKeywords(autokeyword::get_keywords($contentString));
+		$category->setKeywords($config->getNode('messages','keywords').' '.autokeyword::get_keywords($contentString));
 		echo '<tr><td>'.$category->getName().'</td>';
-		if ($category->getKeywords() != '') {
+		if ($category->getKeywords() != $config->getNode('messages','keywords')) {
 			echo '<td>'.$category->getKeywords().'</td>';
 		} else {
 			//Insufficient description, store failure and output notice
@@ -88,5 +88,13 @@ if ($dbConn->rows($result) == 0) {
 if ($failer) {
 	echo '<br /><br /><a name="failerhelp"></a><div class="ui-state-highlight"><span class="ui-icon ui-icon-info"></span>One or more objects could not have keywords generated as the description is not detailed enough. Please improve the description for these, as it will both allow the system to generate keywords, and improve the quality of the content on your site.<br /><br />It is a good rule of thumb that if I can\'t generate keywords, then the description is not detailed enough.</div>';
 }
+
+//Created recommended default keywords
+$result = $dbConn->query('SELECT keywords FROM category');
+$contentString = '';
+while ($row = $dbConn->fetch($result)) {
+	$contentString .= $row['keywords'].' ';
+}
+echo '<div class="ui-widget-header">Recommended Default Keywords</div><p>'.autokeyword::get_keywords($contentString).'</p>';
 
 ?><a href="updateKeywords.php?CLEAR">Clear All Keywords and Regenerate</a></body></html>

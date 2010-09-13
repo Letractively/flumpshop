@@ -27,7 +27,8 @@ if (isset($_GET['q'])) $query = htmlentities($_GET['q']); elseif (isset($_GET['s
 		echo "Please enter a search query.";
 	} else {
 		echo "<h3>Search Results for '$query':</h3>";
-		$query = str_replace("'","''",$query);
+		//Remove whitespace and escape apostrophes
+		$trimmed = trim(str_replace("'","''",$query));
 		
 		//Get current page
 		if (isset($_GET['page'])) $page = $_GET['page']; else $page = 1;
@@ -36,7 +37,7 @@ if (isset($_GET['q'])) $query = htmlentities($_GET['q']); elseif (isset($_GET['s
 		$resultFound = false;
 		
 		//Direct ID Search
-		if (!preg_match("/[a-z]/",$query)) { //Check just number
+		if (preg_match("/[0-9]/",$query)) { //Check just number
 			$result = $dbConn->query("SELECT id FROM `products` WHERE id='$query' LIMIT 1");
 			if ($dbConn->rows($result) == 1) {
 				//Found an item with that ID
@@ -70,26 +71,33 @@ if (isset($_GET['q'])) $query = htmlentities($_GET['q']); elseif (isset($_GET['s
 				}
 			}
 			$additions .= ")";
-			echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-info'></span>Showing results in ".$category->getName()." only.</div>";
+			echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-info'></span>Showing results in ".$category->getName()." only.</div><table>";
 		}
 		
 		$perpage = $config->getNode('pagination','searchPerPage');
 		
 		$fullQuery = "SELECT id FROM `products` WHERE (name LIKE '%$spacedNameQuery%' OR description LIKE '%$spacedDescQuery%')".$additions;
+		//Test Query
+		//$fullQuery = 'SELECT id FROM `products` WHERE MATCH(name,description) AGAINST("'.$trimmed.'")';
 		$results = $dbConn->rows($dbConn->query($fullQuery));
 		$result = $dbConn->query($fullQuery." LIMIT ".$perpage*($page-1).",$perpage");
 		debug_message($fullQuery);
 		if ($dbConn->rows($result) != 0) {
 			$highlight = explode(" ",$query);
 			$resultFound = true;
-			echo "Found <b>".$results." Items</b><br /><ol start='".($perpage*($page-1)+1)."'>";
+			//Keep track of what result number this is
+			$i = ($perpage*($page-1)+1);
+			
+			echo "Found <b>".$results." Items</b><br /><table>";
 			while ($row = $dbConn->fetch($result)) {
 				$item = new Item($row['id']);
 				?>
-				<li class="result_container"><div class="result"><?php echo $item->getDetails("SEARCH",$highlight);?></div></li>
+				<tr><td><?php echo $i;?></td><td class="result_container"><div class="result"><?php echo $item->getDetails("SEARCH",$highlight);?></div></td></tr>
 				<?php
+				//Increment the result counter
+				$i++;
 			}
-			echo "</ol>";
+			echo "</table>";
 			$baseurl = "search.php?q=".$query;
 			if (isset($_GET['cat'])) $baseurl.="&cat=".$_GET['cat'];
 			$paginate = new Paginator();

@@ -267,8 +267,8 @@ class Item {
 		if ($type == "SEARCH") {
 			$reply = "<h3 style='margin-bottom: 0;'><a href='".$this->getURL()."' class='ui-widget-content'>".$this->getName($int)."</a></h3>";
 			$reply .= "<span style='width: 100px; height: 100px;'><img src='".$config->getNode('paths','root')."/item/imageProvider.php?id=".$this->getID()."&image=0&size=thumb' style='float: left; margin-right: 1em; margin-top: 1em;' alt='".$this->getName()." ".$this->getKeywords()."' /></span>";
-			if (strlen($this->getDesc()) > 250) $reply .= "<p style='overflow: hidden; height: 150px;'>".substr($this->getDesc($int),0,250)."...</p>";
-			else $reply .= "<p style='overflow: hidden; height: 150px;'>".$this->getDesc()."</p>";
+			if (strlen($this->getDesc()) > 250) $reply .= "<p>".substr($this->getDesc($int),0,250)."...</p>";
+			else $reply .= "<p>".$this->getDesc()."</p>";
 		}
 		if ($type == "FULL") {
 			$reply = "";

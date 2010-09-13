@@ -390,7 +390,7 @@ class SQLite_Database extends Database {
 								  "/ zerofill/i",
 								  "/ NOT NULL/i"
 								  ),"",$str); //Unsupported & Non-vital
-		$str = preg_replace("/(\s*)?ENGINE=.*?;/i",";",$str);
+		$str = preg_replace("/\) ENGINE=.*?;/i",";",$str);
 		$str = preg_replace("/AUTO_INCREMENT/i","AUTOINCREMENT",$str);
 		//Add Column
 		$str = preg_replace_callback("/ALTER (TABLE )?`(.*?)` ADD (COLUMN )?(.*?)(;|$)/i", 'SQLite_Database_addColumn',$str);

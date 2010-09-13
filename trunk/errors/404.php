@@ -1,8 +1,8 @@
 <?php
 define('PAGE_TYPE','404');
-header("HTTP/1.1 404 File Not Found");
-$page_title = "Invisible";
-require_once dirname(__FILE__)."/../header.php";
+header('HTTP/1.1 404 File Not Found');
+$page_title = 'Page Not Found';
+require_once dirname(__FILE__).'/../header.php';
 
 ob_start();
 
