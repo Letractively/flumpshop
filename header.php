@@ -51,6 +51,9 @@ if (strstr($_SERVER['HTTP_USER_AGENT'],"MSIE 7.0")) {
 if (strstr($_SERVER['HTTP_USER_AGENT'],"MSIE 8.0")) {
 	$css_links .= "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=".$config->getNode("site","theme")."&amp;sub=ie8' />";
 }
+if (strstr($_SERVER['HTTP_USER_AGENT'],"MSIE 9.0")) {
+	$css_links .= "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=".$config->getNode("site","theme")."&amp;sub=ie9' />";
+}
 //JS Includes
 $js_links = "<script src='".$config->getNode('paths','root')."/js/jquery.js' type='text/javascript'></script>";
 $js_links .= "<script src='".$config->getNode('paths','root')."/js/jqueryui.js' type='text/javascript'></script>";
