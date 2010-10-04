@@ -32,7 +32,10 @@ $category = new Category(intval($_GET['id']));
 			// Drop lists for link/image/media/template dialogs
 			template_external_list_url : "lists/template_list.js",
 			external_link_list_url : "lists/link_list.js",
-			media_external_list_url : "lists/media_list.js"
+			media_external_list_url : "lists/media_list.js",
+			
+			//iFrame Support
+			extended_valid_elements : "iframe[src|width|height|name|align]",
 		});
 	});
 </script>
