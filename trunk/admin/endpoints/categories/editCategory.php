@@ -35,7 +35,7 @@ $category = new Category(intval($_GET['id']));
 			media_external_list_url : "lists/media_list.js",
 			
 			//iFrame Support
-			extended_valid_elements : "iframe[src|width|height|name|align]",
+			extended_valid_elements : "iframe[src|width|height|name|align|style]",
 		});
 	});
 </script>
