@@ -23,6 +23,7 @@ require_once(dirname(__FILE__).'/includes/vars.inc.php');
 if (isset($config)) {
 	if($config->getNode('logs','errors')) $errLog = fopen($config->getNode('paths','logDir').'/errors.log','a+');
 	if($config->getNode('server','debug')) $debugLog = fopen($config->getNode('paths','logDir').'/debug.log','a+');
+	$config->setNode('temp','simplexml',extension_loaded('simplexml'));
 }
 function sys_error($level,$msg,$file,$line) {
 	global $errLog, $_PRINTDATA, $ajaxProvider;
