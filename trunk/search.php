@@ -76,12 +76,18 @@ if (isset($_GET['q'])) $query = htmlentities($_GET['q']); elseif (isset($_GET['s
 		
 		$perpage = $config->getNode('pagination','searchPerPage');
 		
-		$fullQuery = "SELECT id FROM `products` WHERE (name LIKE '%$spacedNameQuery%' OR description LIKE '%$spacedDescQuery%')".$additions;
-		//Test Query
-		//$fullQuery = 'SELECT id FROM `products` WHERE MATCH(name,description) AGAINST("'.$trimmed.'")';
-		$results = $dbConn->rows($dbConn->query($fullQuery));
+		if ($config->getNode('database','type') !== 'mysql') {
+			echo 'Sorry! Flumpshop does not support searching systems using an SQLite backend.';
+			include './footer.php';
+			exit;
+		} else {
+			$fullQuery = 'SELECT id FROM `products` WHERE MATCH(name,description) AGAINST ("'.$trimmed.'" IN NATURAL LANGUAGE MODE WITH QUERY EXPANSION)'.$additions;
+		}
+		$count = 'SELECT COUNT(*) FROM `products` WHERE MATCH(name,description) AGAINST ("'.$trimmed.'" IN NATURAL LANGUAGE MODE WITH QUERY EXPANSION)'.$additions;
+		$count = $dbConn->query($count);
+		$count = $dbConn->fetch($count);
+		$results = $count[0];
 		$result = $dbConn->query($fullQuery." LIMIT ".$perpage*($page-1).",$perpage");
-		debug_message($fullQuery);
 		if ($dbConn->rows($result) != 0) {
 			$highlight = explode(" ",$query);
 			$resultFound = true;
