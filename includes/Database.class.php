@@ -272,7 +272,8 @@ class MySQL_Database extends Database {
     */
 	function fetch($resource) {
 		if (!is_object($resource)) {
-			trigger_error("Database Error: Invalid Resource");
+			$caller = debug_backtrace(false);
+			trigger_error('Database Error: Invalid Resource (Called by '.$caller[0]['file'].':'.$caller[0]['line'].')');
 			return false;
 		}
 		return mysqli_fetch_array($resource);
@@ -286,7 +287,8 @@ class MySQL_Database extends Database {
     */
 	function rows($resource) {
 		if (!is_object($resource)) {
-			trigger_error("Database Error: Invalid Resource");
+			$caller = debug_backtrace(false);
+			trigger_error('Database Error: Invalid Resource (Called by '.$caller[0]['file'].':'.$caller[0]['line'].')');
 			return 0;
 		}
 		return mysqli_num_rows($resource);
