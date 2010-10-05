@@ -348,7 +348,7 @@ class Item {
 		if ($type == "FEATURES") {
 			//Features (Experimental)
 			loadClass('Feature');
-			$reply = "<h4>".$config->getNode("messages","featuresName")."</h4><ul>";
+			$reply = "<h4>".$config->getNode("messages","featuresName")."</h4><ul class='features'>";
 			foreach ($this->itemFeatures as $featureId => $featureValue) {
 				$feature = new Feature($featureId);
 				$reply .= "<li>".$feature->getName().": ".$feature->parseValue($featureValue)."</li>";

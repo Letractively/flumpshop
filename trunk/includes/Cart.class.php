@@ -384,7 +384,8 @@ class Cart {
     * @param void No arguments.
     * @return int The current number of unique items in the cart.
     */
-	function getItems() {
+	public function getItems() {
+		$this->loadItems();
 		return sizeof($this->items);
 	}
 	

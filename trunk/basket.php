@@ -44,7 +44,8 @@ echo $config->getNode('messages','noScript');
 	if (isset($_GET['item'])) {
 		$pid = $_GET['item'];
 		$basket->addItem($pid);
-		echo "<script type='text/javascript'>window.location = 'basket.php';</script>";
+		echo '<script type="text/javascript">window.location="basket.php"</script>';
+		exit;
 	}
 	//Notices
 	if (isset($_GET['insufficientStock'])) {
