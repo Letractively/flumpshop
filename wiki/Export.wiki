@@ -1,0 +1,4 @@
+#summary Export Flumpshop data
+#labels Phase-Deploy
+
+The Flumpshop import/export procedures are currently under redevelopment, and are not completely functional. This documentation will be completed later.
