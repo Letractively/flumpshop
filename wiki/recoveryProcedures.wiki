@@ -18,10 +18,6 @@ Although the vast majority of information is stored in the XML backup file, this
 
 In addition, any custom plugins and themes should also be backed up for the same reason. Official ones can easily be obtained again, so these are not vital.
 
-== FRAS ==
-
-Flumpnet is currently developing an automated remote backup service, that is available for a fee, that automatically stores a complete backup of a Flumpshop installation of Flumpnet servers. This feature is currently experimental and unreliable, and only available by request.
-
 = Recovery =
 
 In the event of a system failure, this is the recommended recovery procedure for the Flumpshop platform. Please note the process assumes that the physical machine is running, with an operating system and web server successfully configured.
@@ -44,16 +40,6 @@ In the event of a system failure, this is the recommended recovery procedure for
   # At this point, you should now be able to transfer any files backed up from the offlineDir. It is highly recommended that you do *NOT* copy the conf.txt file, as this may break the system again
   # Install any themes/plugins that you require. Since they should store information in conf.txt they generally do not need reconfiguring
   # Browse the site frontend and ACP to ensure that all features are once again working functionally
-
-== To Recover From A FRAS Backup ==
-
-  # If necessary, delete/rename the old Flumpshop rootDir and offlineDir to remove any potential faults
-  # Download and extract the latest version of Flumpshop to your web server
-  # Follow the regular setupWizard process to configure the system
-  # Login to the ACP using the inituser account
-  # Install and register the FRAS Plugin
-  # In the FRAS management console (hosted on Flumpnet) select a backup set to restore, and generate a restoration authorisation code
-  # Enter the restoration code on the ACP page for the FRAS Plugin, and be patient whilst the system downloads and imports the data from the Flumpnet servers
 
 = Known Flaws =
 
