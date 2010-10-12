@@ -8,8 +8,7 @@ The Advanced menu is for technical changes, or [ExportingConfigurationData Expor
 
 = Menu Items =
 
- * [ConfigurationManager Configuration Manager] - Directly access the 
-[ConfigurationObject Configuration Object]
+ * [ConfigurationManager Configuration Manager] - Directly access the [ConfigurationObject Configuration Object]
  * [ClearCache Clear Cache] - Force an emptying of the Flumpshop Cache
  * [CronScript Cron Script] - Force the execution of scheduled tasks
  * [ExecutePHP Execute PHP] - Directly run PHP code in the Flumpshop environment
