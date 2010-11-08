@@ -73,10 +73,10 @@ if (isset($requires_tier2) && $requires_tier2 == true) {
 //Tier 2 login form
 function acpusr_tier2() {
 	global $config;
-	if (isset($_SERVER['HTTPS']) and $_SERVER['HTTPS'] == "off") {
-		$submitPrefix = $config->getNode('site','root');
+	if (isset($_SERVER['HTTPS']) and $_SERVER['HTTPS'] == "on") {
+		$submitPrefix = $config->getNode('paths','secureRoot');
 	} else {
-		$submitPrefix = $config->getNode('site','secureRoot');
+		$submitPrefix = $config->getNode('paths','root');
 	}
 	?><html><body bgcolor='#E7E7E7'><h1>Second Tier Login Required</h1><p>The operation you are trying to perform requires you to enter the Instance Managemement password. This is an extra layer of security that was hard-coded into this system when it was installed, which is needed for you to perform major tasks that could potentially break the system. Even if you know the password, make sure that you know what you are doing before you access this area.</p><p>All access to this area is logged.</p><form action='<?php echo $submitPrefix;?>/admin/tier2_auth.php' method='post'>Password:&nbsp;<input type='password' name='passkey' id='passkey' /><input type="hidden" name="return" value="<?php echo $_SERVER['REQUEST_URI'];?>" /><input type="submit" /></form></body></html><?php
 	exit;
