@@ -5,9 +5,7 @@ require_once dirname(__FILE__)."/../header.php";
 $content = $_GET['pageid'];
 
 if (isset($_POST['content'])) {
-	$config->setNode('messages',$content,trim(str_replace(array("\\","\n"),
-													 array("","<br />"),
-													 $_POST['content'])));
+	$config->setNode('messages',$content,  $_POST['content']);
 	$msg = "<div class='ui-state-highlight'><span class='ui-icon ui-icon-circle-check'></span>Page Saved</div>";
 	header("Location: ../switchboard/pages.php?msg=".$msg);
 }?>
