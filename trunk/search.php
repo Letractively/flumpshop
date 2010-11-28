@@ -38,7 +38,7 @@ if (isset($_GET['q'])) $query = htmlentities($_GET['q']); elseif (isset($_GET['s
 		
 		//Direct ID Search
 		if (preg_match("/[0-9]/",$query)) { //Check just number
-			$result = $dbConn->query("SELECT id FROM `products` WHERE id='$query' LIMIT 1");
+			$result = $dbConn->query("SELECT id FROM `products` WHERE id='$query' AND active=1 LIMIT 1");
 			if ($dbConn->rows($result) == 1) {
 				//Found an item with that ID
 				$item = $dbConn->fetch($result);
@@ -81,9 +81,9 @@ if (isset($_GET['q'])) $query = htmlentities($_GET['q']); elseif (isset($_GET['s
 			include './footer.php';
 			exit;
 		} else {
-			$fullQuery = 'SELECT id FROM `products` WHERE MATCH(name,description) AGAINST ("'.$trimmed.'" IN NATURAL LANGUAGE MODE WITH QUERY EXPANSION)'.$additions;
+			$fullQuery = 'SELECT id FROM `products` WHERE MATCH(name,description) AGAINST ("'.$trimmed.'" IN NATURAL LANGUAGE MODE WITH QUERY EXPANSION) AND active=1'.$additions;
 		}
-		$count = 'SELECT COUNT(*) FROM `products` WHERE MATCH(name,description) AGAINST ("'.$trimmed.'" IN NATURAL LANGUAGE MODE WITH QUERY EXPANSION)'.$additions;
+		$count = 'SELECT COUNT(*) FROM `products` WHERE MATCH(name,description) AGAINST ("'.$trimmed.'" IN NATURAL LANGUAGE MODE WITH QUERY EXPANSION) AND active=1'.$additions;
 		$count = $dbConn->query($count);
 		$count = $dbConn->fetch($count);
 		$results = $count[0];
