@@ -312,7 +312,7 @@ class Item {
 				}
 				//Stock
 				if ($this->getStock() != 0) $reply .= "<div class='ui-state-default'><span id='itemStock'>".$this->getStock()."</span> Available. <a href='".$config->getNode('paths','root')."/basket.php?item=".$this->getID()."'>Add to Basket</a></div>";
-				else $reply .= "<div class='ui-state-disabled'><span id='itemStock'>Out of Stock. </span><a href='javascript:void(0);'>Notify me when available</a></div>";
+				else $reply .= "<div class='ui-state-disabled'><span id='itemStock'>Out of Stock.</span></div>";
 			}
 			//Description
 			if ($config->getNode("viewItem", "showID")) {
