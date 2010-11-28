@@ -273,6 +273,10 @@ class Item {
 		}
 		if ($type == "FULL") {
 			$reply = "";
+
+			if ($this->itemActive == 0) {
+				return "This item is no longer available.";
+			}
 			
 			$reply .= "<div id='page_text'><h3 id='page_title'>".$this->getName()."</h3>";
 			//Images
