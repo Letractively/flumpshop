@@ -16,8 +16,8 @@ function randStr() {
 $adminPass = randStr();
 
 //Create default user account
-$dbConn->query("INSERT INTO `acp_login` (uname,pass,pass_expires,can_add_products,can_edit_products,can_delete_products,can_add_categories,can_edit_categories,can_delete_categories,can_edit_pages,can_edit_delivery_rates,can_post_news,can_add_customers,can_contact_customers,can_view_customers,can_view_orders,can_edit_orders,can_view_reports) VALUES ('inituser','".md5(sha1($adminPass))."',
- '".$dbConn->time(time()+3600*12)/*12 HOURS!*/."',1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)");
+$dbConn->query("INSERT INTO `acp_login` (uname,pass,pass_expires,can_add_products,can_edit_products,can_delete_products,can_add_categories,can_edit_categories,can_delete_categories,can_edit_pages,can_edit_delivery_rates,can_post_news,can_add_customers,can_contact_customers,can_view_customers,can_view_orders,can_edit_orders,can_view_reports,can_create_orders,can_assign_orders) VALUES ('inituser','".md5(sha1($adminPass))."',
+ '".$dbConn->time(time()+3600*12)/*12 HOURS!*/."',1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)");
 ?><h1>Goodbye, and hello!</h1>
 <p>Hello, and welome to your new Flumpshop installation. My name is the Flumpnet robot, and I'm getting a strange feeling I've met you before. Anyway, the Flumpshop site is now live and raring to go, and I'm gonna give you a few helpful tips to get you started.</p>
 <ul>
