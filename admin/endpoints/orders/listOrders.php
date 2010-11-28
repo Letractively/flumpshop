@@ -30,7 +30,8 @@ switch ($filter) {
 			}
 		}
 		$query .= ")";
-		$query.= " AND assignedTo=0";
+		$query.= " AND assignedTo IS NULL";
+		echo $query;
 		echo "<div class='ui-widget'><div class='ui-widget-header'>Unassigned Orders</div><div class='ui-widget-content'>";
 		break;
 	//All Closed Orders
