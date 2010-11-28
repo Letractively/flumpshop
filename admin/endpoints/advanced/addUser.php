@@ -5,7 +5,7 @@ require_once "../header.php";
 if (isset($_GET['error'])) echo "<p class='ui-state-highlight'>".$_GET['error']."</p>";
 ?><h1>User Manager</h1>
 <p>Fill out the form below to add a new ACP user account. Please note that an ACP login is different than a login for the site frontend.</p>
-<form action="../process/createUser.php" method="post" id="addUsrFrm">
+<form action="../process/createUser.php" method="post" id="addUsrFrm" class="ui-widget-content">
 <h2>Details</h2>
 <table>
 	<tr>
@@ -23,7 +23,7 @@ if (isset($_GET['error'])) echo "<p class='ui-state-highlight'>".$_GET['error'].
 </table>
 <h2>Permissions</h2>
 <table>
-	<tr>
+	<tr style="color:#fff">
 		<th>Action</th>
 		<th>Allowed</th>
 	</tr>
@@ -80,8 +80,16 @@ if (isset($_GET['error'])) echo "<p class='ui-state-highlight'>".$_GET['error'].
 		<td><input type="checkbox" name="can_view_orders" id="can_view_orders" /></td>
 	</tr>
 	<tr>
+		<td><label for="can_create_orders">Create Orders</label></td>
+		<td><input type="checkbox" name="can_create_orders" id="can_create_orders" /></td>
+	</tr>
+	<tr>
 		<td><label for="can_edit_orders">Update Orders</label></td>
 		<td><input type="checkbox" name="can_edit_orders" id="can_edit_orders" /></td>
+	</tr>
+	<tr>
+		<td><label for="can_assign_orders">Assign Orders</label></td>
+		<td><input type="checkbox" name="can_assign_orders" id="can_assign_orders" /></td>
 	</tr>
 	<tr>
 		<td><label for="can_view_reports">View/Generate Reports</label></td>
