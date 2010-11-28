@@ -41,7 +41,9 @@ class Item {
 					$this->setDefaults();
 					$this->itemID = $this->itemResult['id'];
 					$this->itemName = str_replace("\\","",$this->itemResult['name']);
+					$this->itemActive = 0;
 				} else {
+					$this->itemActive = 1;
 					$this->itemID = $id;
 					$this->itemSKU = $this->itemResult['SKU'];
 					if ($this->itemSKU == "") $this->itemSKU = "N/A";
@@ -68,7 +70,6 @@ class Item {
 					$this->itemReductionStart = $this->itemResult['reducedValidFrom'];
 					$this->itemReductionEnd = $this->itemResult['reducedExpiry'];
 					$this->itemWeight = $this->itemResult['weight'];
-					$this->itemActive = 1;
 					//URLs
 					if ($config->getNode('server','rewrite')) {
 						$this->itemURL = $config->getNode('paths','root')."/item/".$this->itemID."/".str_replace(" ","_",$this->itemName)."/";

@@ -10,7 +10,7 @@ $name = htmlentities($_POST['name'],ENT_QUOTES);
 $description = str_replace("'","\'",$_POST['description']);
 $price = str_replace("'","\'",$_POST['price']);
 $cost = str_replace("'","\'",$_POST['cost']);
-$stock = str_replace("'","\'",$_POST['stock']);
+$stock = intval($_POST['stock']);
 $weight = str_replace("'","\'",$_POST['weight']);
 
 for ($i = 0; $i < 1; $i++) {

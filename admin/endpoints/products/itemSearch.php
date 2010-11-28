@@ -11,7 +11,7 @@ if (isset($_GET['page'])) $page = $_GET['page']; else $page = 1;
 
 if (isset($_GET['status'])) echo $_GET['status'];
 
-$result = $dbConn->query("SELECT id FROM `products` WHERE id>0".$criteria." ORDER BY name ASC LIMIT ".(($page-1)*$perPage).",$perPage");
+$result = $dbConn->query("SELECT id FROM `products` WHERE id>0".$criteria." AND active=1 ORDER BY name ASC LIMIT ".(($page-1)*$perPage).",$perPage");
 ?><div class='ui-widget-header'>Edit Item</div>
 <div class='ui-widget-content'><p>Choose an item below to edit. You will then be taken to the item page, where you can click any value to change it.</p>
 <form action='editItems.php' method="GET">
