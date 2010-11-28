@@ -4,7 +4,7 @@ require_once dirname(__FILE__)."/../header.php";
 //Outputs a simple form for creating features
 ?><h1>Add Feature</h1>
 <p>This page allows you to define new features for the Flumpnet Robot to compare. Once it has been added, the robot will learn it, and add the attribute to the list available on any edit category page.</p>
-<form action="../features/processCreateForm.php" method="post" id="form">
+<form action="../features/processCreateForm.php" method="post" id="form" class="ui-widget-content">
 <table id="form_container">
 	<tr>
 		<td><label for="name">Attribute Name:</label></td>

@@ -11,6 +11,10 @@ require_once(dirname(__FILE__)."/preload.php"); require_once dirname(__FILE__)."
 
 ob_start(); //Template Buffer
 
+//Recalculate
+$basket->checkAvail();
+$basket->checkPrice();
+
 if ($config->getNode('secure','enabled') && $_SERVER['HTTPS'] == "off") {
 	echo "Redirecting...";
 	echo("<script type='text/javascript'>window.location = '".$config->getNode('paths','secureRoot')."/checkout.php?".session_id()."';</script>");
