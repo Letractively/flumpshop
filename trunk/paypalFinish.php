@@ -39,7 +39,7 @@ if ($dbConn->rows($dbConn->query("SELECT id FROM `orders` WHERE token='".$_GET['
 			$customer = $dbConn->fetch($customers);
 			$customer = new Customer($customer['id']);
 		}
-		$order = $basket->commitOrder($customer,$_GET['token']);
+		$order = $basket->commitOrder($customer,0,$_GET['token']);
 		if (!$order) echo "Fatal Error: Could not commit order. Contact Support with SESSIONID ".session_id();
 		debug_message(print_r($result,true));
 		

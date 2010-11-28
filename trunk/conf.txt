@@ -1,0 +1,1 @@
+/home/lloyd/Documents/Flumpshop/data/conf.txt

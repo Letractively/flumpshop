@@ -22,7 +22,7 @@ if (!file_exists(dirname(__FILE__)."/../conf.txt")) {
 	}
 } else {
 	$confDat = file_get_contents(dirname(__FILE__)."/../conf.txt");
-	if (!$config = unserialize(file_get_contents($confDat))) {
+	if (!$GLOBALS['config'] = unserialize(file_get_contents($confDat))) {
 		if (!strstr($_SERVER['REQUEST_URI'],"/admin/setup")) {
 			header("Location: ./admin/setup/");
 			die();

@@ -46,15 +46,15 @@ while ($order = $dbConn->fetch($orders)) {
 
 $deliveries = $dbConn->query("SELECT id FROM `delivery`");
 $export['deliveries'] = array();
-while ($delivery = $dbConn->fetch($deliveries)) {
+/*while ($delivery = $dbConn->fetch($deliveries)) {
 	$export['deliveries'][] = serialize(new Delivery($delivery['id']));
-}
+}*/
 
 $newsPosts = $dbConn->query("SELECT id FROM `news`");
 $export['news'] = array();
-while ($news = $dbConn->fetch($newsPosts)) {
+/*while ($news = $dbConn->fetch($newsPosts)) {
 	$export['news'][] = serialize(new News($news['id']));
-}
+}*/
 
 $reserves = $dbConn->query("SELECT id FROM `reserve`");
 $export['reserves'] = array();
@@ -70,9 +70,9 @@ $export['sessions'] = array();
 
 $techhelps = $dbConn->query("SELECT * FROM `techhelp`");
 $export['techhelp'] = array();
-while ($techhelp = $dbConn->fetch($techhelps)) {
+/*while ($techhelp = $dbConn->fetch($techhelps)) {
 	$export['techhelp'][] = serialize(new Techhelp($techhelp['id']));
-}
+}*/
 
 $stats = new Stats();
 //$stats->cacheAll();
@@ -84,8 +84,8 @@ while ($country = $dbConn->fetch($countries)) {
 	$export['countries'][] = $country['iso'];
 }
 
-$keycodes = new Keycodes();
-$export['keycodes'] = serialize($keycodes);
+/*$keycodes = new Keycodes();
+$export['keycodes'] = serialize($keycodes);*/
 
 //Config
 $export['config'] = serialize($config);
