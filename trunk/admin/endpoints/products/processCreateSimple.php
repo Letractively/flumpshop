@@ -5,7 +5,7 @@ require_once dirname(__FILE__)."/../header.php";
 loadClass('Feature');
 
 $name = htmlentities($_POST['name'],ENT_QUOTES);
-$description = nl2br(htmlentities($_POST['description'],ENT_QUOTES));
+$description = str_replace("'","\'",$_POST['description']);
 $price = str_replace("'","\'",$_POST['price']);
 $stock = str_replace("'","\'",$_POST['stock']);
 $weight = str_replace("'","\'",$_POST['weight']);

@@ -78,8 +78,8 @@ if (PHP_VERSION < '4.4.0') {
 register_shutdown_function('endGame');
 function endGame() {
 	global $config,$basket;
-	if (isset($config)) $config->__destruct();
-	if (isset($basket)) $basket->__destruct();
+	if (isset($config) && is_object($config)) $config->__destruct();
+	if (isset($basket) && is_object($basket)) $basket->__destruct();
 	if (isset($user)) $user->customer->__destruct();
 	if (isset($user)) $user->__destruct();
 	if (isset($customer)) $customer->__destruct();

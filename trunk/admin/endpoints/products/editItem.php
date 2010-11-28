@@ -3,6 +3,10 @@ $USR_REQUIREMENT = "can_edit_products";
 require_once dirname(__FILE__)."/../header.php";
 
 $item = new Item(intval($_GET['id']));
+if ($item->itemActive == 0) {
+	echo '<div class="ui-state-error"><span class="ui-icon ui-icon-trash"></span>You can\'t edit this product as it has been archived.</div>';
+	exit;
+}
 ?>
 <script type="text/javascript" src="../../tiny_mce/jquery.tinymce.js"></script>
 <script type="text/javascript">

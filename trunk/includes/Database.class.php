@@ -165,6 +165,7 @@ class Database {
     */
 	function deconstruct() {
 		global $config;
+		if (!is_object($config)) return;
 		if ($config->getNode("temp","simplexml") && $config->getNode("logs","enabled")) {
 			file_put_contents($config->getNode('paths','logDir')."/".date("d-m-Y")."/".session_id().".log.xml",$this->xmlLog->asXML());
 		}
