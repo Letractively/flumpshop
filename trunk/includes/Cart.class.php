@@ -538,11 +538,10 @@ class Cart {
 	 */
 	function commitOrder($billing, $shipping = 0, $token = '') {
 		if ($shipping === 0) $shipping = $billing;
-		print_r($shipping);
 		global $dbConn;
 		if ($dbConn->rows($dbConn->query("SELECT * FROM `orders` WHERE basket=" . $this->id . " LIMIT 1")) == 1)
 			return true;
-		if (!$dbConn->query("INSERT INTO `orders` (basket,status,token,billing,shipping) VALUES (" . $this->id . ",0,'$token'," . $billing->getID() . "," . $shipping->getID() . ")")) {
+		if (!$dbConn->query("INSERT INTO `orders` (basket,status,token,billing,shipping) VALUES (" . $this->id . ",1,'$token'," . $billing->getID() . "," . $shipping->getID() . ")")) {
 			return false;
 		}
 		else
