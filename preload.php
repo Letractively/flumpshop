@@ -106,7 +106,7 @@ if ($_SETUP === false) {
 			$basket = new Cart(-1);
 		}
 		if (!isset($_SERVER['REMOTE_ADDR'])) $ip = '127.0.0.1'; else $ip = $_SERVER['REMOTE_ADDR'];
-		$dbConn->query('INSERT INTO `sessions` (session_id,basket,ip_addr) VALUES ("'.session_id().'","'.$basket->getID().'",'.ip2long($_SERVER['REMOTE_ADDR']).')');
+		$dbConn->query('INSERT INTO `sessions` (session_id,basket,ip_addr) VALUES ("'.session_id().'","'.$basket->getID().'","'.ip2long($_SERVER['REMOTE_ADDR']).'")');
 	} else {
 		if (array_search($_SERVER['HTTP_USER_AGENT'],explode($config->getNode('server','crawlerAgents'),'|'))) {
 			$basket = new Cart(0);
