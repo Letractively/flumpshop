@@ -23,6 +23,7 @@ You are now being redirected to PayPal in order to pay for you order. You will b
 //CALLMARKEXPRESSCHECKOUT - ENTER ADDRESS LOCALLY
 //Check for sufficient stock on items
 $stock = $basket->checkAvail();
+$basket->checkPrice();
 debug_message("Data received from StockChecker: ".print_r($stock,true));
 if ($stock !== true) {
 	//Insufficient Stock
