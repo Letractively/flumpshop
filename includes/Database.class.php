@@ -35,13 +35,13 @@ function db_factory() {
     */
 	global $config, $_SETUP;
 	//MySQL
-	if ($config->getNode('database','type') == "mysql") {
+	if ($GLOBALS['config']->getNode('database','type') == "mysql") {
 		//Check MySQLi Installed
 		if (!extension_loaded("mysqli")) {
 			if (!$_SETUP) init_err("MySQLi Extension NOT Loaded.");
 		} else {
 			debug_message("MySQLi Extension Installed",true);
-			return new MySQL_Database($config->getNode('database','address'),$config->getNode('database','uname'),$config->getNode('database','password'),$config->getNode('database','port'),$config->getNode('database','name'));
+			return new MySQL_Database($GLOBALS['config']->getNode('database','address'),$GLOBALS['config']->getNode('database','uname'),$GLOBALS['config']->getNode('database','password'),$GLOBALS['config']->getNode('database','port'),$GLOBALS['config']->getNode('database','name'));
 		}
 	}
 	//SQLite
