@@ -312,7 +312,7 @@ class Cart {
 			$items = array_keys($this->items);
 			foreach ($items as $id) {
 				$item = new Item($id);
-				$reply .= $item->getDetails("ORDER", $this->items[$id]);
+				$reply .= '<li>'.$item->getDetails("ORDER", $this->items[$id]).'</li>';
 			}
 		}
 		return $reply;

@@ -81,7 +81,8 @@ switch ($filter) {
 	case "customer":
 		$orderStats = array_keys($config->getNodes('orderstatus'));
 		$customer = intval($_GET['id']);
-		$query .= " OR customer=".$customer;
+		$query .= " OR billing=".$customer;
+		$query .= " OR shipping=".$customer;
 		$query .= " ORDER BY status ASC";
 		echo "<div class='ui-widget'><div class='ui-widget-header'>Orders For Customer #".$customer."</div><div class='ui-widget-content'>";
 		break;

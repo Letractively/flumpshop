@@ -40,7 +40,7 @@ $status = $config->getNode('orderstatus',$order['status']);
 	}
 	?>
 	</select></div>
-    <div class="ui-widget-content">Customer ID: <?php echo $order['customer'];?> <a href='customer.php?id=<?php echo $order['customer'];?>'>View Details</a><br />
+    <div class="ui-widget-content">Customer ID: <?php echo $order['shipping'];?> <a href='customer.php?id=<?php echo $order['shipping'];?>'>View Details</a><br />
     <strong>Order Summary</strong><br />
     <?php
 	$orderBasket = $dbConn->query("SELECT * FROM `basket` WHERE id='".$order['basket']."' LIMIT 1");
@@ -48,11 +48,11 @@ $status = $config->getNode('orderstatus',$order['status']);
 		die("<div class='ui-state-error'><span class='ui-icon ui-icon-alert'></span>I couldn't find the basket for the selected order!</div>");
 	}
 	$orderBasket = $dbConn->fetch($orderBasket);
-	$orderBasket = unserialize(base64_decode($orderBasket['obj']));
+	$orderBasket = new Cart($row['id']);
 	echo $orderBasket->listItems("ORDER");
 	?>
 </div>
-<script>
+<script type="text/javascript">
 function updateStatus(statusid) {
 	$('#saverTxt').html('Updating Status...').addClass('ui-state-highlight');
 	$.ajax({url:"updateStatus.php?order=<?php echo $order['id'];?>&status="+statusid,success:function(){$('#saverTxt').html("<span class='ui-icon ui-icon-circle-check'></span>Status Updated!")}});

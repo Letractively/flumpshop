@@ -343,7 +343,7 @@ class Item {
 			$reply .= "</tr>";
 		}
 		if ($type == "ORDER") {
-			$reply = "<a href='".$this->getURL()."'>".$this->getName()."</a> (x$int)";
+			$reply = $this->getID()." - <a href='".$this->getURL()."'>".$this->getName()."</a> (x$int)";
 		}
 		if ($type == "FEATURES") {
 			//Features (Experimental)
