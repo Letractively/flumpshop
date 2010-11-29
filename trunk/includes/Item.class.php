@@ -79,13 +79,17 @@ class Item {
 						$this->itemModifyURL = $config->getNode('paths','root')."/item/?id=".$this->itemID."&modify=true";
 					}
 					//Delivery Rate
-					if ($config->isNode("temp","country")) $country = $config->getNode("temp","country"); else $country = $config->getNode("site","country");
-					$result = $dbConn->query("SELECT price FROM `delivery` WHERE lowerbound<='$this->itemWeight' AND upperbound>='$this->itemWeight' AND `country`='$country' LIMIT 1");
-					if ($dbConn->rows($result) == 0) {
-						$this->itemDeliveryCost = -1;
-					} else {
-						$result = $dbConn->fetch($result);
-						$this->itemDeliveryCost = $result['price'];
+					if ($config->getNode('delivery','deliveryType') === 'custom') {
+						if ($config->isNode("temp","country")) $country = $config->getNode("temp","country"); else $country = $config->getNode("site","country");
+						$result = $dbConn->query("SELECT price FROM `delivery` WHERE lowerbound<='$this->itemWeight' AND upperbound>='$this->itemWeight' AND `country`='$country' LIMIT 1");
+						if ($dbConn->rows($result) == 0) {
+							$this->itemDeliveryCost = -1;
+						} else {
+							$result = $dbConn->fetch($result);
+							$this->itemDeliveryCost = $result['price'];
+						}
+					} elseif ($config->getNode('delivery','deliveryType') === 'perItem') { //Per item cost
+						$this->itemDeliveryCost = $config->getNode('deliveryTier'.$GLOBALS['basket']->deliveryTier,'value');
 					}
 				} //End Item inactive Else
 			} //End Item not found Else
@@ -310,10 +314,12 @@ class Item {
 					}
 				}
 				//Delivery Price
-				if ($this->itemDeliveryCost == -1) {
-					$reply .= "&nbsp;".$config->getNode("messages","itemDeliveryUnavail");
-				} else {
-					$reply .= "&nbsp;".$config->getNode("messages","itemDelivery")." &pound;".$this->itemDeliveryCost;
+				if ($config->getNode('delivery','deliveryType') !== 'single') {
+					if ($this->itemDeliveryCost == -1) {
+						$reply .= "&nbsp;".$config->getNode("messages","itemDeliveryUnavail");
+					} else {
+						$reply .= "&nbsp;".$config->getNode("messages","itemDelivery")." &pound;".$this->itemDeliveryCost;
+					}
 				}
 				//Stock
 				if ($this->getStock() != 0) $reply .= "<div class='ui-state-default'><span id='itemStock'>".$this->getStock()."</span> Available. <a href='".$config->getNode('paths','root')."/basket.php?item=".$this->getID()."'>Add to Basket</a></div>";

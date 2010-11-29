@@ -36,6 +36,7 @@ class Cart {
 	var $change = false;
 	var $vatEnabled = true;
 	var $keys = array();
+	var $deliveryTier = NULL;
 
 	/**
 	 * Cart constructor.
@@ -56,7 +57,7 @@ class Cart {
 			//Load an existing basket for this session
 			$this->id = intval($id);
 			//Load Basket Parameters
-			$query = $dbConn->query('SELECT total,delivery,locked FROM basket WHERE id=' . $this->id . ' LIMIT 1');
+			$query = $dbConn->query('SELECT total,delivery,locked,delivery_tier FROM basket WHERE id=' . $this->id . ' LIMIT 1');
 
 			if ($dbConn->rows($query) === 0) {
 				//The basket doesn't exist - Exit
@@ -67,6 +68,7 @@ class Cart {
 				$this->price = $result['total'];
 				$this->delivery = $result['delivery'];
 				$this->lock = $result['locked'];
+				$this->deliveryTier = intval($result['delivery_tier']);
 				unset($query, $result);
 			}
 		}
@@ -106,12 +108,21 @@ class Cart {
 	 * @assert () === 0
 	 */
 	function checkPrice() {
+		global $config;
 		$this->loadItems();
 		$newPrice = 0;
-		$newDelivery = 0;
+		if ($config->getNode('delivery','deliveryType') === 'single') {
+			$newDelivery = $config->getNode('deliveryTier'.$this->deliveryTier,'value');
+		} else {
+			$newDelivery = 0;
+		}
 		foreach (array_keys($this->items) as $item) {
 			$obj = new Item($item);
-			$newDelivery += $this->items[$item] * $obj->getDeliveryCost();
+			if ($config->getNode('delivery','deliveryType') === 'custom') {
+				$newDelivery += $this->items[$item] * $obj->getDeliveryCost();
+			} elseif ($config->getNode('delivery','deliveryType') === 'perItem') {
+				$newDelivery += $this->items[$item] * $config->getNode('deliveryTier'.$this->deliveryTier,'value');
+			}
 			$newPrice += $this->items[$item] * $obj->getPrice();
 		}
 		$this->total = $newPrice;
@@ -303,8 +314,19 @@ class Cart {
 			}
 			$reply .= "</table>";
 			$reply .= "<hr />";
+			//Delivery type (if SINGLE or PER ITEM)
+			if ($config->getNode('delivery','deliveryType') === 'single'
+					or $config->getNode('delivery','deliveryType') === 'perItem') {
+				//Delivery Options
+				$reply .= 'Delivery Type: ';
+				require_once dirname(__FILE__).'/FormHelper.class.php';
+				$reply .= FormHelper::deliveryTierSelector('deliveryTier',$this->deliveryTier);
+				$reply .= '<button onclick="updateDeliveryTier()">Update</button>';
+				$reply .= '<hr />';
+			}
 			$reply .= "<table><tr><td>Subtotal: </td><td>&pound;" . $this->getFriendlyTotal(false, false) . "</td></tr>";
-			$reply .= "<tr><td>VAT @" . $config->getNode('site', 'vat') . "%: </td><td>&pound;" . $this->getFriendlyVAT() . "</td></tr>";
+			if ($config->getNode('site', 'vat') != 0)
+				$reply .= "<tr><td>VAT @" . $config->getNode('site', 'vat') . "%: </td><td>&pound;" . $this->getFriendlyVAT() . "</td></tr>";
 			$reply .= "<tr><td>Shipping: </td><td>&pound;" . $this->getFriendlyDelivery() . "</td></tr>";
 			$reply .= "<tr class='ui-state-highlight'><td>Total: </td><td>&pound;" . $this->getFriendlyTotal(true, true) . "</td></tr></table>";
 		} elseif ($mode === "ORDER") {
@@ -332,11 +354,16 @@ class Cart {
 		} elseif ($this->change) {
 			debug_message("Commiting Changes to Basket");
 			$this->checkPrice();
-			$query = "UPDATE `basket` SET total='" . $this->total . "', delivery='" . $this->delivery . "', vat='" . $this->vatEnabled . "' WHERE id='" . $this->id . "' LIMIT 1";
+			$query = "UPDATE `basket` SET delivery_tier='".intval($this->deliveryTier)."', total='" . $this->total . "', delivery='" . $this->delivery . "', vat='" . $this->vatEnabled . "' WHERE id='" . $this->id . "' LIMIT 1";
 			if (!$dbConn->query($query)) {
 				trigger_error("Could not save basket. dbConn: " . $dbConn->error());
 			}
 		}
+	}
+
+	function setDeliveryTier($tid) {
+		$this->change = 1;
+		$this->deliveryTier = $tid;
 	}
 
 	/**

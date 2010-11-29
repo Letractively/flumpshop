@@ -34,6 +34,7 @@ CREATE TABLE `basket` (
   `total` decimal(10,2) NOT NULL DEFAULT '0',
   `delivery` decimal(10,2) NOT NULL DEFAULT '0',
   `vat` BOOL NOT NULL DEFAULT '1',
+  `delivery_tier` INT(3) DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -42,6 +43,7 @@ CREATE TABLE `basket_items` (
 	`basket_id` int(11) unsigned NOT NULL,
 	`quantity` int(11) unsigned NOT NULL,
 	`sold_at` decimal(10,2) unsigned NOT NULL DEFAULT '0',
+	`delivery` decimal(10,2) NOT NULL DEFAULT '0',
 	PRIMARY KEY (`item_id`, `basket_id`)
 );
 
