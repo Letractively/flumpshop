@@ -36,6 +36,10 @@ function editQuantity(id,quantity,maxQuantity) {
 							}
 						});
 }
+
+function updateDeliveryTier() {
+	window.location = './setDeliveryTier.php?tid='+$('#deliveryTier').val();
+}
 </script>
 <?php
 if ($config->getNode('temp','crawler') == true) {echo $config->getNode('messages','crawler');} else {?><noscript><?php

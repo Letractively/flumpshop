@@ -63,7 +63,7 @@ $output = ob_get_clean();
 //Compress
 $output = preg_replace('/[^:]\/\/.*?\\n/','',$output); //Comments (: prevents clearing http://, ftp:// etc.
 $output = str_replace(array("\t","\n"),'',$output); //Whitespace
-$output = str_replace('  ',' ',$output); //Double SPaces
+$output = str_replace('  ',' ',$output); //Double Spaces
 
 echo $output;
 

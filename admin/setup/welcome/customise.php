@@ -33,6 +33,7 @@ Method:
         <li>Tab Settings</li>
         <li>Home Page Settings</li>
         <li>Item View Settings</li>
+		<li>Delivery Settings</li>
     </ol>
     <button onclick='window.location = "doConfigure.php?mode=complete";'>Choose Complete</button>
 </div>
@@ -65,6 +66,7 @@ Method:
         <li><input type="checkbox" name="tabs" id="tabs" /><label for="tabs">Tab Settings</label></li>
         <li><input type="checkbox" name="homePage" id="homePage" /><label for="homePage">Home Page Settings</label></li>
         <li><input type="checkbox" name="viewItem" id="viewItem" /><label for="viewItem">Item View Settings</label></li>
+		<li><input type="checkbox" name="delivery" id="delivery" /><label for="delivery">Delivery Settings</label></li>
     </ol>
     <button onclick="$('#custom').submit();">Choose Custom</button>
     </form>

@@ -76,6 +76,19 @@ class FormHelper {
 			return $return;
 		}
 	}
+
+	static function deliveryTierSelector($name,$current) {
+		global $config;
+		$i = 0;
+		$reply = '<select class="ui-widget-content" name="'.$name.'" id="'.$name.'">';
+		while ($config->isTree('deliveryTier'.$i)) {
+			if ($i == $current) $append = ' selected="selected"'; else $append = '';
+			$reply .= '<option value="'.$i.'"'.$append.'>'.$config->getNode('deliveryTier'.$i,'name').' (£'.$config->getNode('deliveryTier'.$i,'value').')</option>';
+			$i++;
+		}
+		$reply .= '</select>';
+		return $reply;
+	}
 	
 }
 ?>

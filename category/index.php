@@ -4,7 +4,7 @@ require_once dirname(__FILE__).'/../preload.php';
 loadClass('Feature');
 loadClass('Paginator');
 
-if (isset($_GET['id'])) $cid = $_GET['id']; else $cid = 1; //Get Category ID
+if (isset($_GET['id'])) $cid = intval($_GET['id']); else $cid = 1; //Get Category ID
 if (isset($_GET['sort'])) $sort = strtolower(htmlentities($_GET['sort'],ENT_QUOTES)); else $sort = "name";
 //Get sort field (name, id, popularity)
 if (isset($_GET['sortType'])) $sortType = strtoupper(htmlentities($_GET['sortType'])); else $sortType = "PRODUCTS";
@@ -20,7 +20,6 @@ $_DESCRIPTION = str_replace('\'','',strip_tags($_DESCRIPTION[0]));
 require_once dirname(__FILE__)."/../header.php";
 
 ob_start(); //Template Buffer
-
 echo "<a href='".$config->getNode('paths','root')."'>Home</a> -> ".$category->getBreadcrumb();
 ?><div id="page_text"><h3 id="page_title"><?php echo $category->getName();?></h3>
     <p><?php echo $category->getDescription();?></p><?php

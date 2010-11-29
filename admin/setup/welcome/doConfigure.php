@@ -28,6 +28,7 @@ switch ($_GET['mode']) {
 		$_SESSION['stage']['tabs'] = true;
 		$_SESSION['stage']['homePage'] = true;
 		$_SESSION['stage']['viewItem'] = true;
+		$_SESSION['stage']['delivery'] = true;
 		break;
 	case "tailored":
 		//Tailored Mode
@@ -54,6 +55,7 @@ switch ($_GET['mode']) {
 		$_SESSION['stage']['tabs'] = isset($_POST['tabs']);
 		$_SESSION['stage']['homePage'] = isset($_POST['homePage']);
 		$_SESSION['stage']['viewItem'] = isset($_POST['viewItem']);
+		$_SESSION['stage']['delivery'] = isset($_POST['delivery']);
 		break;
 }
 
@@ -405,6 +407,12 @@ $_SESSION['config']->setNode("homePage", "featuredItems", true, "Show Featured I
 $_SESSION['config']->setNode("homePage", "popularItems", true, "Show Popular Items");
 $_SESSION['config']->setNode("homePage", "latestNews", true, "Show Latest News");
 $_SESSION['config']->setNode("homePage", "techTips", true, "Show Tech Tips");
+
+//Delivery Options
+$_SESSION['config']->addTree('delivery', 'Delivery Options');
+
+//Accepts: custom, perItem, single
+$_SESSION['config']->setNode('delivery', 'deliveryType', 'custom', 'Delivery Cost System');
 
 //Save
 $_SESSION['config'] = serialize($_SESSION['config']);

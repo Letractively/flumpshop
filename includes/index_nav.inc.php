@@ -10,9 +10,9 @@ if ($config->isNode('cache','navBar')) {
 	echo "<ul id='categories'>";
 	
 	$categories = $dbConn->query("SELECT id FROM `category` WHERE parent='0' AND enabled='1' ORDER BY weight,name ASC");
-	while ($category = $dbConn->fetch($categories)) {
-		$result = $dbConn->query("SELECT id FROM `category` WHERE parent='".$category['id']."' AND enabled='1' ORDER BY `name` ASC");
-		$cat = new Category($category['id'],'noparent'); //Don't need fullname/breadcrumb
+	while ($row = $dbConn->fetch($categories)) {
+		$result = $dbConn->query("SELECT id FROM `category` WHERE parent='".$row['id']."' AND enabled='1' ORDER BY `name` ASC");
+		$cat = new Category($row['id'],'noparent'); //Don't need fullname/breadcrumb
 		echo "<li onclick='window.location = \"".$cat->getURL()."\";'><a class='category' href='".$cat->getURL()."'>".ucwords(strtolower($cat->getName()))."</a>";
 		
 		//Subcat Menu
