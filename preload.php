@@ -1,4 +1,5 @@
 <?php
+if (!defined('PAGE_TYPE')) define('PAGE_TYPE','Unspecified');
 //Some headers sent later & gzip compression
 ob_start('ob_gzhandler');
 header('Content-Type: text/html;charset=UTF-8');
@@ -97,7 +98,8 @@ if ($_SETUP === false) {
 	if ($dbConn->rows($session) === 0) {
 		//Build Session
 		//Web Crawler Exception
-		if (array_search($_SERVER['HTTP_USER_AGENT'],explode($config->getNode('server','crawlerAgents'),'|'))) {
+		if (isset($_SERVER['HTTP_USER_AGENT'])
+				and array_search($_SERVER['HTTP_USER_AGENT'],explode($config->getNode('server','crawlerAgents'),'|'))) {
 			$config->setNode('temp','crawler',true);
 			$basket = new Cart(0);
 			$basket->lock();

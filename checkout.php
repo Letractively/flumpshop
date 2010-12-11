@@ -9,6 +9,12 @@ if (isset($vars[0]) && is_string($vars[0])) {
 }
 require_once(dirname(__FILE__)."/preload.php"); require_once dirname(__FILE__)."/header.php";
 
+//Check the basket isn't empty
+if ($basket->getItems() === 0) {
+	header('Location: /basket.php');
+	exit;
+}
+
 ob_start(); //Template Buffer
 
 //Recalculate

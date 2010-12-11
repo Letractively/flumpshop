@@ -322,7 +322,7 @@ class Item {
 					}
 				}
 				//Stock
-				if ($this->getStock() != 0) $reply .= "<div class='ui-state-default'><span id='itemStock'>".$this->getStock()."</span> Available. <a href='".$config->getNode('paths','root')."/basket.php?item=".$this->getID()."'>Add to Basket</a></div>";
+				if ($this->getStock() != 0) $reply .= "<div class='ui-state-default'><span id='itemStock'>".$this->getStock()."</span> Available. <span class='ui-icon ui-icon-cart'></span><a href='".$config->getNode('paths','root')."/basket.php?item=".$this->getID()."'>Add to Basket</a></div>";
 				else $reply .= "<div class='ui-state-disabled'><span id='itemStock'>Out of Stock.</span></div>";
 			}
 			//Description
@@ -347,7 +347,7 @@ class Item {
 			//Remove Icon
 			$reply .= "<span class='ui-icon ui-icon-trash' onclick='removeItem(".$this->getID().");' title='Remove' style='cursor: pointer;'>&nbsp;</span>";
 			//Quantity Icon
-			$reply .= "<span class='ui-icon ui-icon-plus' onclick='editQuantity(".$this->getID().",".$int.",".$this->getStock().");' title='Quantity' style='cursor: pointer;'>&nbsp;</span>";
+			$reply .= "<span class='ui-icon ui-icon-plusthick' onclick='editQuantity(".$this->getID().",".$int.",".$this->getStock().");' title='Quantity' style='cursor: pointer;'>&nbsp;</span>";
 			$reply .= "</td>";
 			$reply .= "<td>&pound;".$this->itemPrice."</td>";
 			$reply .= "<td>$int</td>";
