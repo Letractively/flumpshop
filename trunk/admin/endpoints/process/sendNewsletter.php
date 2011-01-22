@@ -2,7 +2,6 @@
 $USR_REQUIREMENT = "can_contact_customers";
 
 require_once "../header.php";
-loadClass('Mail');
 //Takes the preview snapshot stored in $_SESSION and emails it to everyone.
 
 /*
@@ -14,27 +13,26 @@ $_SESSION['newsletter_cache'] contains the body
 $dbConn->query("INSERT INTO `newsletters` (title,body) VALUES ('".htmlentities($_SESSION['newsletter_title'],ENT_QUOTES)."','".htmlentities($_SESSION['newsletter_cache'],ENT_QUOTES)."')");
 //Get the id
 $mailingid = $dbConn->insert_id();
-//Place the mailerid into the email
-$_SESSION['newsletter_cache'] = str_replace('[[[mailing_id]]]',$mailingid,$_SESSION['newsletter_cache']);
 
-//Load the SMTP connection
-$mailer = new Mail();
+//Update the mailer so the ID is replaced
+$dbConn->query('UPDATE `newsletters`
+	SET body="'.str_replace(array('"', '[[[mailing_id]]]'),array('""', strval($mailingid)),$_SESSION['newsletter_cache']).'"
+	WHERE newsletter_id='.$mailingid.' LIMIT 1');
 
-//Get a list of non-archived customers with contact enabled
-$result = $dbConn->query('SELECT name,email FROM `customers` WHERE archive=0 AND can_contact=1');
+//Add the newsletter sends to the queue
+$dbConn->query('INSERT INTO newsletter_queue (name,email,newsletter_id) SELECT name,email, "'.$mailingid.'" FROM `customers` WHERE archive=0 AND can_contact=1');
+$_SESSION['messageTotal'] = $dbConn->affected_rows();
+
 
 //Count the number of emails sent
-$sent = 0;
-//Keep track of sent addresses
-$used_addresses = array();
-//Send the email to each of these customers
-while ($row = $result->fetch_array()) {
-	if (!array_search($row['email'],$used_addresses)) {
-		//Prevents duplicate emails
-		$used_addresses[] = $row['email'];
-		$mailer->send($row['name'], $row['email'], $_SESSION['newsletter_title'], $_SESSION['newsletter_cache']);
-		$sent++;
-	}
+$_SESSION['messageCounter'] = 0;
+?><h1>Sending Newsletter</h1>
+<p>Flumpshop has now added the newsletter to its archives and is distributing it as we speak.</p>
+<p>For fastest sending times, keep this window open as it will send emails more quickly.</p>
+<div id="progress">Flumpshop is sending the first batch of emails. This newsletter will be sent to a total of <?php echo $_SESSION['messageTotal'];?> recipients.</div>
+<script type="text/javascript">
+function processEmails() {
+	$('#progress').load('../advanced/processMailQueue.php?time=10',function(){processEmails()});
 }
-?><h1>Sent</h1>
-<p>Your newsletter has been sent to <?php echo $sent;?> email addresses.</p>
+setTimeout("processEmails();",200);
+</script>
