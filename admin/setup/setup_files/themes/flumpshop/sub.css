@@ -1,0 +1,10 @@
+@charset "utf-8";
+.list_subcat{list-style:none;padding-bottom:3em}
+#q{width:300px}
+#item_image_container{padding-right:1em;display:inline-table;width:150px!important}
+#cat_item_container{width:100%}
+#cat_item_container table{display:inline-table;clear:none;height:200px}
+#item_details{width:630px!important;display:inline-table!important}
+#content_container ul{padding-left:20px}
+#sort-content{border:1px solid #009;border-bottom:none}
+#sort-types-list li{display:inline-block}
