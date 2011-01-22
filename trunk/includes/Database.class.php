@@ -308,6 +308,15 @@ class MySQL_Database extends Database {
 		}
 		return mysqli_insert_id($this->linkid);
 	}
+
+	/**
+	 * Gets the number of rows affected by the last operation
+	 * @since 1.2
+	 * @return int The number of rows affected by the last operation
+	 */
+	function affected_rows() {
+		return $this->linkid->affected_rows;
+	}
 	
 	/**
     * The version of the MySQL Server.
