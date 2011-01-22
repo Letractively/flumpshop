@@ -172,6 +172,7 @@ Please enter your username and password to continue...
             <a href="endpoints/advanced/upload.php" onclick='loader("Loading Content...");' target="main">File Upload</a>
 			<a href="endpoints/advanced/import.php" onclick='loader("Loading Content...");' target="main">Import</a>
             <a href="logs" onclick='loader("Loading Content...");' target="main">Log Viewer</a>
+			<a href="endpoints/advanced/mailQueue.php" onclick="loader('Loading Content...');" target="main">Mail Queue</a>
             <a href="endpoints/advanced/phpinfo.php" onclick='loader("Loading Content...");' target="main">PHP Info</a>
             <a href="endpoints/advanced/recreateImages.php" onclick='loader("Loading Content...");' target="main">Rebuild Images</a>
 			<a href="endpoints/advanced/userManager.php" onclick='loader("Loading Content...");' target="main">User Manager</a>
