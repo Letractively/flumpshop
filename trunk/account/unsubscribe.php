@@ -1,6 +1,6 @@
 <?php
 require_once "../header.php";
-
+ob_start();
 if (isset($_GET['do'])) {
 	//The form has been submitted
 	$email = htmlentities($_POST['email'],ENT_QUOTES);
@@ -17,5 +17,6 @@ if (isset($_GET['do'])) {
 <script type="text/javascript">
 $('#unsubform').validate();
 </script><?php
+templateContent();
 require_once "../footer.php";
 ?>
