@@ -1,0 +1,50 @@
+body, a, a:visited {
+	background-color: #1e2b5e;
+	color: #FFF;
+	/*border-bottom: 2px inset #FFF;*/
+}
+
+h1 {
+	font: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 16pt;
+	padding: 5px 0 0 0;
+	margin: 0;
+}
+
+h1.title {
+	position: absolute;
+	top: 0;
+}
+
+.version {
+	font: Verdana, Geneva, sans-serif;
+	padding: 0;
+	margin: 0;
+	position: absolute;
+	top: 30px;
+}
+
+.right {
+	position: fixed;
+	top: 0;
+	text-align: right;
+	right: 5px;
+}
+
+.right .header2 {
+	color: #c43131;
+}
+
+.right p {
+	padding: 0;
+	margin: 0;
+}
+
+a, a:visited {
+	text-decoration: underline;
+	border: none;
+}
+
+a:hover {
+	text-decoration: none;
+}

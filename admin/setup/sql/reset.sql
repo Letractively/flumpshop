@@ -1,0 +1,2 @@
+DELETE FROM cache;
+DELETE FROM stats;
