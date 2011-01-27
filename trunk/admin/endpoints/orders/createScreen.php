@@ -10,7 +10,8 @@ require_once "../header.php";
 loadClass('FormHelper');
 $formHelper = new FormHelper();
 
-?><style>
+?><style type="text/css">
+td label, legend, #itemsSummaryTable td, #orderItemsTable td{color:#000!important}
 input:focus {
 	color: #FFF;
 	font-weight:bolder
