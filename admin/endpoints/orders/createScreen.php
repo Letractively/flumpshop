@@ -187,7 +187,7 @@ var validObject = {
 			required: "#noShipping:not(#noShipping:checked)"
 		},
 		customerShippingPostcode: {
-			required: "#noShipping:not(#noShipping:checked)",
+			required: "#noShipping:not(#noShipping:checked)"
 			//postcode:true
 		},
 		customerShippingCountry: {
