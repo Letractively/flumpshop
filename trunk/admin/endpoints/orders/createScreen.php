@@ -10,6 +10,10 @@ require_once "../header.php";
 loadClass('FormHelper');
 $formHelper = new FormHelper();
 
+if (isset($_GET['id'])) {
+	die('<div class="ui-state-error">Sorry! This form currently cannot edit orders. We\'re working on adding this functionality soon.</div>');
+}
+
 ?><style type="text/css">
 td label, legend, #itemsSummaryTable td, #orderItemsTable td{color:#000!important}
 input:focus {
