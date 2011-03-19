@@ -7,13 +7,16 @@ $id = intval($_POST['id']);
 $name = str_replace("'","''",$_POST['name']);
 $description = str_replace("'","''",$_POST['description']);
 $parent = intval($_POST['parent']);
+$searchable = isset($_POST['searchable']);
 
 $status = "";
 //Update main category row
 if ($name == "") {
 	$status .= "<div class='ui-state-error'><span class='ui-icon ui-icon-alert'></span>'Name' is a required field</div>";
 } else {
-	if ($dbConn->query("UPDATE `category` SET name='$name', description='$description', parent='$parent' WHERE id='$id' LIMIT 1")) {
+	if ($dbConn->query("UPDATE `category`
+			SET name='$name', description='$description', parent='$parent', searchable='$searchable'
+			WHERE id='$id' LIMIT 1")) {
 		$status .= '<div class="ui-state-highlight"><span class="ui-icon ui-icon-circle-check"></span>Category Updated</div>';
 	} else {
 		$status .= '<div class="ui-state-error"><span class="ui-icon ui-icon-alert"></span>Failed to save category changes</div>';

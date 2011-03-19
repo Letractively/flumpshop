@@ -20,16 +20,10 @@
 *
 *
 *  @Name Category.class.php
-*  @Version 1.1
-*  @author Lloyd Wallis <lloyd@theflump.com>
-*  @copyright Copyright (c) 2009-2010, Lloyd Wallis
+*  @Version 1.02
+*  @author Lloyd Wallis <flump5281@gmail.com>
+*  @copyright Copyright (c) 2009-2011, Lloyd Wallis
 *  @package Flumpshop
-*
-*  Version 1.1
-*  - Added the getProducts() function to return a list of products in the category
-*  - Added the setKeywords() function to set the category keywords
-*  - Added the getKeywords() function to get the category keywords
-*
 */
 
 class Category {
@@ -70,6 +64,11 @@ class Category {
 	* @since 1.1
 	*/
 	var $keywords;
+	/**
+	 * @var bool Stores whether the category should have a 'search' box
+	 * @since 1.02
+	 */
+	var $searchable = true;
 	
 	/**
 	* Instantiates a Category object for the given ID
@@ -106,6 +105,7 @@ class Category {
 			$this->parent = $result['parent'];
 			$this->weight = $result['weight'];
 			$this->keywords = $result['keywords'];
+			$this->searchable = $result['searchable'];
 			if (isset($result['enabled'])) $this->enabled = $result['enabled'];
 		}
 	}

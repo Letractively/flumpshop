@@ -65,7 +65,14 @@ require_once dirname(__FILE__)."/../header.php";
 	</select></label>
 </div>
 
-<div class="ui-widget-header">4. Create the Category</div>
+<div class="ui-widget-header">4. Set Some Options</div>
+<div class="ui-widget-content">
+	<p>Sometimes, you might want to disable the sorting or searching options on a category. Uncheck the box below if you want to do this for the new category.</p>
+	<label for="searchable">Make category searchable
+	<input type="checkbox" name="searchable" id="searchable" checked="checked" /></label>
+</div>
+
+<div class="ui-widget-header">5. Create the Category</div>
 <div class="ui-widget-content">
 	<p>Great, once you're sure the category's ready to go, click the Create button below to create it. You can always change it later if you don't like it.</p>
 	<input type="submit" value="Create" name="submit" id="submit" style="font-size: 13px; padding: .2em .4em;" onclick="$('#description').val(tinyMCE.get('description').getContent());return true" />

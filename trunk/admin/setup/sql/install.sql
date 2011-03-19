@@ -77,6 +77,7 @@ CREATE TABLE `category` (
   `enabled` tinyint(1) NOT NULL DEFAULT '1',
   `weight` tinyint(2) NOT NULL DEFAULT '0',
   `keywords` TEXT NULL DEFAULT NULL,
+  `searchable` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `parent` (`parent`)
 );
@@ -239,7 +240,7 @@ CREATE TABLE `products` (
   PRIMARY KEY (`id`)
 );
 
-CREATE  TABLE IF NOT EXISTS `flumpshop`.`product_popular_blacklist` (
+CREATE TABLE `product_popular_blacklist` (
   `id` INT(11) UNSIGNED NOT NULL ,
   PRIMARY KEY (`id`) );
 
