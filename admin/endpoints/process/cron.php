@@ -11,6 +11,15 @@ while ($row = $dbConn->fetch($result)) {
 	$dbConn->query("UPDATE `products` SET stock=stock+$quantity WHERE id=$item LIMIT 1");
 }
 
+//Clear session/basket data
+$dbConn->query('DELETE FROM sessions WHERE DATEDIFF(CURRENT_TIMESTAMP,active) > 1');
+
+$dbConn->query('DELETE FROM basket WHERE
+	(SELECT COUNT(*) FROM orders WHERE orders.id = basket.id LIMIT 1) = 0
+	AND (SELECT COUNT(*) FROM sessions WHERE sessions.basket = basket.id LIMIT 1) = 0
+	AND basket.`locked` = 0
+');
+
 $dbConn->query("DELETE FROM `reserve` WHERE expire<='".$initTime."'");
 
 /**
