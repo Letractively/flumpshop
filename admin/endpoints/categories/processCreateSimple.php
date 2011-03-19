@@ -5,12 +5,14 @@ require_once dirname(__FILE__)."/../header.php";
 $name = str_replace("'","''",$_POST['name']);
 $description = str_replace("'","''",$_POST['description']);
 $parent = str_replace("'","''",$_POST['parent']);
+$searchable = isset($_POST['searchable']);
 
 $status = "";
 if ($name == "") {
 	$status .= "<div class='ui-state-error'><span class='ui-icon ui-icon-alert'></span>'Name' is a required field.</div>";
 } else {
-	if ($dbConn->query("INSERT INTO `category` (name,description,parent) VALUES ('$name','$description','$parent')")) {
+	if ($dbConn->query("INSERT INTO `category` (name,description,parent,searchable)
+			VALUES ('$name','$description','$parent','$searchable')")) {
 		$status .= "<div class='ui-state-highlight'><span class='ui-icon ui-icon-circle-check'></span>";
 		$status .= "Category Added to database with ID ".$dbConn->insert_id().". Next steps:<ol>";
 		$status .= "<li><a href='../categories/createSimple.php'>Create another category</a></li>";

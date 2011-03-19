@@ -125,6 +125,11 @@ if (isset($_GET['return']) and $_GET['return'] == "report") {
 		unset($parent);
 	}
 	?>
+<tr>
+	<td><label for="searchable">Make category searchable</label></td>
+	<td><input type="checkbox" name="searchable" id="searchable" <?php echo ($category->searchable) ? 'checked="checked"' : ''?> /></td>
+	<td>If unchecked, this category will not have a search box or the ability to sort items</td>
+</tr>
 <tr class="featureRow"><td colspan="3"><div class="ui-state-highlight"><span class="ui-icon ui-icon-info"></span>Please note that changing the Parent Category above does not update the inherited features list until you save the changes.</div><hr /></td></tr>
 </table>
 <input type="submit" value="Save Category" name="submit" id="submit" style="font-size: 13px; padding: .2em .4em;" />
