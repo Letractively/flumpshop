@@ -20,9 +20,9 @@
  *
  *
  *  @Name Cart.class.php
- *  @Version 1.0
- *  @author Lloyd Wallis <lloyd@theflump.com>
- *  @copyright Copyright (c) 2009-2010, Lloyd Wallis
+ *  @Version 1.01
+ *  @author Lloyd Wallis <flump5281@gmail.com>
+ *  @copyright Copyright (c) 2009-2011, Lloyd Wallis
  *  @package Flumpshop
  */
 class Cart {
@@ -37,6 +37,12 @@ class Cart {
 	var $vatEnabled = true;
 	var $keys = array();
 	var $deliveryTier = NULL;
+	/**
+	 * This is set to false of the Contructor SELECT returns no rows
+	 * @since 1.01
+	 * @var bool Whether the basket exists
+	 */
+	var $exists = true;
 
 	/**
 	 * Cart constructor.
@@ -61,6 +67,7 @@ class Cart {
 
 			if ($dbConn->rows($query) === 0) {
 				//The basket doesn't exist - Exit
+				$this->exists = false;
 				return;
 			} else {
 				//Set Basket Properties
