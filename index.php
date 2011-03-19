@@ -36,14 +36,35 @@ if ($config->getNode("homePage", "featuredItems")) { //Check Enabled
 } //End Featured Items
 
 // Popular Items
+/**
+ * @todo Cache this. It can now take >20 queries to generate (ouch)
+ */
 if ($config->getNode("homePage", "popularItems")) { //Check Enabled
 	//Find most popular items
-	$popular = $stats->getHighestStat("item%Hits",2);
+	$popular = $stats->getHighestStat("item%Hits",12); //Allow up to 10 from blacklist
 	if (empty($popular)) {
 		//No statistics have been gathered yet
 		$popular_item_1 = $config->getNode("messages", "popularItemsPlaceholder");
 		$popular_item_2 = "";
 	} else {
+		$i = 0;
+		$matches = 0;
+		while ($matches < 2) {
+			$varname = 'popular_item_'.($matches+1);
+			//Parse the ID from the cached statistic
+			$popular_id = intval(preg_replace("/item([0-9]*)Hits/","$1",$popular[$i]));
+			//Check if it is in the blacklist
+			if ($dbConn->rows($dbConn->query('SELECT id FROM product_popular_blacklist WHERE id='.$popular_id.' LIMIT 1')) == 0) {
+				//Not blacklisted. Add as popular item
+				$item = new Item($popular_id);
+				$$varname = $item->getDetails('INDEX');
+				unset($item);
+				//Increment the matches
+				$matches++;
+			}
+			//Increment the current idex
+			$i++;
+		}
 		//First Item
 		$popular1 = intval(preg_replace("/item([0-9]*)Hits/","$1",$popular[0]));
 		$item = new Item($popular1);

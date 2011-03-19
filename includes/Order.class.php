@@ -20,9 +20,9 @@
 *
 *
 *  @Name        : Order.class.php
-*  @Version     : 1.0
-*  @author		: Lloyd Wallis <lloyd@theflump.com>
-*  @copyright	: Copyright (c) 2009-2010, Lloyd Wallis
+*  @Version     : 1.01
+*  @author		: Lloyd Wallis <flump5281@gmail.com>
+*  @copyright	: Copyright (c) 2009-2011, Lloyd Wallis
 */
 
 class Order {
@@ -32,6 +32,17 @@ class Order {
 	var $token;
 	var $billing;
 	var $shipping;
+	/**
+	 * This is set to false if the Constructor's SELECT query returns 0 rows, i.e. there is not order with that ID
+	 * @since 1.01
+	 * @var bool Whether the order exists
+	 */
+	var $exists;
+	/**
+	 * @since 1.01
+	 * @var int The ID of the ACP user this order is assigned to
+	 */
+	var $assigned_to;
 	
 	/**
     * Order constructor.
@@ -42,13 +53,34 @@ class Order {
 	function Order($id) {
 		global $dbConn;
 		$this->id = $id;
-		$result = $dbConn->query("SELECT * FROM `orders` WHERE id=$this->id LIMIT 1");
+		$result = $dbConn->query('SELECT * FROM `orders` WHERE id="'.$this->id.'" LIMIT 1');
+		$this->exists = ($dbConn->rows($result) == 1);
+		if (!$this->exists) return; //Stop here if it wasn't found
 		$result = $dbConn->fetch($result);
 		$this->basket = $result['basket'];
 		$this->status = $result['status'];
 		$this->token = $result['token'];
 		$this->billing = $result['billing'];
 		$this->shipping = $result['shipping'];
+		$this->assigned_to = $result['assignedTo'];
+	}
+
+	/**
+	 * Returns whether the order this object represents exists
+	 * @since 1.01
+	 * @return bool If the order exists
+	 */
+	function getExists() {
+		return $this->exists;
+	}
+
+	/**
+	 * Outputs the basket object for this order
+	 * @since 1.01
+	 * @return Cart a Flumpshop Cart object
+	 */
+	function getBasketObj() {
+		return new Cart($this->basket);
 	}
 	
 	/**
@@ -147,7 +179,8 @@ class Order {
 		$shipping->__destruct();
 		unset($billing,$shipping); //Unset after due to potential alias
 		
-		$dbConn->query('INSERT INTO orders (basket,status,billing,shipping) VALUES ('.$basketID.',"'.$orderStatus.'",'.$billingID.','.$shippingID.')');
+		$dbConn->query('INSERT INTO orders (basket,status,billing,shipping,assignedTo)
+			VALUES ('.$basketID.',"'.$orderStatus.'",'.$billingID.','.$shippingID.','.$GLOBALS['acp_uid'].')');
 		
 		return new Order($dbConn->insert_id());
 	}
