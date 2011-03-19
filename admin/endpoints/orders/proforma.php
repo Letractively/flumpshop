@@ -27,7 +27,7 @@
 
 //Minimalist load - predefined batch loaders may output data
 if (!isset($_SESSION)) session_start();
-require '../../../fpdf/fpdf.php';
+require '../../../includes/fpdf.php';
 require '../../../includes/vars.inc.php';
 require '../../../includes/Database.class.php';
 require '../../../includes/Customer.class.php';
@@ -39,8 +39,12 @@ $dbConn = db_factory();
 
 acpusr_validate("CAN_CREATE_ORDERS") or die();
 
-//Build the order from posted data
-$order = Order::createFromOrderScreen();
+//Build the order from posted data (or GET ID)
+if (!isset($_GET['id'])) {
+	$order = Order::createFromOrderScreen();
+} else {
+	$order = new Order(intval($_GET['id']));
+}
 
 //Load the Order Details
 
@@ -179,11 +183,13 @@ $pdf->Cell(20,4,number_format($totalPrice,2),1,1,"R");
 
 // VAT
 $salesTax = $totalPrice*($config->getNode("site","vat")/100);
-$pdf->Cell(120,4,"",0);
-$pdf->SetFont("","B");
-$pdf->Cell(40,4,"VAT @".$config->getNode("site","vat")."%",1,0,"R");
-$pdf->SetFont("","");
-$pdf->Cell(20,4,number_format($salesTax,2),1,1,"R");
+if ($config->getNode('site','vat') != 0) {
+	$pdf->Cell(120,4,"",0);
+	$pdf->SetFont("","B");
+	$pdf->Cell(40,4,"VAT @".$config->getNode("site","vat")."%",1,0,"R");
+	$pdf->SetFont("","");
+	$pdf->Cell(20,4,number_format($salesTax,2),1,1,"R");
+}
 
 // Shipping & Handling
 $pdf->Cell(120,4,"",0);
