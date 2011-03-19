@@ -237,7 +237,11 @@ CREATE TABLE `products` (
   `cost` DECIMAL(9,2) DEFAULT NULL,
   `keywords` TEXT NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM;
+);
+
+CREATE  TABLE IF NOT EXISTS `flumpshop`.`product_popular_blacklist` (
+  `id` INT(11) UNSIGNED NOT NULL ,
+  PRIMARY KEY (`id`) );
 
 CREATE TABLE `reserve` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
