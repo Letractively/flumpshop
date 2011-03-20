@@ -168,10 +168,8 @@ Please enter your username and password to continue...
 			<a href="endpoints/process/cron.php" onclick='loader("Executing Cron Script...");' target="main">Cron Script</a>
 			<a href="endpoints/advanced/execute.php" onclick='loader("Loading Content...");' target="main">Execute PHP</a>
 			<a href="endpoints/advanced/query.php" onclick='loader("Loading Content...");' target="main">Execute SQL</a>
-			<a href="endpoints/advanced/export.php" onclick='loader("Loading Content...");' target="main">Export</a>
 			<a href="endpoints/advanced/bugs.php" onclick='loader("Loading Content...");' target="main">Feedback</a>
             <a href="endpoints/advanced/upload.php" onclick='loader("Loading Content...");' target="main">File Upload</a>
-			<a href="endpoints/advanced/import.php" onclick='loader("Loading Content...");' target="main">Import</a>
             <a href="logs" onclick='loader("Loading Content...");' target="main">Log Viewer</a>
 			<a href="endpoints/advanced/mailQueue.php" onclick="loader('Loading Content...');" target="main">Mail Queue</a>
 			<a href="endpoints/advanced/popularBlacklist.php" onclick="loader('Loading Content...');" target="main">Popular Items Blacklist</a>
