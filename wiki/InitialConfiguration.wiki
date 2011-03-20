@@ -1,6 +1,0 @@
-#summary Configuration Steps that aren't included in the Setup Wizard
-#labels Phase-Deploy
-
-= Introduction =
-
-The [SetupWizard Setup Wizard] may not always be completely up to date. For this reason, this page contains important additional steps that you may need to take. However, at the current time, there are no showstopper configuration issues. However, is should be noted that there are some optional stages that have not yet been written, but these can all be configured in the [ConfigurationManager Configuration Manager].
