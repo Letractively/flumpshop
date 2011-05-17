@@ -23,6 +23,9 @@ foreach ($vars as $var) {
 		}
 	}
 }
+
+include dirname(__FILE__).'/../advanced/clearCache.php';
+
 ?><div class="ui-state-highlight"><span class="ui-icon ui-icon-circle-check"></span>Configuration Saved</div><?php
 include dirname(__FILE__)."/../advanced/varMan.php";
-?>
+
