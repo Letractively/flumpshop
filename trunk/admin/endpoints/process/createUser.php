@@ -56,4 +56,3 @@ if (!$dbConn->query("INSERT INTO `acp_login` (uname,
 }
 
 header("Location: ../advanced/addUser.php".$errorString);									 
-?>

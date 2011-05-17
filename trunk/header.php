@@ -2,8 +2,8 @@
 require_once dirname(__FILE__).'/preload.php';
 if (!isset($NOCACHE)) {
 	//Cache
-	header('Cache-control: max-age=86400');
-	header('Expires: '.date('D, d M Y H:i:s T',time()+(86400)));
+	//header('Cache-control: max-age=86400');
+	//header('Expires: '.date('D, d M Y H:i:s T',time()+(86400)));
 	header('Pragma: ');
 }
 
@@ -103,4 +103,3 @@ if (file_exists($config->getNode("paths","offlineDir")."/themes/core/".$config->
 }
 //Unset some (not all, user may include them later)
 unset($meta_tags,$title,$css_links,$js_links,$plugin_includes);
-?>
