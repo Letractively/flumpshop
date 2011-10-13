@@ -223,7 +223,7 @@ class Config {
 		//Returns the friendly (human-readable) name of the node or tree
 		debug_message("Getting Friendly Name for $treeName|$nodeName");
 		if ($nodeName != NULL) {
-			return $this->namespaces[$treeName]['varsNames'][$nodeName];
+			return (isset($this->namespaces[$treeName]['varsNames'][$nodeName])?$this->namespaces[$treeName]['varsNames'][$nodeName]:'Element '.$nodeName.' unknown.');
 		} else {
 			return $this->namespaces[$treeName]['friendName'];
 		}
