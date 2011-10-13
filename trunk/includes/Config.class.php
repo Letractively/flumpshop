@@ -225,7 +225,7 @@ class Config {
 		if ($nodeName != NULL) {
 			return (isset($this->namespaces[$treeName]['varsNames'][$nodeName])?$this->namespaces[$treeName]['varsNames'][$nodeName]:'Element '.$nodeName.' unknown.');
 		} else {
-			return $this->namespaces[$treeName]['friendName'];
+			return (isset($this->namespaces[$treeName]['friendName'])?$this->namespaces[$treeName]['friendName']:'Tree '.$treeName.' unknown.');
 		}
 	}
 	
