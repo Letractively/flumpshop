@@ -1,6 +1,6 @@
 <?php
-require_once "preload.php";
 define("PAGE_TYPE","feedback");
+require_once "preload.php";
 $page_title = $config->getNode("messages","sendFeedbackHeader");
 
 require_once dirname(__FILE__)."/header.php";
@@ -21,4 +21,3 @@ ob_start();
 templateContent();
 
 require_once dirname(__FILE__)."/footer.php";
-?>
