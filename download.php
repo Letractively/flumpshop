@@ -1,7 +1,7 @@
 <?php
 $ajaxProvider = true;
 require_once dirname(__FILE__)."/preload.php";
-
+if (!isset($_GET['file'])) exit;
 if (strstr($_GET['file'],"..")) {
 	header("HTTP/1.1 401 Unauthorized");
 	die("You have attempted to leave the scope of the download directory. Access Denied.");
