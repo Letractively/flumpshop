@@ -22,7 +22,7 @@ if ($dbConn->query("INSERT INTO `products` (name,description,price,stock,weight)
 	//Upload Image
 	if (isset($_FILES["image"])) {
 		$item = new Item($id);
-		$error = !$item->saveImage($_FILES["image"]['tmp_name'],$_FILES["imagi"]['type']);
+		$error = !$item->saveImage($_FILES["image"]['tmp_name'],$_FILES["image"]['type']);
 		if ($error) {
 			echo "<div class='ui-state-error'><span class='ui-icon ui-icon-info'></span>The image file you uploaded is not supported.</div>";
 		}
