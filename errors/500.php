@@ -37,7 +37,7 @@ Sorry, I've tried as hard as I can, but I just can't manage to process your requ
 
 <div class="ui-state-error"><span class="ui-icon ui-icon-alert"></span><?php echo base64_decode($_GET['err']); ?></div><br />
 We apologise for the inconvenience caused.<br />
-System Administrator: Click <a href="../admin/setup/index.php"> here</a> to force system reconfiguration.
+<!--System Administrator: Click <a href="../admin/setup/index.php"> here</a> to force system reconfiguration.-->
 
 </div>
 </div>
