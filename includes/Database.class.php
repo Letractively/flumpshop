@@ -197,6 +197,8 @@ class MySQL_Database extends Database {
 			$this->xmlLog($this->lastError,true);
 			trigger_error("MySQL Error: Failed to connect to the MySQL Server: ".$this->lastError);
 			$this->connected = false;
+			header('Location: '.$GLOBALS['config']->getNode('paths','root').'/500.php?config=&error='.base64_encode($this->lastError));
+			exit;
 		} else {
 			$this->connected = true;
 		}
