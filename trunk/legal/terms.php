@@ -1,6 +1,6 @@
 <?php
-require_once "../preload.php";
 define("PAGE_TYPE","termsConditions");
+require_once "../preload.php";
 $page_title = $config->getNode("messages","termsConditionsHeader");
 
 require_once dirname(__FILE__)."/../header.php";
@@ -12,4 +12,3 @@ echo placeholders($config->getNode("messages","termsConditions"));
 templateContent();
 
 require_once dirname(__FILE__)."/../footer.php";
-?>
