@@ -383,6 +383,7 @@ class Item {
 			if (is_array($highlight)) {
 				$return = $this->itemName;
 				foreach ($highlight as $string) {
+				    addslashes($string);
 					$return = preg_replace("/($string)/i","<span class='ui-state-highlight'>$1</span>",$return);
 				}
 				return $return;
@@ -427,6 +428,7 @@ class Item {
 			if (is_array($highlight)) {
 				$return = $this->itemDesc;
 				foreach ($highlight as $string) {
+				    addslashes($string);
 					$return = preg_replace("/($string)/i","<span class='ui-state-highlight'>$1</span>",$return);
 				}
 				return $return;
