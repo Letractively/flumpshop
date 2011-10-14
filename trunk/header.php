@@ -38,21 +38,24 @@ $css_links .= "<link rel='stylesheet' href='".$config->getNode('paths','root')."
 if ($_SUBPAGE == true) {
 	$css_links .= "<link rel='stylesheet' href='".$config->getNode('paths','root')."/style/cssprovider.php?theme=".$config->getNode("site", "theme")."&amp;sub=sub' type='text/css' />";
 }
-// Browser-dependant CSS Overrides
-if (strstr($_SERVER['HTTP_USER_AGENT'],"Opera")) {
-	$css_links .= "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=".$config->getNode("site","theme")."&amp;sub=opera' />";
-}
-if (strstr($_SERVER['HTTP_USER_AGENT'],"MSIE 6.0")) {
-	$css_links .= "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=".$config->getNode("site","theme")."&amp;sub=ie6' />";
-}
-if (strstr($_SERVER['HTTP_USER_AGENT'],"MSIE 7.0")) {
-	$css_links .= "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=".$config->getNode("site","theme")."&amp;sub=ie7' />";
-}
-if (strstr($_SERVER['HTTP_USER_AGENT'],"MSIE 8.0")) {
-	$css_links .= "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=".$config->getNode("site","theme")."&amp;sub=ie8' />";
-}
-if (strstr($_SERVER['HTTP_USER_AGENT'],"MSIE 9.0")) {
-	$css_links .= "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=".$config->getNode("site","theme")."&amp;sub=ie9' />";
+
+if (isset($_SERVER['HTTP_USER_AGENT'])) {
+    // Browser-dependant CSS Overrides
+    if (strstr($_SERVER['HTTP_USER_AGENT'],"Opera")) {
+	    $css_links .= "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=".$config->getNode("site","theme")."&amp;sub=opera' />";
+    }
+    if (strstr($_SERVER['HTTP_USER_AGENT'],"MSIE 6.0")) {
+	    $css_links .= "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=".$config->getNode("site","theme")."&amp;sub=ie6' />";
+    }
+    if (strstr($_SERVER['HTTP_USER_AGENT'],"MSIE 7.0")) {
+	    $css_links .= "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=".$config->getNode("site","theme")."&amp;sub=ie7' />";
+    }
+    if (strstr($_SERVER['HTTP_USER_AGENT'],"MSIE 8.0")) {
+	    $css_links .= "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=".$config->getNode("site","theme")."&amp;sub=ie8' />";
+    }
+    if (strstr($_SERVER['HTTP_USER_AGENT'],"MSIE 9.0")) {
+	    $css_links .= "<link rel='stylesheet' type='text/css' href='".$config->getNode("paths","root")."/style/cssprovider.php?theme=".$config->getNode("site","theme")."&amp;sub=ie9' />";
+    }
 }
 //JS Includes
 $js_links = "<script src='".$config->getNode('paths','root')."/js/jquery.js' type='text/javascript'></script>";
