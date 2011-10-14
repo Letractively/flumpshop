@@ -65,14 +65,15 @@ class Config {
 		$this->setNode('paths','path',dirname(__FILE__));
 	}
 	
-	function addTree($treeName,$friendName = "") {
+	function addTree($treeName,$friendName = "",$purge = true) {
 		//Create a new tree of variables
+		//$purge, if true empties any existing values
 		//Fail if the conf.txt isn't editable
 		if (!$this->editable) return false;
 		//Enter Friendly Name
 		$this->namespaces[$treeName]['friendName'] = $friendName;
 		//Create Tree Array
-		$this->data[$treeName] = array();
+		if ($purge) $this->data[$treeName] = array();
 		//Report Change so that it's saved
 		$this->change = true;
 		//Report Result
