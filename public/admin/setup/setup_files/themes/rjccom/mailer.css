@@ -1,0 +1,8 @@
+@charset "utf-8";
+body{width:100%}
+#content_container{width:800px; left:10%; top:110px; width:80%;}
+.list_subcat{list-style:none;padding-bottom:3em}
+#q{width:300px}
+#item_image_container{padding-right:1em;display:inline-block;float:left}
+#cat_item_container{width:100%}
+#cat_item_container table{display:inline-table;clear:none;height:200px}

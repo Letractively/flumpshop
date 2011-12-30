@@ -1,0 +1,64 @@
+body, a, a:visited {
+	background-color: #1e2b5e;
+	color: #FFF;
+	text-align: center;
+	font: Verdana, Geneva, sans-serif;
+	font-size: 11pt;
+}
+
+.header {
+	color: #FFF;
+	font: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 21pt;
+}
+
+.header2 {
+	color: #c43131;
+}
+
+a, a:visited {
+	text-decoration: underline;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+#navContainer {
+	width: 200px;
+}
+
+h3.ui-accordion-header {
+	background-color: #CFCFCF;
+	text-align: left;
+	padding-left: 25px;
+}
+
+.ui-accordion-content, .ui-accordion-content a {
+	background: none;
+	text-align: left;
+	margin: 0;
+	padding: 0;
+	color: white;
+	overflow:visible;
+}
+
+.ui-accordion-content a {
+	position:relative;left:-20px;width:180px;
+}
+
+.ui-accordion-content-active h4 {
+	padding: 0;
+	margin: 0;
+	font-variant: small-caps;
+}
+
+.ui-accordion-content-active a {
+	display: block;
+	color: white;
+	text-decoration: none;
+}
+
+.ui-accordion-content-active a:hover {
+	color: white;
+}
