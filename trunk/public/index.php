@@ -1,8 +1,11 @@
 <?php
+/**
+ * Set the subpage variable to false. This tells plugins and the core
+ * to load the homepage-only content. Obsolete - PAGE_TYPE == index
+ */
 $_SUBPAGE = false;
 define('PAGE_TYPE','index');
-require_once 'header.php';
-loadClass('Techhelp');
+require_once '../includes/header.php';
 
 // Store content data
 // Title
