@@ -1,253 +1,417 @@
 <?php
 
 /**
-*  Provides global logic and storage for sitewide data
-*
-*  This file is part of Flumpshop.
-*
-*  Flumpshop is free software: you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation, either version 3 of the License, or
-*  (at your option) any later version.
-*
-*  Flumpshop is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  You should have received a copy of the GNU General Public License
-*  along with Flumpshop.  If not, see <http://www.gnu.org/licenses/>.
-*
-*
-*  @Name Config.class.php
-*  @Version 1.0
-*  @author Lloyd Wallis <lloyd@theflump.com>
-*  @copyright Copyright (c) 2009-2010, Lloyd Wallis
-*  @package	Flumpshop
-*/
-
-
+ *  Provides global logic and storage for sitewide data
+ *
+ *  This file is part of Flumpshop.
+ *
+ *  Flumpshop is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Flumpshop is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Flumpshop.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *
+ *  @Name Config.class.php
+ *  @Version 2.0
+ *  @author Lloyd Wallis <flump@flump.me>
+ *  @copyright Copyright (c) 2009-2012, Lloyd Wallis
+ *  @package	Flumpshop
+ */
 class Config {
-	var $name = "Default";
-	var $data = array();
-	var $namespaces = array();
-	var $debug = false;
-	var $editable = true;
-	var $change = false;
-	
-	/**
-    * Config constructor.
-    * @since 1.0
-    * @param string $name Optional. A name to assign to the configuration object. Currently not used. Default "Default".
-	* @param bool $debug Optional. Whether to output debugging data when executiong functions. Default false.
-    * @return void No return value.
-    */
-	function Config($name = "Default",$debug = false) {
-		$this->name = $name;
-		$this->debug = $debug;
-	}
-	
-	function __destruct() {
-		global $_SETUP;
-		//Save the configuration changes if the setup wizard is not running and a non-temp var has been changed
-		$this->clearCache();
-		if ((!isset($_SETUP) or $_SETUP === false) and $this->change) {
-			//Delete temp tree
-			$this->removeTree("temp");
-			file_put_contents($this->getNode('paths','offlineDir')."/conf.txt",serialize($this));
-			file_put_contents($this->getNode('paths','path')."/conf.txt",$this->getNode('paths','offlineDir')."/conf.txt");
-		}
-	}
-	
-	function import() {
-		//Imported. Attempt to learn offline directory
-		$this->setNode('paths',"offlineDir",preg_replace('/\/conf\.txt$/i','',file_get_contents(dirname(__FILE__)."/conf.txt")));
-		$this->setNode('paths','path',dirname(__FILE__));
-	}
-	
-	function addTree($treeName,$friendName = "",$purge = true) {
-		//Create a new tree of variables
-		//$purge, if true empties any existing values
-		//Fail if the conf.txt isn't editable
-		if (!$this->editable) return false;
-		//Enter Friendly Name
-		$this->namespaces[$treeName]['friendName'] = $friendName;
-		//Create Tree Array
-		if ($purge) $this->data[$treeName] = array();
-		//Report Change so that it's saved
-		$this->change = true;
-		//Report Result
-		$this->printDebug("Created Tree $treeName");
-		return true;
-	}
-	
-	function removeTree($treeName) {
-		//Deletes a tree
-		//Fail if conf.txt isn't editable
-		if (!$this->editable and $treeName != "temp") return false;
-		//Remove friendly names
-		unset($this->namespaces[$treeName]);
-		//Remove Data
-		unset($this->data[$treeName]);
-		//Mark as changed
-		if ($treeName != "temp") $this->change = true;
-		//Report Result
-		$this->printDebug("Removed Tree $treeName");
-		return true;
-	}
-	
-	function falseify($tree = NULL) {
-		//Set all booleans to false as unchecked fields aren't sent in forms
-		//Check conf.txt is editable
-		if (!$this->editable) return false;
-		//Null wipes the entire object (all trees)
-		if ($tree == NULL) {
-			foreach ($this->getTrees() as $tree) {
-				foreach ($this->getNodes($tree) as $node) {
-					if ($this->getNode($tree,$node) === true) {
-						$this->setNode($tree,$node,false);
-					}
-				}
-			}
-		} else {
-			foreach ($this->getNodes($tree) as $node) {
-				if ($this->getNode($tree,$node) === true) {
-					$this->setNode($tree,$node,false);
-				}
-			}
-		}
-		//Report Change
-		$this->change = true;
-		return true;
-	}
-	
-	function getTrees() {
-		//Returns a list of all variable trees in the object
-		return array_keys($this->namespaces);
-	}
-	
-	function clearCache() {
-		//Updates cache data to remove expired information
-		$time = time();
-		//Only Check once an hour
-		if (isset($this->namespaces['cache']['nextCheck']) and $this->namespaces['cache']['nextCheck'] > $time) return;
-		
-		$this->change = true;
-		debug_message("Clearing Cache...");
-		global $dbConn;
-		
-		if (is_object($dbConn) && isset($this->namespaces['cache']['expirations'])) { //Don't trigger error if nothing's been cached, ever, or the Database doesn't happen
-			foreach ($this->namespaces['cache']['expirations'] as $nodeName => $timeout) {
-				if ($timeout < $time) {
-					debug_message("Removing $nodeName from cache...");
-					$dbConn->query("DELETE FROM `cache` WHERE id='".$this->data['cache'][$nodeName]."' LIMIT 1");
-					unset($this->data['cache'][$nodeName],$this->namespaces['cache']['expirations'][$nodeName]);
-				}
-			}
-		}
-		
-		//Schedule next check
-		$this->namespaces['cache']['nextCheck'] = $time+3600;
-	}
-	
-	function setNode($treeName,$nodeName,$nodeVal,$friendName = "",$cacheTimeout = 86400) {
-		//Only allow changing of temp vars if the file isn't editable
-		if (!$this->editable && $treeName != "temp") return false;
-		//If the Friendly name hasn't been defined yet, do it now
-		if (!isset($this->namespaces[$treeName]['varsNames'][$nodeName])) {$this->namespaces[$treeName]['varsNames'][$nodeName] = $friendName;}
-		//Report change if not Temp
-		if ($treeName != "temp") $this->change = true;
-		//Magic: Store an expiration time if the tree is cache (default 24hrs)
-		//And actually store the data in the database, and set the value to the ID
-		if ($treeName == "cache") {
-			debug_message("Storing cache data");
-			global $dbConn;
-			
-			$this->namespaces['cache']['expirations'][$nodeName] = time()+$cacheTimeout; //Timeout
-			debug_message("Timeout set to ".$this->namespaces['cache']['expirations'][$nodeName]);
-			
-			if (!$this->isNode('cache',$nodeName)) { //Doesn't Exist Yet
-				debug_message("New cache Data");
-				$dbConn->query("INSERT INTO `cache` (nodeName,cache) VALUES ('".$nodeName."','".str_replace("'","''",$nodeVal)."')");
-				$this->data['cache'][$nodeName] = $dbConn->insert_id();
-				debug_message("New cache ID: ".$dbConn->insert_id());
-			} else { //Already Exists
-				debug_message("Existing cache Data");
-				$dbConn->query("UPDATE `cache` SET cache = '".str_replace("'","''",$nodeVal)."' WHERE id='".$this->getNode('cache',$nodeVal)."' LIMIT 1");
-			}
-		} else { //Not cache
-			//Set Value
-			$this->data[$treeName][$nodeName] = $nodeVal;
-		}
-		//Print the value (change true/false to 1/0)
-		if (is_bool($nodeVal)) $nodeVal = intval($nodeVal);
-		$this->printDebug("Set $nodeName to $nodeVal");
-		//Success
-		return true;
-	}
-	
-	function getNode($treeName,$nodeName) {
-		//Returns the value of a node, or NULL if it doesn't exist
-		if ($treeName == "cache") {
-			//Grab from DB
-			global $dbConn;
-			$result = $dbConn->query("SELECT cache FROM `cache` WHERE nodeName='$nodeName' LIMIT 1");
-			$row = $dbConn->fetch($result);
-			unset($result);
-			return $row['cache'];
-		} else {
-			if ($this->isNode($treeName,$nodeName)) {
-				$value = $this->data[$treeName][$nodeName];
-				return $value;
-			} else {
-				return NULL;
-			}
-		}
-	}
-	
-	function isNode($treeName,$nodeName) {
-		//Checks if the node exists
-		if ($treeName == 'cache') {
-			global $dbConn;
-			return $dbConn->rows($dbConn->query('SELECT nodeName FROM cache WHERE nodeName="'.$nodeName.'" LIMIT 1')) === 1;
-		} else {
-			return isset($this->data[$treeName][$nodeName]);
-		}
-	}
-	
-	function isTree($treeName) {
-		//Checks whether a tree exists
-		return isset($this->data[$treeName]);
-	}
-	
-	function getFriendName($treeName, $nodeName = NULL) {
-		//Returns the friendly (human-readable) name of the node or tree
-		debug_message("Getting Friendly Name for $treeName|$nodeName");
-		if ($nodeName != NULL) {
-			return (isset($this->namespaces[$treeName]['varsNames'][$nodeName])?$this->namespaces[$treeName]['varsNames'][$nodeName]:'Element '.$nodeName.' unknown.');
-		} else {
-			return (isset($this->namespaces[$treeName]['friendName'])?$this->namespaces[$treeName]['friendName']:'Tree '.$treeName.' unknown.');
-		}
-	}
-	
-	function getNodes($treeName) {
-		//Returns a list of nodes in the specified tree
-		return array_keys($this->data[$treeName]);
-	}
-	
-	function printDebug($msg) {
-		//Deprecated - Used to use custom function, now just calls main routine
-		debug_message($msg);
-	}
-	
-	function setEditable($bool) {
-		//Mark whether the conf.txt can be edited
-		$this->editable = $bool;
-	}
-	
-	function getEditable() {
-		//Check if the conf.txt can be edited
-		return $this->editable;
-	}
+
+  /**
+   * The $name variable is the name of the Configuration set - the database
+   * can store multiple unique configurations, and this tells the object which
+   * set should be used.
+   * @var string $name Configuration set name
+   * @since 1.0
+   */
+  private $name = 'Default';
+
+  /**
+   * The $set_id variable contains the internal ID of the set name $name
+   * @var int $set_id Configuration set ID
+   * @since 2.0 
+   */
+  private $set_identifier = 0;
+
+  /**
+   * The $data variable caches elements of the configuration store that have
+   * been retrieved in the object's lifetime so that it doesn't have to query
+   * again if the element is used multiple times
+   * @var array $data Cached configuration store data
+   * @since 1.0
+   */
+  private $data = array();
+
+  /**
+   * The $human_readable array is initialised and used if $commit is false. It
+   * provides temporary storage of human-readable names and descriptions of
+   * configuration values that will be written if $this->commitAll() is called
+   * @var array $human_readable Human readable message for the key-value maps
+   * @since 2.0
+   */
+  private $human_readable;
+
+  /**
+   * The $commit variable defines whether or not the object auto-commits
+   * changes to the configuration into the configuration store. This is useful
+   * for the setup wizard when these requests will just fail, and the object
+   * is stored elsewhere anyway
+   * @var boolean $commit Whether data can be commited to the DB
+   * @since 2.0
+   */
+  private $commit = true;
+
+  /**
+   * Config constructor.
+   * @since 1.0
+   * @param string $name Optional. A name to assign to the configuration object. Currently not used. Default "Default".
+   * @param bool $debug Optional. Whether to output debugging data when executiong functions. Default false.
+   * @return void No return value.
+   */
+  public function Config($name = null, $commit = null) {
+    if (is_null($name))
+      $name = 'Default Configuration';
+    if (is_null($commit))
+      $commit = true;
+
+    $this->name = $name;
+    $this->commit = $commit;
+    if (!$commit)
+      $this->human_readable = array();
+    else {
+      //Get or set the configuration set ID
+      global $dbConn;
+      $dbConn->query('REPLACE INTO config_sets  (set_name)
+        VALUES ("' . $name . '")');
+      $this->set_identifier = (int) $dbConn->insert_id();
+    }
+  }
+
+  /**
+   * Adds a new configuration tree to the configuration store. $description
+   * @param string $treeName The internal name of the new tree
+   * @param string $friendName A human-readable name of the tree
+   * @param boolean $purge If true, any existing values in this tree are deleted
+   * @param string $description A human-readable explanation of the tree
+   * @return type 
+   */
+  public function addTree($treeName, $friendName, $description, $purge = null) {
+    if (is_null($purge))
+      $purge = false;
+
+    //Purge the configuration tree's contents if requested
+    if ($purge)
+      $this->purge_tree($treeName);
+
+    //Replace the Tree configuration data in the database
+    return $this->configure_tree($treeName, $friendName, $description);
+  }
+
+  /**
+   * Purges the given configuration tree, so it has no values within it
+   * @param string $treeName The tree to purge
+   * @return boolean Whether the operation was successful 
+   */
+  private function purge_tree($treeName) {
+    //Report Progress
+    debug_message('Purging Tree ' . $treeName);
+
+    $this->data[$treeName] = array();
+    if ($this->commit) {
+      return (boolean) $db->query('DELETE FROM config_values
+        WHERE config_set="' . $this->getSetID() . '"
+        AND config_tree="' . $treeName . '"');
+    }
+
+    //Report Progress
+    debug_message('Tree will not be purged in Configuation store');
+    return true; //Return true if not committing
+  }
+
+  /**
+   * Inserts or Updates the configuration store tree with the specified values
+   * This is not Configuration Set specific.
+   * @global Database $dbConn Database handle
+   * @param string $treeName The internal name of the tree
+   * @param string $human_name The human-readable name of the tree
+   * @param string $human_description The human-readable description of the tree
+   * @return boolean Whether the operation was successful 
+   * @since 2.0
+   */
+  private function configure_tree($treeName, $human_name, $human_description) {
+    //Report Progress
+    debug_message('Configuring Tree ' . $treeName);
+
+    //If commit is enabled, update the configuration store. Otherwise update the
+    //local config $human_readable
+    if ($this->commit) {
+      global $dbConn;
+      //escape the human-readable strings
+      $human_name = $dbConn->real_escape_string($human_name);
+      $human_description = $dbConn->real_escape_string($human_description);
+      //Run the query, and return if it was successful
+      return (boolean) $dbConn->query('REPLACE INTO config_values_human
+        (config_tree, config_human_name, config_human_description) VALUES
+        ("' . $treeName . '", "' . $human_name . '", "' . $human_description, '"');
+    } else {
+      debug_message('Commit mode disabled. Tree not commited to store.');
+      $this->human_readable[$treeName]['__meta'] = array(
+          'config_human_name' => $human_name,
+          'config_human_description' => $human_description);
+      return true;
+    }
+  }
+
+  /**
+   * Used when submitting the Configuration Manager. Because checkboxes in fields
+   * just don't appear in POST when not checked, the system first sets all
+   * booleans to false, then sets appropriate ones to true.
+   * It is best practice to either start a transaction or disable commits for
+   * this process.
+   * @param string $tree If defined, only this tree will be reset
+   * @return boolean Whether the operation was a success 
+   */
+  public function falseify($tree = NULL) {
+    debug_message('Flumpshop is nullifying the configuration store...');
+    //Null wipes the entire object (all trees)
+    if ($tree == NULL) {
+      foreach ($this->getTrees() as $tree) {
+        $this->falseify($tree);
+      }
+    } else {
+      foreach ($this->getNodes($tree) as $node) {
+        if ($this->getNode($tree, $node) === true) {
+          $this->setNode($tree, $node, false);
+        }
+      }
+    }
+    return true;
+  }
+
+  /**
+   * Returns an alphabetised list of Configuration Trees
+   * @global Database $dbConn The database handle
+   * @return array An array of Configuration trees
+   * @since 1.0
+   */
+  public function getTrees() {
+    //Can't get a complete list as database-free mode is on
+    if (!$this->commit) {
+      return array();
+    }
+
+    global $dbConn;
+    $result = $dbConn->query('SELECT config_tree, config_human_name,
+      config_human_description FROM config_values_human config_key IS NULL
+      ORDER BY config_human_name ASC');
+    $data = array();
+    while ($row = $dbConn->fetch($result)) {
+      $data[] = $row;
+    }
+
+    return $data;
+  }
+
+  /**
+   * Updates the Configuration store element with the given configuration data
+   * @param string $treeName The name of the tree the updated elemend is in
+   * @param string $nodeName The internal name of the element to update
+   * @param mixed $nodeVal The new value of the element
+   * @param string $friendName Optional human-readable name of the element
+   * @param string $description Optional human-readable description of the element
+   * @return boolean Whether the operation was successful 
+   */
+  public function setNode($treeName, $nodeName, $nodeVal, $friendName = null, $description = null) {
+    //Define the node human-readable descriptions, if configured
+    if ($friendName !== null or $description !== null) {
+      $this->defineNode($treeName, $nodeName, $friendName, $description);
+    }
+
+    //Set Value
+    $this->data[$treeName][$nodeName] = $nodeVal;
+    if ($this->commit) {
+      $nodeVal = $dbConn->real_escape_string($nodeVal);
+      return $dbConn->query('REPLACE INTO config_values
+        (config_set, config_tree, config_key, config_value) VALUES
+        (' . $this->getSetID() . ', "' . $treeName . '", "' . $nodeName . '",
+          "' . $nodeVal . '")');
+    }
+    return true;
+  }
+
+  /**
+   * Defines a configuration element in the Configuration store, providing a
+   * human readable name and description.
+   * @global Database $dbConn The database handle
+   * @param string $treeName The tree the element exists in
+   * @param string $nodeName The internal name of the element
+   * @param string $human_name The human-readable name of the element
+   * @param string $description The human-readable description of the element
+   * @return boolean Whether the operation was a success 
+   */
+  private function defineNode($treeName, $nodeName, $human_name, $description) {
+    if (!$this->commit) {
+      //Database mode is disabled. Update local repo only
+      $this->human_readable[$treeName][$nodeName] = array(
+          'config_human_name' => $human_name,
+          'config_human_descripition' => $description
+      );
+      return true;
+    }
+    //Prepare the human-readable values to be SQL safe
+    global $dbConn;
+    $human_name = $dbConn->real_escape_string($human_name);
+    $description = $dbConn->real_escape_string($description);
+
+    //Commit the values and return whether it was successful
+    return (boolean) $dbConn->query('REPLACE INTO config_values_human
+      (config_tree, config_key, config_human_name, config_human_description)
+      VALUES ("' . $treeName, '", "' . $nodeName . '", "' . $human_name .
+                    '", "' . $description . '")');
+  }
+
+  /**
+   * Fetches a property from the Configuration store
+   * @global Database $dbConn The database handle
+   * @param string $treeName The tree the element exists in
+   * @param string $nodeName The name of the element to fetch
+   * @return mixed The configuration value, or null if it doesn't exist 
+   */
+  public function getNode($treeName, $nodeName) {
+    if (isset($this->data[$treeName][$nodeName])) {
+      return $this->data[$treeName][$nodeName];
+    }
+
+    if (!$this->commit)
+      return null;
+
+    global $dbConn;
+    $result = $dbConn->query('SELECT config_value FROM config_values
+      WHERE config_set=' . $this->getSetID() . '
+        AND config_tree="' . $treeName . '"
+          AND config_key="' . $nodeName . '" LIMIT 1');
+
+    if ($dbConn->rows($result) === 0)
+      return null;
+
+    $row = $dbConn->fetch($result);
+    $this->data[$treeName][$nodeName] = $row['config_value'];
+
+    return $row['config_value'];
+  }
+
+  /**
+   * Returns whether the given node is defined in the configuration store
+   * @param string $treeName The tree the node should reside in
+   * @param string $nodeName The internal name of the node to check
+   * @return boolean Whether the configuration value exists 
+   */
+  public function isNode($treeName, $nodeName) {
+    if (isset($this->data[$treeName][$nodeName]))
+      return true;
+    if (!$this->commit)
+      return false;
+
+    return (boolean) $dbConn->rows(
+                    $dbConn->query('SELECT config_name FROM config_values
+              WHERE config_set=' . $this->getSetID() . '
+                AND config_tree="' . $treeName . '"
+                  AND config_key="' . $nodeName . '" LIMIT 1'));
+  }
+
+  /**
+   * Returns if the given string is a valid Configuration store tree
+   * @param string $treeName The internal name of the tree to check
+   * @return boolean Whether the tree exists in the configuration store 
+   */
+  public function isTree($treeName) {
+    if (isset($this->data[$treeName]))
+      return true;
+    if (!$this->commit)
+      return false;
+
+    return (boolean) $dbConn->rows(
+                    $dbConn->query('SELECT config_name FROM config_values
+              WHERE config_set=' . $this->getSetID() . '
+                AND config_tree="' . $treeName . '" LIMIT 1'));
+  }
+
+  /**
+   * Returns the human-readable name of a tree of value
+   * @param string $treeName The tree to fetch, or the tree the node is in
+   * @param string $nodeName Optional. The node to fetch
+   * @return string The human-readable name of the element
+   */
+  public function getFriendName($treeName, $nodeName = null) {
+    //Returns the friendly (human-readable) name of the node or tree
+    debug_message('Getting Friendly Name for '.$treeName.'|'.$nodeName);
+    
+    if (!$this->commit) {
+      //Commit mode is disabled. Check the local cache instead
+      if ($nodeName === null) {
+        return $this->human_readable[$treeName]['__meta']['config_human_name'];
+      } else {
+        return $this->human_readable[$treeName][$nodeName]['config_human_name'];
+      }
+    }
+    
+    //Prepare the where clause for the query
+    if ($nodeName === null) {
+      $where = ' IS NULL';
+    } else {
+      $where = '="'.$nodeName.'"';
+    }
+    
+    $result = $dbConn->query('SELECT config_human_name FROM config_values_human
+      WHERE config_tree="'.$treeName.'" AND config_value'.$nodeName.' LIMIT 1');
+    
+    if ($dbConn->rows($result) === 0) return 'Unknown Element';
+    
+    $row = $dbConn->fetch($result);
+    return $row['config_human_name'];
+  }
+
+  /**
+   * Returns all possible Configuration nodes for the given tree
+   * @global Database $dbConn The database handle
+   * @param string $treeName The internal name of the tree
+   * @return array An array of keys sorted alphabetically by human name 
+   */
+  public function getNodes($treeName) {
+    if (!$this->commit) {
+      //Commit mode disables database usage. Return cached keys only
+      return array_keys($this->data[$treeName]);
+    }
+    
+    global $dbConn;
+    $result = $dbConn->query('SELECT config_key FROM config_values_human
+      WHERE config_tree="'.$treeName.'" ORDER BY config_human_name ASC');
+    
+    $keys = array();
+    
+    while ($row = $dbConn->fetch($result)) {
+      $keys[] = $row['config_key'];
+    }
+    
+    return $keys;
+  }
+
+  /**
+   * The Internal ID of the configuration set
+   * @return int The ID of the Configuration set 
+   */
+  public function getSetID() {
+    return $this->set_identifier;
+  }
+
 }
-?>

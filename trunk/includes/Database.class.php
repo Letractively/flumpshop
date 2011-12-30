@@ -7,7 +7,7 @@
 				 database engines
 *  Version     : 1.1-conf
 *
-*  Copyright (c) 2008-2010 Lloyd Wallis, lloyd@theflump.com
+*  Copyright (c) 2008-2010 Lloyd Wallis, flump@flump.me
 *  
 *  This file is part of Flumpshop.
 *
