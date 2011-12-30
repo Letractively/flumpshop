@@ -21,7 +21,7 @@
 *
 *  @Name Keycode.class.php
 *  @Version 1.0
-*  @author Lloyd Wallis <lloyd@theflump.com>
+*  @author Lloyd Wallis <flump@flump.me>
 *  @copyright Copyright (c) 2009-2010, Lloyd Wallis
 *  @package Flumpshop
 */

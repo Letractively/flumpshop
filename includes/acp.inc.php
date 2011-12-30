@@ -20,8 +20,8 @@
 *
 *  @Name acp.inc.php
 *  @Version 1.0
-*  @author Lloyd Wallis <lloyd@theflump.com>
-*  @copyright Copyright (c) 2009-2010, Lloyd Wallis
+*  @author Lloyd Wallis <flump5281@gmail.com>
+*  @copyright Copyright (c) 2009-2012, Lloyd Wallis
 *  @package Flumpshop
 */
 
