@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  This file is the Controller for the paths stage of the setup wizard.
  *
@@ -24,11 +25,10 @@
  *  @copyright Copyright (c) 2009-2012, Lloyd Wallis
  *  @package Flumpshop
  */
-
-
-require '../../../../includes/setup/header.inc.php';
+require '../../../../includes/setup/lib.inc';
 
 require '../../../../models/setup_stage_paths.inc';
-require '../../../../views/setup_stage.inc';
 
-require_once '../../../../includes/setup/footer.inc.php';
+require '../../../../includes/setup/header.inc.php';
+require '../../../../views/setup_stage.inc';
+require '../../../../includes/setup/footer.inc.php';
