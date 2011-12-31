@@ -264,7 +264,7 @@ class Config {
       //Database mode is disabled. Update local repo only
       $this->human_readable[$treeName][$nodeName] = array(
           'config_human_name' => $human_name,
-          'config_human_descripition' => $description
+          'config_human_description' => $description
       );
       return true;
     }
@@ -354,8 +354,8 @@ class Config {
    */
   public function getFriendName($treeName, $nodeName = null) {
     //Returns the friendly (human-readable) name of the node or tree
-    debug_message('Getting Friendly Name for '.$treeName.'|'.$nodeName);
-    
+    debug_message('Getting Friendly Name for ' . $treeName . '|' . $nodeName);
+
     if (!$this->commit) {
       //Commit mode is disabled. Check the local cache instead
       if ($nodeName === null) {
@@ -364,19 +364,20 @@ class Config {
         return $this->human_readable[$treeName][$nodeName]['config_human_name'];
       }
     }
-    
+
     //Prepare the where clause for the query
     if ($nodeName === null) {
       $where = ' IS NULL';
     } else {
-      $where = '="'.$nodeName.'"';
+      $where = '="' . $nodeName . '"';
     }
-    
+
     $result = $dbConn->query('SELECT config_human_name FROM config_values_human
-      WHERE config_tree="'.$treeName.'" AND config_value'.$nodeName.' LIMIT 1');
-    
-    if ($dbConn->rows($result) === 0) return 'Unknown Element';
-    
+      WHERE config_tree="' . $treeName . '" AND config_value' . $nodeName . ' LIMIT 1');
+
+    if ($dbConn->rows($result) === 0)
+      return 'Unknown Element';
+
     $row = $dbConn->fetch($result);
     return $row['config_human_name'];
   }
@@ -385,24 +386,46 @@ class Config {
    * Returns all possible Configuration nodes for the given tree
    * @global Database $dbConn The database handle
    * @param string $treeName The internal name of the tree
+   * @param array $additional_fields Additional fields to return from the store
    * @return array An array of keys sorted alphabetically by human name 
+   * If $additional_fields is defined, returns an array of arrays
    */
-  public function getNodes($treeName) {
+  public function getNodes($treeName, $additional_fields = array()) {
     if (!$this->commit) {
       //Commit mode disables database usage. Return cached keys only
-      return array_keys($this->data[$treeName]);
+      $data = array_keys($this->data[$treeName]);
+      
+      if (empty($additional_fields)) return $data;
+      
+      $nodes = array();
+      foreach ($data as $key) {
+        $node = $this->human_readable[$treeName][$key];
+        $node['config_key'] = $key;
+        $nodes[] = $node;
+      }
+      return $nodes;
     }
-    
+
+    $fields = 'config_key';
+    foreach ($additional_fields as $additional_field) {
+      $fields .= ',' . $additional_field;
+    }
+
     global $dbConn;
-    $result = $dbConn->query('SELECT config_key FROM config_values_human
-      WHERE config_tree="'.$treeName.'" ORDER BY config_human_name ASC');
-    
+    $result = $dbConn->query('SELECT ' . $fields . ' FROM config_values_human
+      WHERE config_tree="' . $treeName . '" ORDER BY config_human_name ASC');
+
     $keys = array();
-    
+
     while ($row = $dbConn->fetch($result)) {
-      $keys[] = $row['config_key'];
+      //Don't return an array of arrays if there's only 1 field to return
+      if (empty($additional_fields)) {
+        $row = $row['config_key'];
+      }
+      //Append the row
+      $keys[] = $row;
     }
-    
+
     return $keys;
   }
 

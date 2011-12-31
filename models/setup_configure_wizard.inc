@@ -84,30 +84,31 @@ switch ($_GET['mode']) {
 }
 
 //Build sample conf
-$_SESSION['config'] = new Config("Default Configuration", $INIT_DEBUG);
+$_SESSION['config'] = new Config("Default Configuration", false);
 
 //Main Tree
-$_SESSION['config']->addTree("site", "Main Settings");
+$_SESSION['config']->addTree("site", "Main Settings",
+        'This section contains the most important settings for the site, including the second-tier password and the theme.');
 
-$_SESSION['config']->setNode("site", "enabled", true, "Enable Site");
-$_SESSION['config']->setNode("site", "password", md5("123456"), "Admin Password");
-$_SESSION['config']->setNode("site", "vat", 17.5, "VAT Rate");
-$_SESSION['config']->setNode("site", "country", "GB", "Default Country");
-$_SESSION['config']->setNode("site", "shopMode", true, "Shop Mode");
-$_SESSION['config']->setNode("site", "homeTab", true, "Home Tab");
-$_SESSION['config']->setNode("site", "sendFeedback", true, "Send Feedback");
-$_SESSION['config']->setNode("site", "loginTab", true, "Login Tab");
-$_SESSION['config']->setNode("site", "theme", "flumpshop", "Theme");
-$_SESSION['config']->setNode("site", "templateMode", "core", "Template Mode");
+$_SESSION['config']->setNode("site", "enabled", true, "Enable Site", 'When this option is disabled, any visitors to the site are provided with a "Down for Maintenance" page. You can still access the Admin CP. This is normally changed automatically by the system during upgrades.');
+$_SESSION['config']->setNode("site", "password", sha1("123456"), "Admin Password", 'This is the encrypted second tier password. Unless you know what you\'re doing. Don\'t touch this or you could lock yourself out.');
+$_SESSION['config']->setNode("site", "vat", 20, "VAT Rate", 'This is the default Value Added Tax rate that is applied to orders, as a percentage.');
+$_SESSION['config']->setNode("site", "country", "GB", "Default Country", 'This is the two-letter country code of the default country this site operated in.');
+$_SESSION['config']->setNode("site", "shopMode", true, "Shop Mode", 'When enabled, visitors can see stock levels, add items to a basket, then send them to a checkout.');
+$_SESSION['config']->setNode("site", "homeTab", true, "Home Tab", 'When enabled, the primary navigation bar has a "Home" link on it.');
+$_SESSION['config']->setNode("site", "sendFeedback", true, "Send Feedback", 'When enabled, a "Send Feedback" link is displayed on every page (depending on theme) that allows users to fill in a contact form.');
+$_SESSION['config']->setNode("site", "loginTab", true, "Login Tab", 'When enabled, the primary navigation bar has a "Login" link on it. Disabling this essentially disables access to the user authentication part of the site');
+$_SESSION['config']->setNode("site", "theme", "flumpshop", "Theme", 'This is the theme that is used on the site frontend.');
+$_SESSION['config']->setNode("site", "templateMode", "core", "Template Mode", 'Unless specified by the theme, leave this as "core"');
 
 //Paths and Directories Tree
-$_SESSION['config']->addTree("paths", "Site Paths and Directories");
+$_SESSION['config']->addTree("paths", "Site Paths and Directories", 'This Configuration tree is used to store URLs and file paths that are important to Flumpshop\'s operation.');
 
-$_SESSION['config']->setNode("paths", "root", "http://" . $_SERVER['HTTP_HOST'] . preg_replace('/\/admin\/setup\/.*$/i', '', $_SERVER['REQUEST_URI']), "Home URL");
-$_SESSION['config']->setNode("paths", "secureRoot", "https://" . $_SERVER['HTTP_HOST'] . preg_replace('/\/admin\/setup\/.*$/i', '', $_SERVER['REQUEST_URI']), "Secure Home URL");
-$_SESSION['config']->setNode("paths", "path", preg_replace("/(\\\\|\/)admin(\\\\|\/)setup(.*)/i", "", dirname(__FILE__)), "Home Directory");
-$_SESSION['config']->setNode("paths", "offlineDir", "C:/inetpub/data", "Offline Directory");
-$_SESSION['config']->setNode("paths", "logDir", $_SESSION['config']->getNode("paths", "offlineDir") . "/logs", "Server Log Directory");
+$_SESSION['config']->setNode("paths", "root", "http://" . $_SERVER['HTTP_HOST'] . preg_replace('/\/admin\/setup\/.*$/i', '', $_SERVER['REQUEST_URI']), "Home URL", 'This is the URL of the main directory of the site. This should be automatically worked out, but check it just to be sure. Change this if you move the Flumpshop installation to another website later.');
+$_SESSION['config']->setNode("paths", "secureRoot", "https://" . $_SERVER['HTTP_HOST'] . preg_replace('/\/admin\/setup\/.*$/i', '', $_SERVER['REQUEST_URI']), "Secure Home URL", 'This is the URL of the main directory of the site when using SSL encryption. This should be automatically worked out, but check it just to be sure. Change this if you move the Flumpshop installation to another website later, or if you use a different domain for secure pages, e.g. secure.flump.me');
+$_SESSION['config']->setNode("paths", "path", preg_replace("/(\\\\|\/)models(.*)/i", "", dirname(__FILE__)), "Home Directory",'This is the physical location of the site on the server. This should be automatically worked out, but check it just to be sure. Change this is you ever move the server Flumpshop is hosted on.');
+$_SESSION['config']->setNode("paths", "offlineDir", "C:/inetpub/data", "Offline Directory", 'DEPRECATED. This is the physical location of a directory on the server that Flumpshop has full permissions over. It is highly recommeneded that you ensure this folder cannot be accessed from the Internet. Make sure this directory already exists, as I won\'t create it for you.');
+$_SESSION['config']->setNode("paths", "logDir", $_SESSION['config']->getNode("paths", "offlineDir") . "/logs", "Server Log Directory", 'This is the physical location of a directory that Flumpshop has full permissions over. By default, this is a subdirectory called logs within the Offline Direcory. Make sure this directory already exists, as I won\'t create it for you.');
 
 //Secure Site
 $_SESSION['config']->addTree("secure", "Secure Site Settings");
