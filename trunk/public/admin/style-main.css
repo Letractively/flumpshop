@@ -3,3 +3,12 @@ body {
 }
 a {color:#C43131}
 .featureRow{display:none}
+
+.iconbutton {
+  width: 16px;
+  height: 16px;
+}
+
+input.setup {
+  width: 250px;
+}
