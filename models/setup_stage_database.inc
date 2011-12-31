@@ -20,23 +20,34 @@
  *  along with Flumpshop.  If not, see <http://www.gnu.org/licenses/>.
  *
  *
- *  @Name models/setup_stage_paths.inc
+ *  @Name models/setup_stage_database.inc
  *  @Version 1.00
  *  @author Lloyd Wallis <flump5281@gmail.com>
  *  @copyright Copyright (c) 2009-2012, Lloyd Wallis
  *  @package Flumpshop
  */
-$tree = 'paths';
+$tree = 'database';
 $additional_fields = array('config_human_name', 'config_human_description');
 
 $data = array(
     'heading' => $_SESSION['config']->getFriendName($tree),
-    'form_action' => '../process/doPaths.php',
+    'form_action' => '../process/doDatabase.php',
     'fields' => $_SESSION['config']->getNodes($tree, $additional_fields)
 );
 
 foreach (array_keys($data['fields']) as $i => $j) {
+  //The engine is not an editable field atm
+  if ($data['fields'][$i]['config_key'] === 'type') {
+    unset($data['fields'][$i]);
+    continue;
+  }
+  //Override the password field so it's a password type object
+  if ($data['fields'][$i]['config_key'] === 'password') {
+    $data['fields'][$i]['input_type'] = 'password';
+  } else {
+    //Set all other fields to the default text type
+    $data['fields'][$i]['input_type'] = 'text';
+  }
   $value = $_SESSION['config']->getNode($tree, $data['fields'][$i]['config_key']);
   $data['fields'][$i]['value'] = $value;
-  $data['fields'][$i]['input_type'] = 'text';
 }

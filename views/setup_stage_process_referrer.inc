@@ -1,8 +1,7 @@
 <?php
 /**
- *  This model prepares the necessary data required to render a setup stage view
- * It is a very similar model to the other stages, although each will have minor
- * variations due to the nature of the Configuration elements they are loading
+ *  This view outputs a simple page that referrs the client to the next
+ * controller needed.
  *
  *  This file is part of Flumpshop.
  *
@@ -20,23 +19,18 @@
  *  along with Flumpshop.  If not, see <http://www.gnu.org/licenses/>.
  *
  *
- *  @Name models/setup_stage_paths.inc
+ *  @Name views/setup_stage_process_referrer.inc
  *  @Version 1.00
  *  @author Lloyd Wallis <flump5281@gmail.com>
  *  @copyright Copyright (c) 2009-2012, Lloyd Wallis
  *  @package Flumpshop
  */
-$tree = 'paths';
-$additional_fields = array('config_human_name', 'config_human_description');
-
-$data = array(
-    'heading' => $_SESSION['config']->getFriendName($tree),
-    'form_action' => '../process/doPaths.php',
-    'fields' => $_SESSION['config']->getNodes($tree, $additional_fields)
-);
-
-foreach (array_keys($data['fields']) as $i => $j) {
-  $value = $_SESSION['config']->getNode($tree, $data['fields'][$i]['config_key']);
-  $data['fields'][$i]['value'] = $value;
-  $data['fields'][$i]['input_type'] = 'text';
-}
+require dirname(__FILE__) . '/../includes/setup/header.inc.php';
+?><h1>Processing...</h1>
+<p>The Flumpnet Robot is busy processing the information you have just given him. He'll ask you a few more questions when he's caught up.</p>
+<script type="text/javascript">
+  parent.leftFrame.window.location = '../?frame=leftFrame&p=<?=$navigation_stage?>';
+  window.location = '../stages/<?=$next_stage?>';
+</script>";
+<?php
+require dirname(__FILE__) . '/../includes/setup/footer.inc.php';

@@ -24,7 +24,7 @@
  *  @copyright Copyright (c) 2009-2012, Lloyd Wallis
  *  @package Flumpshop
  */
-require dirname(__FILE__) . '/lib.inc';
+require_once dirname(__FILE__) . '/lib.inc';
 ?><html>
   <head>
     <link href="../../style-main.css" rel="stylesheet" type="text/css" />

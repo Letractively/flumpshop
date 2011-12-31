@@ -117,14 +117,14 @@ $_SESSION['config']->setNode("secure", "enabled", true, "Enable Secure Transacti
 $_SESSION['config']->setNode("secure", "admin", true, "Force Secure Admin CP");
 
 //Database
-$_SESSION['config']->addTree("database", "Database Server Settings");
+$_SESSION['config']->addTree("database", "Database Server Settings", 'These settings control how Flumpshop connects to the backend database server. Avoid changing, unless you know what you are doing.');
 
-$_SESSION['config']->setNode("database", "type", "mysql", "Database Engine");
-$_SESSION['config']->setNode("database", "address", "localhost", "Server Address");
-$_SESSION['config']->setNode("database", "port", "3306", "Server Port");
-$_SESSION['config']->setNode("database", "uname", "", "Username");
-$_SESSION['config']->setNode("database", "password", "", "Password");
-$_SESSION['config']->setNode("database", "name", "flumpshop", "Main Site Database Name");
+$_SESSION['config']->setNode("database", "type", "mysql", "Database Engine", 'Flumpshop currently only supports the MySQL database type.');
+$_SESSION['config']->setNode("database", "address", "localhost", "Server Address", 'This is the hostname or IP address of the server the MySQL Service is running on. Quite often, this will be localhost, the same server running the web frontend, although this may be different in larger environments.');
+$_SESSION['config']->setNode("database", "port", "3306", "Server Port", 'The port used to connect to the MySQL Server. Usually, this is 3306.');
+$_SESSION['config']->setNode("database", "uname", "", "Username", 'This is the username of the MySQL Account Flumpshop will use to connect to the server. It will need full control over the database, and must be created in MySQL before Flumpshop can use it.');
+$_SESSION['config']->setNode("database", "password", "", "Password", 'This is the password associated with the above account.');
+$_SESSION['config']->setNode("database", "name", "flumpshop", "Main Site Database Name", 'This is the name of the database that Flumpshop will use. If it doesn\'t exit, the Flumpnet Robot will try to create it for you if the account has the necessary permissions. If you have multiple Flumpshop installs on the same MySQL Server, they will each need a different database name.');
 
 //Advanced Server
 $_SESSION['config']->addTree("server", "Advanced Server Configuration");

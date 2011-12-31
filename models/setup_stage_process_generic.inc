@@ -1,8 +1,8 @@
 <?php
 /**
- *  This model prepares the necessary data required to render a setup stage view
- * It is a very similar model to the other stages, although each will have minor
- * variations due to the nature of the Configuration elements they are loading
+ *  This generic model reads all variables from $_POST, and combined with a tree
+ * variable defined by the controller, it sets all the configuration values to
+ * the data in the post array.
  *
  *  This file is part of Flumpshop.
  *
@@ -20,23 +20,13 @@
  *  along with Flumpshop.  If not, see <http://www.gnu.org/licenses/>.
  *
  *
- *  @Name models/setup_stage_paths.inc
+ *  @Name models/setup_stage_process_generic.inc
  *  @Version 1.00
  *  @author Lloyd Wallis <flump5281@gmail.com>
  *  @copyright Copyright (c) 2009-2012, Lloyd Wallis
  *  @package Flumpshop
  */
-$tree = 'paths';
-$additional_fields = array('config_human_name', 'config_human_description');
 
-$data = array(
-    'heading' => $_SESSION['config']->getFriendName($tree),
-    'form_action' => '../process/doPaths.php',
-    'fields' => $_SESSION['config']->getNodes($tree, $additional_fields)
-);
-
-foreach (array_keys($data['fields']) as $i => $j) {
-  $value = $_SESSION['config']->getNode($tree, $data['fields'][$i]['config_key']);
-  $data['fields'][$i]['value'] = $value;
-  $data['fields'][$i]['input_type'] = 'text';
+foreach ($_POST as $key => $value) {
+  $_SESSION['config']->setNode($tree, $key, $value);
 }
