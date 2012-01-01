@@ -100,6 +100,7 @@ $_SESSION['config']->setNode("site", "sendFeedback", true, "Send Feedback", 'Whe
 $_SESSION['config']->setNode("site", "loginTab", true, "Login Tab", 'When enabled, the primary navigation bar has a "Login" link on it. Disabling this essentially disables access to the user authentication part of the site');
 $_SESSION['config']->setNode("site", "theme", "flumpshop", "Theme", 'This is the theme that is used on the site frontend.');
 $_SESSION['config']->setNode("site", "templateMode", "core", "Template Mode", 'Unless specified by the theme, leave this as "core"');
+$_SESSION['config']->setNode('site', 'debug', false, 'Debug Mode' , 'If this is enabled, you\'ll see a lot more information produced on every page detailing what is or isn\'t going on. For developer use only.');
 
 //Paths and Directories Tree
 $_SESSION['config']->addTree("paths", "Site Paths and Directories", 'This Configuration tree is used to store URLs and file paths that are important to Flumpshop\'s operation.');
@@ -357,6 +358,7 @@ $_SESSION['config']->addTree("logs", "Server Log Files");
 
 $_SESSION['config']->setNode("logs", "enabled", true, "Enable Server Logs");
 $_SESSION['config']->setNode("logs", "errors", "errors.log", "Error Logfile");
+$_SESSION['config']->setNode('logs', 'xmldblogs', $_INIT_DEBUG, 'Detailed Database Logs', 'Requires the SimpleXML extension. When enabled, every query executed against the database is logged in XML files on a per-session basis.');
 
 //Order Statuses
 $_SESSION['config']->addTree("orderstatus", "Order Statuses");

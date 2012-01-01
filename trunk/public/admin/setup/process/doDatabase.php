@@ -1,59 +1,58 @@
 <?php
-require_once dirname(__FILE__)."/../header.inc.php";
+/**
+ *  This file is the Controller that process the input from the database stage
+ * of the setup wizard. It may re-call the previous Controller if its sanity
+ * checks deem it necessary.
+ *
+ *  This file is part of Flumpshop.
+ *
+ *  Flumpshop is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Flumpshop is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Flumpshop.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *
+ *  @Name public/admin/setup/process/doPaths.php
+ *  @Version 2.00
+ *  @author Lloyd Wallis <flump5281@gmail.com>
+ *  @copyright Copyright (c) 2009-2012, Lloyd Wallis
+ *  @package Flumpshop
+ */
+require_once '../../../../includes/setup/lib.inc';
 
-if (!isset($logger)) { //Not if upgrading
-	$_SESSION['config']->setNode("database","type",$_POST['type']);
-	$_SESSION['config']->setNode("database","address",$_POST['address']);
-	$_SESSION['config']->setNode("database","port",$_POST['port']);
-	$_SESSION['config']->setNode("database","uname",$_POST['uname']);
-	$_SESSION['config']->setNode("database","password",$_POST['password']);
-	$_SESSION['config']->setNode("database","name",$_POST['name']);
-	//Alias needed for factory
-	$config = $_SESSION['config'];
-	
-	file_put_contents(dirname(__FILE__)."/status.txt", "Testing Database Connection");
-	$dbConn = db_factory();
-	if (!$dbConn->connected) {
-		file_put_contents(dirname(__FILE__)."/status.txt", "Database Connection Failed!");
-		sleep(1);
-		unlink(dirname(__FILE__)."/status.txt");
-		require_once dirname(__FILE__)."/../footer.inc.php";
-		exit;
-	}
-	file_put_contents(dirname(__FILE__)."/status.txt", "Database Connection Succesful. Analysing Database");
+$tree = 'database';
+$navigation_stage = '2.3';
+$next_stage = 'about.php';
+/*
+ * Call the model to store the data - even if it's incorrect we'll want the form
+ * controller to reload it
+ */
+require '../../../../models/setup_stage_process_generic.inc';
+
+/**
+ * The database factory requires the $config variable to be defined
+ */
+$config =& $_SESSION['config'];
+
+//Test the Database connection
+require_once '../../../../includes/Database.class.php';
+$dbConn = db_factory();
+
+if ($dbConn->error() != '') {
+  //Database connection failed
+  echo '<h1>Oops!</h1><p>I couldn\'t connect to the database. Please check your details and try again.</p>';
+  echo '<p>', $dbConn->error(), '</p>';
+  require '../stages/database.php';
+  exit;
 }
 
-/*Create Database*/
-//Database Upgrader
-function DBUpgrade($current_version = 1) {
-	global $dbConn;
-	$current_version++;
-	while (file_exists(dirname(__FILE__)."/../sql/DBUpgrade_v".$current_version.".sql")) {
-		file_put_contents(dirname(__FILE__)."/status.txt", "Running DBUpgrade (v$current_version...)");
-		$qry = implode("",file(dirname(__FILE__)."/../sql/DBUpgrade_v".$current_version.".sql"));
-		$dbConn->multi_query($qry);
-		$dbConn->query("UPDATE `stats` SET value = '$current_version' WHERE `key`='dbVer' LIMIT 1");
-		$current_version++;
-	}
-}
-
-if ($result = $dbConn->query("SELECT `value` FROM `stats` WHERE `key` = 'dbVer' LIMIT 1")) {
-	file_put_contents(dirname(__FILE__)."/status.txt", "Running DBUpgrade");
-	$result = $dbConn->fetch($result);
-	DBUpgrade($result['value']);
-} else {
-	file_put_contents(dirname(__FILE__)."/status.txt", "Running install.sql");
-	$dbConn->multi_query(file_get_contents(dirname(__FILE__)."/../sql/install.sql"),true);
-	file_put_contents(dirname(__FILE__)."/status.txt", "Running DBUpgrade");
-	DBUpgrade(1);
-}
-
-//Run reset.sql to delete data that may confuse new Config object
-file_put_contents(dirname(__FILE__)."/status.txt", "Running reset script");
-$dbConn->multi_query(file_get_contents(dirname(__FILE__)."/../sql/reset.sql"),true);
-
-file_put_contents(dirname(__FILE__)."/status.txt", "Finished!");
-sleep(1); //Give time for ajax to notice change
-//unlink(dirname(__FILE__)."/status.txt");
-require_once dirname(__FILE__)."/../footer.inc.php";
-?>
+require '../../../../models/setup_configure_db.inc';
+require '../../../../views/setup_stage_process_db.inc';
