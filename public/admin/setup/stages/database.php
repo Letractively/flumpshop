@@ -25,7 +25,7 @@
  *  @copyright Copyright (c) 2009-2012, Lloyd Wallis
  *  @package Flumpshop
  */
-require '../../../../includes/setup/lib.inc';
+require_once '../../../../includes/setup/lib.inc';
 
 require '../../../../models/setup_stage_database.inc';
 

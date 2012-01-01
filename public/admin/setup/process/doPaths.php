@@ -27,7 +27,7 @@
  *  @copyright Copyright (c) 2009-2012, Lloyd Wallis
  *  @package Flumpshop
  */
-require '../../../../includes/setup/lib.inc';
+require_once '../../../../includes/setup/lib.inc';
 
 $tree = 'paths';
 $navigation_stage = '2.2';
