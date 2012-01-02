@@ -1,15 +1,14 @@
 <?php
 $ajaxProvider = true;
-require_once dirname(__FILE__)."/../preload.php";
+require_once '../../includes/preload.php';
 
 //Secure Redirect
 if ($config->getNode('secure','admin') and $_SERVER['HTTPS'] == "off") {
-	header("Location: ".$config->getNode('paths','secureRoot')."/admin");
+	header("Location: ".$initcfg->getNode('paths','secureRoot')."/admin");
 	exit;
 }
 
 //Process Login
-
 if (isset($_POST['uname'])) {
 	$fail = false;
 	$result = $dbConn->query("SELECT * FROM `acp_login` WHERE uname='".htmlentities($_POST['uname'],ENT_QUOTES)."' LIMIT 1");
@@ -36,36 +35,23 @@ if (isset($_POST['uname'])) {
 
 //Not Logged In
 if (!acpusr_validate()) {
-	//Login Page
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
-><head>
-<style type="text/css">
-body {background-color: #1e2b5b; color: #FFF; font: Arial, Helvetica, sans-serif;}
-form {width: 300px; margin: 150px auto 0 auto;}
-.header {font: "Trebuchet MS", Arial, Helvetica, sans-serif; font-size: 23px;}
-.header2 {color: #c43131;}
-.title {background-color: #0e78ee; padding: 0 5px; line-height: 1.5; font-size: 17px;}
-.content {background-color: #e7e7e7; padding: 0 5px; color: #000; font-size: 12px;}
-.content label {color: #1e2b5b;}
-table td {text-align: right;}
-input {border: 1px solid #1e2b5b; color: #1e2b5b; width: 200px;}
-input.submit {width: auto; position: relative; left: 220px; border: 3px outset #1e2b5b; background: #FFF; color: #1e2b5b; font-size: 14px; font-weight: bold;}
-</style>
-<title>Flumpshop Login</title></head><body>
-<form action="./" method="post">
-<div class="header"><img src="images/logo.jpg" alt="Flumpshop Logo" />flump<span class='header2'>shop</span></div>
-<div class="title">please login...</div>
-<div class="content">
-Please enter your username and password to continue...
-<table>
-<tr><td><label for='uname'>Username: </label></td><td><input type="text" name="uname" id="uname" /></td></tr>
-<tr><td><label for='pass'>Password: </label></td><td><input type="password" name="pass" id="pass" /></td></tr>
-</table>
-<input type="submit" class="submit" value="Login" />
-</div>
-</form>
-</body></html><?php
+  $login_action = './index.php';
+  $login_message = 'Please enter your username and password to continue...';
+  $login_fields = array(
+      array(
+          'label' => 'Username: ',
+          'type' => 'text',
+          'id' => 'uname'
+      ),
+      array(
+          'label' => 'Password: ',
+          'type' => 'password',
+          'id' => 'pass'
+      )
+  );
+
+  require '../../views/admin_login.inc';
+  
 } else {
 	//Logged In
 	if (isset($_GET['frame'])) {
@@ -82,7 +68,7 @@ Please enter your username and password to continue...
 </head>
 <body>
     <center><img src="images/logo.jpg" />
-    <div class="header">flump<span class='header2'>shop</span> <?php echo $config->getNode("site","version");?></div>
+    <div class="header">flump<span class='header2'>shop</span> <?php echo FS_VERSION;?></div>
     Powered by Flumpnet<br /><br />
     <div id="navContainer">
     <div id="navAccordion">
@@ -215,7 +201,7 @@ Please enter your username and password to continue...
 				<h1 class="title">ADMINISTRATOR CONTROL PANEL</h1>
 				<p class="version">Latest Version Available: <?php echo file_get_contents("http://flumpshop.googlecode.com/svn/updater/version.txt");?> <a href='upgrade' target='_top'>Upgrade Wizard</a></p>
 				<div class="right">
-					<h1>flump<span class="header2">shop</span> <?php echo $config->getNode("site","version");?></h1>
+					<h1>flump<span class="header2">shop</span> <?=FS_VERSION?></h1>
 					<p><a href='../account/logout.php' target="_top">Logout</a> | <a href='../' target="_top">View live storefront</a></p>
 				</div>
 				</body>
@@ -225,7 +211,7 @@ Please enter your username and password to continue...
 			?><html>
 				<head><link href="style-main.css" rel="stylesheet" type="text/css" /><link href="jqueryui.css" rel="stylesheet" type="text/css" /><script src="../js/jquery.js"></script><script src="../js/jqueryui.js"></script><script>function loadDialog() {$('#dialog').dialog();}</script></head>
 				<body>
-				<h1>Flumpshop v<?php echo $config->getNode('site','version');?></h1>
+				<h1>Flumpshop v<?=FS_VERSION?></h1>
                 <h2>Admin CP</h2><?php
 				//Check for possible security issues
 				if (file_exists("setup")) {
@@ -235,7 +221,7 @@ Please enter your username and password to continue...
 				//Check for Updates
 				if (!$latestVer = file_get_contents("http://flumpshop.googlecode.com/svn/updater/version.txt")) {
 					echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-extlink'></span><strong>Connection Failure</strong> - An error occured checking for updates.</div>";
-				} elseif ($config->getNode('site','version') != $latestVer) {
+				} elseif (FS_VERSION < $latestVer) {
 					echo "<div class='ui-state-highlight'><span class='ui-icon ui-icon-notice'></span><strong>Update Available</strong> - An update is available for installation. To install, click the Upgrade Wizard button above.</div>";
 				}
 				

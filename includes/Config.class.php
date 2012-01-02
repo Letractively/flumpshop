@@ -89,9 +89,16 @@ class Config {
     else {
       //Get or set the configuration set ID
       global $dbConn;
-      $dbConn->query('REPLACE INTO config_sets  (set_name)
-        VALUES ("' . $name . '")');
-      $this->set_identifier = (int) $dbConn->insert_id();
+      $result = $dbConn->query('SELECT id FROM config_sets WHERE
+        set_name="'.$name.'" LIMIT 1');
+      if ($result->num_rows === 0) {
+        $dbConn->query('INSERT INTO config_sets  (set_name)
+          VALUES ("' . $name . '")');
+        $this->set_identifier = (int) $dbConn->insert_id;
+      } else {
+        $row = $result->fetch_assoc();
+        $this->set_identifier = (int) $row['id'];
+      }
     }
   }
 
@@ -329,10 +336,10 @@ class Config {
         AND config_tree="' . $treeName . '"
           AND config_key="' . $nodeName . '" LIMIT 1');
 
-    if ($dbConn->rows($result) === 0)
+    if ($result->num_rows === 0)
       return null;
 
-    $row = $dbConn->fetch($result);
+    $row = $result->fetch_assoc();
     $this->data[$treeName][$nodeName] = $row['config_value'];
 
     return $row['config_value'];
@@ -345,16 +352,16 @@ class Config {
    * @return boolean Whether the configuration value exists 
    */
   public function isNode($treeName, $nodeName) {
+    global $dbConn;
     if (isset($this->data[$treeName][$nodeName]))
       return true;
     if (!$this->commit)
       return false;
 
-    return (boolean) $dbConn->rows(
-                    $dbConn->query('SELECT config_name FROM config_values
+    return (boolean) $dbConn->query('SELECT config_name FROM config_values
               WHERE config_set=' . $this->getSetID() . '
                 AND config_tree="' . $treeName . '"
-                  AND config_key="' . $nodeName . '" LIMIT 1'));
+                  AND config_key="' . $nodeName . '" LIMIT 1')->num_rows;
   }
 
   /**

@@ -1,5 +1,5 @@
 <?php
-require_once dirname(__FILE__)."/../../preload.php";
+require_once dirname(__FILE__)."/../../../includes/preload.php";
 
 if (isset($USR_REQUIREMENT)) {
 	if (!acpusr_validate($USR_REQUIREMENT) and (!isset($auth) or $auth == true)) {

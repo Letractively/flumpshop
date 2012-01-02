@@ -28,11 +28,13 @@
 require dirname(__FILE__) . '/../includes/setup/header.inc.php';
 ?><h1>Processing...</h1>
 <p>The Flumpnet Robot is busy processing the information you have just given him. He'll ask you a few more questions when he's caught up.</p>
+<a href="../stages/<?=$next_stage?>">Click here if you think he's got lost</a>
 <script type="text/javascript">
-  newurl = '../?frame=leftFrame&p=<?=$navigation_stage?>';
-  if (parent.leftFrame.window.location.href != newurl)
+  newurl = '../?frame=leftFrame&p=<?= $navigation_stage ?>';
+  if ('<?= isset($_SESSION['navstage']) ? $_SESSION['navstage'] : ''?>' != '<?= $navigation_stage ?>')
   parent.leftFrame.window.location = newurl;
-  window.location = '../stages/<?=$next_stage?>';
+  window.location = '../stages/<?= $next_stage ?>';
 </script>
 <?php
+$_SESSION['navstage'] = $navigation_stage;
 require dirname(__FILE__) . '/../includes/setup/footer.inc.php';

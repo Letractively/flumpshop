@@ -33,6 +33,7 @@
  * @return An instantiated Database Object
  */
 function db_factory($cfg) {
+  if (!is_object($cfg)) return false;
   return new MysqliDatabase($cfg->getNode('database', 'address'),
                   $cfg->getNode('database', 'uname'),
                   $cfg->getNode('database', 'password'),
@@ -171,7 +172,8 @@ class MysqliDatabase extends mysqli implements Database {
    * @deprecated
    */
   function fetch($resource) {
-    echo '<div class="ui-state-error">Call to deprecated function MysqliDatabase::fetch()</div>';
+    global $ajaxProvider;
+    if (!$ajaxProvider) echo '<div class="ui-state-error">Call to deprecated function MysqliDatabase::fetch()</div>';
     return $resource->fetch_assoc();
   }
 
@@ -183,7 +185,8 @@ class MysqliDatabase extends mysqli implements Database {
    * @deprecated
    */
   public function rows($resource) {
-    echo '<div class="ui-state-error">Call to deprecated function MysqliDatabase::rows()</div>';
+    global $ajaxProvider;
+    if (!$ajaxProvider) echo '<div class="ui-state-error">Call to deprecated function MysqliDatabase::rows()</div>';
     return $resource->num_rows;
   }
 
@@ -194,7 +197,8 @@ class MysqliDatabase extends mysqli implements Database {
    * @deprecated
    */
   function affected_rows() {
-    echo '<div class="ui-state-error">Call to deprecated function MysqliDatabase::affected_rows()</div>';
+    global $ajaxProvider;
+    if (!$ajaxProvider) echo '<div class="ui-state-error">Call to deprecated function MysqliDatabase::affected_rows()</div>';
     return $this->affected_rows;
   }
 

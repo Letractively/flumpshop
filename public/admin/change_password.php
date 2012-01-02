@@ -1,6 +1,6 @@
 <?php
 $ajaxProvider = true;
-require_once dirname(__FILE__)."/../preload.php";
+require_once dirname(__FILE__)."/../../includes/preload.php";
 acpusr_validate();
 $msg = 'Change your password regularly to keep your account safe';
 if (isset($_POST['oldpass'])) {

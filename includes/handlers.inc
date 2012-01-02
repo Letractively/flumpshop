@@ -59,9 +59,7 @@ function init_err($msg) {
 /**
  * This is the standard non-fatal error handler for the system. This function
  * should not be called in code. Instead, trigger_error should be used
- * @global handle $errLog If defined, this function will log the error here
- * @global boolean $_PRINTDATA If true, the error will be outputted to client
- * @global boolean $ajaxProvider If false, supresses, even if $_PRINTDATA
+ * @global boolean $ajaxProvider If false, supresses, even if $debug
  * @param int $level The level of the error, E_ERROR....
  * @param string $msg A textual representation of the error that has occurred
  * @param string $file The file in which the error occurred
@@ -69,18 +67,38 @@ function init_err($msg) {
  * @return boolean Always returns true.
  */
 function sys_error($level, $msg, $file, $line) {
-  global $errLog, $_PRINTDATA, $ajaxProvider;
+  global $config, $initcfg, $ajaxProvider;
   if (!stristr($msg, 'Unable to load dynamic library')) {
-    if ($_PRINTDATA && !$ajaxProvider)
+    if ((isset($config) && $config->getNode('server','debug')) && !$ajaxProvider)
       echo '<div class="ui-state-error ui-corner-all"><span class="ui-icon ui-icon-script"></span>' . $msg . ' (' . $file . ':' . $line . ')</div>';
-    if (isset($errLog))
+    
+    //Log to the error logfile
+    if (isset($config)) {
+      $errLog = fopen($initcfg->getNode('paths', 'logDir') . '/' . $config->getNode('logs','errors'), 'a');
       fwrite($errLog, '(' . date('d/m/y H:i:s') . ') ' . $msg . ' [' . $file . ':' . $line . "]\r\n");
+      fclose($errLog);
+    }
   }
   return true;
 }
 
 //Sets the above function as the core error handler
 set_error_handler('sys_error');
+
+/**
+ * Call this function to send debugging information to the client.
+ * @param string $msg The message to send
+ * @param boolean $check I can't remember what this was supposed to do
+ * @return void
+ * @todo Make this log to a database table?
+ */
+function debug_message($msg, $check = false) {
+  global $initcfg;
+  //Don't open a persistent handle as this limits to one request.
+  $handle = fopen($initcfg->getNode('paths', 'logDir') . '/debug.log', 'a');
+  fwrite($msg . '\n');
+  fclose($handle);
+}
 
 /**
  * Autoloader to automatically load classes as needed. This will be called

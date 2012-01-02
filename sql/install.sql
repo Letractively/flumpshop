@@ -25,7 +25,8 @@ CREATE TABLE  `acp_login` (
 `can_edit_features` BOOL NOT NULL DEFAULT '0',
 `can_delete_features` BOOL NOT NULL DEFAULT '0',
 `pass_expires` TIMESTAMP NOT NULL,
-PRIMARY KEY (`id`)
+PRIMARY KEY (`id`),
+UNIQUE (`uname`)
 );
 
 CREATE TABLE `basket` (
@@ -101,7 +102,8 @@ CREATE TABLE `compare_features` (
 CREATE TABLE `config_sets` (
   `id` int(3) unsigned NOT NULL AUTO_INCREMENT,
   `set_name` varchar(25) NOT NULL DEFAULT 'Default Configuration',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE (`set_name`)
 );
 
 CREATE TABLE `config_values` (

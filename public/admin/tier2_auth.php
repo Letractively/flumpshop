@@ -1,8 +1,8 @@
 <?php
-require_once "../preload.php";
+require_once "../../includes/preload.php";
 if (!acpusr_validate()) {echo $config->getNode("messages","adminDenied"); exit;}
 
-if (md5($_POST['passkey']) == $config->getNode('site','password')) {
+if (sha1($_POST['passkey']) == $config->getNode('site','password')) {
 	$user = explode("~",base64_decode($_SESSION['acpusr']));
 	$user = $user[0];
 	$result = $dbConn->query("SELECT id FROM `acp_login` WHERE uname='".htmlentities($user,ENT_QUOTES)."' LIMIT 1");
@@ -12,4 +12,3 @@ if (md5($_POST['passkey']) == $config->getNode('site','password')) {
 }
 
 header("Location: ".$_POST['return']);
-?>

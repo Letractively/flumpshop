@@ -33,6 +33,19 @@ switch ($_GET['mode']) {
     $_SESSION['stage']['paths'] = true;
     $_SESSION['stage']['database'] = true;
     $_SESSION['stage']['about'] = true;
+    $_SESSION['stage']['security'] = false;
+    $_SESSION['stage']['shop'] = false;
+    $_SESSION['stage']['paypal'] = false;
+    $_SESSION['stage']['messages'] = false;
+    $_SESSION['stage']['pagination'] = false;
+    $_SESSION['stage']['account'] = false;
+    $_SESSION['stage']['smtp'] = false;
+    $_SESSION['stage']['logs'] = false;
+    $_SESSION['stage']['server'] = false;
+    $_SESSION['stage']['tabs'] = false;
+    $_SESSION['stage']['homePage'] = false;
+    $_SESSION['stage']['viewItem'] = false;
+    $_SESSION['stage']['delivery'] = false;
     break;
   case "complete":
     //Complete Mode
@@ -41,7 +54,6 @@ switch ($_GET['mode']) {
     $_SESSION['stage']['about'] = true;
     $_SESSION['stage']['security'] = true;
     $_SESSION['stage']['shop'] = true;
-    $_SESSION['stage']['orderstatus'] = true;
     $_SESSION['stage']['paypal'] = true;
     $_SESSION['stage']['messages'] = true;
     $_SESSION['stage']['pagination'] = true;
@@ -59,7 +71,18 @@ switch ($_GET['mode']) {
     $_SESSION['stage']['paths'] = true;
     $_SESSION['stage']['database'] = true;
     $_SESSION['stage']['about'] = true;
+    $_SESSION['stage']['security'] = false;
     $_SESSION['stage']['paypal'] = isset($_GET['paypal']);
+    $_SESSION['stage']['messages'] = false;
+    $_SESSION['stage']['pagination'] = false;
+    $_SESSION['stage']['account'] = false;
+    $_SESSION['stage']['smtp'] = false;
+    $_SESSION['stage']['logs'] = false;
+    $_SESSION['stage']['server'] = false;
+    $_SESSION['stage']['tabs'] = false;
+    $_SESSION['stage']['homePage'] = false;
+    $_SESSION['stage']['viewItem'] = false;
+    $_SESSION['stage']['delivery'] = false;
     break;
   case "custom":
     //Custom Mode
