@@ -1,28 +1,34 @@
 <?php
-require_once dirname(__FILE__)."/../header.inc.php";
-$section = "messages";
-?><h1>Predefined Messages</h1>
-<p>These messages appear all over the site. Here you can customise them all to your needs.</p>
-<form action="../process/doMessages.php" method="post"><table><?php
-foreach ($_SESSION['config']->getNodes($section) as $node) {
-//Nothing special in this stage. Just use a generic handler
-?><tr>
-	<td><label for="<?php echo $node;?>"><?php echo $_SESSION['config']->getFriendName($section, $node);?></label></td>
-    <td><textarea name="<?php echo $node;?>" id="<?php echo $node;?>" class='ui-widget-content' rows="6" cols="60"><?php echo $_SESSION['config']->getNode($section,$node);?></textarea></td>
-    <td><!--<span class='iconbutton' onclick='$("#<?php echo $node;?>Help").dialog("open");'></span>--></td>
-</tr><?php
-}
-?></table>
-<input type="submit" value="Continue" />
-</form>
-<div class="ui-helper-hidden helpDialog" id="enabledHelp" title="Home URL">When checked, Flumpshop will offer PayPal as a form of payment for your customers.</div>
-<div class="ui-helper-hidden helpDialog" id="unameHelp" title="PayPal API Username">This is your unique PayPal API Username assigned to your PayPal business account.</div>
-<div class="ui-helper-hidden helpDialog" id="passHelp" title="PayPal API Password">This is your unique PayPal API Password assigned to your PayPal business account.</div>
-<div class="ui-helper-hidden helpDialog" id="apiKeyHelp" title="PayPal API Key">This is your unique PayPal API Key assigned to your PayPal business account.</div>
-<script>
-$('.iconbutton').button({icons: {primary: 'ui-icon-help'}}).width('16px').height('16px');
-$('.helpDialog').each(function() {$(this).dialog({autoOpen: false});});
-$('input:submit').button().width('100px').css('font-size','12px');
-document.logDirFocus = true;
-</script><?php
-require_once dirname(__FILE__)."/../footer.inc.php";?>
+
+/**
+ *  This file is the Controller for the messages stage of the setup wizard.
+ *
+ *  This file is part of Flumpshop.
+ *
+ *  Flumpshop is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Flumpshop is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Flumpshop.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *
+ *  @Name public/admin/setup/stages/messages.php
+ *  @Version 2.00
+ *  @author Lloyd Wallis <flump5281@gmail.com>
+ *  @copyright Copyright (c) 2009-2012, Lloyd Wallis
+ *  @package Flumpshop
+ */
+require_once '../../../../includes/setup/lib.inc';
+
+require '../../../../models/setup_stage_messages.inc';
+
+require '../../../../includes/setup/header.inc.php';
+require '../../../../views/setup_stage.inc';
+require '../../../../includes/setup/footer.inc.php';

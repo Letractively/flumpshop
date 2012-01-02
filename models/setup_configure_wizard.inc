@@ -375,25 +375,25 @@ $_SESSION['config']->setNode("orderstatus", "7", array("name" => "Acknowledged",
 //PayPal
 $_SESSION['config']->addTree("paypal", "PayPal Settings");
 
-$_SESSION['config']->setNode("paypal", "enabled", false, "Enable PayPal");
-$_SESSION['config']->setNode("paypal", "uname", "", "PayPal API Username");
-$_SESSION['config']->setNode("paypal", "pass", "", "PayPal API Password");
-$_SESSION['config']->setNode("paypal", "apiKey", "", "PayPal API Key");
+$_SESSION['config']->setNode("paypal", "enabled", false, "Enable PayPal", 'When checked, Flumpshop will offer PayPal as a form of payment for your customers.');
+$_SESSION['config']->setNode("paypal", "uname", "", "PayPal API Username", 'This is your unique PayPal API Username assigned to your PayPal business account.');
+$_SESSION['config']->setNode("paypal", "pass", "", "PayPal API Password", 'This is your unique PayPal API Password assigned to your PayPal business account.');
+$_SESSION['config']->setNode("paypal", "apiKey", "", "PayPal API Key", 'This is your unique PayPal API Key assigned to your PayPal business account. You can get it by setting up your account to use the Express Checkout feature on the PayPal website.');
 
 //Pagination Options
 $_SESSION['config']->addTree("pagination", "Pagination Options");
 
-$_SESSION['config']->setNode("pagination", "sitemapPerPage", 10, "Per Page: Sitemap");
-$_SESSION['config']->setNode("pagination", "categoryPerPage", 10, "Per Page: Category View");
-$_SESSION['config']->setNode("pagination", "searchPerPage", 25, "Per Page: Search Results");
-$_SESSION['config']->setNode("pagination", "editItemsPerPage", 25, "Per Page: Edit Items List");
+$_SESSION['config']->setNode("pagination", "sitemapPerPage", 10, "Per Page: Sitemap", 'The number of links on each page of the site map.');
+$_SESSION['config']->setNode("pagination", "categoryPerPage", 10, "Per Page: Category View", 'The number of items displayed on each page of search results.');
+$_SESSION['config']->setNode("pagination", "searchPerPage", 25, "Per Page: Search Results", 'The number of links on each page of the edit sections in the Admin CP.');
+$_SESSION['config']->setNode("pagination", "editItemsPerPage", 25, "Per Page: Edit Items List", 'The number of items displayed on each page in category view.');
 
 //Account Settings
 $_SESSION['config']->addTree("account", "Account Settings");
 
-$_SESSION['config']->setNode("account", "requireAllAtSignup", false, "Require All Details at Signup");
-$_SESSION['config']->setNode("account", "requireEmailValidation", false, "Require Email Address Confirmation");
-$_SESSION['config']->setNode("account", "validationTimeout", 48, "Email Validation Timeout (hrs)");
+$_SESSION['config']->setNode("account", "requireAllAtSignup", false, "Require All Details at Signup", 'When enabled, users signing up to your website are required to fill in all the fields in the form. If not, then some parts of the form are optional.');
+$_SESSION['config']->setNode("account", "requireEmailValidation", false, "Require Email Address Confirmation", 'When enabled, users signing up to your website are sent an email with a link, which they must click before their account is activated and they can log in.');
+$_SESSION['config']->setNode("account", "validationTimeout", 48, "Email Validation Timeout (hrs)", 'When Require Email Address Confirmation is enabled, this is the amount of time the email confirmation link is valid for before the registration is cancelled and all user information is deleted.');
 
 //Mail Settings
 $_SESSION['config']->addTree("smtp", "Mail Server Settings");

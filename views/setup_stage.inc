@@ -13,6 +13,8 @@
       case 'textarea':
         echo '<textarea ' . $fields . '>' . $field['value'] . '</textarea>';
         break;
+      case 'checkbox':
+        $fields .= $field['input_checked'];
       default:
         echo '<input type="' . $field['input_type'] . '" ' . $fields .
               ' value="' . $field['value'] . '" />';
