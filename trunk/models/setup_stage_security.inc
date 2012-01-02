@@ -39,5 +39,10 @@ $data = array(
 foreach (array_keys($data['fields']) as $i => $j) {
   $value = $_SESSION['config']->getNode($tree, $data['fields'][$i]['config_key']);
   $data['fields'][$i]['value'] = $value;
-  $data['fields'][$i]['input_type'] = 'text';
+  if (is_bool($value)) {
+    $data['fields'][$i]['input_type'] = 'checkbox';
+    $data['fields'][$i]['input_checked'] = $value ? ' checked="checked"' : '';
+  } else {
+    $data['fields'][$i]['input_type'] = 'text';
+  }
 }

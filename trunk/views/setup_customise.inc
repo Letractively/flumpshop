@@ -1,4 +1,30 @@
-<h1>Customise Setup</h1>
+<?php
+/**
+ *  This view outputs the setup customisation form for the setup wizard
+ *
+ *  This file is part of Flumpshop.
+ *
+ *  Flumpshop is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Flumpshop is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Flumpshop.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *
+ *  @Name views/setup_customise.inc
+ *  @Version 1.01
+ *  @author Lloyd Wallis <flump5281@gmail.com>
+ *  @copyright Copyright (c) 2009-2012, Lloyd Wallis
+ *  @package Flumpshop
+ */
+?><h1>Customise Setup</h1>
 <p>In order to streamline your setup experience, I would like to know how much detail you wish to go in at this time. You can choose one of the preconfigured options, or set a custom setup.</p>
 <p>All modes include these steps: </p>
 <ol>

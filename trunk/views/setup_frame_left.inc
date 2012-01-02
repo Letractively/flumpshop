@@ -58,7 +58,7 @@ if (isset($_SESSION['stage']['server']) and $_SESSION['stage']['server']) {
 if (isset($_SESSION['stage']['tabs']) and $_SESSION['stage']['tabs']) {
   echo '<li><a href="?frame=leftFrame&p=3.11" id="3.11">Tab Settings</a></li>';
 }
-if (isset($_SESSION['stage']['widget_carousel']) and $_SESSION['stage']['widget_carousel']) {
+if (isset($_SESSION['stage']['homePage']) and $_SESSION['stage']['homePage']) {
   echo '<li><a href="?frame=leftFrame&p=3.12" id="3.12">Carousel Widget Settings</a></li>';
 }
 if (isset($_SESSION['stage']['viewItem']) and $_SESSION['stage']['viewItem']) {

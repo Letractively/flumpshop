@@ -60,5 +60,4 @@ if ($_USER['apass'] != $_USER['apass2']
 //Commit user information
 require '../../../../models/setup_stage_process_about.inc';
 
-
 require '../../../../views/setup_stage_process_referrer.inc';

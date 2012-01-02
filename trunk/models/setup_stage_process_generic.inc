@@ -27,6 +27,13 @@
  *  @package Flumpshop
  */
 
+if (!isset($falsify_keys)) $falsify_keys = array();
+$_SESSION['config']->falseify($tree, $falsify_keys);
+
 foreach ($_POST as $key => $value) {
-  $_SESSION['config']->setNode($tree, $key, $value);
+  if ($value == 'checked') {
+    $_SESSION['config']->setNode($tree, $key, true);
+  } else {
+    $_SESSION['config']->setNode($tree, $key, $value);
+  }
 }
