@@ -55,7 +55,7 @@ class Cart {
 		if ($id === -1) {
 			//Initialise an new basket for this session
 			$query = $dbConn->query('INSERT INTO `basket` (locked,total,delivery) VALUES (0,0,0)');
-			$this->id = $dbConn->insert_id();
+			$this->id = $dbConn->insert_id;
 		} elseif ($id === 0) {
 			//Search Crawler - Doesn't store
 			return;

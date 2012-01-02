@@ -1,5 +1,5 @@
 <?php
-
+define('FS_VERSION', '0.9.9.594');
 /**
  * Include the event handlers
  */
@@ -29,11 +29,8 @@ ini_set('date.timezone', 'Europe/London');
  * @var boolean $_SETUP When true, tells the internal system that the setup
  * wizard is still in progress, so not to die because something doesn't work
  * yet
- * @todo Uses inefficient stristr. Explicity flag $_SETUP pages?
  */
-if (isset($_SERVER['REQUEST_URI']) && stristr($_SERVER['REQUEST_URI'], 'admin/setup'))
-  $_SETUP = true; else
-  $_SETUP = false;
+$_SETUP = false;
 
 /**
  * @var boolean $ajaxProvider When true, the current request is for an ajax
@@ -43,27 +40,55 @@ if (isset($_SERVER['REQUEST_URI']) && stristr($_SERVER['REQUEST_URI'], 'admin/se
 if (!isset($ajaxProvider))
   $ajaxProvider = false;
 
-
-
-require_once(dirname(__FILE__) . '/vars.inc.php');
-
-if (isset($config)) {
-  if ($config->getNode('logs', 'errors'))
-    $errLog = fopen($config->getNode('paths', 'logDir') . '/errors.log', 'a+');
-  if ($config->getNode('server', 'debug'))
-    $debugLog = fopen($config->getNode('paths', 'logDir') . '/debug.log', 'a+');
-  $config->setNode('temp', 'simplexml', extension_loaded('simplexml'));
+/**
+ * Load the $initcfg Configuration Store
+ */
+require_once(dirname(__FILE__) . '/../models/init_config.inc');
+//Check the result of the $initcfg model
+switch ($controller_action) {
+  case 'runSetup':
+    //There is no initcfg file. Run the setup wizard.
+    require dirname(__FILE__) . '/../views/setup_go.inc';
+    exit;
+  case 'abort':
+    //The configuration did not initialise correctly.
+    require dirname(__FILE__) . '/../views/init_error.inc';
+    exit;
+  case 'continue':
+    break;
+  default:
+    //I don't know how to deal with this.
+    trigger_error('preload.php encountered an invalid response from init_config.inc. The response was '.$controller_action.'.');
 }
+unset($controller_action);
 
 /**
- * Call this function to send debugging information to the client.
- * @param string $msg The message to send
- * @param boolean $check I can't remember what this was supposed to do
- * @return void This function only does something when needed for debugging.
+ * Connect to the database
  */
-function debug_message($msg, $check = false) {
-  return;
+require_once dirname(__FILE__) . '/Database.class.php';
+
+$dbConn = db_factory($initcfg);
+if ($dbConn->connect_error) {
+  //Database connection failed.
+  $error_description = 'Database error: ' . $dbConn->connect_error;
+  require dirname(__FILE__) . '/../views/init_error.inc';
+  exit;
 }
+
+require_once dirname(__FILE__) . '/../models/main_config.inc';
+//Check the result of the $config model
+switch ($controller_action) {
+  case 'abort':
+    //The configuration did not initialise correctly.
+    require dirname(__FILE__) . '/../views/init_error.inc';
+    exit;
+  case 'continue':
+    break;
+  default:
+    //I don't know how to deal with this.
+    trigger_error('preload.php encountered an invalid response from main_config.inc. The response was '.$controller_action.'.');
+}
+unset($controller_action);
 
 //Initialise the session if it is not already running
 if (!isset($_SESSION)) {
@@ -71,32 +96,30 @@ if (!isset($_SESSION)) {
 }
 
 //Maintenance Page
-if ($_SETUP == false && $config->getNode('site', 'enabled') != true && !strstr($_SERVER['REQUEST_URI'], '/admin/') && !isset($maintPage)) {
-  header('Location: ' . $config->getNode('paths', 'root') . '/errors/maintenance.php');
-  die();
+if ($_SETUP == false &&
+        $config->getNode('site', 'enabled') != true &&
+        !strstr($_SERVER['REQUEST_URI'], '/admin/')) {
+  require dirname(__FILE__) . '/../views/error_maintenance.inc';
 }
 
 $stats = new Stats();
 
 /* Actual User Initialisation */
 if ($_SETUP === false) {
-  //Connect to Database
-  $dbConn = db_factory();
-
   $session = $dbConn->query('SELECT basket FROM `sessions` WHERE session_id="' . session_id() . '" LIMIT 1');
-  if ($session === false && $_PRINTDATA) {
+  if ($session === false) {
     trigger_error($dbConn->error());
   }
-  if ($dbConn->rows($session) === 0) {
+  if ($session->num_rows === 0) {
     //Build Session
     //Web Crawler Exception
     if (isset($_SERVER['HTTP_USER_AGENT'])
-            and array_search($_SERVER['HTTP_USER_AGENT'], explode($config->getNode('server', 'crawlerAgents'), '|'))) {
-      $config->setNode('temp', 'crawler', true);
+            && array_search($_SERVER['HTTP_USER_AGENT'], explode('|', $config->getNode('server', 'crawlerAgents')))) {
+      define('CRAWLER', true);
       $basket = new Cart(0);
       $basket->lock();
     } else {
-      $config->setNode('temp', 'crawler', false);
+      define('CRAWLER', false);
       $basket = new Cart(-1);
     }
     if (!isset($_SERVER['REMOTE_ADDR']))

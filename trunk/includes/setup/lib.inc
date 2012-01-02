@@ -26,7 +26,7 @@
  */
 
 //Set the debug/setup flags as needed
-$INIT_DEBUG = true;
+$INIT_DEBUG = false;
 $_SETUP = true;
 
 //Verbose messages if debug is enabled
@@ -69,52 +69,51 @@ function debug_message($arg1 = "", $arg2 = false) {
 function getNextStage($stage) {
   global $_SESSION;
   //Security
-  if (isset($_SESSION['stage']['security']) && $_SESSION['stage']['security'] && $stage < 4) {
+  if ($_SESSION['stage']['security'] && $stage < 4) {
     return "security.php";
   }
   //Shop
-  if (isset($_SESSION['stage']['shop']) && $_SESSION['stage']['shop'] && $stage < 5) {
+  if ($_SESSION['stage']['shop'] && $stage < 5) {
     return "shop.php";
   }
-  //Order Status was removed (CBA)
   //PayPal
-  if (isset($_SESSION['stage']['paypal']) && $_SESSION['stage']['paypal'] && $stage < 7) {
+  if ($_SESSION['stage']['paypal'] && $stage < 7) {
     return "paypal.php";
   }
   //Messages
-  if (isset($_SESSION['stage']['messages']) && $_SESSION['stage']['messages'] && $stage < 8) {
+  if ($_SESSION['stage']['messages'] && $stage < 8) {
     return "messages.php";
   }
   //Pagination
-  if (isset($_SESSION['stage']['pagination']) && $_SESSION['stage']['pagination'] && $stage < 9) {
+  if ($_SESSION['stage']['pagination'] && $stage < 9) {
     return "pagination.php";
   }
   //Account
-  if (isset($_SESSION['stage']['account']) && $_SESSION['stage']['account'] && $stage < 10) {
+  if ($_SESSION['stage']['account'] && $stage < 10) {
     return "account.php";
   }
   //SMTP
-  if (isset($_SESSION['stage']['smtp']) && $_SESSION['stage']['smtp'] && $stage < 11) {
+  if ($_SESSION['stage']['smtp'] && $stage < 11) {
     return "smtp.php";
   }
   //Logs
-  if (isset($_SESSION['stage']['logs']) && $_SESSION['stage']['logs'] && $stage < 12) {
+  if ($_SESSION['stage']['logs'] && $stage < 12) {
     return "logs.php";
   }
   //Server
-  if (isset($_SESSION['stage']['server']) && $_SESSION['stage']['server'] && $stage < 13) {
+  if ($_SESSION['stage']['server'] && $stage < 13) {
     return "server.php";
   }
   //Tabs
-  if (isset($_SESSION['stage']['tabs']) && $_SESSION['stage']['tabs'] && $stage < 14) {
+  if ($_SESSION['stage']['tabs'] && $stage < 14) {
     return "tabs.php";
   }
   //Home Page
-  if (isset($_SESSION['stage']['homePage']) && $_SESSION['stage']['homePage'] && $stage < 15) {
+  if ($_SESSION['stage']['homePage'] && $stage < 15) {
     return "homePage.php";
   }
   //View Item
-  if (isset($_SESSION['stage']['viewItem']) && $_SESSION['stage']['viewItem'] && $stage < 16) {
+  if ($_SESSION['stage']['viewItem'] && $stage < 16) {
     return "viewItem.php";
   }
   return "finish.php";

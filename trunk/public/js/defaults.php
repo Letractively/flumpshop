@@ -4,11 +4,7 @@ $ajaxProvider = true;
 header("Content-Type: text/javascript");
 header("Cache-control: max-age=86400, must-revalidate, public");
 header("Expires: ".date("D, d M Y H:i:s T",time()+(3600*24)));
-require_once dirname(__FILE__)."/../includes/vars.inc.php";
-require_once dirname(__FILE__)."/../includes/Database.class.php";
-$dbConn = db_factory();
-
-if ($config->isNode('cache','jsDefaultsScript')) die($config->getNode('cache','jsDefaultsScript')); //Use cache if available
+require_once dirname(__FILE__)."/../../includes/preload.php";
 
 ob_start();
 ?>$('*').ajaxError(function (event, request, settings) {

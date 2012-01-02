@@ -128,7 +128,6 @@ if ($config->getNode('homePage', 'techTips')) { //Check Enabled
 } //End Tech Tips
 
 //Actual include
-require $config->getNode('paths','offlineDir').'/themes/core/'.$config->getNode('site','theme').'/index.content.tpl.php';
+require $initcfg->getNode('paths','offlineDir').'/themes/core/'.$config->getNode('site','theme').'/index.content.tpl.php';
 
-require_once 'footer.php';
-?>
+require_once '../includes/footer.php';
