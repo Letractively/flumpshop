@@ -12,3 +12,10 @@ a {color:#C43131}
 input.setup {
   width: 250px;
 }
+
+textarea.setup {
+  background-color: #333;
+  color: #FFF;
+  width: 250px;
+  height: 50px;
+}

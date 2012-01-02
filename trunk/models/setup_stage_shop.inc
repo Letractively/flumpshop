@@ -20,23 +20,30 @@
  *  along with Flumpshop.  If not, see <http://www.gnu.org/licenses/>.
  *
  *
- *  @Name models/setup_stage_paths.inc
+ *  @Name models/setup_stage_shop.inc
  *  @Version 1.00
  *  @author Lloyd Wallis <flump5281@gmail.com>
  *  @copyright Copyright (c) 2009-2012, Lloyd Wallis
  *  @package Flumpshop
  */
-$tree = 'paths';
+$tree = 'site';
 $additional_fields = array('config_human_name', 'config_human_description');
+$display_entities = array('enabled', 'vat', 'shopMode', 'sendFeedback');
 
 $data = array(
-    'heading' => $_SESSION['config']->getFriendName($tree),
-    'summary' => 'Please do me a quick favour and make sure the information in the boxes is correct. Most of the time this won\'t need changing, but if it\'s wrong then Flumpshop won\'t be able to work correctly.',
-    'form_action' => '../process/doPaths.php',
+    'heading' => 'Shop Settings',
+    'summary' => 'On this page, you can tell me whether you want Flumpshop to actually be able to process transactions, or even turn the site offline, showing a Maintenance page while you get it ready to be used.',
+    'form_action' => '../process/doShop.php',
     'fields' => $_SESSION['config']->getNodes($tree, $additional_fields)
 );
 
 foreach (array_keys($data['fields']) as $i => $j) {
+  //Don't show the fields that aren't set to display
+  if (!in_array($data['fields'][$i]['config_key'], $display_entities)) {
+    unset($data['fields'][$i]);
+    continue;
+  }
+  //Get the default value and put it in the form
   $value = $_SESSION['config']->getNode($tree, $data['fields'][$i]['config_key']);
   $data['fields'][$i]['value'] = $value;
   $data['fields'][$i]['input_type'] = 'text';

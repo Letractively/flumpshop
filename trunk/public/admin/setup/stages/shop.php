@@ -1,39 +1,33 @@
 <?php
-require_once dirname(__FILE__)."/../header.inc.php";
-?><script>parent.leftFrame.window.location = '../?frame=leftFrame&p=3.1';</script>
-<h1>Shop Settings</h1>
-<form action="../process/doShop.php" method="post"><table>
-<tr>
-	<td><label for="enabled">Enable Site</label></td>
-    <td><input type="checkbox" name="enabled" id="enabled" checked="checked" /></td>
-    <td><span class='iconbutton' onclick='$("#enabledHelp").dialog("open");'></span></td>
-</tr>
-<tr>
-	<td><label for="vat">VAT Rate</label></td>
-    <td><input type="text" name="vat" id="vat" value="<?php echo $_SESSION['config']->getNode('site','vat');?>" />%</td>
-    <td><span class='iconbutton' onclick='$("#vatHelp").dialog("open");'></span></td>
-</tr>
-<tr>
-	<td><label for="shopMode">Enable Shop Mode</label></td>
-    <td><input type="checkbox" name="shopMode" id="shopMode" checked="checked" /></td>
-    <td><span class='iconbutton' onclick='$("#shopModeHelp").dialog("open");'></span></td>
-</tr>
-<tr>
-	<td><label for="sendFeedback">Enable Send Feedback</label></td>
-    <td><input type="checkbox" name="sendFeedback" id="sendFeedback" checked="checked" /></td>
-    <td><span class='iconbutton' onclick='$("#sendFeedbackHelp").dialog("open");'></span></td>
-</tr>
-</table>
-<input type="submit" value="Continue" />
-</form>
-<div class="ui-helper-hidden helpDialog" id="enabledHelp" title="Enable Site">When unchecked, the site is placed into maintenance mode, during which only the Admin CP is accessible. The maintenance message can be customised in the Predefined Messages section.</div>
-<div class="ui-helper-hidden helpDialog" id="vatHelp" title="VAT Rate">This is the percentage tax added to all products and deliveries.</div>
-<div class="ui-helper-hidden helpDialog" id="shopModeHelp" title="Enable Shop Mode">When unchecked, no prices or stock levels are displayed, and the basket/checkout features are disabled.<br /><br />Shop Mode MUST be disabled when using an SQLite Database until issue 24 is fixed.</div>
-<div class="ui-helper-hidden helpDialog" id="sendFeedbackHelp" title="Enable Send Feedback">When checked, a 'Send Feedback' button is added to the footer.</div>
-<script>
-$('.iconbutton').button({icons: {primary: 'ui-icon-help'}}).width('16px').height('16px');
-$('.helpDialog').each(function() {$(this).dialog({autoOpen: false});});
-$('input:submit').button().width('100px').css('font-size','12px');
-document.logDirFocus = true;
-</script><?php
-require_once dirname(__FILE__)."/../footer.inc.php";?>
+/**
+ *  This file is the Controller for the shop stage of the setup wizard.
+ *
+ *  This file is part of Flumpshop.
+ *
+ *  Flumpshop is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Flumpshop is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Flumpshop.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *
+ *  @Name public/admin/setup/stages/shop.php
+ *  @Version 2.00
+ *  @author Lloyd Wallis <flump5281@gmail.com>
+ *  @copyright Copyright (c) 2009-2012, Lloyd Wallis
+ *  @package Flumpshop
+ */
+require_once '../../../../includes/setup/lib.inc';
+
+require '../../../../models/setup_stage_shop.inc';
+
+require '../../../../includes/setup/header.inc.php';
+require '../../../../views/setup_stage.inc';
+require '../../../../includes/setup/footer.inc.php';

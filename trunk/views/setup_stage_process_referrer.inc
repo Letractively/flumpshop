@@ -31,6 +31,6 @@ require dirname(__FILE__) . '/../includes/setup/header.inc.php';
 <script type="text/javascript">
   parent.leftFrame.window.location = '../?frame=leftFrame&p=<?=$navigation_stage?>';
   window.location = '../stages/<?=$next_stage?>';
-</script>";
+</script>
 <?php
 require dirname(__FILE__) . '/../includes/setup/footer.inc.php';

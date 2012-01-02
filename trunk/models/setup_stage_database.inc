@@ -31,6 +31,7 @@ $additional_fields = array('config_human_name', 'config_human_description');
 
 $data = array(
     'heading' => $_SESSION['config']->getFriendName($tree),
+    'summary' => 'For Flumpshop to store information, it needs to be able to access a MySQL Database. Please enter the connection details here, then I will set up the database so that Flumpshop can use it.',
     'form_action' => '../process/doDatabase.php',
     'fields' => $_SESSION['config']->getNodes($tree, $additional_fields)
 );

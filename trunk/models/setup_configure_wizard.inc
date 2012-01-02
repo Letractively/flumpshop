@@ -114,8 +114,8 @@ $_SESSION['config']->setNode("paths", "logDir", $_SESSION['config']->getNode("pa
 //Secure Site
 $_SESSION['config']->addTree("secure", "Secure Site Settings");
 
-$_SESSION['config']->setNode("secure", "enabled", true, "Enable Secure Transaction Processing");
-$_SESSION['config']->setNode("secure", "admin", true, "Force Secure Admin CP");
+$_SESSION['config']->setNode("secure", "enabled", true, "Enable Secure Transaction Processing", 'Whether the server should redirect to the HTTPS site for transaction processing.');
+$_SESSION['config']->setNode("secure", "admin", true, "Force Secure Admin CP", 'Whether the server should force the Admin CP to be accessed using HTTPS.');
 
 //Database
 $_SESSION['config']->addTree("database", "Database Server Settings", 'These settings control how Flumpshop connects to the backend database server. Avoid changing, unless you know what you are doing.');
@@ -145,8 +145,8 @@ $_SESSION['config']->addTree("messages", "Predefined Text Strings");
 //Global Messages
 $_SESSION['config']->setNode("messages", "footer", "Designed and built by Flumpnet", "Page Footer");
 $_SESSION['config']->setNode("messages", "crawler", "A Crawler User Agent has been detected. Some site features are disabled to reduce server load.", "Crawler Agent");
-$_SESSION['config']->setNode("messages", "name", "Flumpshop", "Site Name");
-$_SESSION['config']->setNode("messages", "tagline", "Make it happen", "Tagline");
+$_SESSION['config']->setNode("messages", "name", "Flumpshop", "Site Name", 'The name of this website, which is used in legal pages, and the header.');
+$_SESSION['config']->setNode("messages", "tagline", "Make it happen", "Tagline", 'The tagline that appears below the Site Name.');
 $_SESSION['config']->setNode("messages", "keywords", "Flumpshop online shop buy ecommerce sales", "Keywords");
 $_SESSION['config']->setNode("messages", "defaultCategoryName", "Uncategorised", "Default Category Name");
 $_SESSION['config']->setNode("messages", "defaultCategoryDesc", "Details for this category are unavailable.", "Default Category Description");
@@ -193,8 +193,8 @@ $_SESSION['config']->setNode("messages", "loginNeeded", "You must be logged in t
 $_SESSION['config']->setNode("messages", "countryNotSupported", "Sorry, but we can't deliver to your country online. We're working hard to expand our range, but you must call or email us to arrange delivery to this region.", "Unsupported Country");
 
 //Legal Additions
-$_SESSION['config']->setNode("messages", "email", "sales@" . $_SERVER['HTTP_HOST'], "Email Address");
-$_SESSION['config']->setNode("messages", "address", "[Please enter your business address here]", "Address");
+$_SESSION['config']->setNode("messages", "email", "sales@" . $_SERVER['HTTP_HOST'], "Email Address", 'The email address anyone can use, anytime, to contact a person who maintains or is in some way connected to the site. Your site, not the Flumpshop system in general. We covered all bases there. HA!');
+$_SESSION['config']->setNode("messages", "address", "[Please enter your business address here]", "Address", 'The address of your business, or the registered office of your company.');
 
 //Page Titles
 $_SESSION['config']->setNode("messages", "titlesIndexPrefix", "Welcome to ", "Home Page Title Prefix");
