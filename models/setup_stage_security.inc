@@ -20,19 +20,19 @@
  *  along with Flumpshop.  If not, see <http://www.gnu.org/licenses/>.
  *
  *
- *  @Name models/setup_stage_paths.inc
+ *  @Name models/setup_stage_security.inc
  *  @Version 1.00
  *  @author Lloyd Wallis <flump5281@gmail.com>
  *  @copyright Copyright (c) 2009-2012, Lloyd Wallis
  *  @package Flumpshop
  */
-$tree = 'paths';
+$tree = 'secure';
 $additional_fields = array('config_human_name', 'config_human_description');
 
 $data = array(
     'heading' => $_SESSION['config']->getFriendName($tree),
-    'summary' => 'Please do me a quick favour and make sure the information in the boxes is correct. Most of the time this won\'t need changing, but if it\'s wrong then Flumpshop won\'t be able to work correctly.',
-    'form_action' => '../process/doPaths.php',
+    'summary' => 'This page lets you check and adjust the settings used for SSL/HTTPS sections of the site. HTTPS is used in parts of the site where additional security is needed, such as processing orders.',
+    'form_action' => '../process/doSecurity.php',
     'fields' => $_SESSION['config']->getNodes($tree, $additional_fields)
 );
 
