@@ -28,7 +28,7 @@
  */
 $tree = 'site';
 $additional_fields = array('config_human_name', 'config_human_description');
-$display_entities = array('enabled', 'vat', 'shopMode', 'sendFeedback');
+$display_entities = array('enabled', 'vat', 'shopMode', 'sendFeedback', 'debug');
 
 $data = array(
     'heading' => 'Shop Settings',
@@ -46,5 +46,10 @@ foreach (array_keys($data['fields']) as $i => $j) {
   //Get the default value and put it in the form
   $value = $_SESSION['config']->getNode($tree, $data['fields'][$i]['config_key']);
   $data['fields'][$i]['value'] = $value;
-  $data['fields'][$i]['input_type'] = 'text';
+  if (is_bool($value)) {
+    $data['fields'][$i]['input_type'] = 'checkbox';
+    $data['fields'][$i]['input_checked'] = $value ? ' checked="checked"' : '';
+  } else {
+    $data['fields'][$i]['input_type'] = 'text';
+  }
 }

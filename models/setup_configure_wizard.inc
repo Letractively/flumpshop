@@ -100,7 +100,6 @@ $_SESSION['config']->setNode("site", "sendFeedback", true, "Send Feedback", 'Whe
 $_SESSION['config']->setNode("site", "loginTab", true, "Login Tab", 'When enabled, the primary navigation bar has a "Login" link on it. Disabling this essentially disables access to the user authentication part of the site');
 $_SESSION['config']->setNode("site", "theme", "flumpshop", "Theme", 'This is the theme that is used on the site frontend.');
 $_SESSION['config']->setNode("site", "templateMode", "core", "Template Mode", 'Unless specified by the theme, leave this as "core"');
-$_SESSION['config']->setNode('site', 'debug', false, 'Debug Mode' , 'If this is enabled, you\'ll see a lot more information produced on every page detailing what is or isn\'t going on. For developer use only.');
 
 //Paths and Directories Tree
 $_SESSION['config']->addTree("paths", "Site Paths and Directories", 'This Configuration tree is used to store URLs and file paths that are important to Flumpshop\'s operation.');
@@ -108,7 +107,7 @@ $_SESSION['config']->addTree("paths", "Site Paths and Directories", 'This Config
 $_SESSION['config']->setNode("paths", "root", "http://" . $_SERVER['HTTP_HOST'] . preg_replace('/\/admin\/setup\/.*$/i', '', $_SERVER['REQUEST_URI']), "Home URL", 'This is the URL of the main directory of the site. This should be automatically worked out, but check it just to be sure. Change this if you move the Flumpshop installation to another website later.');
 $_SESSION['config']->setNode("paths", "secureRoot", "https://" . $_SERVER['HTTP_HOST'] . preg_replace('/\/admin\/setup\/.*$/i', '', $_SERVER['REQUEST_URI']), "Secure Home URL", 'This is the URL of the main directory of the site when using SSL encryption. This should be automatically worked out, but check it just to be sure. Change this if you move the Flumpshop installation to another website later, or if you use a different domain for secure pages, e.g. secure.flump.me');
 $_SESSION['config']->setNode("paths", "path", preg_replace("/(\\\\|\/)models(.*)/i", "", dirname(__FILE__)), "Home Directory",'This is the physical location of the site on the server. This should be automatically worked out, but check it just to be sure. Change this is you ever move the server Flumpshop is hosted on.');
-$_SESSION['config']->setNode("paths", "offlineDir", "C:/inetpub/data", "Offline Directory", 'DEPRECATED. This is the physical location of a directory on the server that Flumpshop has full permissions over. It is highly recommeneded that you ensure this folder cannot be accessed from the Internet. Make sure this directory already exists, as I won\'t create it for you.');
+$_SESSION['config']->setNode("paths", "offlineDir", $_SESSION['config']->getNode('paths', 'path') . '/private', "Offline Directory", 'DEPRECATED. This is the physical location of a directory on the server that Flumpshop has full permissions over. It is highly recommeneded that you ensure this folder cannot be accessed from the Internet. Make sure this directory already exists, as I won\'t create it for you.');
 $_SESSION['config']->setNode("paths", "logDir", $_SESSION['config']->getNode("paths", "offlineDir") . "/logs", "Server Log Directory", 'This is the physical location of a directory that Flumpshop has full permissions over. By default, this is a subdirectory called logs within the Offline Direcory. Make sure this directory already exists, as I won\'t create it for you.');
 
 //Secure Site
@@ -128,16 +127,16 @@ $_SESSION['config']->setNode("database", "password", "", "Password", 'This is th
 $_SESSION['config']->setNode("database", "name", "flumpshop", "Main Site Database Name", 'This is the name of the database that Flumpshop will use. If it doesn\'t exit, the Flumpnet Robot will try to create it for you if the account has the necessary permissions. If you have multiple Flumpshop installs on the same MySQL Server, they will each need a different database name.');
 
 //Advanced Server
-$_SESSION['config']->addTree("server", "Advanced Server Configuration");
+$_SESSION['config']->addTree("server", "Advanced Server Configuration", 'These are advanced settings. Do not alter these unless you know what you are doing.');
 
-$_SESSION['config']->setNode("server", "rewrite", false, "Enable URL Rewrite");
-$_SESSION['config']->setNode("server", "holdTimeout", 60, "Item Hold Timeout");
-$_SESSION['config']->setNode("server", "commitPayments", true, "Commit Payments (Debug)");
-$_SESSION['config']->setNode("server", "crawlerAgents", "Googlebot|msnbot|Slurp", "Web Crawler Useragents");
-$_SESSION['config']->setNode("server", "debug", false, "Enable Debug Mode");
-$_SESSION['config']->setNode("server", "cronFreq", 30, "Cron Frequency (mins)");
-$_SESSION['config']->setNode("server", "backupFreq", 24, "Backup Frequency (hrs)");
-$_SESSION['config']->setNode("server", "analyticsID", "", "Google Analytics ID");
+$_SESSION['config']->setNode("server", "rewrite", false, "Enable URL Rewrite", 'If this server is running Apache with AllowOverride and mod_rewrite enabled, then you can tick this box right now to get friendlier web address for products. If you are using nginx as your web server, additional configuration is required. Instructions can be found in the Flumpshop wiki.');
+$_SESSION['config']->setNode("server", "holdTimeout", 60, "Item Hold Timeout", 'When Flumpshop passes an order over to PayPal for processing, it sets a temporary hold on the ordered items that prevents another user from buying the same stock. If a user cancels their transaction, the stock is made available, but if they simply leave, Flumpshop doesn\'t no to change these back. Instead, you can set a timeout in minutes after which the stock will automatically be made available again.');
+$_SESSION['config']->setNode("server", "commitPayments", true, "Commit Payments (Debug)", 'When disabled, Flumpshop will not actually commit payments to the system, and run PayPal in Sandbox mode. This allows developers to test the checkout flow without buying anything.');
+$_SESSION['config']->setNode("server", "crawlerAgents", "Googlebot|msnbot|Slurp", "Web Crawler Useragents", 'When these strings, separated by pipe characters, are detected in a User Agent header, Flumpshop assumes they are a web crawler and does not display some content in order to reduce the load on the server.');
+$_SESSION['config']->setNode("server", "debug", false, "Enable Debug Mode", 'When enabled, a debug.log file is populated with more information during a page load, and the page itself has lots of detailed logging information output to it. For developer and debugging purposes only.');
+$_SESSION['config']->setNode("server", "cronFreq", 30, "Cron Frequency (mins)", 'How often Flumpshop will include the cron script at the footer of a page.');
+$_SESSION['config']->setNode("server", "backupFreq", 24, "Backup Frequency (hrs)", 'How often a Flumpshop cron script will attempt to take a backup.');
+$_SESSION['config']->setNode("server", "analyticsID", "", "Google Analytics ID", 'Flumpshop supports Google Analytics for monitoring web traffic. If you have an account, enter the Analytics account ID here so you can track visitors to your site.');
 
 //Messages
 $_SESSION['config']->addTree("messages", "Predefined Text Strings");
@@ -356,9 +355,9 @@ EOT
 //Log Files
 $_SESSION['config']->addTree("logs", "Server Log Files");
 
-$_SESSION['config']->setNode("logs", "enabled", true, "Enable Server Logs");
-$_SESSION['config']->setNode("logs", "errors", "errors.log", "Error Logfile");
-$_SESSION['config']->setNode('logs', 'xmldblogs', $_INIT_DEBUG, 'Detailed Database Logs', 'Requires the SimpleXML extension. When enabled, every query executed against the database is logged in XML files on a per-session basis.');
+$_SESSION['config']->setNode("logs", "enabled", true, "Enable Server Logs", 'When unchecked, no logging will occur.');
+$_SESSION['config']->setNode("logs", "errors", "errors.log", "Error Logfile", 'This is the file within the logs directory that errors will be written to.');
+$_SESSION['config']->setNode('logs', 'xmldblogs', false, 'Detailed Database Logs', 'Requires the SimpleXML extension. When enabled, every query executed against the database is logged in XML files on a per-session basis.');
 
 //Order Statuses
 $_SESSION['config']->addTree("orderstatus", "Order Statuses");
@@ -398,11 +397,11 @@ $_SESSION['config']->setNode("account", "validationTimeout", 48, "Email Validati
 //Mail Settings
 $_SESSION['config']->addTree("smtp", "Mail Server Settings");
 
-$_SESSION['config']->setNode("smtp", "host", "localhost", "SMTP Server");
-$_SESSION['config']->setNode("smtp", "port", 25, "SMTP Port");
-$_SESSION['config']->setNode("smtp", "uname", "daemon", "Username");
-$_SESSION['config']->setNode("smtp", "password", "", "Password");
-$_SESSION['config']->setNode("smtp", "email", "daemon@" . preg_replace("/^www\./i", "", $_SERVER['HTTP_HOST']), "Email Address");
+$_SESSION['config']->setNode("smtp", "host", "localhost", "SMTP Server", 'This is the hostname of the SMTP, e.g. smtp.examplemail.com');
+$_SESSION['config']->setNode("smtp", "port", 25, "SMTP Port", 'This is the port the SMTP server runs on. This is usually 25 (Flumpshop does not support SSL or TLS encryption).');
+$_SESSION['config']->setNode("smtp", "uname", "daemon", "Username", 'This is the username of the account on the SMTP server that Flumpshop has permission to send from.');
+$_SESSION['config']->setNode("smtp", "password", "", "Password", 'This is the password for the above account.');
+$_SESSION['config']->setNode("smtp", "email", "daemon@" . preg_replace("/^www\./i", "", $_SERVER['HTTP_HOST']), "Email Address", 'This is the email address that Flumpshop will send emails from.');
 
 //Item View Options
 $_SESSION['config']->addTree("viewItem", "Item View Settings");
@@ -418,11 +417,11 @@ $_SESSION['config']->setNode("viewItem", "homeChars", 30, "Home Item Summary Len
 //Home Page Options
 $_SESSION['config']->addTree("homePage", "Home Page Options");
 
-$_SESSION['config']->setNode("homePage", "pageText", true, "Show Page Text");
-$_SESSION['config']->setNode("homePage", "featuredItems", true, "Show Featured Items");
-$_SESSION['config']->setNode("homePage", "popularItems", true, "Show Popular Items");
-$_SESSION['config']->setNode("homePage", "latestNews", true, "Show Latest News");
-$_SESSION['config']->setNode("homePage", "techTips", true, "Show Tech Tips");
+$_SESSION['config']->setNode("homePage", "pageText", true, "Show Page Text", 'Toggles whether or not to show the home page message on the home page.');
+$_SESSION['config']->setNode("homePage", "featuredItems", true, "Show Featured Items", 'Toggles whether or not to show the Featured Items section on the home page.');
+$_SESSION['config']->setNode("homePage", "popularItems", true, "Show Popular Items", 'Toggles whether or not to show the Popular Items section on the home page.');
+$_SESSION['config']->setNode("homePage", "latestNews", true, "Show Latest News", 'Toggles whether or not to show the Latest News section on the home page.');
+$_SESSION['config']->setNode("homePage", "techTips", true, "Show FAQ", 'Toggles whether or not to show the FAQ section on the home page.');
 
 //Delivery Options
 $_SESSION['config']->addTree('delivery', 'Delivery Options');

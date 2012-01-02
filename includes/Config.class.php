@@ -78,11 +78,9 @@ class Config {
    * @param bool $debug Optional. Whether to output debugging data when executiong functions. Default false.
    * @return void No return value.
    */
-  public function Config($name = null, $commit = null) {
+  public function Config($name = null, $commit = true) {
     if (is_null($name))
       $name = 'Default Configuration';
-    if (is_null($commit))
-      $commit = true;
 
     $this->name = $name;
     $this->commit = $commit;
@@ -120,22 +118,47 @@ class Config {
   /**
    * Purges the given configuration tree, so it has no values within it
    * @param string $treeName The tree to purge
+   * @param boolean $purge_meta Whether to remove human-readable metadata
    * @return boolean Whether the operation was successful 
    */
-  private function purge_tree($treeName) {
+  private function purge_tree($treeName, $purge_meta = false) {
     //Report Progress
     debug_message('Purging Tree ' . $treeName);
 
     $this->data[$treeName] = array();
     if ($this->commit) {
-      return (boolean) $db->query('DELETE FROM config_values
+      global $dbConn;
+      $result1 = $dbConn->query('DELETE FROM config_values
         WHERE config_set="' . $this->getSetID() . '"
         AND config_tree="' . $treeName . '"');
+      
+      $result2 = true;
+      if ($purge_meta) {
+        $result2 = $dbConn->query('DELETE FROM config_values_human
+        WHERE config_set="' . $this->getSetID() . '"
+        AND config_tree="' . $treeName . '"');
+      }
+      
+      return ((boolean) $result1) && ((boolean) $result2);
     }
 
     //Report Progress
     debug_message('Tree will not be purged in Configuation store');
     return true; //Return true if not committing
+  }
+  
+  /**
+   * Completely deletes a tree from the Configuration Store.
+   * As this remove human-readable metadata, parts of this operation transcend
+   * to the Global Configuration Store.
+   * @param string $treeName The name of the tree to delete
+   * @return boolean Whether the operation was a success 
+   */
+  public function removeTree($treeName) {
+    $result = $this->purge_tree($treeName);
+    unset($this->data[$treeName]);
+    unset($this->human_readable[$treeName]);
+    return $result;
   }
 
   /**
@@ -162,7 +185,7 @@ class Config {
       //Run the query, and return if it was successful
       return (boolean) $dbConn->query('REPLACE INTO config_values_human
         (config_tree, config_human_name, config_human_description) VALUES
-        ("' . $treeName . '", "' . $human_name . '", "' . $human_description, '"');
+        ("' . $treeName . '", "' . $human_name . '", "' . $human_description . '")');
     } else {
       debug_message('Commit mode disabled. Tree not commited to store.');
       $this->human_readable[$treeName]['__meta'] = array(
@@ -179,9 +202,10 @@ class Config {
    * It is best practice to either start a transaction or disable commits for
    * this process.
    * @param string $tree If defined, only this tree will be reset
+   * @param array $keys If defined, only these keys will be falsified
    * @return boolean Whether the operation was a success 
    */
-  public function falseify($tree = NULL) {
+  public function falseify($tree = NULL, $keys = array()) {
     debug_message('Flumpshop is nullifying the configuration store...');
     //Null wipes the entire object (all trees)
     if ($tree == NULL) {
@@ -189,8 +213,11 @@ class Config {
         $this->falseify($tree);
       }
     } else {
-      foreach ($this->getNodes($tree) as $node) {
-        if ($this->getNode($tree, $node) === true) {
+      $nodes = $this->getNodes($tree);
+      if (empty($keys)) $keys = $nodes;
+      foreach ($nodes as $node) {
+        if ($this->getNode($tree, $node) === true
+                && in_array($node, $keys)) {
           $this->setNode($tree, $node, false);
         }
       }
@@ -207,7 +234,7 @@ class Config {
   public function getTrees() {
     //Can't get a complete list as database-free mode is on
     if (!$this->commit) {
-      return array();
+      return array_keys($this->data);
     }
 
     global $dbConn;
@@ -240,6 +267,7 @@ class Config {
     //Set Value
     $this->data[$treeName][$nodeName] = $nodeVal;
     if ($this->commit) {
+      global $dbConn;
       $nodeVal = $dbConn->real_escape_string($nodeVal);
       return $dbConn->query('REPLACE INTO config_values
         (config_set, config_tree, config_key, config_value) VALUES
@@ -276,7 +304,7 @@ class Config {
     //Commit the values and return whether it was successful
     return (boolean) $dbConn->query('REPLACE INTO config_values_human
       (config_tree, config_key, config_human_name, config_human_description)
-      VALUES ("' . $treeName, '", "' . $nodeName . '", "' . $human_name .
+      VALUES ("' . $treeName . '", "' . $nodeName . '", "' . $human_name .
                     '", "' . $description . '")');
   }
 
@@ -347,21 +375,44 @@ class Config {
   }
 
   /**
-   * Returns the human-readable name of a tree of value
+   * Returns the human-readable name of a tree or value
    * @param string $treeName The tree to fetch, or the tree the node is in
    * @param string $nodeName Optional. The node to fetch
    * @return string The human-readable name of the element
    */
   public function getFriendName($treeName, $nodeName = null) {
-    //Returns the friendly (human-readable) name of the node or tree
-    debug_message('Getting Friendly Name for ' . $treeName . '|' . $nodeName);
+    $attr = 'config_human_name';
+    return $this->getFriendAttr($treeName, $nodeName, $attr);
+  }
+  
+  /**
+   * Returns the human-readable description of a tree or value
+   * @param string $treeName The tree to fetch, or the tree the node is in
+   * @param string $nodeName Optional. The node to fetch
+   * @return string The human-readable description of the element
+   */
+  public function getFriendDesc($treeName, $nodeName = null) {
+    $attr = 'config_human_description';
+    return $this->getFriendAttr($treeName, $nodeName, $attr);
+  }
+  
+  /**
+   * Returns a human-readable attribute of a tree or value
+   * @param string $treeName The tree to fetch, or the tree the node is in
+   * @param string $nodeName The node to fetch
+   * @param string $attr The name of the attribute
+   * @return string The human-readable attribute of the element
+   */
+  private function getFriendAttr($treeName, $nodeName, $attr) {
+    //Returns the friendly (human-readable) attribute of the node or tree
+    debug_message('Getting '.$attr.' for ' . $treeName . '|' . $nodeName);
 
     if (!$this->commit) {
       //Commit mode is disabled. Check the local cache instead
       if ($nodeName === null) {
-        return $this->human_readable[$treeName]['__meta']['config_human_name'];
+        return $this->human_readable[$treeName]['__meta'][$attr];
       } else {
-        return $this->human_readable[$treeName][$nodeName]['config_human_name'];
+        return $this->human_readable[$treeName][$nodeName][$attr];
       }
     }
 
@@ -372,14 +423,15 @@ class Config {
       $where = '="' . $nodeName . '"';
     }
 
-    $result = $dbConn->query('SELECT config_human_name FROM config_values_human
+    global $dbConn;
+    $result = $dbConn->query('SELECT '.$attr.' FROM config_values_human
       WHERE config_tree="' . $treeName . '" AND config_value' . $nodeName . ' LIMIT 1');
 
     if ($dbConn->rows($result) === 0)
       return 'Unknown Element';
 
     $row = $dbConn->fetch($result);
-    return $row['config_human_name'];
+    return $row[$attr];
   }
 
   /**
@@ -435,6 +487,82 @@ class Config {
    */
   public function getSetID() {
     return $this->set_identifier;
+  }
+  
+  /**
+   * Write the entire Configuration store to a file that can be reinitiated by
+   * being included
+   * @param string $file The path to the file to write to
+   * @param string $initcfg The name of the variable the configuration object
+   * would reinitialise as
+   * @return boolean whether the operaion was a success
+   */
+  public function writeAllToFile($file, $var_name = 'initcfg') {
+    $handle = fopen($file, 'w');
+    if (!$handle) return false; //Could not open file
+    
+    fwrite($handle, "<?php\n\${$var_name} = new Config('{$this->name}', false);\n\n");
+    
+    //Iterate over each tree
+    foreach ($this->getTrees() as $tree) {
+      //Define the Tree
+      $treeName = addslashes($this->getFriendName($tree));
+      $treeDesc = addslashes($this->getFriendDesc($tree));
+      
+      fwrite($handle, "\n\${$var_name}->addTree('{$tree}', '{$treeName}', '{$treeDesc}');\n\n");
+      
+      //Iterate over each node in the tree
+      foreach ($this->getNodes($tree, array('config_human_name','config_human_desc')) as $value) {
+        $node = $value['config_key'];
+        $nodeName = addslashes($value['config_human_name']);
+        $nodeDesc = addslashes($value['config_human_description']);
+        $value = addslashes($this->getNode($tree, $node));
+        
+        fwrite($handle, "\${$var_name}->setNode('{$tree}', '{$node}', '{$value}' , '{$nodeName}', '{$nodeDesc}');\n");
+      }
+    }
+    fclose($handle);
+    return true;
+  }
+  
+  public function writeAll() {
+    global $dbConn;
+    if (!$dbConn) return false;
+    
+    //Create or update the configuration set
+    $set = $dbConn->real_escape_string($this->name);
+    $result = $dbConn->query('REPLACE INTO config_sets (set_name) VALUES ("'.$set.'")');
+    $this->set_identifier = $dbConn->insert_id;
+    unset($set);
+    
+    /*
+     * Create a copy of the data in the object before activating commit, as
+     * afterwards some gets will try to query the database, which is likely
+     * outdated
+     */
+    $data = $this->data;
+    $human_readable = $this->human_readable;
+    //Set the Config as writable
+    $this->commit = true;
+    
+    //Iterate over each tree
+    foreach (array_keys($data) as $tree) {
+      //Define the Tree
+      $treeName = $human_readable[$tree]['__meta']['config_human_name'];
+      $treeDesc = $human_readable[$tree]['__meta']['config_human_description'];
+      
+      $this->addTree($tree, $treeName, $treeDesc, true);
+      
+      //Iterate over each node in the tree
+      foreach ($data[$tree] as $key => $value) {
+        $nodeName = $human_readable[$tree][$key]['config_human_name'];
+        $nodeDesc = $human_readable[$tree][$key]['config_human_description'];
+        
+        $this->setNode($tree, $key, $value, $nodeName, $nodeDesc);
+      }
+    }
+    $this->commit = false; //Debugging
+    return true;
   }
 
 }

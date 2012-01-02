@@ -29,7 +29,9 @@ require dirname(__FILE__) . '/../includes/setup/header.inc.php';
 ?><h1>Processing...</h1>
 <p>The Flumpnet Robot is busy processing the information you have just given him. He'll ask you a few more questions when he's caught up.</p>
 <script type="text/javascript">
-  parent.leftFrame.window.location = '../?frame=leftFrame&p=<?=$navigation_stage?>';
+  newurl = '../?frame=leftFrame&p=<?=$navigation_stage?>';
+  if (parent.leftFrame.window.location.href != newurl)
+  parent.leftFrame.window.location = newurl;
   window.location = '../stages/<?=$next_stage?>';
 </script>
 <?php

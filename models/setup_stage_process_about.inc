@@ -37,10 +37,9 @@
 $_SESSION['config']->setNode('site','password',sha1($_USER['t2pass']));
 
 //Set up the new user
-$config =& $_SESSION['config'];
 require_once dirname(__FILE__) . '/../includes/Database.class.php';
 
-$dbConn = db_factory();
+$dbConn = db_factory($_SESSION['config']);
 
 $dbConn->query('INSERT INTO acp_login (uname, pass,
   can_add_products, can_edit_products, can_delete_products,

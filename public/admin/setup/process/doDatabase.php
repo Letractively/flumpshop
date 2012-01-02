@@ -37,14 +37,9 @@ $next_stage = 'about.php';
  */
 require '../../../../models/setup_stage_process_generic.inc';
 
-/**
- * The database factory requires the $config variable to be defined
- */
-$config =& $_SESSION['config'];
-
 //Test the Database connection
 require_once '../../../../includes/Database.class.php';
-$dbConn = db_factory();
+$dbConn = db_factory($_SESSION['config']);
 
 if ($dbConn->error() != '') {
   //Database connection failed

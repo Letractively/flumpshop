@@ -31,6 +31,7 @@ require_once '../../../../includes/setup/lib.inc';
 $tree = 'shop';
 $navigation_stage = '3.1';
 $next_stage = getNextStage(5);
+$falsify_keys = array('enabled', 'vat', 'shopMode', 'sendFeedback', 'debug');
 
 require '../../../../models/setup_stage_process_generic.inc';
 require '../../../../views/setup_stage_process_referrer.inc';

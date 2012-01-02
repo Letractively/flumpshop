@@ -32,7 +32,7 @@ $additional_fields = array('config_human_name', 'config_human_description');
 $data = array(
     'heading' => $_SESSION['config']->getFriendName($tree),
     'summary' => 'These settings apply to user accounts on the Flumpshop frontend, not the ACP.',
-    'form_action' => '../process/doPagination.php',
+    'form_action' => '../process/doAccount.php',
     'fields' => $_SESSION['config']->getNodes($tree, $additional_fields)
 );
 

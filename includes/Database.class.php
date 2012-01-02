@@ -32,12 +32,12 @@
  * @param Uses Flumpshop Superglobals to fetch necessary details.
  * @return An instantiated Database Object
  */
-function db_factory() {
-  return new MysqliDatabase($GLOBALS['config']->getNode('database', 'address'),
-                  $GLOBALS['config']->getNode('database', 'uname'),
-                  $GLOBALS['config']->getNode('database', 'password'),
-                  $GLOBALS['config']->getNode('database', 'name'),
-                  $GLOBALS['config']->getNode('database', 'port'));
+function db_factory($cfg) {
+  return new MysqliDatabase($cfg->getNode('database', 'address'),
+                  $cfg->getNode('database', 'uname'),
+                  $cfg->getNode('database', 'password'),
+                  $cfg->getNode('database', 'name'),
+                  $cfg->getNode('database', 'port'));
 }
 
 /**
@@ -125,15 +125,19 @@ class MysqliDatabase extends mysqli implements Database {
    * @param $debug whether to output detailed information and errors. Optional (default false).
    * @return DatabaseResult object on success, false on failure.
    */
-  public function query($str, $debug = NULL) {
+  public function query($str, $debug = false) {
     $this->xmlLog->log($str, 'query');
 
     $result = parent::query($str);
     if (!$result) {
       $caller = debug_backtrace(false);
-      $this->lastError = $this->error . " (Called by " . $caller[0]['file'] . ":" . $caller[0]['line'] . ")";
+      $this->lastError = '<div class="ui-state-error">'.
+              $this->error . " (Called by " . $caller[0]['file'] .
+              ":" . $caller[0]['line'] . ") when executing $str</div>";
       $this->xmlLog->log($this->lastError, 'error');
-      trigger_error('MySQL Error: Failed to connect to the MySQL Server: ' . $this->lastError);
+      trigger_error('MySQL Error: ' . $this->lastError);
+      if ($debug)
+        echo nl2br(print_r($caller,true));
     }
     $this->queryCount++;
     return $result;
@@ -213,8 +217,9 @@ class DatabaseLogger {
 
   function DatabaseLogger() {
     global $config;
-    if (!$config->getNode('logs', 'xmldblog')) {
+    if (!isset($config) or !$config->getNode('logs', 'xmldblog')) {
       $this->handle = false;
+      return;
     }
     $date = date("d-m-Y");
 
@@ -226,7 +231,12 @@ class DatabaseLogger {
     if (!file_exists($url)) {
       file_put_contents($url, '<?xml version=\'1.0\'?><log></log>');
     }
-    $this->handle = new SimpleXMLElement($url, NULL, true);
+    try {
+      $this->handle = new SimpleXMLElement($url, NULL, true);
+    } catch (Exception $e) {
+      trigger_error('Could not load XML File - '.$e->getMessage());
+      $this->handle = false;
+    }
   }
 
   function log($msg, $type) {
