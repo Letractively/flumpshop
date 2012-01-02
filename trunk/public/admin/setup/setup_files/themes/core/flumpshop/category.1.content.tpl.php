@@ -1,1 +1,0 @@
-<tr><td id="page_text">This is category 1. YAY! It has a different template to all the other categories!</td></tr>
