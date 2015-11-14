@@ -1,0 +1,2 @@
+# Introduction #
+Flumpshop regularly runs a few tasks to ensure that it runs smoothly. The Cron script is what triggers these tasks and by default is run once an hour. To run it immediately, you can trigger it in the Admin CP. You do not need the [SecondTierAdmin](SecondTierAdmin.md) Password to accomplish this, as enabling this security feature would mean it could not be run at all.

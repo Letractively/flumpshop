@@ -1,0 +1,1 @@
+Eventually planned to support the purchasing process used between businesses at all stages, this PHP ecommerce system will hopefully be a powerful, customisable system.
